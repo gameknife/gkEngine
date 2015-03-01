@@ -11,3 +11,4 @@ exec/engine/shaders/d3d9/shadercache/
 exec/bin32/
 code/Lib/
 *.opensdf
+*.gmf
