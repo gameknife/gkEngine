@@ -1,0 +1,40 @@
+#version 100
+
+precision highp float;
+uniform sampler2D  _tex0;
+
+uniform vec4 PI_psOffsets[8]/* < vsregister = c4; > */;
+uniform vec4 psWeights[8];
+
+varying mediump vec2   TexCoord0;
+
+void main()
+{
+	vec4 sum = vec4(0.0,0.0,0.0,0.0);
+
+	vec4 col = texture2D(_tex0, TexCoord0 + PI_psOffsets[0].xy);
+	sum += col * psWeights[0].x;  
+
+	col = texture2D(_tex0, TexCoord0 + PI_psOffsets[1].xy);
+	sum += col * psWeights[1].x;  
+
+	col = texture2D(_tex0, TexCoord0 + PI_psOffsets[2].xy);
+	sum += col * psWeights[2].x;  
+
+	col = texture2D(_tex0, TexCoord0 + PI_psOffsets[3].xy);
+	sum += col * psWeights[3].x;  
+
+	col = texture2D(_tex0, TexCoord0 + PI_psOffsets[4].xy);
+	sum += col * psWeights[4].x;   
+
+	col = texture2D(_tex0, TexCoord0 + PI_psOffsets[5].xy);
+	sum += col * psWeights[5].x;  
+
+	col = texture2D(_tex0, TexCoord0 + PI_psOffsets[6].xy);
+	sum += col * psWeights[6].x;   
+
+	col = texture2D(_tex0, TexCoord0 + PI_psOffsets[7].xy);
+	sum += col * psWeights[7].x;  
+
+	gl_FragColor = sum;   
+}

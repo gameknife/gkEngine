@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="assets">
+      <UniqueIdentifier>{ed1f1a5d-b37b-4855-8d8e-c886f58225bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="character">
+      <UniqueIdentifier>{88cc968b-75b1-4818-aefb-a3971bbf7fe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="loader">
+      <UniqueIdentifier>{34b1b791-bd2b-40f0-aa42-710c7caa611b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="gkAnimationHavok.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="assets\RigManager.cpp">
+      <Filter>assets</Filter>
+    </ClCompile>
+    <ClCompile Include="assets\AnimationManager.cpp">
+      <Filter>assets</Filter>
+    </ClCompile>
+    <ClCompile Include="assets\gkHkxMeshLoader.cpp">
+      <Filter>assets</Filter>
+    </ClCompile>
+    <ClCompile Include="character\gkSkinRenderable.cpp">
+      <Filter>character</Filter>
+    </ClCompile>
+    <ClCompile Include="character\CharacterInstance.cpp">
+      <Filter>character</Filter>
+    </ClCompile>
+    <ClCompile Include="gkHavokLoader.cpp">
+      <Filter>loader</Filter>
+    </ClCompile>
+    <ClCompile Include="StableHeader.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\gkHavokAssetManagementUtil.cpp">
+      <Filter>loader</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StableHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="prerequistes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="assets\gkHkxMeshLoader.h">
+      <Filter>assets</Filter>
+    </ClInclude>
+    <ClInclude Include="assets\RigManager.h">
+      <Filter>assets</Filter>
+    </ClInclude>
+    <ClInclude Include="assets\AnimationManager.h">
+      <Filter>assets</Filter>
+    </ClInclude>
+    <ClInclude Include="character\CharacterInstance.h">
+      <Filter>character</Filter>
+    </ClInclude>
+    <ClInclude Include="character\gkSkinRenderable.h">
+      <Filter>character</Filter>
+    </ClInclude>
+    <ClInclude Include="gkHavokLoader.h">
+      <Filter>loader</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\gkHavokAssetManagementUtil.h">
+      <Filter>loader</Filter>
+    </ClInclude>
+    <ClInclude Include="gkAnimationHavok.h">
+      <Filter>System</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

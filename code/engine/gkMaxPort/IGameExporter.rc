@@ -1,0 +1,168 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_PANEL DIALOGEX 0, 0, 308, 214
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "GameKnife Scene Exporter | alpha v0.1.0"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    CONTROL         "Vertex Normals",IDC_EXP_NORMALS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,124,63,10
+    CONTROL         "Export Geometry",IDC_EXP_GEOMETRY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,25,69,10
+    CONTROL         "Export Controllers",IDC_EXP_CONTROLLERS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,53,69,10
+    RTEXT           "Static Frame",IDC_STATIC,128,18,39,14
+    RTEXT           "Frames/Sample",IDC_STATIC,98,34,63,8
+    PUSHBUTTON      "OK",IDOK,223,17,72,18
+    PUSHBUTTON      "Cancel",IDCANCEL,223,44,72,18
+    GROUPBOX        "Export Options",IDC_STATIC,5,12,83,85
+    CONTROL         "",IDC_STATIC_FRAME,"CustEdit",WS_TABSTOP,176,18,25,10
+    CONTROL         "",IDC_STATIC_FRAME_SPIN,"SpinnerControl",0x0,202,18,7,10
+    CONTROL         "",IDC_SAMPLE_FRAME,"CustEdit",WS_TABSTOP,176,34,25,10
+    CONTROL         "",IDC_SAMPLE_FRAME_SPIN,"SpinnerControl",0x0,202,34,7,10
+    GROUPBOX        "Geom Options",IDC_STATIC,5,100,101,104
+    CONTROL         "Faces based on Smgrps",IDC_EXP_FACESMGRP,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,13,137,92,10
+    CONTROL         "Vertex Colors",IDC_EXP_VCOLORS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,150,57,10
+    CONTROL         "Mapping Channels",IDC_EXP_MAPCHAN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,176,75,10
+    CONTROL         "Texture Coordinates",IDC_EXP_TEXCOORD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,163,79,10
+    CONTROL         "Export Materials",IDC_EXP_MATERIAL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,67,69,10
+    CONTROL         "Export Modifiers",IDC_EXP_MODIFIERS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,81,69,10
+    GROUPBOX        "Controller Options",IDC_STATIC,113,58,83,64
+    CONTROL         "Constraints",IDC_EXP_CONSTRAINTS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,118,80,52,12
+    CONTROL         "Force Sample",IDC_EXP_SAMPLECONT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,118,93,68,12
+    GROUPBOX        "Modifiers",IDC_STATIC,113,124,83,39
+    CONTROL         "Skin",IDC_EXP_SKIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,118,134,52,12
+    CONTROL         "General ",IDC_EXP_GENMOD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,118,146,52,12
+    CONTROL         "Export Splines",IDC_EXP_SPLINES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,39,69,10
+    GROUPBOX        "Coord System",IDC_STATIC,208,106,62,49
+    CONTROL         "Max",IDC_COORD_MAX,"Button",BS_AUTORADIOBUTTON | WS_GROUP,214,118,48,8
+    CONTROL         "DirectX",IDC_COORD_D3D,"Button",BS_AUTORADIOBUTTON,214,130,48,8
+    CONTROL         "OpenG_T(",IDC_COORD_OGL,")Button",BS_AUTORADIOBUTTON,214,142,48,8
+    CONTROL         "Save Mesh XML File",IDC_SPLITFILE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,210,172,85,13
+    CONTROL         "Object Space",IDC_EXP_OBJECTSPACE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,111,59,10
+    CONTROL         "Export Quaternions",IDC_EXP_QUATERNIONS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,118,106,75,12
+    CONTROL         "Relative",IDC_EXP_RELATIVE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,118,67,52,12
+    GROUPBOX        "Normals",IDC_STATIC,113,167,83,36
+    CONTROL         "Per Vertex",IDC_NORMALS_LIST,"Button",BS_AUTORADIOBUTTON | WS_GROUP,118,177,57,10
+    CONTROL         "Per Face",IDC_NORMALS_FACE,"Button",BS_AUTORADIOBUTTON,118,189,63,11
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_PANEL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 301
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 207
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.K.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "#include ""veroverrides.h""\r\n"
+    "#include ""maxversion.r""\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_LIBDESCRIPTION      "IGame Exporter Sample"
+    IDS_CATEGORY            "Sparks"
+    IDS_CLASS_NAME          "IGameExporter"
+END
+
+#endif    // English (U.K.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+#include "veroverrides.h"
+#include "maxversion.r"
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

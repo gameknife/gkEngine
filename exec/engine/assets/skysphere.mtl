@@ -1,0 +1,12 @@
+<Material Name="skysphere">
+	<Effect FileName="ks_skyhdr" ParamCount="7" Mask="0" CastShadow="false">
+		<Param name="g_LightPos" type="int" value="0"/>
+		<Param name="g_MatSpecularPow" type="float" value="32 "/>
+		<Param name="g_CloudConstrat" type="float" value="1.76 "/>
+		<Param name="g_CloudBright" type="float" value="-0.46 "/>
+	</Effect>
+	<Static ParamCount="1">
+		<Param name="uvparams" type="external" value="1 1 0 0"/>
+	</Static>
+</Material>
+

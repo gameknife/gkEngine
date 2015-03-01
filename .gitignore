@@ -1,0 +1,11 @@
+code/thirdparty/
+INTERMEDIATE/
+.hg/
+code/engine/solutions/ipch/
+exec/engine/shaders/d3d9/shadercache/
+*.dds
+*.pvr
+*.sdf
+*.hgignore
+*.7z
+exec/bin32/

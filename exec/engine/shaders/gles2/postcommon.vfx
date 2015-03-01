@@ -1,0 +1,19 @@
+#version 100
+
+attribute highp   vec3  inPosition;
+attribute mediump vec2  inTexcoord;
+attribute highp   vec3  inFarClipPos;
+
+uniform mediump float  TexelOffsetX;
+uniform mediump float  TexelOffsetY;
+
+varying mediump vec2  TexCoord0;
+varying highp vec3 FarClipPos;
+
+void main()
+{
+	// Pass through vertex
+	gl_Position = vec4(inPosition, 1.0);
+	TexCoord0 = inTexcoord.xy;
+    FarClipPos = inFarClipPos;
+}

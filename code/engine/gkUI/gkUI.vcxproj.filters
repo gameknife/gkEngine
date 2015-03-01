@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="GameKnife">
+      <UniqueIdentifier>{10441af4-2b01-40fb-b134-ef16104e24fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{4ce0c159-b443-4d64-92db-58c1c49cedbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugin">
+      <UniqueIdentifier>{6dbe9d2e-d0a1-46ec-993d-ad9b81703ac4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packer">
+      <UniqueIdentifier>{033f09bb-2544-4f0e-8a7f-22a39a9cb611}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\GameKnifeUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UIPrerequisites.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UIStableHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkMovieMovable.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkMovieMovableEditText.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkMovieMovableInstanceBase.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkMovieMovableShape.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkMovieMovableStaticText.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkMovieMovableTextBase.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkVtxTexture.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkVtxPlugin.h">
+      <Filter>Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkMovieShapeAtlasElement.h">
+      <Filter>Packer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkVtxGlyphAtlasElement.h">
+      <Filter>Packer</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameKnifeUI.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\gkMovieMovable.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkMovieMovableEditText.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkMovieMovableInstanceBase.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkMovieMovableShape.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkMovieMovableStaticText.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkMovieMovableTextBase.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkVtxTexture.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkVtxPlugin.cpp">
+      <Filter>Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkMovieShapeAtlasElement.cpp">
+      <Filter>Packer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkVtxGlyphAtlasElement.cpp">
+      <Filter>Packer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+</Project>

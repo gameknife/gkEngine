@@ -1,0 +1,17 @@
+
+<GFX>
+
+  <GLES2Shader Name="postbloom">
+    <VSShader FileName="engine/shaders/gles2/postcommon.vfx" />
+    <PSShader FileName="engine/shaders/gles2/post_bloom.ffx" />
+  </GLES2Shader>
+
+  <D3D9Shader Name="postbloom">
+    <Effect Filename="engine/shaders/d3d9/ksaux.fx" />
+  </D3D9Shader>
+
+  <Marco>
+    <Attribute name="DOF" desc="Dof" mask="1" value="" />
+  </Marco>
+
+</GFX>

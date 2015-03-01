@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile_MultiBytes|Win32">
+      <Configuration>Profile_MultiBytes</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile_StaticLib|Win32">
+      <Configuration>Profile_StaticLib</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile|Win32">
+      <Configuration>Profile</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BD439D52-5D90-482B-8265-B443F54A5E01}</ProjectGuid>
+    <RootNamespace>gkCommon</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile_StaticLib|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profile_StaticLib|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Profile_StaticLib|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Profile_StaticLib|Win32'">$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">$(Configuration)\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="gkAndroidSpecific.h" />
+    <ClInclude Include="gkIniParser.h" />
+    <ClInclude Include="gkIOSSpecific.h" />
+    <ClInclude Include="gkLinuxSpecific.h" />
+    <ClInclude Include="gkAssert.h" />
+    <ClInclude Include="gkCommonStructs.h" />
+    <ClInclude Include="gkFilePath.h" />
+    <ClInclude Include="gkFilePath_impl.h" />
+    <ClInclude Include="gkIterator.h" />
+    <ClInclude Include="gkLinuxTchar.h" />
+    <ClInclude Include="gkMeshFileLoader.h" />
+    <ClInclude Include="gkPlatform.h" />
+    <ClInclude Include="gkPlatform_impl.h" />
+    <ClInclude Include="gkSharedPtr.h" />
+    <ClInclude Include="gkSingleton.h" />
+    <ClInclude Include="gkStudioWndMsg.h" />
+    <ClInclude Include="gkWin32Specific.h" />
+    <ClInclude Include="I3DEngine.h" />
+    <ClInclude Include="IAnimation.h" />
+    <ClInclude Include="IFont.h" />
+    <ClInclude Include="IGame.h" />
+    <ClInclude Include="IGameFramework.h" />
+    <ClInclude Include="IHavok.h" />
+    <ClInclude Include="IInputManager.h" />
+    <ClInclude Include="IMeshLoader.h" />
+    <ClInclude Include="INetworkLayer.h" />
+    <ClInclude Include="IParticle.h" />
+    <ClInclude Include="IRenderer.h" />
+    <ClInclude Include="IRenderSequence.h" />
+    <ClInclude Include="IResFile.h" />
+    <ClInclude Include="ISound.h" />
+    <ClInclude Include="IStereoDevice.h" />
+    <ClInclude Include="ISystem.h" />
+    <ClInclude Include="ISystemProfiler.h" />
+    <ClInclude Include="ITask.h" />
+    <ClInclude Include="ITerrianSystem.h" />
+    <ClInclude Include="IThread_linux.h" />
+    <ClInclude Include="IThread_win32.h" />
+    <ClInclude Include="ITimer.h" />
+    <ClInclude Include="IAuxRenderer.h" />
+    <ClInclude Include="IMaterial.h" />
+    <ClInclude Include="IMesh.h" />
+    <ClInclude Include="IRenderTarget.h" />
+    <ClInclude Include="IResource.h" />
+    <ClInclude Include="IShader.h" />
+    <ClInclude Include="ITexture.h" />
+    <ClInclude Include="IResourceManager.h" />
+    <ClInclude Include="ITimeOfDay.h" />
+    <ClInclude Include="ICamera.h" />
+    <ClInclude Include="ILog.h" />
+    <ClInclude Include="ITrackBus.h" />
+    <ClInclude Include="IVideo.h" />
+    <ClInclude Include="IXmlUtil.h" />
+    <ClInclude Include="IEvent.h" />
+    <ClInclude Include="IThread.h" />
+    <ClInclude Include="IGameObject.h" />
+    <ClInclude Include="IGameObjectLayer.h" />
+    <ClInclude Include="MathLib\gk_Camera.h" />
+    <ClInclude Include="MathLib\gk_Color.h" />
+    <ClInclude Include="MathLib\gk_Geo.h" />
+    <ClInclude Include="MathLib\gk_GeoDistance.h" />
+    <ClInclude Include="MathLib\gk_GeoIntersect.h" />
+    <ClInclude Include="MathLib\gk_GeoOverlap.h" />
+    <ClInclude Include="MathLib\gk_HWMatrix.h" />
+    <ClInclude Include="MathLib\gk_HWVector3.h" />
+    <ClInclude Include="MathLib\gk_Math.h" />
+    <ClInclude Include="MathLib\gk_Matrix.h" />
+    <ClInclude Include="MathLib\gk_Quat.h" />
+    <ClInclude Include="MathLib\gk_ValidNumber.h" />
+    <ClInclude Include="MathLib\gk_Vector2.h" />
+    <ClInclude Include="MathLib\gk_Vector3.h" />
+    <ClInclude Include="UnicodeConverter.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,5 @@
+<GLES2Shader Name="ksBase">
+	<VSShader FileName="engine/shaders/gles2/postcommon.vfx" />
+	<PSShader FileName="engine/shaders/gles2/post_ssao.ffx" />
+</GLES2Shader>
+

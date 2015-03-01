@@ -1,0 +1,19 @@
+<GFX>
+
+<GLES2Shader Name="ksBase">
+	<VSShader FileName="engine/shaders/gles2/ksbase.vfx" />
+	<PSShader FileName="engine/shaders/gles2/vegetation.ffx" />
+	<StateStage Count="1">
+		<State name="cullmode" type="none" />
+	</StateStage>
+</GLES2Shader>
+
+<D3D9Shader Name="vegetation">
+	<Effect Filename="engine/shaders/d3d9/vegetation.fx" />
+</D3D9Shader>
+
+<Marco>
+
+</Marco>
+  
+</GFX>

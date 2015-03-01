@@ -1,0 +1,126 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "Resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "Resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// 24
+//
+
+#if !defined(ID_MFCLOC_MANIFEST) && !defined( _MFC_FILENAME_VER)  // VS2005, VS2008,VS2010
+
+IDR_MANIFEST            24      DISCARDABLE     "res\\manifest.xml"
+
+#endif
+
+IDI_POPUP_CLOSE          ICON    DISCARDABLE     "res\\PopupClose.ico"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG FIXED IMPURE  0, 0, 204, 138
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About Sample Application"
+FONT 8, "MS Sans Serif"
+BEGIN
+    CTEXT           "<< package version >>",IDC_TXT_TITLE,7,49,190,8,
+                    SS_NOPREFIX
+    DEFPUSHBUTTON   "OK",IDOK,137,118,60,14,WS_GROUP
+    CONTROL         101,IDC_STATIC,"Static",SS_BITMAP,7,7,190,37
+    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDFRAME,7,83,190,30
+    CTEXT           "<< copyright info >>",IDC_TXT_COPYRIGHT,7,69,190,8
+    LTEXT           "http://www.codejock.com",IDC_TXT_URL,72,98,84,8
+    LTEXT           "sales@codejock.com",IDC_TXT_EMAIL,72,89,69,8
+    RTEXT           "contact:",IDC_STATIC,41,89,27,8
+    RTEXT           "website:",IDC_STATIC,41,98,27,8
+    CTEXT           "<< sample name >>",IDC_TXT_APPNAME,7,59,190,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDC_CODEJOCK        BITMAP  FIXED IMPURE    "res\\cj_logo.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 197
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 131
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

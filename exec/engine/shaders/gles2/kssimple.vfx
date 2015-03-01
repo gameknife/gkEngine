@@ -1,0 +1,39 @@
+#version 100
+precision highp float;
+
+attribute highp vec3	inPosition;
+
+uniform highp mat4		g_matWVP;
+uniform highp mat4		g_matWorld;
+
+// uniform highp mat4		g_matViewProjI;
+// uniform highp float		g_camposfar;
+
+varying highp vec4		outScreenTC;
+varying highp vec3		outPosInCam;
+
+vec4 HPosToScreenTC(vec4 HPos)
+{
+	vec4 ScrTC = HPos;
+	ScrTC.xy = (HPos.xy * vec2(1.0,1.0) + HPos.ww) * 0.5;
+	return ScrTC;
+}
+
+void main(void)
+{
+	highp vec4 hpos = g_matWVP * vec4(inPosition.xyz, 1);
+	outScreenTC = HPosToScreenTC( hpos );
+
+	highp vec4 worldpos = g_matWorld * vec4(inPosition.xyz, 1);
+	outPosInCam = worldpos.xyz;
+
+// 	highp vec4 hpos_end = hpos / hpos.w;
+// 	hpos_end.z = 1.0;
+// 	hpos_end = hpos_end * (-g_camposfar);
+// 
+// 	highp vec4 viewpos = g_matViewProjI * hpos_end;
+// 
+// 	outPosInCam = viewpos.xyz;// - g_campos_far.xyz;
+
+	gl_Position = hpos;
+}

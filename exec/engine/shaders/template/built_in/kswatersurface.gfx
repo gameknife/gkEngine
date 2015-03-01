@@ -1,0 +1,18 @@
+<GFX>
+
+<GLES2Shader Name="kswatersurface">
+	<VSShader FileName="engine/shaders/gles2/ksbase.vfx" />
+	<PSShader FileName="engine/shaders/gles2/ksbase.ffx" />
+</GLES2Shader>
+
+<D3D9Shader Name="kswatersurface">
+	<Effect Filename="engine/shaders/d3d9/kswatersurface.fx" />
+</D3D9Shader>
+
+<RenderLayer layer="WATER" />
+  
+<Marco>
+  <Attribute name="SSRL" desc="SSRefl" mask="1" value="" />
+</Marco>
+  
+</GFX>

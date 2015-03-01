@@ -1,0 +1,27 @@
+<Material Name="">
+	<Effect FileName="kswatersurface.fx" ParamCount="19" Mask="0" CastShadow="true">
+		<Param name="g_MatDiffuse" type="float4" value="0.494118 0.494118 0.494118 1 "/>
+		<Param name="g_MatSpecular" type="float4" value="0.0313726 0.0313726 0.0313726 1 "/>
+		<Param name="g_Gloss" type="float" value="255 "/>
+		<Param name="g_Fresnel" type="float" value="5 "/>
+		<Param name="g_FresnelScale" type="float" value="1 "/>
+		<Param name="g_FresnelBia" type="float" value="1 "/>
+		<Param name="g_EnvironmentBia" type="float" value="1 "/>
+		<Param name="g_DetailTilling" type="float" value="40 "/>
+		<Param name="g_DetailAmount" type="float" value="1 "/>
+		<Param name="g_AlphaRef" type="float" value="0 "/>
+		<Param name="g_Glow" type="float" value="1 "/>
+		<Param name="texDiffuse" type="texture" value="/objects/basic/grey.tga"/>
+		<Param name="texNormal" type="texture" value="/engine/assets/textures/procedure/watervolume.tga"/>
+		<Param name="texSpec" type="texture" value="/engine/assets/textures/default/flat.tga"/>
+		<Param name="texDetail" type="texture" value="/engine/assets/textures/default/flat.tga"/>
+		<Param name="texCustom1" type="texture" value="/engine/assets/textures/default/flat.tga"/>
+		<Param name="texCustom2" type="texture" value="/engine/assets/textures/default/flat.tga"/>
+		<Param name="IBLenvmap" type="texture" value="/engine/assets/textures/default/flat.tga"/>
+		<Param name="IBLcubemap" type="texture" value="/engine/assets/textures/default/flat.tga"/>
+	</Effect>
+	<Static ParamCount="1">
+		<Param name="uvparams" type="external" value="10 10 0 0"/>
+	</Static>
+</Material>
+

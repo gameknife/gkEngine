@@ -1,0 +1,50 @@
+#version 100
+
+precision highp float;
+
+attribute highp vec3	inPosition;
+attribute highp vec4	inTexcoord;
+attribute highp vec4	inTangent;
+attribute highp vec3	inBinormal;
+
+uniform highp mat4		g_matWVP;
+uniform highp mat4		g_matWorld;
+uniform highp mat4		g_matViewI;
+uniform highp mat4		g_matWorldI;
+
+uniform highp vec3		g_camPos;
+uniform highp vec3		g_camDir;
+
+#include "include/varying_def.h"
+
+vec4 HPosToScreenTC(vec4 HPos)
+{
+	vec4 ScrTC = HPos;
+	ScrTC.xy = (HPos.xy * vec2(1.0,1.0) + HPos.ww) * 0.5;
+	return ScrTC;
+}
+
+void main(void)
+{
+  	highp vec3 frontDir = (g_matWorldI * vec4(g_camDir, 0.0)).xyz;
+
+ 	highp vec3 rightDir = normalize( cross( vec3(0.0, 0.0, 1.0), frontDir ) );
+  	highp vec3 upDir = normalize( cross(frontDir, rightDir) );
+// 
+ 	highp vec3 pos = inPosition.xyz;
+  	pos += (inTexcoord.x - 0.5) * rightDir * 4.0;
+  	pos -= (inTexcoord.y - 0.5) * upDir * 4.0;
+// 
+	highp vec4 posInWorld = g_matWorld * vec4(pos, 1.0);
+	highp vec4 hpos = g_matWVP * vec4(pos, 1.0);
+
+	outTC = inTexcoord;
+
+#ifdef ZPASS
+	outTangent = vec4(rightDir, inTangent.w);
+	outBinormal = -upDir;
+#else
+	outScreenTC = HPosToScreenTC( hpos );
+#endif
+	gl_Position = hpos;
+}

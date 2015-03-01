@@ -1,0 +1,27 @@
+#version 100
+
+precision highp float;
+uniform sampler2D texDiffuse;		// diffuse 0
+uniform highp vec4 ViewportParam;
+
+varying mediump vec2   TexCoord0;
+
+void main()
+{
+	float depth = (texture2D(texDiffuse, TexCoord0).x);
+    float Wd = ViewportParam.z / (ViewportParam.w-(ViewportParam.w-ViewportParam.z)*depth);
+    
+#ifdef GL330
+    gl_FragColor = vec4(Wd,Wd,Wd,Wd);
+#else
+    const vec4 bitSh        = vec4(   256.0*256.0*256.0,		256.0*256.0,		256.0,			1.0);
+	const vec4 bitMsk       = vec4(   0,				1.0/256.0,		1.0/256.0,		1.0/256.0);
+
+	vec4 comp;
+	comp	= Wd * bitSh;
+	comp	= fract(comp);
+	comp	-= comp.xxyz * bitMsk;
+	
+    gl_FragColor = comp;
+#endif
+}

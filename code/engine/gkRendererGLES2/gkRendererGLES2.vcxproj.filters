@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="include\RenderThread.h" />
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkAuxRenderer.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkShaderParamDataSource.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Prerequisites.h">
+      <Filter>DllMain</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StableHeader.h">
+      <Filter>DllMain</Filter>
+    </ClInclude>
+    <ClInclude Include="include\dllmain.h">
+      <Filter>DllMain</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkRendererGLES2.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Android\gkRenderContextAndroid.h">
+      <Filter>Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Win32\gkRenderContextWin32.h">
+      <Filter>Platform\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DeviceRenderContext.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkRenderSequence.h" />
+    <ClInclude Include="include\gkRenderLayer.h" />
+    <ClInclude Include="RenderRes\gkMeshManager.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderRes\gkMaterial.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderRes\gkMaterialManager.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderRes\gkShader.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderRes\gkShaderManager.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderRes\gkTextureManager.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderRes\gkTextureGLES2.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderRes\gkMeshGLES2.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="HwTextureLoader.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="glExtension.h" />
+    <ClInclude Include="RendererCVars.h">
+      <Filter>CVars</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{04677d4a-cc8b-4496-ac71-e6bf1c3153c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderSys">
+      <UniqueIdentifier>{72d10bc8-0aeb-425f-ae8d-841f416cc5e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DllMain">
+      <UniqueIdentifier>{e0f6c6b4-c863-464c-8e3b-01710bec384b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{368f3be3-fa25-4ff4-83fa-e459d2e67fe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Android">
+      <UniqueIdentifier>{49a54b8a-d492-49a3-8b6e-f3fde001502e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Win32">
+      <UniqueIdentifier>{227d152f-ec2e-4918-9022-f52ef4dff73c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderRes">
+      <UniqueIdentifier>{a047acf0-11b9-4ed1-be8f-aa58d45ed511}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\IOS">
+      <UniqueIdentifier>{46827889-3d6a-4b63-862b-ce927fad9a72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CVars">
+      <UniqueIdentifier>{c2a927f2-5cd3-4d80-b488-8977b2a0a412}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\gkAuxRenderer.cpp">
+      <Filter>RenderSys</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkShaderParamDataSource.cpp">
+      <Filter>RenderSys</Filter>
+    </ClCompile>
+    <ClCompile Include="source\dllmain.cpp">
+      <Filter>DllMain</Filter>
+    </ClCompile>
+    <ClCompile Include="source\StableHeader.cpp">
+      <Filter>DllMain</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkRendererGLES2.cpp">
+      <Filter>RenderSys</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\Android\gkRenderContextAndroid.cpp">
+      <Filter>Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\Win32\gkRenderContextWin32.cpp">
+      <Filter>Platform\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkRenderSequence.cpp" />
+    <ClCompile Include="include\gkRenderLayer.cpp" />
+    <ClCompile Include="RenderRes\gkMeshManager.cpp">
+      <Filter>RenderRes</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderRes\gkMaterial.cpp">
+      <Filter>RenderRes</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderRes\gkMaterialManager.cpp">
+      <Filter>RenderRes</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderRes\gkShader.cpp">
+      <Filter>RenderRes</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderRes\gkShaderManager.cpp">
+      <Filter>RenderRes</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderRes\gkTextureManager.cpp">
+      <Filter>RenderRes</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderRes\gkTextureGLES2.cpp">
+      <Filter>RenderRes</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderRes\gkMeshGLES2.cpp">
+      <Filter>RenderRes</Filter>
+    </ClCompile>
+    <ClCompile Include="HwTextureLoader.cpp">
+      <Filter>RenderRes</Filter>
+    </ClCompile>
+    <ClCompile Include="glExtension.cpp" />
+    <ClCompile Include="RendererCVars.cpp">
+      <Filter>CVars</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="gkRendererGLES2.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,15 @@
+#version 100
+
+attribute highp vec3	inPosition;
+attribute highp vec3	inNormal;
+attribute mediump vec2	inTC;
+
+uniform highp mat4		g_matWVP;
+
+varying mediump vec2	outTC;
+
+void main(void)
+{
+	gl_Position = g_matWVP * vec4(inPosition, 1);
+	outTC = vec2(inTC.x, inTC.y);
+}

@@ -1,0 +1,13 @@
+<GFX>
+
+  <GLES2Shader Name="ksgeneratesm">
+    <VSShader FileName="engine/shaders/gles2/genshadowmap.vfx" />
+    <PSShader FileName="engine/shaders/gles2/genshadowmap.ffx" />
+  </GLES2Shader>
+
+  <D3D9Shader Name="ksgeneratesm">
+    <Effect Filename="engine/shaders/d3d9/ksgeneratesm.fx" />
+    <Macro />
+  </D3D9Shader>
+
+</GFX>

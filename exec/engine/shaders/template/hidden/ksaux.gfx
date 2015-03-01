@@ -1,0 +1,18 @@
+<GFX>
+
+<GLES2Shader Name="ksAux">
+    <VSShader FileName="engine/shaders/gles2/ksaux.vfx" />
+    <PSShader FileName="engine/shaders/gles2/ksaux.ffx" />
+
+
+</GLES2Shader>
+
+<D3D9Shader Name="ksAux">
+    <Effect Filename="engine/shaders/d3d9/ksaux.fx" />
+</D3D9Shader>
+
+  <Marco>
+    <Attribute name="TEX" desc="Tex" mask="1" value="" />
+  </Marco>
+
+</GFX>

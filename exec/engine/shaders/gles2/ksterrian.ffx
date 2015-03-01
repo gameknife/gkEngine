@@ -1,0 +1,60 @@
+#version 100
+
+precision highp float;
+
+#define TC_HIGHP
+
+#include "include/sampler_def.h"
+#include "include/constant_ps_def.h"
+#include "include/varying_def.h"
+#include "include/shade_lib.h"
+
+vec4 lerp(vec4 A, vec4 B, float amount)
+{
+	return A * (1.0 - amount) + B * amount;
+}
+
+float GetLuminance( vec3 color )
+{
+	return dot( color, vec3( 0.2126, 0.7152, 0.0722 ) );
+}
+
+void main (void)
+{
+#ifdef ZPASS
+	vec3 normal = cross(outTangent.xyz, outBinormal) * outTangent.w;
+	normal = normalize(normal);
+
+	normal = normal * 0.5 + 0.5;
+
+	gl_FragColor = vec4(normal,1);
+#else
+	highp vec3 screenTC = outScreenTC.xyz / outScreenTC.w;
+	lowp float shadow = 1.0;
+	shadow = texture2D(texEnvmap,screenTC.xy).a;
+
+	// pre discard
+	highp vec4 texcolor = texture2D(texDiffuse, outTC.xy);
+	highp vec4 divide = texture2D(texCustom2, outTC.xy);
+
+	highp vec2 dTCBase = fract(outTC.xy * vec2(500.0, 500.0));
+    //highp vec2 dTCBase = outTC * vec2(500.0, 500.0);
+
+	vec4 detailcolorbase = texture2D(texCustom1, vec2(0.000, 0.000) + dTCBase * 0.499);
+	vec4 detailcolor1 = texture2D(texCustom1, vec2(0.50, 0.00) + dTCBase * 0.499);
+	vec4 detailcolor2 = texture2D(texCustom1, vec2(0.00, 0.50) + dTCBase * 0.499);
+	texcolor = detailcolorbase;
+	texcolor = lerp(texcolor, detailcolor1, divide.x);
+	texcolor = lerp(texcolor, detailcolor2, divide.y);
+
+	mediump vec3 normal = (texture2D(texNormal, screenTC.xy).rgb - 0.5) * 2.0;
+	normal = normalize(normal);
+
+	float NdotL = dot(normal, g_LightDir);
+
+	lowp vec4 dif = texture2D(texDetail, screenTC.xy);
+
+	vec4 lightcolor = (dif + clamp( NdotL, 0.0, 1.0) * g_LightDiffuse * shadow) * texcolor * texcolor * 0.5; 
+	gl_FragColor = lightcolor * g_ldrbright;
+	#endif
+}

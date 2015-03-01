@@ -1,0 +1,109 @@
+#version 100
+
+precision highp float;
+
+#include "include/shade_lib.h"
+
+uniform sampler2D texDiffuse;		// diffuse 0
+uniform sampler2D texNormal;		// normal 1
+uniform sampler2D texSpecular;		// specular 2
+uniform sampler2D texDetail;		// detail 3
+uniform sampler2D texCustom1;		// 4
+uniform sampler2D texCustom2;		// 5
+uniform sampler2D texEnvmap;		// evnmap 6
+
+uniform vec4 clBloom;
+uniform vec4 DofParams;
+
+varying mediump vec2   TexCoord0;
+
+#define C 0.32
+
+float GetLuminance( vec3 color )
+{
+	return dot( color, vec3( 0.2126, 0.7152, 0.0722 ) );
+}
+
+vec3 FilmToneMapEX(vec3 color)
+{
+	vec3 x = color;
+	vec3 t1 = 6.2 * x * x;
+	vec3 t2 = C * x;
+	vec3 y = (t1 + t2) / (t1 + 4.1 * t2 + 0.05) + (0.634 * C - 0.247) * x;
+
+	return sqrt(y);
+}
+
+// Filmic tone mapping
+vec4 FilmMapping( vec4 cScene, vec4 cBloom, float fAdaptedLum, float fVignetting )
+{
+	float fLum = GetLuminance( cScene.rgb );
+	//fAdaptedLum = EyeAdaption( fAdaptedLum );
+
+	// Exposure
+	float fAdaptedLumDest = 3.0 / (1e-6 + 1.0 + 10.0 * fAdaptedLum);
+
+	//cScene = ApplyBlueShift( IN, cScene, fLum );
+
+	// Tone mapping
+	vec3 outcolor = FilmToneMapEX( fVignetting * (fAdaptedLumDest * cScene.xyz + cBloom.xyz)  );
+	//cScene.xyz = FilmToneMapEX(cScene.xyz);
+
+	return vec4(outcolor, 1.0);
+}
+
+float GetDepthBlurinessBiased(float fDepth)
+{
+	float f = 0.0; 
+
+	// 0 - in focus
+	// 1 or -1 - completely out of focus
+	// 如果大于了景深后片
+	if(fDepth > DofParams.y)
+	{
+		// here we out the far
+		f=(fDepth-DofParams.y)/DofParams.z; // max range
+		f=clamp(f, 0.0, 1.0);
+	}
+	// 如果小于了景深后片
+	else if(fDepth<DofParams.x)
+	{
+		// here we out the near
+		f=(DofParams.x - fDepth)/DofParams.w;  // min range
+		f=clamp(f, 0.0, 1.0);
+
+		//f *= -1;
+	}
+
+	return f;
+}
+
+void main()
+{
+	vec4 org = texture2D(texDiffuse, TexCoord0);
+    #ifdef GL330
+	vec4 brightpass = texture2D(texNormal, TexCoord0) * 0.33;
+	brightpass += texture2D(texSpecular, TexCoord0) * 0.33;
+    brightpass += texture2D(texDetail, TexCoord0) * 0.33;
+    brightpass *= 0.1;
+    
+    #else
+    vec4 brightpass = texture2D(texNormal, TexCoord0) * 0.2;
+	brightpass += texture2D(texSpecular, TexCoord0) * 0.2;
+    #endif
+    brightpass *= clBloom;
+
+#ifdef DOF
+	vec4 blur = texture2D(texCustom2, TexCoord0);
+	float depth = SampleDepth(texDetail, TexCoord0);
+	float amount = GetDepthBlurinessBiased(depth * 4000.0);
+	org = org * (1.0 - amount) + blur * amount;
+#endif
+
+	vec4 vegnitte = texture2D(texCustom1, TexCoord0);
+
+    org = max( org, vec4(0,0,0,1) );
+    brightpass = max( brightpass, vec4(0,0,0,1) );
+	gl_FragColor = FilmMapping( org, brightpass, 1.2, vegnitte.x);
+
+}

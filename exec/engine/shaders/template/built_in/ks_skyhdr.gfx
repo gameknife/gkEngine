@@ -1,0 +1,20 @@
+<GFX>
+
+<GLES2Shader Name="ks_SkyHdr">
+	<VSShader FileName="engine/shaders/gles2/ks_skyhdr.vfx" />
+	<PSShader FileName="engine/shaders/gles2/ks_skyhdr.ffx" />
+	<StateStage Count="1">
+		<State name="cullmode" type="none" />
+	</StateStage>
+</GLES2Shader>
+
+<D3D9Shader Name="ks_SkyHdr">
+	<Effect Filename="engine/shaders/d3d9/ks_skyhdr.fx" />
+
+</D3D9Shader>
+  
+<RenderLayer layer="RENDER_LAYER_SKIES_EARLY" />
+  
+<Marco />
+
+</GFX>

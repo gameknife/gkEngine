@@ -1,0 +1,122 @@
+#version 100
+
+//--------------------------------------------------------------------------------------
+// 	File: Illum.ffx
+//	Desc: The effect file for SkinHD
+//
+//  The files of KnifeShader Lab.
+// 	It could be used in 3dsMax, FxComposer & DirectX
+//
+// 	by Kaimingyi 2012.8.25
+//--------------------------------------------------------------------------------------
+precision highp float;
+
+#include "include/sampler_def.h"
+#include "include/constant_ps_def.h"
+#include "include/varying_def.h"
+#include "include/shade_lib.h"
+
+uniform highp float g_SkinScatter;
+
+void main (void)
+{
+	vec3 screenTC = outScreenTC.xyz / outScreenTC.w;
+
+	vec2 ShadowTexC = 0.5 * outLightPos.xy / outLightPos.w + vec2( 0.5, 0.5 );
+
+	float shadow = 1.0;
+	if(ShadowTexC.x < 0.0 || ShadowTexC.x > 1.0 || ShadowTexC.y < 0.0 || ShadowTexC.y > 1.0 )
+	{
+		shadow = 1.0;	
+	}
+	else
+	{
+		highp vec4 depth = vec4(0.0,0.0,0.0,0.0);
+
+		//vec3 samplevec = vec2(PIXEL_STEP, PIXEL_STEP);
+		vec2 randomMultiplyer = vec2( 256.0 / 64.0, 256.0 / 64.0 );
+
+		vec2 rand = normalize(texture2D( texDetail, screenTC.xy * randomMultiplyer).xy * 2.0 - 1.0);  
+
+		vec2 samplevec0 = reflect(vec2(1,0), rand) * PIXEL_STEP;
+		vec2 samplevec1 = reflect(vec2(0,1), rand) * PIXEL_STEP;
+		vec2 samplevec2 = reflect(vec2(-1,0), rand) * PIXEL_STEP;
+		vec2 samplevec3 = reflect(vec2(0,-1), rand) * PIXEL_STEP;
+
+		depth.x = texture2D(texEnvmap,ShadowTexC + samplevec0.xy).x;
+		depth.y = texture2D(texEnvmap,ShadowTexC + samplevec1.xy).x;
+		depth.z = texture2D(texEnvmap,ShadowTexC + samplevec2.xy).x;
+		depth.w = texture2D(texEnvmap,ShadowTexC + samplevec3.xy).x;
+
+		highp float depthNow = outLightPos.z / outLightPos.w * 0.5 + 0.5 - CONST_BIA;
+		highp vec4 comp = vec4(depthNow,depthNow,depthNow,depthNow);
+
+		bvec4 bshadow4 = lessThan(comp , depth);
+		vec4 shadow4 = vec4(bshadow4);
+		shadow = dot(shadow4, vec4(1.0,1.0,1.0,1.0)) * 0.25;
+	}
+
+	// pre discard
+	vec4 texcolor = texture2D(texDiffuse,outTC.xy);
+
+	// alpha test
+	//if(texcolor.a < 0.25)
+	//	discard;
+	vec4 glosscolor = vec4(texcolor.a, texcolor.a, texcolor.a, texcolor.a);
+			
+	// vector
+	
+	vec3 normalTS = texture2D(texNormal, outTC.xy).xyz;
+	normalTS = normalTS * 2.0 - 1.0;
+	vec3 normal = cross(outTangent.xyz, outBinormal) * outTangent.w;
+	mat3 Tangent2World = mat3(outTangent.xyz, outBinormal, normal);
+	normal = Tangent2World * normalTS;
+	normal = normalize(normal);
+
+
+	vec3 view = normalize(g_camPos.xyz - outWorldPos.xyz);
+	float NdotL = dot(normal, normalize(g_LightDir));
+	
+	float fNdotE = dot(view, normal);
+	vec3 vReflVec = (2.0 * fNdotE * normal) - view;		  
+	vReflVec = vReflVec.xzy;
+	vReflVec.y *= -1.0;
+
+	// gloss
+	float shiness = g_Gloss;// * glosscolor.a;
+	float fresnel_bia = g_FresnelBia;
+	float fresnel_pow = g_Fresnel;
+	float fresnel_scale = g_FresnelScale;
+
+	// environment
+	//float fGlossinessLod = 14.16231 - 0.497418 * gloss;
+	vec4 envColor = textureCube( texCubemap, vReflVec );
+	envColor.rgb *= envColor.a * 16.0;
+	// srgb 2 linear
+	texcolor = texcolor * texcolor * g_MatDiffuse;
+	glosscolor = glosscolor * glosscolor;
+
+	vec4 DifPart = vec4(1.0, 1.0, 1.0, 1.0);
+	vec4 SubPart = vec4(1.0, 1.0, 1.0, 1.0);
+
+	// HD Lambert
+	nvLambSkin( NdotL, vec4(1.0, 1.0, 1.0, 1.0), texture2D(texCustom1, outTC.xy), g_SkinScatter, DifPart, SubPart );
+	vec4 Diffuse = g_LightDiffuse * DifPart + SubPart;
+	//NdotL = saturate(NdotL);
+
+
+	// specular
+	float spec = Blinn(normal, view, g_LightDir, shiness);
+	spec = max(0.0, spec);
+
+	float fFresnel = fresnel_bia + fresnel_scale * pow(1.0 - fNdotE, fresnel_pow); // 4 inst
+
+
+	// lighting formula
+	vec4 specular = glosscolor * g_MatSpecular * g_LightSpecular * fFresnel * shadow;
+	vec4 ambient = g_SkyLight * (normal.z * 0.25 + 0.75); // 2 inst
+	vec4 lightcolor = texcolor * ( ambient + Diffuse * shadow )  + NdotL * spec * specular + envColor * specular;
+		
+	// revert to srgb
+	gl_FragColor = lightcolor * HDR_SCALE;
+}

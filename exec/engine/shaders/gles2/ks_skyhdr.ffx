@@ -1,0 +1,21 @@
+#version 100
+precision highp float;
+
+uniform lowp vec4 g_SkyBottom;
+uniform lowp vec4 g_SkyTop;
+
+varying mediump vec4	outTC;
+
+void main (void)
+{
+	vec3 LUMINANCE_VECTOR  = vec3(0.2125, 0.7154, 0.0721);
+ 	float LumBottom = dot(g_SkyBottom.xyz, LUMINANCE_VECTOR);
+	float LumTop = dot(g_SkyTop.xyz, LUMINANCE_VECTOR);
+
+ 	float zenith = outTC.y;
+ 	zenith = clamp( zenith + 0.2, 0.0, 1.0);
+	zenith = pow(zenith, 5.0);
+
+	vec4 outcolor = vec4( (zenith * g_SkyBottom.xyz + (1.0 - zenith) * g_SkyTop.xyz) * 0.5 * (LumTop + LumBottom) * 10.0, 1.0);
+	gl_FragColor = outcolor;
+}

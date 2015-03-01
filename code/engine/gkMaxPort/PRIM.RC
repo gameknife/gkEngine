@@ -1,0 +1,246 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP1             BITMAP                  "title.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_RB_RADIUS           "Radius"
+    IDS_RB_SEGS             "Segments"
+    IDS_RB_POS              "Position"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_RB_SMOOTH           "Smooth"
+    IDS_RB_NOPHY            "No PhysX"
+    IDS_RB_DYNPHY           "Dynamic PhysX"
+    IDS_RB_BOXSHAPE         "Box Shape"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_RB_PRIMITIVES       "Standard Primitives"
+    IDS_GEOSPHERE           "gkObject"
+    IDS_KEYBOARD_ENTRY      "Keyboard Entry"
+    IDS_CREATION_METHOD     "Creation Method"
+    IDS_BASETYPE            "Base Type"
+    IDS_PARAMETERS          "Parameters"
+    IDS_MESH_PATH           "Ä£ÐÍÂ·¾¶"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LIBDESCRIPTION      "Geosphere Object (Autodesk)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_BASEPIVOT           "Base to Pivot"
+    IDS_MAPPING             "Generate mapping coords."
+    IDS_SM_NURBS_SURFACE    "NURBS"
+    IDS_CT_SURF             "Surf"
+    IDS_CT_CAP              "Cap"
+    IDS_GEOSPHERE_CLASS     "gkObject"
+    IDS_DS_PARAMCHG         "Parameter Change"
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_GSPHERE2 DIALOGEX 0, 0, 108, 516
+STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    CONTROL         "AutoSmooth",IDC_OBSMOOTH,"Button",BS_AUTOCHECKBOX,8,291,69,10
+    CONTROL         182,IDC_STATIC,"Static",SS_BITMAP,7,6,93,46
+    CONTROL         "Choose Mesh...",IDC_CHOOSE_MESH,"CustButton",WS_GROUP | WS_TABSTOP,8,147,90,14
+    EDITTEXT        IDC_MESHPATH,7,174,90,12,ES_AUTOHSCROLL | ES_READONLY
+    GROUPBOX        "Mesh Info",IDC_STATIC,3,132,98,140
+    LTEXT           "Cur Mesh File:",IDC_STATIC,7,166,63,8
+    GROUPBOX        "Optional",IDC_STATIC,3,276,98,45
+    CONTROL         "No PhysX",IDC_OBSMOOTH2,"Button",BS_AUTOCHECKBOX,8,305,69,10
+    CONTROL         "Update",IDC_UPDATE_MESH,"CustButton",WS_GROUP | WS_TABSTOP,7,223,90,14
+    GROUPBOX        "Behavior Info",IDC_STATIC,3,422,98,52
+    EDITTEXT        IDC_SCRIPTPATH,7,454,90,12,ES_AUTOHSCROLL | WS_DISABLED
+    LTEXT           "Script File:",IDC_STATIC,7,443,63,8
+    EDITTEXT        IDC_MESHNAME,8,204,90,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "meshName:",IDC_STATIC,7,193,63,8
+    GROUPBOX        "PhysXType",IDC_STATIC,4,327,97,43
+    CONTROL         "Stc",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,11,340,28,10
+    CONTROL         "Dyn",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,11,355,28,10
+    CONTROL         "Trigger",IDC_RADIO3,"Button",BS_AUTORADIOBUTTON,44,340,44,10
+    CONTROL         "Controller",IDC_RADIO4,"Button",BS_AUTORADIOBUTTON,44,355,56,10
+    GROUPBOX        "PhysXShape",IDC_STATIC,5,377,96,39
+    CONTROL         "Trimesh",IDC_RADIO5,"Button",BS_AUTORADIOBUTTON | WS_GROUP,11,390,44,10
+    CONTROL         "Convex",IDC_RADIO6,"Button",BS_AUTORADIOBUTTON,11,403,40,10
+    CONTROL         "Box",IDC_RADIO7,"Button",BS_AUTORADIOBUTTON,55,390,28,10
+    CONTROL         "Capsule",IDC_RADIO8,"Button",BS_AUTORADIOBUTTON,55,403,44,10
+    CONTROL         "Commit",IDC_COMMIT_MESH,"CustButton",WS_GROUP | WS_TABSTOP,7,240,90,14
+    GROUPBOX        "Global",IDC_STATIC,4,70,98,58
+    CONTROL         "Sync gkStudio",IDC_SYNC,"CustButton",WS_GROUP | WS_TABSTOP,8,85,90,32,WS_EX_DLGMODALFRAME
+END
+
+IDD_GSPHERE3 DIALOGEX 0, 0, 108, 64
+STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    CONTROL         "Create",IDC_TI_CREATE,"CustButton",WS_TABSTOP,15,23,76,25
+    LTEXT           "Click to Build one.",IDC_STATIC,16,12,80,11
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "#include ""veroverrides.h""\r\n"
+    "#include ""maxversion.r""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_GSPHERE2, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 497
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_RB_PRIMITIVES       "Standard Primitives"
+    IDS_GEOSPHERE           "gkObject"
+    IDS_KEYBOARD_ENTRY      "Keyboard Entry"
+    IDS_CREATION_METHOD     "Creation Method"
+    IDS_BASETYPE            "Base Type"
+    IDS_PARAMETERS          "Parameters"
+    IDS_MESH_PATH           "Mesh Path"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LIBDESCRIPTION      "GameKnfieObject (K&K studio)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_RB_RADIUS           "Radius"
+    IDS_RB_SEGS             "Segments"
+    IDS_RB_POS              "Position"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_RB_SMOOTH           "Smooth"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_BASEPIVOT           "Base to Pivot"
+    IDS_MAPPING             "Generate mapping coords."
+    IDS_SM_NURBS_SURFACE    "NURBS"
+    IDS_CT_SURF             "Surf"
+    IDS_CT_CAP              "Cap"
+    IDS_GEOSPHERE_CLASS     "gkObject"
+    IDS_DS_PARAMCHG         "Parameter Change"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+#include "veroverrides.h"
+#include "maxversion.r"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

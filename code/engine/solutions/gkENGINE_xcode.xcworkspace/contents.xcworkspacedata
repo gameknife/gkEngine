@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:../gkTestApps/TestCases.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../gkENGINE_CoreModule.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../gkLauncherMac.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../gkLauncherIOS.xcodeproj">
+   </FileRef>
+</Workspace>

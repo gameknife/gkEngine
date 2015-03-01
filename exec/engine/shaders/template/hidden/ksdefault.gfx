@@ -1,0 +1,13 @@
+<GFX>
+
+  <GLES2Shader Name="kshdrprocess">
+    <VSShader FileName="engine/shaders/gles2/ks_skyhdr.vfx" />
+    <PSShader FileName="engine/shaders/gles2/ks_skyhdr.ffx" />
+  </GLES2Shader>
+
+  <D3D9Shader Name="kshdrprocess">
+    <Effect Filename="engine/shaders/d3d9/ksdefault.fx" />
+    <Macro />
+  </D3D9Shader>
+
+</GFX>

@@ -1,0 +1,1418 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "Resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (Simplified, PRC) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_PANE_STYLES DIALOGEX 0, 0, 186, 326
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    LISTBOX         IDC_LIST_STYLES,7,53,172,51,LBS_SORT | LBS_OWNERDRAWFIXED | LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "静态物体",IDC_BUTTON_NEWSTYLE,17,9,70,19
+    PUSHBUTTON      "动态物体",IDC_BUTTON_STYLEINSPECTOR,95,9,70,19
+    PUSHBUTTON      "地形工具",IDC_BUTTON_MANAGESTYLES,17,31,70,19
+    PUSHBUTTON      "环境工具",IDC_BUTTON_MANAGESTYLES2,95,31,70,19
+    CONTROL         "",IDC_PANEOBJ_PLACEHOLDER,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,7,107,172,202,WS_EX_CLIENTEDGE
+END
+
+IDD_PANE_CONSOLE DIALOGEX 0, 0, 487, 239
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    PUSHBUTTON      "参数",IDC_BUTTON_CVAR,456,226,28,13
+    CONTROL         "",IDC_RICHEDIT_CONSOLELIST,"RichEdit50W",WS_VSCROLL | WS_TABSTOP | 0x844,2,2,482,224,WS_EX_STATICEDGE
+END
+
+IDD_TODDLG DIALOGEX 0, 0, 266, 319
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    CONTROL         "",IDC_PROPPLACEHOLDER,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,7,41,246,270
+    CONTROL         "",IDC_TODSLIDER,"msctls_trackbar32",TBS_BOTH | WS_TABSTOP,15,14,230,23
+END
+
+IDD_MATERIALEDITOR DIALOGEX 0, 0, 311, 293
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_PANE_CONSOLEVAR DIALOGEX 0, 0, 159, 182
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_PANE_CONSOLEVAR_PLACEHOLDER,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,0,0,159,168
+    EDITTEXT        IDC_EDIT_CVSEARCH,37,168,121,14,ES_AUTOHSCROLL
+    LTEXT           "搜索:",IDC_STATIC_CVSEARCH,3,170,19,8
+END
+
+IDD_WORKSPACETITLE DIALOGEX 0, 0, 330, 24
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    CONTROL         "Prespective:       ",IDC_WORKSPACETITLE,"Static",SS_SIMPLE | WS_GROUP,8,2,69,10,WS_EX_TRANSPARENT
+    PUSHBUTTON      "H",IDC_WORKSPACE_SHOWHELPER,308,0,15,14,BS_FLAT,WS_EX_TRANSPARENT
+END
+
+IDD_STARTBANNER DIALOGEX 0, 0, 547, 260
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         209,IDC_STATIC,"Static",SS_BITMAP,0,0,533,246
+    LTEXT           "Static",IDC_STARTTEXT,12,235,519,12
+END
+
+IDD_PSCP DIALOGEX 0, 0, 387, 229
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_CHILD | WS_CAPTION
+CAPTION "PSCP"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_PSCP_COLOR_AREA1,"Static",SS_BLACKFRAME,7,7,225,215
+    CONTROL         "",IDC_PSCP_COLOR_AREA2,"Static",SS_BLACKFRAME,237,7,26,215
+    EDITTEXT        IDC_PSCP_RED,288,138,29,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PSCP_GREEN,288,158,29,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PSCP_BLUE,288,178,29,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PSCP_COLORREF,288,206,29,14,ES_AUTOHSCROLL
+    LTEXT           "R",IDC_STATIC,280,141,8,8
+    LTEXT           "G",IDC_STATIC,280,161,8,8
+    LTEXT           "B",IDC_STATIC,280,181,8,8
+    LTEXT           "#",IDC_STATIC,280,207,8,8
+    CONTROL         "",IDC_PSCP_RCHECKER,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,268,140,12,10
+    CONTROL         "",IDC_PSCP_GCHECKER,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,268,160,12,10
+    CONTROL         "",IDC_PSCP_BCHECKER,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,268,180,12,10
+    EDITTEXT        IDC_PSCP_HUE,288,40,29,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PSCP_SAT,288,62,29,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PSCP_LUM,288,81,29,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_PSCP_HCHECKER,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,268,42,12,10
+    CONTROL         "",IDC_PSCP_SCHECKER,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,268,62,12,10
+    CONTROL         "",IDC_PSCP_LCHECKER,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,268,82,12,10
+    LTEXT           "H",IDC_STATIC,280,43,8,8
+    LTEXT           "S",IDC_STATIC,280,63,8,8
+    LTEXT           "L",IDC_STATIC,280,83,8,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_PANE_STYLES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 319
+    END
+
+    IDD_PANE_CONSOLE, DIALOG
+    BEGIN
+        LEFTMARGIN, 2
+        RIGHTMARGIN, 484
+        TOPMARGIN, 2
+    END
+
+    IDD_TODDLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 254
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 311
+    END
+
+    IDD_MATERIALEDITOR, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 310
+        BOTTOMMARGIN, 286
+    END
+
+    IDD_PANE_CONSOLEVAR, DIALOG
+    BEGIN
+    END
+
+    IDD_WORKSPACETITLE, DIALOG
+    BEGIN
+        LEFTMARGIN, 6
+        RIGHTMARGIN, 323
+        BOTTOMMARGIN, 16
+    END
+
+    IDD_STARTBANNER, DIALOG
+    BEGIN
+        RIGHTMARGIN, 533
+        BOTTOMMARGIN, 246
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_TOOLBAR1            BITMAP                  "res\\toolbar1.bmp"
+IDR_TOOLBAR_MATERIALEDITOR BITMAP                  "res\\toolbar1.bmp"
+IDR_TOOLBAR_TODEDITOR   BITMAP                  "res\\toolbar_.bmp"
+IDB_BITMAP_STARTBANNER  BITMAP                  "res\\startbanner.bmp"
+IDB_MATEDTLIST          BITMAP                  "res\\bitmap2.bmp"
+IDB_GRIDPROPERTY        BITMAP                  "res\\properties.bmp"
+IDB_SWISSKNIFE_BIG      BITMAP                  "res\\SwissKnifeBar_big.bmp"
+IDB_SWISSKNIFE_SMALL    BITMAP                  "res\\SwissKnifeBar_small.bmp"
+IDB_SKB_ICONLIST        BITMAP                  "res\\skb_iconlist.bmp"
+IDR_TOOLBAR_HIERARCHY   BITMAP                  "res\\bmp00001.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_TOOLBAR_MATERIALEDITOR TOOLBAR 32, 32
+BEGIN
+    BUTTON      ID_BUTTON_MATEDIT_SET
+    BUTTON      ID_BUTTON_MATEDIT_GET
+    BUTTON      ID_BUTTON_MATEDT_REFRESH
+    BUTTON      ID_BUTTON_MATDEL
+    BUTTON      ID_BUTTON_MATEDT_PICK
+    BUTTON      ID_BUTTON_MATEDT_CATE
+END
+
+IDR_TOOLBAR_TODEDITOR TOOLBAR 32, 32
+BEGIN
+    BUTTON      ID_BUTTON_TODEDT_PLAY
+    BUTTON      ID_BUTTON_TODEDT_FORWARD
+    BUTTON      ID_BUTTON_TODEDT_STOP
+    SEPARATOR
+    BUTTON      ID_BUTTON_TODEDT_PREVKEY
+    BUTTON      ID_BUTTON_TODEDT_NEXTKEY
+    SEPARATOR
+    BUTTON      ID_BUTTON_TODEDT_PLANTKEY
+    BUTTON      ID_BUTTON_TODEDT_DELKEY
+    BUTTON      ID_BUTTON_TODEDT_CPYKEY
+    BUTTON      ID_BUTTON_TODEDT_PSTKEY
+END
+
+IDR_TOOLBAR_HIERARCHY TOOLBAR 32, 32
+BEGIN
+    BUTTON      ID_HRC_REFRESH
+    BUTTON      ID_HRC_DELETE
+    BUTTON      ID_HRC_FOCUS
+    BUTTON      ID_BUTTON_4
+    BUTTON      ID_BUTTON_5
+    BUTTON      ID_BUTTON_6
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// PNG
+//
+
+IDR_TOOLBAR_MATERIALEDITOR PNG                     "res\\MatEditToolBar.png"
+IDR_TOOLBAR_TODEDITOR   PNG                     "res\\todedittoolbar.png"
+IDB_SWISSBAR_BIGA       PNG                     "res\\SwissKnifeBar_big.png"
+IDB_SWISSBAR_SMALLA     PNG                     "res\\SwissKnifeBar_small.png"
+IDR_TOOLBAR_HIERARCHY   PNG                     "res\\HierarchyToolBar.png"
+IDR_PANES               PNG                     "res\\SubEditor.png"
+#endif    // Chinese (Simplified, PRC) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP_PICTURE      BITMAP                  "res\\BitmapPicture.bmp"
+IDB_BITMAP_GRAPHIC      BITMAP                  "res\\BitmapGraphic.bmp"
+IDB_BITMAP_CHART        BITMAP                  "res\\BitmapChart.bmp"
+IDB_BITMAP_TABLE        BITMAP                  "res\\BitmapTable.bmp"
+ID_GROUP_TABLEOFCONTENTS BITMAP                  "res\\GroupTableOfContents.bmp"
+ID_GROUP_FOOTNOTES      BITMAP                  "res\\GroupFootnotes.bmp"
+ID_GROUP_INDEX          BITMAP                  "res\\GroupIndex.bmp"
+ID_GROUP_CAPTIONS       BITMAP                  "res\\GroupCaptions.bmp"
+ID_GROUP_DOCUMENTVIEWS  BITMAP                  "res\\GroupDocumentViews.bmp"
+ID_GROUP_ZOOM           BITMAP                  "res\\GroupZoom.bmp"
+ID_GROUP_WINDOW         BITMAP                  "res\\GroupWindow.bmp"
+IDR_LAYOUTTABLARGE      BITMAP                  "res\\layoutta.bmp"
+IDR_LARGEICONS          BITMAP                  "res\\largeico.bmp"
+IDR_LAYOUTTABSMALL      BITMAP                  "res\\bmp00002.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_SMALLICONS TOOLBAR 16, 16
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      ID_EDIT_CUT
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_EDIT_PASTE
+    BUTTON      ID_EDIT_UNDO
+    BUTTON      ID_EDIT_REDO
+    SEPARATOR
+    BUTTON      ID_FILE_PRINT
+    SEPARATOR
+    BUTTON      ID_APP_ABOUT
+    BUTTON      ID_APP_EXIT
+    BUTTON      ID_APP_OPTIONS
+END
+
+IDR_LARGEICONS TOOLBAR 32, 32
+BEGIN
+    BUTTON      ID_EDIT_PASTE
+    BUTTON      1
+    SEPARATOR
+    BUTTON      ID_PAGES_NEW
+    BUTTON      ID_PAGES_COVER
+    BUTTON      ID_PAGES_BREAK
+    SEPARATOR
+    BUTTON      ID_TABLE_NEW
+    SEPARATOR
+    BUTTON      ID_ILLUSTRATION_PICTURE
+    BUTTON      ID_ILLUSTRATION_GRAPHIC
+    BUTTON      ID_ILLUSTRATION_CHART
+    SEPARATOR
+    BUTTON      ID_INSERT_HEADER
+    BUTTON      ID_INSERT_FOOTER
+    BUTTON      ID_INSERT_PAGENUMBER
+    SEPARATOR
+    BUTTON      ID_TEXT_TEXTBOX
+    BUTTON      ID_TEXT_PARTS
+    BUTTON      ID_TEXT_WORDART
+    BUTTON      ID_TEXT_DROPCAP
+    SEPARATOR
+    BUTTON      ID_SYMBOL_EQUATIONS
+    BUTTON      ID_SYMBOL_SYMBOL
+    BUTTON      ID_GALLERY_SHAPES
+END
+
+IDR_LAYOUTTABSMALL TOOLBAR 16, 16
+BEGIN
+    BUTTON      ID_THEMES_COLORS
+    BUTTON      ID_THEMES_FONTS
+    BUTTON      ID_THEMES_EFFECTS
+    SEPARATOR
+    BUTTON      ID_PAGE_MOVEMODE_ORIENTATION
+    BUTTON      ID_PAGE_MOVEMODE_SCALE
+    BUTTON      ID_PAGE_COLUMNS
+    SEPARATOR
+    BUTTON      ID_PAGE_BREAKS
+    BUTTON      ID_PAGE_LINENUMBERS
+    BUTTON      ID_PAGE_HYPHENATATION
+    SEPARATOR
+    BUTTON      ID_PAGE_TIMEOFDAY
+    BUTTON      ID_PAGE_MATERIALEDITOR
+    BUTTON      ID_PAGE_BORDERS
+    SEPARATOR
+    BUTTON      ID_ARRANGE_FRONT
+    BUTTON      ID_ARRANGE_BACK
+    BUTTON      ID_ARRANGE_ALIGN
+    SEPARATOR
+    BUTTON      ID_ARRANGE_GROUP
+    BUTTON      ID_ARRANGE_UNGROUP
+    BUTTON      ID_ARRANGE_ROTATE
+END
+
+IDR_LAYOUTTABLARGE TOOLBAR 32, 32
+BEGIN
+    BUTTON      ID_THEMES_THEMES
+    SEPARATOR
+    BUTTON      ID_PAGE_MOVEMODE_MOVE
+    BUTTON      ID_PAGE_MOVEMODE_ORIENTATION
+    BUTTON      ID_PAGE_MOVEMODE_SCALE
+    BUTTON      ID_PAGE_COLUMNS
+    SEPARATOR
+    BUTTON      ID_PAGE_TIMEOFDAY
+    BUTTON      ID_PAGE_MATERIALEDITOR
+    BUTTON      ID_PAGE_BORDERS
+    SEPARATOR
+    BUTTON      ID_ARRANGE_POSITION
+    BUTTON      ID_ARRANGE_TEXTWRAPPING
+END
+
+ID_GROUP_TABLEOFCONTENTS TOOLBAR 16, 16
+BEGIN
+    BUTTON      ID_CONTENTS_TABLE
+    BUTTON      ID_CONTENTS_ADDTEXT
+    BUTTON      ID_CONTENTS_UPDATE
+END
+
+ID_GROUP_FOOTNOTES TOOLBAR 16, 16
+BEGIN
+    BUTTON      ID_FOOTNOTES_INSERT
+    BUTTON      ID_FOOTNOTES_INSEREND
+    BUTTON      ID_FOOTNOTES_NEXT
+    BUTTON      ID_FOOTNOTES_SHOW
+END
+
+ID_GROUP_INDEX TOOLBAR 16, 16
+BEGIN
+    BUTTON      ID_INDEX_MARK
+    BUTTON      ID_INDEX_INSERT
+    BUTTON      ID_INDEX_UPDATE
+END
+
+ID_GROUP_CAPTIONS TOOLBAR 16, 16
+BEGIN
+    BUTTON      ID_CAPTIONS_INSERT
+    BUTTON      ID_CAPTIONS_FIGURES
+    BUTTON      ID_CAPTIONS_UPDATE
+    BUTTON      IOD_CAPTIONS_CROSSREFERENCE
+END
+
+ID_GROUP_DOCUMENTVIEWS TOOLBAR 16, 16
+BEGIN
+    BUTTON      ID_VIEW_PRINTLAYOUT
+    BUTTON      ID_VIEW_FULLSCREENREADING
+    BUTTON      ID_VIEW_WEBLAYOUT
+    BUTTON      ID_VIEW_OUTLINE
+    BUTTON      ID_VIEW_DRAFT
+END
+
+ID_GROUP_ZOOM TOOLBAR 16, 16
+BEGIN
+    BUTTON      ID_ZOOM_ZOOM
+    BUTTON      ID_ZOOM_ONEPAGE
+    BUTTON      ID_ZOOM_TWOPAGES
+    BUTTON      ID_ZOOM_PAGEWIDTH
+END
+
+ID_GROUP_WINDOW TOOLBAR 16, 16
+BEGIN
+    BUTTON      ID_WINDOW_NEW
+    BUTTON      ID_WINDOW_ARRANGE
+    BUTTON      ID_WINDOW_SPLIT
+    SEPARATOR
+    BUTTON      ID_WINDOW_SIDEBYSIDE
+    BUTTON      ID_WINDOW_SYNCHRONOUSSCROLLING
+    BUTTON      ID_WINDOW_RESET
+    SEPARATOR
+    BUTTON      ID_WINDOW_SWITCH
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// PNG
+//
+
+IDR_SMALLICONS          PNG                     "res\\SmallIcons.png"
+IDR_LARGEICONS          PNG                     "res\\LargeIcons.png"
+IDB_INSERTTAB           PNG                     "res\\InsertTab.png"
+IDR_LAYOUTTABSMALL      PNG                     "res\\LayoutTab.png"
+IDR_LAYOUTTABLARGE      PNG                     "res\\LayoutTabLarge.png"
+ID_GROUP_PARAGRAPH      PNG                     "res\\GroupParagraph.png"
+ID_GROUP_CLIPBOARD      PNG                     "res\\GroupClipboard.png"
+ID_GROUP_FONT           PNG                     "res\\GroupFont.png"
+ID_GROUP_FIND           PNG                     "res\\GroupFind.png"
+ID_GROUP_STYLES         PNG                     "res\\GroupStyles.png"
+IDB_BITMAPS_GROUPS      PNG                     "res\\GroupIcons.png"
+IDB_GEAR                PNG                     "res\\shiny-gear.png"
+ID_TAB_REFERENCES       PNG                     "res\\TabReferences.png"
+ID_TAB_VIEW             PNG                     "res\\TabView.png"
+IDB_GROUPOPTIONTOOLTIP  PNG                     "res\\GroupOptionToolTip.png"
+IDB_SYSTEMMENULARGE     PNG                     "res\\SystemMenuLarge.png"
+ID_GROUP_PAGEPARAGRAPH  PNG                     "res\\GroupPageParagraph.png"
+ID_TAB_PAGELAYOUT       PNG                     "res\\TabPageLayout.png"
+ID_GALLERY_SHAPES       PNG                     "res\\GalleryShapes.png"
+ID_GALLERY_STYLES       PNG                     "res\\GalleryStyles.png"
+ID_GALLERY_COLUMNS      PNG                     "res\\GalleryColumns.png"
+IDB_STATUSBAR_VIEWSWITCH PNG                     "res\\StatusBarViewSwitches.png"
+IDC_BUTTON_STYLEINSPECTOR PNG                     "res\\StylesStyleInspector.png"
+IDC_BUTTON_NEWSTYLE     PNG                     "res\\StylesPaneNewStyle.png"
+IDC_BUTTON_MANAGESTYLES PNG                     "res\\StylesManageStyles.png"
+ID_INDICATOR_MACRORECORDING PNG                     "res\\IndicatorMacroRecording.png"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_PANES MENU
+BEGIN
+    POPUP "PANES"
+    BEGIN
+        MENUITEM "ConsoleVar",                  ID_PANES_CVAR
+        MENUITEM "SwissKnifeBar",               ID_PANES_SWISSKNIFEBAR
+        MENUITEM "Material Editor",             ID_PANES_MATERIALEDITOR
+        MENUITEM "TrackBus Editor",             ID_PANES_TRACKBUSEDITOR
+        MENUITEM "TimeOfDay Editor",            ID_PANES_TIMEOFDAYEDITOR
+        MENUITEM "Hierarchy Editor",            ID_PANES_HIERARCHYEDITOR
+        MENUITEM "Terrian Editor",              ID_PANES_TERRIANEDITOR
+        MENUITEM "Character Editor",            ID_PANES_CHARACTEREDITOR
+        MENUITEM "Console",                     ID_PANES_CONSOLE
+    END
+END
+
+IDR_MAINFRAME MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "&Print",                      ID_FILE_PRINT
+        MENUITEM "Pr&epare",                    ID_FILE_PREPARE32918
+        MENUITEM "Sen&d",                       ID_FILE_SEND
+        MENUITEM "P&ublish",                    ID_FILE_PUBLISH
+        MENUITEM SEPARATOR
+        MENUITEM "Close",                       ID_APP_CLOSE
+        MENUITEM SEPARATOR
+        MENUITEM "Recent Documents",            ID_FILE_RECENTDOCUMENTS
+        MENUITEM "Opt&ions",                    ID_APP_OPTIONS
+        MENUITEM "E&xit Sample",                ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+        MENUITEM "Paste &Special...",           ID_EDIT_PASTE_SPECIAL
+        MENUITEM "Select A&ll\tCtrl+A",         ID_EDIT_SELECT_ALL
+        MENUITEM SEPARATOR
+        MENUITEM "&Find...\tCtrl+F",            ID_EDIT_FIND
+        MENUITEM "F&ind Next\tF3",              ID_EDIT_REPEAT
+        MENUITEM "R&eplace\tCtrl+H",            ID_EDIT_REPLACE
+        MENUITEM SEPARATOR
+        MENUITEM "Insert &New Object...",       ID_OLE_INSERT_NEW
+        MENUITEM "Lin&ks...",                   ID_OLE_EDIT_LINKS
+        MENUITEM "Object P&roperties\tAlt+Enter", ID_OLE_EDIT_PROPERTIES
+        MENUITEM "<<OLE VERBS GO HERE>>",       ID_OLE_VERB_FIRST
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About RibbonSample...",      ID_APP_ABOUT
+    END
+    POPUP "&SubEditor"
+    BEGIN
+        MENUITEM "&TimeOfDay",                  ID_SUBEDITOR_TIMEOFDAY
+        MENUITEM "&MaterialEditor",             ID_SUBEDITOR_MATERIALEDITOR
+    END
+END
+
+IDR_CNTR_INPLACE MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
+        MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
+        MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    MENUITEM SEPARATOR
+    MENUITEM SEPARATOR
+END
+
+ID_ILLUSTRATION_PICTURE MENU
+BEGIN
+    POPUP "&Picture"
+    BEGIN
+        MENUITEM "&Picture...",                 ID_ILLUSTRATION_PICTURE
+        MENUITEM "&Clip Art...",                ID_ILLUSTRATION_CLIPART
+        MENUITEM "From &Scanner or Camera...",  ID_ILLUSTRATION_FROMCAMERA
+    END
+END
+
+ID_INSERT_PAGENUMBER MENU
+BEGIN
+    POPUP "&Page Number"
+    BEGIN
+        MENUITEM "&Format Page Numbers",        ID_PAGENUMBER_FORMATPAGENUMBERS
+        MENUITEM "&Remove Page Numbers",        ID_PAGENUMBER_REMOVEPAGENUMBERS
+    END
+END
+
+ID_PAGES_NEW MENU
+BEGIN
+    POPUP "&New Page"
+    BEGIN
+        MENUITEM "&Blank Page",                 ID_NEWPAGE_BLANKPAGE
+        MENUITEM "&Save Selection as New Page", ID_NEWPAGE_SELECTION
+    END
+END
+
+ID_PAGES_COVER MENU
+BEGIN
+    POPUP "&Cover Page"
+    BEGIN
+        MENUITEM "&Remove Current Cover Page",  ID_COVERPAGE_REMOVECURRENTCOVERPAGE
+        MENUITEM "Save Selection as New Cover Page...", ID_COVERPAGE_SAVESELECTIONASNEWCOVERPAGE
+    END
+END
+
+ID_TABLE_NEW MENU
+BEGIN
+    POPUP "&Table"
+    BEGIN
+        MENUITEM "&Insert Table...",            ID_TABLE_INSERTTABLE
+        MENUITEM "Dra&w Table",                 ID_TABLE_DRAWTABLE
+        MENUITEM "Con&vert Text to Table...",   ID_TABLE_CONVERTTEXTTOTABLE
+    END
+END
+
+ID_TEXT_TEXTBOX MENU
+BEGIN
+    POPUP "&Text Box"
+    BEGIN
+        MENUITEM "&Draw Text Box",              ID_TEXTBOX_DRAWTEXTBOX
+        MENUITEM "&Save Selection as new Text Box", ID_TEXTBOX_SAVESELECTIONASNEWTEXTBOX
+    END
+END
+
+ID_TEXT_PARTS MENU
+BEGIN
+    POPUP "&Document Parts"
+    BEGIN
+        MENUITEM "AutoText",                    ID_DOCUMENTPARTS_AUTOTEXT
+        MENUITEM "Property",                    ID_DOCUMENTPARTS_PROPERTY
+        MENUITEM "Field...",                    ID_DOCUMENTPARTS_FIELD
+        MENUITEM "Building Block Organizer",    ID_DOCUMENTPARTS_BUILDINGBLOCKORGANIZER
+    END
+END
+
+ID_SYMBOL_EQUATIONS MENU
+BEGIN
+    POPUP "&Equations"
+    BEGIN
+        MENUITEM "&Math",                       ID_EQUATIONS_MATH
+    END
+END
+
+IDR_MENU_CONTEXT MENU
+BEGIN
+    POPUP "Context"
+    BEGIN
+        MENUITEM "Cu&t",                        ID_EDIT_CUT
+        MENUITEM "&Copy",                       ID_EDIT_COPY
+        MENUITEM "&Paste",                      ID_EDIT_PASTE
+        MENUITEM SEPARATOR
+        MENUITEM "&Font...",                    ID_CONTEXT_FONT
+        MENUITEM "&Paragraph...",               ID_PARA_PARAGRAPH
+        MENUITEM "Bullets",                     ID_INSERT_BULLET
+        MENUITEM SEPARATOR
+        POPUP "Options"
+        BEGIN
+            POPUP "Style"
+            BEGIN
+                MENUITEM "Blue",                        ID_OPTIONS_STYLEBLUE
+                MENUITEM "Black",                       ID_OPTIONS_STYLEBLACK
+                MENUITEM "Silver",                      ID_OPTIONS_STYLESILVER
+                MENUITEM "Aqua",                        ID_OPTIONS_STYLEAQUA
+                MENUITEM "Scenic",                      ID_OPTIONS_STYLESCENIC
+                MENUITEM "White",                       ID_OPTIONS_STYLEWHITE
+                MENUITEM "System",                      ID_OPTIONS_STYLESYSTEM
+            END
+            POPUP "Font"
+            BEGIN
+                MENUITEM "System Default",              ID_OPTIONS_FONT_SYSTEM
+                MENUITEM SEPARATOR
+                MENUITEM "Normal",                      ID_OPTIONS_FONT_NORMAL
+                MENUITEM "Large",                       ID_OPTIONS_FONT_LARGE
+                MENUITEM "Extra Large",                 ID_OPTIONS_FONT_EXTRALARGE
+                MENUITEM SEPARATOR
+                MENUITEM "Auto Resize Icons",           ID_OPTIONS_FONT_AUTORESIZEICONS
+            END
+            MENUITEM SEPARATOR
+            MENUITEM "Right To Left",               ID_OPTIONS_RIGHTTOLEFT
+            MENUITEM "Animation",                   ID_OPTIONS_ANIMATION
+            MENUITEM "Frame Theme",                 ID_OPTIONS_FRAMETHEME
+        END
+    END
+END
+
+ID_APP_THEME MENU
+BEGIN
+    POPUP "&Theme"
+    BEGIN
+        MENUITEM "Office 2003",                 ID_THEME_OFFICE2003
+        MENUITEM "Office 2007",                 ID_THEME_OFFICE2007
+    END
+END
+
+ID_STYLES_QUICKSTYLES MENU
+BEGIN
+    POPUP "Quick Styles"
+    BEGIN
+        MENUITEM "Styles",                      ID_GALLERY_STYLES
+        MENUITEM "Save Style",                  ID_QUICKSTYLES_SAVESTYLE
+        MENUITEM "Apply Style",                 ID_QUICKSTYLES_APPLYSTYLE
+    END
+END
+
+ID_STYLES_CHANGE MENU
+BEGIN
+    POPUP "Change Styles"
+    BEGIN
+        POPUP "Style Set"
+        BEGIN
+            MENUITEM "Style Set",                   ID_GALLERY_STYLESET
+            MENUITEM "Reset",                       ID_CHANGESTYLES_STYLESET_RESET
+        END
+        POPUP "Colors"
+        BEGIN
+            MENUITEM "Colors",                      ID_GALLERY_COLORS
+            MENUITEM "Create New Theme Colors...",  ID_CHANGESTYLES_COLORS_CREATENEWTHEMECOLORS
+        END
+        POPUP "Fonts"
+        BEGIN
+            MENUITEM "Fonts",                       ID_GALLERY_FONTS
+            MENUITEM "Create New Theme Fonts...",   ID_CHANGESTYLES_FONTS_CREATENEWFONT
+        END
+    END
+END
+
+ID_GALLERY_FONTTEXTCOLOR MENU
+BEGIN
+    POPUP "Font Color"
+    BEGIN
+        MENUITEM "Automatic",                   ID_FORMAT_FONTCOLOR_AUTOMATIC
+        MENUITEM "Font Color",                  ID_GALLERY_FONTTEXTCOLOR
+        MENUITEM "More Colors...",              ID_FORMAT_FONTCOLOR_MORECOLORS
+    END
+END
+
+ID_GALLERY_FONTBACKCOLOR MENU
+BEGIN
+    POPUP "Font Back Color"
+    BEGIN
+        MENUITEM "Font Back Color",             ID_GALLERY_FONTBACKCOLOR
+        MENUITEM "No Colors",                   ID_FORMAT_FONTCOLOR_NOHIGHLIGHT
+    END
+END
+
+ID_INSERT_SHAPES MENU
+BEGIN
+    POPUP "Shapes"
+    BEGIN
+        MENUITEM "Shapes",                      ID_GALLERY_SHAPES
+        MENUITEM "New Drawing",                 ID_SHAPES_NEWDRAWING
+    END
+END
+
+IDR_MENU_OPTIONS MENU
+BEGIN
+    POPUP "Options"
+    BEGIN
+        MENUITEM SEPARATOR
+        MENUITEM "White Theme",                 ID_OPTIONS_GKWHITE
+        MENUITEM "Black Theme",                 ID_OPTIONS_GKBLACK
+        MENUITEM "Animation",                   ID_OPTIONS_ANIMATION
+        MENUITEM "English",                     ID_OPTIONS_ENGLISH
+        MENUITEM "??",                          ID_OPTIONS_CHINESE
+    END
+END
+
+ID_TEXT_HIGHLIGHTCOLOR MENU
+BEGIN
+    POPUP "Back Color"
+    BEGIN
+        MENUITEM "Back Color",                  ID_GALLERY_FONTBACKCOLOR
+        MENUITEM "No Colors",                   ID_BACKCOLOR_NOCOLORS
+    END
+END
+
+IDR_MENU_PRINT MENU
+BEGIN
+    POPUP "Print"
+    BEGIN
+        MENUITEM "&Print",                      ID_FILE_PRINT
+        MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
+        MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
+    END
+END
+
+IDR_MENU_SEND MENU
+BEGIN
+    POPUP "Send"
+    BEGIN
+        MENUITEM "E-Mail",                      ID_FILE_SEND_MAIL
+        MENUITEM "Intenet Fax",                 ID_FILE_SEND_INTERNETFAX
+    END
+END
+
+ID_TEXT_INSERTOBJECT MENU
+BEGIN
+    POPUP "Object"
+    BEGIN
+        MENUITEM "Insert &New Object...",       ID_OLE_INSERT_NEW
+        MENUITEM "Lin&ks...",                   ID_OLE_EDIT_LINKS
+        MENUITEM "<<OLE VERBS GO HERE>>",       ID_OLE_VERB_FIRST
+    END
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "Resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\RibbonSample.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#include ""afxprint.rc""       // printing/print preview resources\r\n"
+    "#include ""afxolecl.rc""       // OLE container resources\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\CJSample.ico"
+IDR_RIBBONTYPE          ICON                    "res\\RibbonSampleDoc.ico"
+ID_GROUP_BUTTONPOPUP    ICON                    "res\\GroupPopup.ico"
+IDC_MESSAGEBAR_WARNING  ICON                    "res\\Warning.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS
+BEGIN
+    VK_ESCAPE,      ID_CANCEL_EDIT_CNTR,    VIRTKEY, NOINVERT
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "F",            ID_EDIT_FIND,           VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    VK_F3,          ID_EDIT_REPEAT,         VIRTKEY, NOINVERT
+    "H",            ID_EDIT_REPLACE,        VIRTKEY, CONTROL, NOINVERT
+    "A",            ID_EDIT_SELECT_ALL,     VIRTKEY, CONTROL, NOINVERT
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_RETURN,      ID_OLE_EDIT_PROPERTIES, VIRTKEY, ALT, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    VK_F1,          ID_SAVE_CAM1,           VIRTKEY, SHIFT, NOINVERT
+    VK_F2,          ID_SAVE_CAM2,           VIRTKEY, SHIFT, NOINVERT
+    VK_F3,          ID_SAVE_CAM3,           VIRTKEY, SHIFT, NOINVERT
+    VK_F4,          ID_SAVE_CAM4,           VIRTKEY, SHIFT, NOINVERT
+    VK_F5,          ID_SAVE_CAM5,           VIRTKEY, SHIFT, NOINVERT
+    VK_F6,          ID_SAVE_CAM6,           VIRTKEY, SHIFT, NOINVERT
+    VK_F7,          ID_SAVE_CAM7,           VIRTKEY, SHIFT, NOINVERT
+    VK_F8,          ID_SAVE_CAM8,           VIRTKEY, SHIFT, NOINVERT
+    VK_F9,          ID_SAVE_CAM9,           VIRTKEY, SHIFT, NOINVERT
+    VK_F1,          ID_SWITCH_CAM1,         VIRTKEY, CONTROL, NOINVERT
+    VK_F2,          ID_SWITCH_CAM2,         VIRTKEY, CONTROL, NOINVERT
+    VK_F3,          ID_SWITCH_CAM3,         VIRTKEY, CONTROL, NOINVERT
+    VK_F4,          ID_SWITCH_CAM4,         VIRTKEY, CONTROL, NOINVERT
+    VK_F5,          ID_SWITCH_CAM5,         VIRTKEY, CONTROL, NOINVERT
+    VK_F6,          ID_SWITCH_CAM6,         VIRTKEY, CONTROL, NOINVERT
+    VK_F7,          ID_SWITCH_CAM7,         VIRTKEY, CONTROL, NOINVERT
+    VK_F8,          ID_SWITCH_CAM8,         VIRTKEY, CONTROL, NOINVERT
+    VK_F9,          ID_SWITCH_CAM9,         VIRTKEY, CONTROL, NOINVERT
+    VK_F1,          ID_TOGGLE_GROUPS,       VIRTKEY, SHIFT, CONTROL, NOINVERT
+    "F",            ID_GLOBAL_FOCUSOBJ,     VIRTKEY, NOINVERT
+END
+
+IDR_CNTR_INPLACE ACCELERATORS
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+    VK_ESCAPE,      ID_CANCEL_EDIT_CNTR,    VIRTKEY, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 13,2,1,0
+ PRODUCTVERSION 13,2,1,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "FileDescription", "gkStudio Editor"
+            VALUE "FileVersion", "13, 2, 1, 0"
+            VALUE "InternalName", "GameKnife Studio"
+            VALUE "LegalCopyright", "(c)2009-2011 K&K Studio, All Rights Reserved."
+            VALUE "OriginalFilename", "gkStudio.exe"
+            VALUE "ProductName", "GameKnife Studio Editor"
+            VALUE "ProductVersion", "13, 2, 1, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDP_OLE_INIT_FAILED     "OLE initialization failed.  Make sure that the OLE libraries are the correct version."
+    IDC_TODPROPERTY         "TimeOfDay"
+    IDP_FAILED_TO_CREATE    "Failed to create object.  Make sure the object is entered in the system registry."
+    IDC_MATEDTPROPERTY      "property"
+    IDC_PANEOBJPROPERTY     "ObjPane"
+    IDC_PANECONSOLEVAR      "ObjPane"
+    IDS_SWISSKNIFEBAR_CREATION "Creation"
+    IDS_SWISSKNIFEBAR_MODIFY "Modify"
+    IDS_SWISSKNIFEBAR_DISPLAY "Display"
+END
+
+STRINGTABLE
+BEGIN
+    IDR_MAINFRAME           "GameKnife Studio\n\nRibbon\n\n\ngkStudio.Document\nRibbon Document"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_APP_TITLE       "Codejock Ribbon Sample"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+    ID_FILE_PRINT           "Select a printer, number of copies, and other printing options before printing\nPrint"
+    ID_FILE_PRINT_PREVIEW   "Preview and make changes to pages before printing\nPrint Preview"
+END
+
+STRINGTABLE
+BEGIN
+    ID_CHAR_BOLD            "Makes the selection bold (toggle).\nBold"
+    ID_CHAR_ITALIC          "Makes the selection italic (toggle)\nItalic"
+    ID_CHAR_UNDERLINE       "Formats the selection with a continuous underline (toggle)\nUnderline"
+    ID_EDIT_GOTO            "Navigate to a specific page, line, numer, footnote, comment, or other object\nGo To"
+    ID_EDIT_SELECT_OBJECTS  "\n&Select Objects"
+    ID_EDIT_SELECT          "\nSelect"
+    ID_EDIT_SELECT_MULTIPLE_OBJECTS "\nSelect Multiple Objects"
+END
+
+STRINGTABLE
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+    ID_FILE_MRU_FILE5       "Open this document"
+    ID_FILE_MRU_FILE6       "Open this document"
+    ID_FILE_MRU_FILE7       "Open this document"
+    ID_FILE_MRU_FILE8       "Open this document"
+    ID_FILE_MRU_FILE9       "Open this document"
+    ID_FILE_MRU_FILE10      "Open this document"
+    ID_FILE_MRU_FILE11      "Open this document"
+    ID_FILE_MRU_FILE12      "Open this document"
+    ID_FILE_MRU_FILE13      "Open this document"
+    ID_FILE_MRU_FILE14      "Open this document"
+    ID_FILE_MRU_FILE15      "Open this document"
+    ID_FILE_MRU_FILE16      "Open this document"
+END
+
+STRINGTABLE
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE
+BEGIN
+    ID_WINDOW_NEW           "\nNew Window"
+    ID_WINDOW_ARRANGE       "\nArrabge All"
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_PASTE_LINK      "Insert Clipboard contents and a link to its source\nPaste Link"
+    ID_EDIT_PASTE_SPECIAL   "Insert Clipboard contents with options\nPaste &Special"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nStatus Bar"
+    ID_VIEW_MESSAGE_BAR     "Show or hide the message bar\nMessage Bar"
+END
+
+STRINGTABLE
+BEGIN
+    ID_OLE_INSERT_NEW       "Insert new embedded object\nNew Object"
+    ID_OLE_EDIT_LINKS       "Edit linked objects\nEdit Links"
+    ID_OLE_EDIT_CONVERT     "Convert object to different type\nConvert Object"
+END
+
+STRINGTABLE
+BEGIN
+    ID_OLE_VERB_FIRST       "Activate embedded or linked object"
+    57873                   "Activate embedded or linked object"
+    57874                   "Activate embedded or linked object"
+    57875                   "Activate embedded or linked object"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
+END
+
+STRINGTABLE
+BEGIN
+    ID_PAGES_NEW            "Insert a fully-formatted page. You replace the sample text with you own content\nNew Page"
+    ID_GALLERY_FONTFACE     "Font Face"
+    ID_PAGES_BREAK          "Start a new page at the insertion point.\nPage Break"
+    ID_TABLE_NEW            "Insert or draw a table into the document.\nTable"
+    ID_ILLUSTRATION_PICTURE "Insert Picture from a file\nPicture"
+    ID_ILLUSTRATION_GRAPHIC "Insert a diagram to illustrate processes of relationships\nIGX Graphic"
+    ID_ILLUSTRATION_CHART   "Insert a chart to illustrate and compare data.\nChart"
+    ID_FILE_PRINT_LABEL     "\nPreview and print the document"
+    ID_INSERT_HEADER        "\nHeader"
+    ID_INSERT_FOOTER        "\nFooter"
+    ID_INSERT_PAGENUMBER    "\nPage Number"
+    ID_TEXT_TEXTBOX         "\nText Box"
+END
+
+STRINGTABLE
+BEGIN
+    ID_TEXT_PARTS           "\nDocument Parts"
+    ID_TEXT_WORDART         "\nWordArt"
+    ID_TEXT_DROPCAP         "\nDrop Cap"
+    ID_SYMBOL_EQUATIONS     "\nEquations"
+    ID_SYMBOL_SYMBOL        "\nSymbol"
+    ID_PAGES_COVER          "Insert a fully-formatted cover page. You fill in the title, author, date, and other information.\nCover Page"
+    ID_GROUP_CLIPBOARD_OPTION "Show the Office clipboard Task Pane\nClipboard"
+    ID_INSERT_BOOKMARK      "\nBookmark"
+    ID_FONT_GROW            "\nGrow Font"
+    ID_FONT_SHRINK          "\nShrink Font"
+    ID_FONT_CLEAR           "\nClear Formatting"
+    ID_TEXT_CHANGECASE      "Change Case"
+    ID_INSERT_NUMBERING     "\nNumbering"
+    ID_INSERT_LIST          "\nMultilevel List"
+    ID_PARA_DECREASEINDENT  "\nDecrease Indent"
+    ID_PARA_INCREASEINDENT  "\nIncrease Indent"
+END
+
+STRINGTABLE
+BEGIN
+    ID_INSERT_HYPERLINK     "Create a link to a Web page, a picture, an e-mail address, or a program.\nHyperlink"
+    ID_INSERT_CROSS_REFERENCE "\nCross-reference"
+    ID_TEXT_SIGNATURE       "\nSignature Line"
+    ID_TEXT_DATETIME        "\nDate && Time"
+    ID_TEXT_INSERTOBJECT    "\nInsert Object"
+    ID_GALLERY_FONTSIZE     "Font Size"
+    ID_SWITCH_FULLSCREEN    "\nSwitch Fullscreen"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FORMAT_PAINTER       "Copy formatting from one place and apply it to another\nFormat Painter"
+    ID_TEXT_FONT            "\nFont"
+    ID_FONT_FACE            "\nFont Face"
+    ID_FONT_SIZE            "\nFont Size"
+    ID_CHAR_STRIKETHROUGH   "Draw a line through the middle of the selected text\nStrikethrough"
+    ID_TEXT_SUBSCRIPT       "Subscript"
+    ID_TEXT_SUPERSCRIPT     "\nSuperscript"
+    ID_TEXT_COLOR           "\nColor"
+END
+
+STRINGTABLE
+BEGIN
+    ID_INSERT_BULLET        "Inserts a bullet on this line\nBullets"
+END
+
+STRINGTABLE
+BEGIN
+    ID_PARA_LEFT            "Left-justifies paragraph\nAlign Left"
+    ID_PARA_CENTER          "Center-justifies paragraph\nCenter"
+    ID_PARA_RIGHT           "Right-justifies paragraph\nAlign Right"
+    ID_THEMES_COLORS        "\nColors"
+    ID_THEMES_FONTS         "\nFonts"
+    ID_THEMES_EFFECTS       "\nEffects"
+    ID_PAGE_MOVEMODE_ORIENTATION "Object Rotate Mode\nRotate"
+    ID_PAGE_MOVEMODE_SCALE  "Object Scale Mode\nScale"
+    ID_PAGE_COLUMNS         "\nColumns"
+    ID_PAGE_BREAKS          "\nBreaks"
+END
+
+STRINGTABLE
+BEGIN
+    ID_PAGE_LINENUMBERS     "\nLine Numbers"
+    ID_PAGE_HYPHENATATION   "\nHyphenation"
+    ID_PAGE_TIMEOFDAY       "Open TimeOfDay Editor\nTOD"
+    ID_PAGE_MATERIALEDITOR  "Open Material Editor\nMatEdit"
+    ID_PAGE_BORDERS         "Page Borders"
+    ID_ARRANGE_FRONT        "\nBring to Front"
+    ID_ARRANGE_BACK         "\nSend to Back"
+    ID_ARRANGE_ALIGN        "\nAlign"
+    ID_ARRANGE_GROUP        "\nGroup"
+    ID_ARRANGE_UNGROUP      "\nUngroup"
+    ID_ARRANGE_ROTATE       "\nRotate"
+    ID_THEMES_THEMES        "Object Selection Mode\nSelect"
+    ID_PAGE_MOVEMODE_MOVE   "Object Move Mode\nMove"
+    ID_ARRANGE_POSITION     "\nPosition"
+    ID_ARRANGE_TEXTWRAPPING "\nText Wrapping"
+END
+
+STRINGTABLE
+BEGIN
+    ID_PARA_SORT            "\nSort"
+    ID_PARA_JUSTIFY         "\nJustify"
+    ID_PARA_SHOWMARKS       "\nShow/Hide Marks"
+    ID_PARA_LINESPACING     "\nLine spacing"
+    ID_PARA_SHADING         "\nShading"
+    ID_BORDERS_NOBORDER     "\nNo Border"
+    ID_TEXT_HIGHLIGHTCOLOR  "\nHighlight Color"
+    ID_VIEW_RULER           "\n&Ruler"
+    ID_VIEW_GRIDLINES       "\n&Gridlines"
+    ID_VIEW_PROPERTIES      "\n&Properties"
+    ID_VIEW_DOCUMENTMAP     "\nDocument Map"
+    ID_VIEW_THUMBNAILS      "\nThumbnails"
+    ID_VIEW_ACTINBAR        "\nDocument Action Bar"
+    ID_THEMES_OFFICE        "Office"
+    ID_STYLES_CHANGE        "Changethe set of styles, colors, and fonts used in this document\nChange Styles"
+END
+
+STRINGTABLE
+BEGIN
+    ID_THEMES_BUILTIN       "Built-in"
+END
+
+STRINGTABLE
+BEGIN
+    ID_GROUP_OBJSEL         "Object"
+    ID_GROUP_EDITORS        "Editors"
+    ID_GROUP_BASICPANE      "Basic Pane"
+    ID_GROUP_PARAGRAPH      "\n&Paragraph"
+    ID_GROUP_CLIPBOARD      "\n&Clipboard"
+    ID_GROUP_FONT           "\nF&ont"
+    ID_GROUP_FIND           "\n&Editing"
+    ID_GROUP_STYLES         "&Styles"
+    ID_GROUP_SHAPES         "&Shapes"
+    ID_GROUP_FONT_OPTION    "Show the Font dialog box\nF&ont"
+    ID_GROUP_STYLES_OPTION  "Show the Styles window\nStyles"
+    ID_GROUP_PARAGRAPH_OPTION "Show the Paragraph dialog box\nParagraph"
+    ID_GROUP_PAGEPARAGRAPH  "Paragraph"
+END
+
+STRINGTABLE
+BEGIN
+    ID_TAB_HOME             "&Home"
+    ID_TAB_INSERT           "I&nsert"
+    ID_TAB_PAGELAYOUT       "&Page Layout"
+    ID_TAB_ADDINS           "&Add-Ins"
+END
+
+STRINGTABLE
+BEGIN
+    ID_TAB_TABLEDESIGN      "&Design"
+    ID_TAB_TABLELAYOUT      "&Layout"
+    ID_TAB_CHARTDESIGN      "&Design"
+    ID_TAB_CHARTFORMAT      "&Format"
+    ID_TAB_CHARTLAYOUT      "&Layout"
+    ID_TAB_CONTEXTCHART     "Chart Tools"
+    ID_TAB_SUBEDITOR        "&SubEditor"
+END
+
+STRINGTABLE
+BEGIN
+    ID_TAB_VIEW             "Vie&w"
+    ID_TAB_REFERENCES       "Reference&s"
+    ID_TAB_MAILINGS         "&Mailings"
+    ID_TAB_REVIEW           "&Review"
+    ID_TAB_PICTUREFORMAT    "Picture Format"
+    ID_MENU_FILE            "Click here to see everything you can do with your document\n&File"
+END
+
+STRINGTABLE
+BEGIN
+    ID_GROUP_TABLEOFCONTENTS "&Table of Contents"
+    ID_GROUP_FOOTNOTES      "&Footnotes"
+    ID_GROUP_INDEX          "Index"
+    ID_GROUP_DOCUMENTVIEWS  "Document Views"
+    ID_GROUP_ZOOM           "Zoom"
+    ID_GROUP_CAPTIONS       "Captions"
+    ID_GROUP_WINDOW         "Window"
+    ID_GROUP_PAGES          "&Pages"
+    ID_GROUP_TABLE          "&Tables"
+    ID_GROUP_ILLUSTRATIONS  "&Illustrations"
+    ID_GROUP_HEADERFOOTERS  "&Header && Footer"
+    ID_GROUP_LINKS          "&Links"
+    ID_GROUP_TEXT           "&Text"
+    ID_GROUP_SYMBOLS        "&Symbols"
+    ID_GROUP_THEMES         "Themes"
+    ID_GROUP_PAGESETUP      "Page Setup"
+END
+
+STRINGTABLE
+BEGIN
+    ID_CONTENTS_TABLE       "\nTable of Contents"
+    ID_CONTENTS_ADDTEXT     "\nAdd Text"
+END
+
+STRINGTABLE
+BEGIN
+    ID_CONTENTS_UPDATE      "\nUpdate Table"
+    ID_FOOTNOTES_INSERT     "\nInsert Footnote"
+    ID_FOOTNOTES_INSEREND   "\n&Insert Endnote"
+    ID_FOOTNOTES_NEXT       "\nNext Footnote"
+    ID_FOOTNOTES_SHOW       "\nShow Notes"
+    ID_INDEX_MARK           "\nMark Entry"
+    ID_INDEX_INSERT         "\nInsert Index"
+    ID_INDEX_UPDATE         "\nUpdate Index"
+    ID_CAPTIONS_INSERT      "\nInsert Caption"
+    ID_CAPTIONS_FIGURES     "\nInsert Table of Figures"
+    ID_CAPTIONS_UPDATE      "\nUpdate Table"
+    IOD_CAPTIONS_CROSSREFERENCE "\nCross-reference"
+    ID_VIEW_PRINTLAYOUT     "\nPrint Layout"
+    ID_VIEW_WEBLAYOUT       "Web Layout"
+END
+
+STRINGTABLE
+BEGIN
+    ID_VIEW_OUTLINE         "Outline"
+    ID_VIEW_DRAFT           "\nDraft"
+    ID_ZOOM_ZOOM            "\nZoom"
+    ID_ZOOM_ONEPAGE         "One Page"
+    ID_ZOOM_TWOPAGES        "Two Pages"
+    ID_ZOOM_PAGEWIDTH       "Page Width"
+    ID_WINDOW_SIDEBYSIDE    "View Side by Side"
+    ID_WINDOW_SYNCHRONOUSSCROLLING "\nSynchronous Scrolling"
+    ID_WINDOW_RESET         "\nReset Window Position"
+    ID_WINDOW_SWITCH        "Switch Windows"
+    ID_VIEW_FULLSCREENREADING "\nFull Screen Reading"
+    ID_FILE_SEND_INTERNETFAX 
+                            "Use an Internet fax service to fax the document.\nInternet Fax"
+    ID_APP_CLOSE            "Close the active document\nClose"
+END
+
+STRINGTABLE
+BEGIN
+    ID_PARAGRAPH_INDENT     "Indent"
+    ID_PARAGRAPH_INDENTLEFT "Move in the left side of the paragraph\nIndent Left\nLeft:   "
+    ID_PARAGRAPH_INDENTRIGHT 
+                            "Move in the right side of the paragraph\nIndent Right\nRight:"
+    ID_PARAGRAPH_SPACING    "Spacing"
+    ID_PARAGRAPH_SPACINGBEFORE "Before:"
+    ID_PARAGRAPH_SPACINGAFTER "After:   "
+    ID_FILE_SEND_LABEL      "Send a copy of the document to other people"
+END
+
+STRINGTABLE
+BEGIN
+    ID_GALLERY_SHAPES       "Insert ready-made shapes, such as rectangles and circles, arrows, lines, flowchart symbols, and callouts.\nShapes"
+    ID_GALLERY_STYLES       "\nQuick Styles"
+END
+
+STRINGTABLE
+BEGIN
+    ID_SWITCH_PRINTLAYOUT   "Print Layout"
+    ID_SWITCH_FULLSCREENREADING "Full Screen Reading"
+    ID_SWITCH_WEBLAYOUT     "Web Layout"
+    ID_SWITCH_OUTLINE       "Outline"
+    ID_SWITCH_DRAFT         "Draft"
+END
+
+STRINGTABLE
+BEGIN
+    ID_SUBEDITOR_TIMEOFDAY  "Open TimeOfDay Editor\nTime Of Day"
+    ID_SUBEDITOR_MATERIALEDITOR "Open Material Editor\nMaterial Editor"
+    ID_SUBEDITOR_HIERARCHY  "Open Hierarchy\nHierarchy"
+    ID_SUBEDITOR_TERRIANEDITOR "\nOpen Terrian Editor"
+    ID_SUBEDITOR_TRACKBUS   "\nOpen TrackBus"
+END
+
+STRINGTABLE
+BEGIN
+    ID_PANES_SWISSKNIFEBAR  "\nSwiss Knife Toolbox"
+    ID_PANES_MATERIALEDITOR "\nMaterial Editor"
+    ID_PANES_TRACKBUSEDITOR "\nTrack Bus Editor"
+    ID_PANES_CVAR           "\nConsole"
+    ID_PANES_TIMEOFDAYEDITOR "\nTimeOfDay Editor"
+END
+
+STRINGTABLE
+BEGIN
+    ID_PANES_HIERARCHYEDITOR "\nHierarchy Editor"
+    ID_PANES_TERRIANEDITOR  "\nTerrian Editor"
+    ID_PANES_CHARACTEREDITOR "\nCharacter Editor"
+    ID_PANES_CONSOLE        "\nConsole"
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\RibbonSample.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#include "afxprint.rc"       // printing/print preview resources
+#include "afxolecl.rc"       // OLE container resources
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

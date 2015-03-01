@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="RenderObjects">
+      <UniqueIdentifier>{dd7a1602-0294-41e2-8f21-90b45cb75aa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderObjects\include">
+      <UniqueIdentifier>{53a195a2-825e-4506-ac9f-9a5994028982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderObjects\source">
+      <UniqueIdentifier>{55d424c6-c3e1-439c-9ebf-6efb80916040}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{92f31725-f946-410e-a6f2-dfef91285ed6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderObjects\Renderable">
+      <UniqueIdentifier>{1b4669a3-4b27-44bc-91f0-fd0902a8474b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderObjects\Base">
+      <UniqueIdentifier>{fd2e9612-3a3c-4a3b-9474-87ed912ad515}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderObjects\RenderNode">
+      <UniqueIdentifier>{8d6674f2-0a40-4182-b3a7-de82e2eb46f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderObjects\Camera">
+      <UniqueIdentifier>{394aef87-e54f-45b6-b775-5268f4ffa6db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderObjects\Interface">
+      <UniqueIdentifier>{963b70e8-419b-4343-8bc8-9bacf70a2743}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderObjects\Light">
+      <UniqueIdentifier>{152929d2-cbfc-4732-8add-056fe0ccb18c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{9eaaf66b-cd83-4ae8-b4f8-1b9303281744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderObjects\Terrian">
+      <UniqueIdentifier>{e6be4151-ced0-4380-8df1-2a25fe4878e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderObjects\Particle">
+      <UniqueIdentifier>{7610f93d-b56d-43e5-a938-179dce9da461}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\gkStableHeader.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkSceneQuery.cpp">
+      <Filter>RenderObjects\include</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkStaticObjRenderable.cpp">
+      <Filter>RenderObjects\Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="gkTerrianBlockRenderable.cpp">
+      <Filter>RenderObjects\Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkMovableObject.cpp">
+      <Filter>RenderObjects\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkEntity.cpp">
+      <Filter>RenderObjects\RenderNode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkFrustum.cpp">
+      <Filter>RenderObjects\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkCamera.cpp">
+      <Filter>RenderObjects\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkTimeOfDayManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkVtxMovieListener.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkDecalsManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkSceneManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkVtxLayerManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkDecal.cpp">
+      <Filter>RenderObjects\Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkLight.cpp">
+      <Filter>RenderObjects\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkNode.cpp">
+      <Filter>RenderObjects\RenderNode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkSceneNode.cpp">
+      <Filter>RenderObjects\RenderNode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gkSun.cpp">
+      <Filter>RenderObjects\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="gk3DEngine.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="gkTerrian.cpp">
+      <Filter>RenderObjects\Terrian</Filter>
+    </ClCompile>
+    <ClCompile Include="gkVegetationBlockRenderable.cpp">
+      <Filter>RenderObjects\Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="gkParticleRenderable.cpp">
+      <Filter>RenderObjects\Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="gkParticleInstance.cpp">
+      <Filter>RenderObjects\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\gkPrerequisites.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkStableHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkSceneQuery.h">
+      <Filter>RenderObjects\include</Filter>
+    </ClInclude>
+    <ClInclude Include="gkTerrianBlockRenderable.h">
+      <Filter>RenderObjects\Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkStaticObjRenderable.h">
+      <Filter>RenderObjects\Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkMovableObject.h">
+      <Filter>RenderObjects\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkEntity.h">
+      <Filter>RenderObjects\RenderNode</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkFrustum.h">
+      <Filter>RenderObjects\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkCamera.h">
+      <Filter>RenderObjects\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkCommon\gkRenderOperation.h">
+      <Filter>RenderObjects\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkCommon\gkRenderableList.h">
+      <Filter>RenderObjects\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkCommon\gkRenderable.h">
+      <Filter>RenderObjects\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkDecalsManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkSceneManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkTimeOfDayManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkVtxLayerManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkVtxMovieListener.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkDecal.h">
+      <Filter>RenderObjects\Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkLight.h">
+      <Filter>RenderObjects\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkNode.h">
+      <Filter>RenderObjects\RenderNode</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkSceneNode.h">
+      <Filter>RenderObjects\RenderNode</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gkSun.h">
+      <Filter>RenderObjects\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="gkTerrian.h">
+      <Filter>RenderObjects\Terrian</Filter>
+    </ClInclude>
+    <ClInclude Include="gkVegetationBlockRenderable.h">
+      <Filter>RenderObjects\Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gk3DEngine.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="gkParticleRenderable.h">
+      <Filter>RenderObjects\Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="gkParticleInstance.h">
+      <Filter>RenderObjects\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="dllmain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameKnifeCore.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+</Project>

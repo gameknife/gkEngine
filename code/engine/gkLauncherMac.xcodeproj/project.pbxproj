@@ -1,0 +1,496 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A06034E917999A1900B2F4C6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06034E817999A1900B2F4C6 /* CoreGraphics.framework */; };
+		A06034EB17999A2200B2F4C6 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06034EA17999A2200B2F4C6 /* IOKit.framework */; };
+		A06034EC17999A2D00B2F4C6 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F19FC117928FFD00F788C5 /* AppKit.framework */; };
+		A06034F417999FF100B2F4C6 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06034E11799925D00B2F4C6 /* OpenGL.framework */; };
+		A0A7A08E17A9FD73003FC387 /* libgkCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A7A08617A9FD73003FC387 /* libgkCore.a */; };
+		A0A7A08F17A9FD73003FC387 /* libgkFont.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A7A08717A9FD73003FC387 /* libgkFont.a */; };
+		A0A7A09017A9FD73003FC387 /* libgkGameFramework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A7A08817A9FD73003FC387 /* libgkGameFramework.a */; };
+		A0A7A09117A9FD73003FC387 /* libgkGameObjectSystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A7A08917A9FD73003FC387 /* libgkGameObjectSystem.a */; };
+		A0A7A09217A9FD73003FC387 /* libgkInput.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A7A08A17A9FD73003FC387 /* libgkInput.a */; };
+		A0A7A09317A9FD73003FC387 /* libgkRendererGL330.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A7A08B17A9FD73003FC387 /* libgkRendererGL330.a */; };
+		A0A7A09417A9FD73003FC387 /* libgkSystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A7A08C17A9FD73003FC387 /* libgkSystem.a */; };
+		A0A7A09517A9FD73003FC387 /* libTestCases.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A7A08D17A9FD73003FC387 /* libTestCases.a */; };
+		A0A7A09717A9FD88003FC387 /* libglfw.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A7A09617A9FD88003FC387 /* libglfw.a */; };
+		A0F19FC917928FFD00F788C5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0F19FC717928FFD00F788C5 /* InfoPlist.strings */; };
+		A0F19FCB17928FFD00F788C5 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0F19FCA17928FFD00F788C5 /* main.mm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A06034E11799925D00B2F4C6 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		A06034E817999A1900B2F4C6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A06034EA17999A2200B2F4C6 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		A07D4BBE179A63A100C36005 /* logo_retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_retina.png; sourceTree = "<group>"; };
+		A0A7A08617A9FD73003FC387 /* libgkCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkCore.a; path = "../../exec/ios/Debug-OSX/libgkCore.a"; sourceTree = "<group>"; };
+		A0A7A08717A9FD73003FC387 /* libgkFont.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkFont.a; path = "../../exec/ios/Debug-OSX/libgkFont.a"; sourceTree = "<group>"; };
+		A0A7A08817A9FD73003FC387 /* libgkGameFramework.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkGameFramework.a; path = "../../exec/ios/Debug-OSX/libgkGameFramework.a"; sourceTree = "<group>"; };
+		A0A7A08917A9FD73003FC387 /* libgkGameObjectSystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkGameObjectSystem.a; path = "../../exec/ios/Debug-OSX/libgkGameObjectSystem.a"; sourceTree = "<group>"; };
+		A0A7A08A17A9FD73003FC387 /* libgkInput.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkInput.a; path = "../../exec/ios/Debug-OSX/libgkInput.a"; sourceTree = "<group>"; };
+		A0A7A08B17A9FD73003FC387 /* libgkRendererGL330.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkRendererGL330.a; path = "../../exec/ios/Debug-OSX/libgkRendererGL330.a"; sourceTree = "<group>"; };
+		A0A7A08C17A9FD73003FC387 /* libgkSystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkSystem.a; path = "../../exec/ios/Debug-OSX/libgkSystem.a"; sourceTree = "<group>"; };
+		A0A7A08D17A9FD73003FC387 /* libTestCases.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTestCases.a; path = "../../exec/ios/Debug-OSX/libTestCases.a"; sourceTree = "<group>"; };
+		A0A7A09617A9FD88003FC387 /* libglfw.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw.a; path = ../thirdparty/GLFW/libglfw.a; sourceTree = "<group>"; };
+		A0F19FBB17928FFD00F788C5 /* gkLauncherMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gkLauncherMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0F19FBE17928FFD00F788C5 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		A0F19FC117928FFD00F788C5 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		A0F19FC217928FFD00F788C5 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		A0F19FC317928FFD00F788C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A0F19FC617928FFD00F788C5 /* gkLauncherMac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "gkLauncherMac-Info.plist"; sourceTree = "<group>"; };
+		A0F19FC817928FFD00F788C5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A0F19FCA17928FFD00F788C5 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A0F19FB817928FFD00F788C5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0A7A08E17A9FD73003FC387 /* libgkCore.a in Frameworks */,
+				A0A7A08F17A9FD73003FC387 /* libgkFont.a in Frameworks */,
+				A0A7A09017A9FD73003FC387 /* libgkGameFramework.a in Frameworks */,
+				A0A7A09117A9FD73003FC387 /* libgkGameObjectSystem.a in Frameworks */,
+				A0A7A09217A9FD73003FC387 /* libgkInput.a in Frameworks */,
+				A0A7A09317A9FD73003FC387 /* libgkRendererGL330.a in Frameworks */,
+				A0A7A09417A9FD73003FC387 /* libgkSystem.a in Frameworks */,
+				A0A7A09517A9FD73003FC387 /* libTestCases.a in Frameworks */,
+				A0A7A09717A9FD88003FC387 /* libglfw.a in Frameworks */,
+				A06034F417999FF100B2F4C6 /* OpenGL.framework in Frameworks */,
+				A06034EC17999A2D00B2F4C6 /* AppKit.framework in Frameworks */,
+				A06034EB17999A2200B2F4C6 /* IOKit.framework in Frameworks */,
+				A06034E917999A1900B2F4C6 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A0F19FB217928FFD00F788C5 = {
+			isa = PBXGroup;
+			children = (
+				A0A7A09617A9FD88003FC387 /* libglfw.a */,
+				A0A7A08617A9FD73003FC387 /* libgkCore.a */,
+				A0A7A08717A9FD73003FC387 /* libgkFont.a */,
+				A0A7A08817A9FD73003FC387 /* libgkGameFramework.a */,
+				A0A7A08917A9FD73003FC387 /* libgkGameObjectSystem.a */,
+				A0A7A08A17A9FD73003FC387 /* libgkInput.a */,
+				A0A7A08B17A9FD73003FC387 /* libgkRendererGL330.a */,
+				A0A7A08C17A9FD73003FC387 /* libgkSystem.a */,
+				A0A7A08D17A9FD73003FC387 /* libTestCases.a */,
+				A07D4BBE179A63A100C36005 /* logo_retina.png */,
+				A06034EA17999A2200B2F4C6 /* IOKit.framework */,
+				A06034E817999A1900B2F4C6 /* CoreGraphics.framework */,
+				A06034E11799925D00B2F4C6 /* OpenGL.framework */,
+				A0F19FC417928FFD00F788C5 /* gkLauncherMac */,
+				A0F19FBD17928FFD00F788C5 /* Frameworks */,
+				A0F19FBC17928FFD00F788C5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A0F19FBC17928FFD00F788C5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A0F19FBB17928FFD00F788C5 /* gkLauncherMac.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A0F19FBD17928FFD00F788C5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A0F19FBE17928FFD00F788C5 /* Cocoa.framework */,
+				A0F19FC017928FFD00F788C5 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A0F19FC017928FFD00F788C5 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A0F19FC117928FFD00F788C5 /* AppKit.framework */,
+				A0F19FC217928FFD00F788C5 /* CoreData.framework */,
+				A0F19FC317928FFD00F788C5 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		A0F19FC417928FFD00F788C5 /* gkLauncherMac */ = {
+			isa = PBXGroup;
+			children = (
+				A0F19FC517928FFD00F788C5 /* Supporting Files */,
+			);
+			path = gkLauncherMac;
+			sourceTree = "<group>";
+		};
+		A0F19FC517928FFD00F788C5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A0F19FC617928FFD00F788C5 /* gkLauncherMac-Info.plist */,
+				A0F19FC717928FFD00F788C5 /* InfoPlist.strings */,
+				A0F19FCA17928FFD00F788C5 /* main.mm */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A0F19FBA17928FFD00F788C5 /* gkLauncherMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A0F19FD817928FFD00F788C5 /* Build configuration list for PBXNativeTarget "gkLauncherMac" */;
+			buildPhases = (
+				A0F19FB717928FFD00F788C5 /* Sources */,
+				A0F19FB817928FFD00F788C5 /* Frameworks */,
+				A0F19FB917928FFD00F788C5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = gkLauncherMac;
+			productName = gkLauncherMac;
+			productReference = A0F19FBB17928FFD00F788C5 /* gkLauncherMac.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A0F19FB317928FFD00F788C5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = kkstudio;
+			};
+			buildConfigurationList = A0F19FB617928FFD00F788C5 /* Build configuration list for PBXProject "gkLauncherMac" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A0F19FB217928FFD00F788C5;
+			productRefGroup = A0F19FBC17928FFD00F788C5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A0F19FBA17928FFD00F788C5 /* gkLauncherMac */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A0F19FB917928FFD00F788C5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0F19FC917928FFD00F788C5 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A0F19FB717928FFD00F788C5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0F19FCB17928FFD00F788C5 /* main.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A0F19FC717928FFD00F788C5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A0F19FC817928FFD00F788C5 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A07D4BB4179A38FC00C36005 /* Debug-OSX */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CONFIGURATION_BUILD_DIR = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				CONFIGURATION_TEMP_DIR = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_STATIC_LIB,
+					_7ZIP_ST,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					gkCommon,
+					../thirdparty/rapidxml,
+					../thirdparty,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OBJROOT = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				OTHER_LDFLAGS = "-ObjC";
+				SDKROOT = macosx;
+				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+			};
+			name = "Debug-OSX";
+		};
+		A07D4BB5179A38FC00C36005 /* Debug-OSX */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				INFOPLIST_FILE = "gkLauncherMac/gkLauncherMac-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../thirdparty/GLFW\"",
+					"\"$(SRCROOT)/../../exec/ios/Debug\"",
+					"\"$(SRCROOT)/../thirdparty/OGLSDK/lib\"",
+					"\"$(SRCROOT)/../../exec/ios/Debug-iphoneos\"",
+					"\"$(SRCROOT)/../../exec/ios/Debug-OSX\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = "Debug-OSX";
+		};
+		A0950F00179C3E5F002C8759 /* Release-OSX */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CONFIGURATION_BUILD_DIR = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				CONFIGURATION_TEMP_DIR = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_STATIC_LIB,
+					_7ZIP_ST,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					gkCommon,
+					../thirdparty/rapidxml,
+					../thirdparty,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OBJROOT = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				OTHER_LDFLAGS = "-ObjC";
+				SDKROOT = macosx;
+				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+			};
+			name = "Release-OSX";
+		};
+		A0950F01179C3E5F002C8759 /* Release-OSX */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				INFOPLIST_FILE = "gkLauncherMac/gkLauncherMac-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../thirdparty/GLFW\"",
+					"\"$(SRCROOT)/../../exec/ios/Debug\"",
+					"\"$(SRCROOT)/../thirdparty/OGLSDK/lib\"",
+					"\"$(SRCROOT)/../../exec/ios/Debug-iphoneos\"",
+					"\"$(SRCROOT)/../../exec/ios/Debug-OSX\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = "Release-OSX";
+		};
+		A0F19FD617928FFD00F788C5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CONFIGURATION_BUILD_DIR = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				CONFIGURATION_TEMP_DIR = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_STATIC_LIB,
+					_7ZIP_ST,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					gkCommon,
+					../thirdparty/rapidxml,
+					../thirdparty,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OBJROOT = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				OTHER_LDFLAGS = "-ObjC";
+				SDKROOT = macosx;
+				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+			};
+			name = Debug;
+		};
+		A0F19FD717928FFD00F788C5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CONFIGURATION_BUILD_DIR = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				CONFIGURATION_TEMP_DIR = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_STATIC_LIB,
+					_7ZIP_ST,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					gkCommon,
+					../thirdparty/rapidxml,
+					../thirdparty,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OBJROOT = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				OTHER_LDFLAGS = "-ObjC";
+				SDKROOT = macosx;
+				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+			};
+			name = Release;
+		};
+		A0F19FD917928FFD00F788C5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				INFOPLIST_FILE = "gkLauncherMac/gkLauncherMac-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../thirdparty/GLFW\"",
+					"\"$(SRCROOT)/../../exec/ios/Debug\"",
+					"\"$(SRCROOT)/../thirdparty/OGLSDK/lib\"",
+					"\"$(SRCROOT)/../../exec/ios/Debug-iphoneos\"",
+					"\"$(SRCROOT)/../../exec/ios/Debug-OSX\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A0F19FDA17928FFD00F788C5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				INFOPLIST_FILE = "gkLauncherMac/gkLauncherMac-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../thirdparty/GLFW\"",
+					"\"$(SRCROOT)/../../exec/ios/Debug\"",
+					"\"$(SRCROOT)/../thirdparty/OGLSDK/lib\"",
+					"\"$(SRCROOT)/../../exec/ios/Debug-iphoneos\"",
+					"\"$(SRCROOT)/../../exec/ios/Debug-OSX\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A0F19FB617928FFD00F788C5 /* Build configuration list for PBXProject "gkLauncherMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0F19FD617928FFD00F788C5 /* Debug */,
+				A07D4BB4179A38FC00C36005 /* Debug-OSX */,
+				A0950F00179C3E5F002C8759 /* Release-OSX */,
+				A0F19FD717928FFD00F788C5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A0F19FD817928FFD00F788C5 /* Build configuration list for PBXNativeTarget "gkLauncherMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0F19FD917928FFD00F788C5 /* Debug */,
+				A07D4BB5179A38FC00C36005 /* Debug-OSX */,
+				A0950F01179C3E5F002C8759 /* Release-OSX */,
+				A0F19FDA17928FFD00F788C5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A0F19FB317928FFD00F788C5 /* Project object */;
+}

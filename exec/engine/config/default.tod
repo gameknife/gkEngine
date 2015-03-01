@@ -1,0 +1,39 @@
+<TimeOfDay time="9.000000" keycount="2">
+	<float name="KEYTIME">9 15 </float>
+	<float name="HDRBRIGHTNESS">1 1 </float>
+	<float name="HDRCONSTACT">1 1 </float>
+	<float name="SSAOINTENSITY">1 1 </float>
+	<color name="CLSKYLIGHT">0.6 0.8 1 1 0.6 0.8 1 1 </color>
+	<color name="CLGROUNDAMB">0 0.0627 0.227 1 0 0.0627 0.227 1 </color>
+	<float name="GROUNDAMBMIN">0 0 </float>
+	<float name="GROUNDAMBMAX">360 360 </float>
+	<color name="CLSUNLIGHT">1 0.922 0.714 1 1 0.922 0.714 1 </color>
+	<float name="SUNINTENSITY">5 5 </float>
+	<float name="SUNSPECINTENSITY">1 1 </float>
+	<float name="SUNSHAFTVISIBILITY">1 1 </float>
+	<float name="SUNSHAFTATTEN">0.15 0.15 </float>
+	<float name="SUNSHAFTLENGTH">1 1 </float>
+	<color name="CLZENITHBOTTOM">0.07 0.15 0.25 1 0.0902 0.2 0.4 1 </color>
+	<color name="CLZENITHTOP">0.07 0.15 0.25 1 0.0471 0.114 0.333 1 </color>
+	<float name="ZENITHSHIFT">0.5 0.5 </float>
+	<color name="CLFOGCOLOR">0.098 0.149 0.298 0 0.1 0.15 0.3 1.08 </color>
+	<float name="FOGDENSITY">0.004 0.004 </float>
+	<float name="FOGSTART">0 0.015 </float>
+	<float name="BLOOMINTENSITY">0.3 0.3 </float>
+	<color name="CLBLOOMCOLOR">0.8 0.8 1 1 0.8 0.8 1 1 </color>
+	<float name="STREAKINTENSITY">0.01 0.01 </float>
+	<color name="CLSTREAKCOLOR">0.8 0.8 1 1 0.8 0.8 1 1 </color>
+	<float name="SATURATE">0.82 0.82 </float>
+	<float name="CONSTRACT">1 1 </float>
+	<float name="BRIGHTNESS">1 1 </float>
+	<float name="LEVELINPUTMIN">0 0 </float>
+	<float name="LEVEL">0.92 0.92 </float>
+	<float name="LEVELINPUTMAX">239 239 </float>
+	<float name="DOFBLURINTENSITY">1 1 </float>
+	<float name="DOFDISTANCE">600 600 </float>
+	<float name="DOFDISTANCENEAR">0.0 0.5 </float>
+	<float name="DOFFOCUSPLANE">1 1 </float>
+	<float name="DOFFOCUSDISTANCE">50 50 </float>
+	<float name="LDRFAKEBRIGHTNESS">4.0 4.0</float>
+</TimeOfDay>
+

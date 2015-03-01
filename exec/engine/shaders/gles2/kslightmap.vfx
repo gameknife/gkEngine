@@ -1,0 +1,18 @@
+#version 100
+
+#include "include/constant_vs_def.h"
+#include "include/varying_def.h"
+
+void main(void)
+{
+	highp vec4 posInWorld = g_matWorld * vec4(inPosition.xyz, 1);
+	vec4 hpos = g_matWVP * vec4(inPosition.xyz, 1);
+
+	outTC = inTexcoord;
+	outTangent = vec4( (g_matWorld * vec4(inTangent.xyz, 0.0) ).xyz, inTangent.w);
+	outBinormal = (g_matWorld * vec4(inBinormal.xyz, 0.0)).xyz;
+	outWorldPos = vec4(posInWorld.xyz, gl_Position.z);
+	outLightPos =  g_mViewToLightProj * vec4(posInWorld.xyz, 1.0);
+    
+    gl_Position = hpos;
+}

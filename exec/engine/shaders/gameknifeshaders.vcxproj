@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile_MultiBytes|Win32">
+      <Configuration>Profile_MultiBytes</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile_StaticLib|Win32">
+      <Configuration>Profile_StaticLib</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile|Win32">
+      <Configuration>Profile</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{96F0C4C1-512E-4E4D-9A76-6B4812EDD8CA}</ProjectGuid>
+    <RootNamespace>GameKnifeShaders</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile_StaticLib|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profile_StaticLib|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Profile_StaticLib|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Profile_StaticLib|Win32'">$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">$(Configuration)\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Profile_StaticLib|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Profile_StaticLib|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Profile_StaticLib|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>../../thirdparty/maxsdk/2012/lib</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile_StaticLib|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="d3d9\hwcode\$ksreflpass.fx" />
+    <None Include="d3d9\hwcode\$ksshadowpass.fx" />
+    <None Include="d3d9\hwcode\%24BasePara.h" />
+    <None Include="d3d9\hwcode\%24InOutDefine.h" />
+    <None Include="d3d9\hwcode\%24ksPixelLib.h" />
+    <None Include="d3d9\hwcode\%24ksVertexLib.h" />
+    <None Include="d3d9\hwcode\%24Light_Calc.h" />
+    <None Include="d3d9\hwcode\%24postlib.h" />
+    <None Include="d3d9\hwcode\%24SamplerDef.h" />
+    <None Include="d3d9\hwcode\%24VolumeFog.h" />
+    <None Include="d3d9\hwcode\grass.fx" />
+    <None Include="d3d9\hwcode\ksAux.fx" />
+    <None Include="d3d9\hwcode\ksbase.fx" />
+    <None Include="d3d9\hwcode\ksCommonPost.fx" />
+    <None Include="d3d9\hwcode\ksCompileFailed.fx" />
+    <None Include="d3d9\hwcode\ksDefault.fx" />
+    <None Include="d3d9\hwcode\ksDeferredLighting.fx" />
+    <None Include="d3d9\hwcode\ksDeferredShading.fx" />
+    <None Include="d3d9\hwcode\ksDeferredSnow.fx" />
+    <None Include="d3d9\hwcode\ksfont.fx" />
+    <None Include="d3d9\hwcode\ksGenerateSM.fx" />
+    <None Include="d3d9\hwcode\ksHDRProcess.fx" />
+    <None Include="d3d9\hwcode\ksoculus.fx" />
+    <None Include="d3d9\hwcode\ksReflGen.fx" />
+    <None Include="d3d9\hwcode\ksShadowMaskGen.fx" />
+    <None Include="d3d9\hwcode\ksShadowStencilGen.fx" />
+    <None Include="d3d9\hwcode\ksskinhd.fx" />
+    <None Include="d3d9\hwcode\ksSpecilEffects.fx" />
+    <None Include="d3d9\hwcode\ksSSAO.fx" />
+    <None Include="d3d9\hwcode\ksSSDO.fx" />
+    <None Include="d3d9\hwcode\ksSSRL.fx" />
+    <None Include="d3d9\hwcode\ksstereo_general.fx" />
+    <None Include="d3d9\hwcode\kswatersurface.fx" />
+    <None Include="d3d9\hwcode\%24kszpass.fx" />
+    <None Include="d3d9\hwcode\ks_skyhdr.fx" />
+    <None Include="d3d9\hwcode\Particle.fx" />
+    <None Include="d3d9\hwcode\ParticleUpdate.fx" />
+    <None Include="d3d9\hwcode\post_msaa.fx" />
+    <None Include="d3d9\hwcode\post_smaa.fx" />
+    <None Include="d3d9\hwcode\terrian.fx" />
+    <None Include="d3d9\hwcode\vegetation.fx" />
+    <None Include="d3d9\hwcode\vegetation_autoexpand.fx" />
+    <None Include="gles2\genshadowmap.ffx" />
+    <None Include="gles2\genshadowmap.vfx" />
+    <None Include="gles2\ksaux.ffx" />
+    <None Include="gles2\ksaux.vfx" />
+    <None Include="gles2\ksBase.ffx" />
+    <None Include="gles2\ksBase.vfx" />
+    <None Include="gles2\ksfont.ffx" />
+    <None Include="gles2\ksfont.vfx" />
+    <None Include="gles2\ksLightMap.ffx" />
+    <None Include="gles2\ksLightMap.vfx" />
+    <None Include="gles2\kssimple.ffx" />
+    <None Include="gles2\kssimple.vfx" />
+    <None Include="gles2\ksskinhd.ffx" />
+    <None Include="gles2\ksterrian.ffx" />
+    <None Include="gles2\ksterrian.vfx" />
+    <None Include="gles2\ks_SkyHdr.ffx" />
+    <None Include="gles2\ks_SkyHdr.vfx" />
+    <None Include="gles2\postcommon.ffx" />
+    <None Include="gles2\postcommon.vfx" />
+    <None Include="gles2\post_bloom.ffx" />
+    <None Include="gles2\post_bloom_dof.ffx" />
+    <None Include="gles2\post_brightpass.ffx" />
+    <None Include="gles2\post_copy.ffx" />
+    <None Include="gles2\post_cvtlineardepth.ffx" />
+    <None Include="gles2\post_deferredlighting_ambient.ffx" />
+    <None Include="gles2\post_fogprocess.ffx" />
+    <None Include="gles2\post_gaussian.ffx" />
+    <None Include="gles2\post_shadowmask.ffx" />
+    <None Include="gles2\post_ssao.ffx" />
+    <None Include="gles2\showdepthmap.ffx" />
+    <None Include="gles2\Vegetation.ffx" />
+    <None Include="gles2\Vegetation_AutoExpand.ffx" />
+    <None Include="gles2\Vegetation_AutoExpand.vfx" />
+    <None Include="template\built_in\grass.gfx" />
+    <None Include="template\built_in\ksbase.gfx" />
+    <None Include="template\built_in\kssimple.gfx">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="template\built_in\ksskinhd.gfx">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="template\built_in\kswatersurface.gfx" />
+    <None Include="template\built_in\ks_skyhdr.gfx" />
+    <None Include="template\built_in\terrian.gfx" />
+    <None Include="template\built_in\vegetation.gfx" />
+    <None Include="template\built_in\vegetation_autoexpand.gfx" />
+    <None Include="template\hidden\ksaux.gfx" />
+    <None Include="template\hidden\kscommonpost.gfx" />
+    <None Include="template\hidden\ksdefault.gfx" />
+    <None Include="template\hidden\ksdeferredlighting.gfx">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="template\hidden\ksdeferredshading.gfx" />
+    <None Include="template\hidden\ksdeferredsnow.gfx" />
+    <None Include="template\hidden\ksfont.gfx" />
+    <None Include="template\hidden\ksgeneratesm.gfx" />
+    <None Include="template\hidden\kshdrprocess.gfx" />
+    <None Include="template\hidden\ksreflgen.gfx" />
+    <None Include="template\hidden\ksshadowmaskgen.gfx" />
+    <None Include="template\hidden\ksshadowstencilgen.gfx" />
+    <None Include="template\hidden\ksspecileffects.gfx" />
+    <None Include="template\hidden\ksssao.gfx" />
+    <None Include="template\hidden\ksssrl.gfx" />
+    <None Include="template\hidden\kszpass.gfx" />
+    <None Include="template\hidden\kszpassskinned.gfx" />
+    <None Include="template\hidden\particleupdate.gfx" />
+    <None Include="template\hidden\postcommon.gfx" />
+    <None Include="template\hidden\post_bloom.gfx" />
+    <None Include="template\hidden\post_brightpass.gfx" />
+    <None Include="template\hidden\post_copy.gfx" />
+    <None Include="template\hidden\post_cvtlineardepth.gfx" />
+    <None Include="template\hidden\post_fogprocess.gfx" />
+    <None Include="template\hidden\post_gaussian.gfx" />
+    <None Include="template\hidden\post_msaa.gfx" />
+    <None Include="template\hidden\post_ssao.gfx" />
+    <None Include="template\hidden\showdepthmap.gfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="gles2\include\constant_ps_def.h" />
+    <ClInclude Include="gles2\include\constant_vs_def.h" />
+    <ClInclude Include="gles2\include\sampler_def.h" />
+    <ClInclude Include="gles2\include\shade_lib.h" />
+    <ClInclude Include="gles2\include\varying_def.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

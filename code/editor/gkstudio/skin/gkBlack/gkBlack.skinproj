@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SkinBuilderProject CompactMode="1">
+	<ThemeInfo Caption="Common">
+		<Class Name="Documentation">
+			<Property Name="DisplayName" Value="CryDark"/>
+			<Property Name="Description" Value="Based on CryDark"/>
+			<Property Name="Copyright" Value="Copyright ?2009 Codejock Software"/>
+			<Property Name="Author" Value="Codejock Skin Builder v1.0"/>
+			<Property Name="Company" Value="Codejock Software"/>
+			<Property Name="Url" Value="http://www.codejock.com"/>
+			<Property Name="Version" Value="1.0"/>
+		</Class>
+		<Class Name="Macros">
+			<Property Name="ImageFolder" Value="images"/>
+		</Class>
+		<Class Name="SysMetrics">
+			<Property Name="MenuText" Value="255 255 255"/>
+			<Property Name="GrayText" Value="119 119 119"/>
+			<Property Name="BtnFace" Value="45 45 48"/>
+			<Property Name="BtnText" Value="231 231 231"/>
+			<Property Name="CssName" Value="cpwebvw.css"/>
+			<Property Name="InactiveCaptionText" Value="255 255 255"/>
+			<Property Name="Window" Value="37 37 38"/>
+			<Property Name="WindowText" Value="192 192 192"/>
+			<Property Name="ActiveCaption" Value="94 94 94"/>
+			<Property Name="Highlight" Value="0 129 195"/>
+			<Property Name="BtnHighlight" Value="0 0 0"/>
+			<Property Name="Menu" Value="41 41 41"/>
+			<Property Name="ActiveBorder" Value="0 0 0"/>
+			<Property Name="HighlightText" Value="255 255 255"/>
+			<Property Name="InactiveBorder" Value="0 0 0"/>
+			<Property Name="DkShadow3d" Value="63 63 70"/>
+			<Property Name="BtnShadow" Value="63 63 70"/>
+		</Class>
+		<Class Name="Window">
+			<Property Part="MinButton" Name="BgType" Value="ImageFile"/>
+			<Property Part="MinButton" Name="ImageFile" Value="%ImageFolder%\\minimize.png"/>
+			<Property Part="MinButton" Name="ImageCount" Value="3"/>
+			<Property Part="MinButton" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="Caption" Name="CaptionMargins" Value="0, 0, 0, 20"/>
+			<Property Part="Caption" Name="TextColor" Value="255 255 255"/>
+			<Property Part="Caption" Name="TextShadowType" Value="None"/>
+			<Property Part="Caption" Name="BgType" Value="BorderFill"/>
+			<Property Part="Caption" Name="SizingMargins" Value="5, 5, 0, 0"/>
+			<Property Part="MaxButton" Name="BgType" Value="ImageFile"/>
+			<Property Part="MaxButton" Name="ImageFile" Value="%ImageFolder%\\maximize.png"/>
+			<Property Part="MaxButton" Name="ImageCount" Value="3"/>
+			<Property Part="MaxButton" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="CloseButton" Name="BgType" Value="ImageFile"/>
+			<Property Part="CloseButton" Name="ImageFile" Value="%ImageFolder%\\close.png"/>
+			<Property Part="CloseButton" Name="ImageCount" Value="3"/>
+			<Property Part="CloseButton" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="FrameRight" Name="BgType" Value="BorderFill"/>
+			<Property Part="FrameBottom" Name="BgType" Value="BorderFill"/>
+			<Property Part="MaxCaption" Name="BgType" Value="BorderFill"/>
+			<Property Part="MaxCaption" Name="CaptionMargins" Value="20, 0, 0, 0"/>
+			<Property Part="MaxCaption" Name="SizingMargins" Value="5, 5, 0, 0"/>
+			<Property Part="RestoreButton" Name="BgType" Value="ImageFile"/>
+			<Property Part="RestoreButton" Name="ImageFile" Value="%ImageFolder%\\restore.png"/>
+			<Property Part="RestoreButton" Name="ImageCount" Value="3"/>
+			<Property Part="RestoreButton" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="SmallFrameLeft" Name="BgType" Value="BorderFill"/>
+			<Property Part="SmallFrameRight" Name="BgType" Value="BorderFill"/>
+			<Property Part="SmallFrameBottom" Name="BgType" Value="BorderFill"/>
+			<Property Part="SmallCaption" Name="ImageFile" Value="%ImageFolder%\\frametop_02.png"/>
+			<Property Part="SmallCaption" Name="BgType" Value="ImageFile"/>
+			<Property Part="SmallCaption" Name="TextColor" Value="192 192 192"/>
+			<Property Part="SmallCaption" Name="Transparent" Value="True"/>
+			<Property Part="SmallCaption" Name="SizingMargins" Value="5, 5, 0, 0"/>
+			<Property Part="SmallCaption" Name="TransparentColor" Value="255 255 255"/>
+			<Property Part="MinCaption" Name="BgType" Value="ImageFile"/>
+			<Property Part="MinCaption" Name="ImageFile" Value="%ImageFolder%\\framemaximized.png"/>
+			<Property Part="SmallMinCaption" Name="BgType" Value="ImageFile"/>
+			<Property Part="SmallMinCaption" Name="ImageFile" Value="%ImageFolder%\\framemaximized.png"/>
+			<Property Part="SmallMaxCaption" Name="BgType" Value="ImageFile"/>
+			<Property Part="SmallMaxCaption" Name="ImageFile" Value="%ImageFolder%\\framemaximized.png"/>
+			<Property Part="SmallCloseButton" Name="ImageFile" Value="%ImageFolder%\\mdiclosebutton.png"/>
+			<Property Part="SmallCloseButton" Name="ImageCount" Value="4"/>
+			<Property Part="SmallCloseButton" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="SmallCloseButton" Name="SizingType" Value="TrueSize"/>
+			<Property Part="MdiCloseButton" Name="ImageFile" Value="%ImageFolder%\\mdiclosebutton.png"/>
+			<Property Part="MdiCloseButton" Name="ImageCount" Value="4"/>
+			<Property Part="MdiCloseButton" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="MdiCloseButton" Name="SizingType" Value="TrueSize"/>
+			<Property Part="FrameRight" Name="BorderColor" Value="45 45 48"/>
+			<Property Part="FrameLeft" Name="BgType" Value="BorderFill"/>
+			<Property Part="FrameLeft" Name="BorderColor" Value="45 45 48"/>
+			<Property Part="FrameBottom" Name="BorderColor" Value="45 45 48"/>
+			<Property Part="SmallFrameLeft" Name="BorderColor" Value="45 45 48"/>
+			<Property Part="Caption" Name="BorderColor" Value="45 45 48"/>
+			<Property Part="Caption" Name="FillColor" Value="45 45 48"/>
+			<Property Part="FrameLeft" Name="FillColor" Value="45 45 48"/>
+			<Property Part="FrameRight" Name="FillColor" Value="45 45 48"/>
+			<Property Part="FrameBottom" Name="FillColor" Value="45 45 48"/>
+			<Property Part="SmallFrameLeft" Name="FillColor" Value="45 45 48"/>
+			<Property Part="SmallFrameRight" Name="BorderColor" Value="45 45 48"/>
+			<Property Part="SmallFrameRight" Name="FillColor" Value="45 45 48"/>
+			<Property Part="SmallFrameBottom" Name="BorderColor" Value="45 45 48"/>
+			<Property Part="SmallFrameBottom" Name="FillColor" Value="45 45 48"/>
+			<Property Part="MaxCaption" Name="BorderColor" Value="45 45 48"/>
+			<Property Part="MaxCaption" Name="FillColor" Value="45 45 48"/>
+		</Class>
+		<Class Name="Button">
+			<Property Name="BorderColor" Value="128 128 128"/>
+			<Property Name="BorderSize" Value="1"/>
+			<Property Name="BgType" Value="BorderFill"/>
+			<Property Name="TextColor" Value="231 231 231"/>
+			<Property Part="CheckBox" Name="FillColor" Value="255 255 255"/>
+			<Property Part="CheckBox" Name="BgType" Value="ImageFile"/>
+			<Property Part="CheckBox" Name="ImageFile" Value="%ImageFolder%\\checkl2.png"/>
+			<Property Part="CheckBox" Name="ImageCount" Value="12"/>
+			<Property Part="CheckBox" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="CheckBox" Name="ImageSelectType" Value="Dpi"/>
+			<Property Part="CheckBox" Name="MirrorImage" Value="False"/>
+			<Property Part="CheckBox" Name="ContentMargins" Value="0, 0, 0, 0"/>
+			<Property Part="CheckBox" Name="SizingMargins" Value="0, 0, 0, 0"/>
+			<Property Part="CheckBox" Name="SizingType" Value="TrueSize"/>
+			<Property Part="CheckBox" Name="TrueSizeScalingType" Value="Dpi"/>
+			<Property Part="CheckBox" Name="TrueSizeStretchMark" Value="50"/>
+			<Property Part="CheckBox" Name="ContentAlignment" Value="Left"/>
+			<Property Part="CheckBox" Name="Transparent" Value="True"/>
+			<Property Part="RadioButton" Name="BgType" Value="ImageFile"/>
+			<Property Part="RadioButton" Name="ImageFile" Value="%ImageFolder%\\radiol.png"/>
+			<Property Part="RadioButton" Name="ImageCount" Value="8"/>
+			<Property Part="RadioButton" Name="SizingType" Value="TrueSize"/>
+			<Property Part="RadioButton" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="PushButton" Name="BgType" Value="ImageFile"/>
+			<Property Part="PushButton" Name="ImageFile" Value="%ImageFolder%\\Big_Button_sheet.png"/>
+			<Property Part="PushButton" Name="ImageCount" Value="5"/>
+			<Property Part="PushButton" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="PushButton" Name="SizingMargins" Value="10, 8, 6, 5"/>
+			<Property Part="PushButton" Name="MinSize" Value="0, 20"/>
+			<Property Part="PushButton" Name="TextColor" Value="231 231 231"/>
+			<Property Part="PushButton" Name="TransparentColor" Value="255 0 255"/>
+			<Property Part="PushButton" Name="Transparent" Value="True"/>
+			<Property Part="PushButton" Name="MirrorImage" Value="False"/>
+		</Class>
+		<Class Name="Rebar">
+			<Property Name="BgType" Value="ImageFile"/>
+			<Property Name="Font" Value="Tahoma, 8"/>
+			<Property Name="TextColor" Value="231 231 231"/>
+			<Property Name="EdgeHighlightColor" Value="29 28 26"/>
+			<Property Name="EdgeShadowColor" Value="29 28 26"/>
+			<Property Name="ImageFile" Value="%ImageFolder%\\toolbarbg.png"/>
+			<Property Part="Gripper" Name="BgType" Value="ImageFile"/>
+			<Property Part="Gripper" Name="ImageFile" Value="%ImageFolder%\\rebargripper.png"/>
+			<Property Part="Gripper" Name="SizingType" Value="TrueSize"/>
+			<Property Part="Band" Name="FillColor" Value="150 140 131"/>
+		</Class>
+		<Class Name="Toolbar">
+			<Property Name="TextColor" Value="231 231 231"/>
+			<Property Part="Button" Name="BgType" Value="ImageFile"/>
+			<Property Part="Button" Name="ImageFile" Value="%ImageFolder%\\toolbarbuttons.png"/>
+			<Property Part="Button" Name="ImageCount" Value="6"/>
+			<Property Part="Button" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="Button" Name="SizingMargins" Value="2, 2, 2, 3"/>
+			<Property Part="Separator" Name="BgType" Value="ImageFile"/>
+			<Property Part="Separator" Name="ImageFile" Value="%ImageFolder%\\menubarseparator.png"/>
+			<Property Part="DropDownButton" Name="BgType" Value="ImageFile"/>
+			<Property Part="DropDownButton" Name="ImageFile" Value="%ImageFolder%\\toolbarbuttons.png"/>
+			<Property Part="DropDownButton" Name="ImageCount" Value="6"/>
+			<Property Part="DropDownButton" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="DropDownButton" Name="SizingMargins" Value="2, 2, 2, 3"/>
+			<Property Part="SplitButton" Name="BgType" Value="ImageFile"/>
+			<Property Part="SplitButton" Name="ImageFile" Value="%ImageFolder%\\toolbarbuttons_split_left.png"/>
+			<Property Part="SplitButton" Name="ImageCount" Value="6"/>
+			<Property Part="SplitButton" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="SplitButton" Name="SizingMargins" Value="2, 0, 1, 1"/>
+			<Property Part="SplitButtonDropDown" Name="BgType" Value="ImageFile"/>
+			<Property Part="SplitButtonDropDown" Name="ImageFile" Value="%ImageFolder%\\toolbarbuttons_split_right.png"/>
+			<Property Part="SplitButtonDropDown" Name="SizingType" Value="Stretch"/>
+			<Property Part="SplitButtonDropDown" Name="ImageCount" Value="6"/>
+			<Property Part="SplitButtonDropDown" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="SplitButtonDropDown" Name="SizingMargins" Value="0, 8, 1, 1"/>
+		</Class>
+		<Class Name="Status">
+			<Property Name="BgType" Value="BorderFill"/>
+			<Property Name="TextColor" Value="231 231 231"/>
+			<Property Name="BorderColor" Value="45 45 48"/>
+			<Property Name="FillColor" Value="45 45 48"/>
+		</Class>
+		<Class Name="ListBox">
+			<Property Name="BgType" Value="BorderFill"/>
+			<Property Name="BorderSize" Value="1"/>
+		</Class>
+		<Class Name="ListView">
+			<Property Name="BgType" Value="BorderFill"/>
+			<Property Name="BorderSize" Value="1"/>
+		</Class>
+		<Class Name="Header">
+			<Property Name="BgType" Value="BorderFill"/>
+			<Property Name="BorderSize" Value="1"/>
+			<Property Name="SizingMargins" Value="1, 1, 1, 1"/>
+		</Class>
+		<Class Name="Progress">
+			<Property Part="Bar" Name="FillColor" Value="128 128 128"/>
+			<Property Part="Bar" Name="BgType" Value="BorderFill"/>
+			<Property Part="BarVert" Name="BgType" Value="ImageFile"/>
+			<Property Part="BarVert" Name="ImageFile" Value="%ImageFolder%\\progresschunkvert.png"/>
+			<Property Part="Chunk" Name="BgType" Value="ImageFile"/>
+			<Property Part="Chunk" Name="ImageFile" Value="%ImageFolder%\\progresschunk.png"/>
+			<Property Part="Chunk" Name="CaptionMargins" Value="0, 0, 0, 0"/>
+			<Property Part="Chunk" Name="SizingMargins" Value="0, 0, 0, 0"/>
+			<Property Part="Chunk" Name="SizingType" Value="Stretch"/>
+			<Property Part="Chunk" Name="FillType" Value="TileImage"/>
+			<Property Part="ChunkVert" Name="BgType" Value="BorderFill"/>
+			<Property Part="ChunkVert" Name="FillColor" Value="128 128 128"/>
+			<Property Name="ProgressChunkSize" Value="1"/>
+			<Property Name="ProgressSpaceSize" Value="0"/>
+		</Class>
+		<Class Name="Tab">
+			<Property Part="TopTabItem" Name="Transparent" Value="True"/>
+			<Property Part="TopTabItem" Name="SizingMargins" Value="11, 11, 17, 1"/>
+			<Property Part="TopTabItem" Name="ContentMargins" Value="1, 0, 0, 0"/>
+			<Property Part="TopTabItem" Name="TransparentColor" Value="255 0 255"/>
+			<Property Part="TopTabItem" Name="ImageFile" Value="%ImageFolder%\\tabs_Inactive_left.png"/>
+			<Property Part="TopTabItem" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="TopTabItem" Name="BgType" Value="ImageFile"/>
+			<Property Part="TopTabItem" Name="ImageCount" Value="3"/>
+			<Property Part="TopTabItemLeftEdge" Name="ImageFile" Value="%ImageFolder%\\tabs_Inactive_left.png"/>
+			<Property Part="TopTabItemLeftEdge" Name="SizingMargins" Value="14, 11, 17, 1"/>
+			<Property Part="TopTabItemLeftEdge" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="TopTabItemLeftEdge" Name="TransparentColor" Value="255 0 255"/>
+			<Property Part="TopTabItemLeftEdge" Name="BgType" Value="ImageFile"/>
+			<Property Part="TopTabItemLeftEdge" Name="ImageCount" Value="3"/>
+			<Property Part="TopTabItemLeftEdge" Name="Transparent" Value="True"/>
+			<Property Name="TextColor" Value="231 231 231"/>
+			<Property Name="BgType" Value="BorderFill"/>
+			<Property Name="FillColor" Value="153 153 153"/>
+			<Property Name="FillType" Value="Solid"/>
+			<Property Name="BorderSize" Value="0"/>
+			<Property Part="TopTabItemRightEdge" Name="ImageFile" Value="%ImageFolder%\\tabs_Inactive_right.png"/>
+			<Property Part="TopTabItemRightEdge" Name="SizingMargins" Value="14, 11, 17, 1"/>
+			<Property Part="TopTabItemRightEdge" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="TopTabItemRightEdge" Name="TransparentColor" Value="255 0 255"/>
+			<Property Part="TopTabItemRightEdge" Name="BgType" Value="ImageFile"/>
+			<Property Part="TopTabItemRightEdge" Name="ImageCount" Value="3"/>
+			<Property Part="TopTabItemRightEdge" Name="Transparent" Value="True"/>
+			<Property Part="Pane" Name="BgType" Value="ImageFile"/>
+			<Property Part="Pane" Name="ImageCount" Value="1"/>
+			<Property Part="Pane" Name="ImageFile" Value="%ImageFolder%\\tabpaneedge.png"/>
+			<Property Part="Pane" Name="SizingMargins" Value="8, 8, 9, 9"/>
+			<Property Part="Pane" Name="SizingType" Value="Tile"/>
+			<Property Part="Pane" Name="Transparent" Value="True"/>
+			<Property Part="Pane" Name="TransparentColor" Value="255 0 255"/>
+			<Property Part="Body" Name="BgType" Value="ImageFile"/>
+			<Property Part="Body" Name="ImageFile1" Value="%ImageFolder%\\tabbackground.png"/>
+			<Property Part="Body" Name="StockImageFile" Value="%ImageFolder%\\tabbackground.png"/>
+		</Class>
+		<Class Name="TrackBar">
+			<Property Part="Track" Name="BgType" Value="BorderFill"/>
+			<Property Part="Track" Name="FillColor" Value="128 128 128"/>
+			<Property Part="TrackVert" Name="BgType" Value="BorderFill"/>
+			<Property Part="TrackVert" Name="FillColor" Value="128 128 128"/>
+			<Property Part="Thumb" Name="BgType" Value="ImageFile"/>
+			<Property Part="Thumb" Name="ImageFile" Value="%ImageFolder%\\trackbar.png"/>
+			<Property Part="Thumb" Name="ImageCount" Value="5"/>
+			<Property Part="Thumb" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="Thumb" Name="SizingMargins" Value="1, 1, 1, 1"/>
+			<Property Part="Thumb" Name="SizingType" Value="TrueSize"/>
+			<Property Part="ThumbBottom" Name="BgType" Value="ImageFile"/>
+			<Property Part="ThumbBottom" Name="ImageFile" Value="%ImageFolder%\\trackbar.png"/>
+			<Property Part="ThumbBottom" Name="ImageCount" Value="5"/>
+			<Property Part="ThumbBottom" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="ThumbBottom" Name="SizingType" Value="TrueSize"/>
+			<Property Part="ThumbBottom" Name="UniformSizing" Value="True"/>
+			<Property Part="ThumbBottom" Name="SizingMargins" Value="6, 6, 0, 0"/>
+			<Property Part="ThumbBottom" Name="TrueSizeScalingType" Value="Dpi"/>
+			<Property Part="ThumbBottom" Name="BorderSize" Value="0"/>
+			<Property Part="ThumbBottom" Name="BorderColor" Value="0 0 0"/>
+			<Property Part="ThumbBottom" Name="ImageSelectType" Value="Dpi"/>
+			<Property Part="ThumbBottom" Name="MinDpi1" Value="96"/>
+			<Property Part="ThumbBottom" Name="FillType" Value="Solid"/>
+			<Property Part="ThumbBottom" Name="FillColor" Value="255 153 0"/>
+			<Property Part="ThumbVert" Name="BgType" Value="ImageFile"/>
+			<Property Part="ThumbVert" Name="ImageFile" Value="%ImageFolder%\\trackbar.png"/>
+			<Property Part="ThumbVert" Name="ImageCount" Value="5"/>
+			<Property Part="ThumbVert" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="ThumbVert" Name="SizingType" Value="TrueSize"/>
+			<Property Part="ThumbVert" Name="UniformSizing" Value="True"/>
+			<Property Part="ThumbVert" Name="SizingMargins" Value="6, 6, 0, 0"/>
+			<Property Part="ThumbVert" Name="TrueSizeScalingType" Value="Dpi"/>
+			<Property Part="ThumbVert" Name="BorderSize" Value="0"/>
+			<Property Part="ThumbVert" Name="BorderColor" Value="0 0 0"/>
+			<Property Part="ThumbVert" Name="ImageSelectType" Value="Dpi"/>
+			<Property Part="ThumbVert" Name="MinDpi1" Value="96"/>
+			<Property Part="ThumbVert" Name="FillType" Value="Solid"/>
+			<Property Part="ThumbVert" Name="FillColor" Value="255 153 0"/>
+			<Property Part="ThumbLeft" Name="BgType" Value="ImageFile"/>
+			<Property Part="ThumbLeft" Name="ImageFile" Value="%ImageFolder%\\trackbar.png"/>
+			<Property Part="ThumbLeft" Name="ImageCount" Value="5"/>
+			<Property Part="ThumbLeft" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="ThumbLeft" Name="SizingType" Value="TrueSize"/>
+			<Property Part="ThumbLeft" Name="UniformSizing" Value="True"/>
+			<Property Part="ThumbLeft" Name="SizingMargins" Value="6, 6, 0, 0"/>
+			<Property Part="ThumbLeft" Name="TrueSizeScalingType" Value="Dpi"/>
+			<Property Part="ThumbLeft" Name="BorderSize" Value="0"/>
+			<Property Part="ThumbLeft" Name="BorderColor" Value="0 0 0"/>
+			<Property Part="ThumbLeft" Name="ImageSelectType" Value="Dpi"/>
+			<Property Part="ThumbLeft" Name="MinDpi1" Value="96"/>
+			<Property Part="ThumbLeft" Name="FillType" Value="Solid"/>
+			<Property Part="ThumbLeft" Name="FillColor" Value="255 153 0"/>
+			<Property Part="ThumbRight" Name="BgType" Value="ImageFile"/>
+			<Property Part="ThumbRight" Name="ImageFile" Value="%ImageFolder%\\trackbar.png"/>
+			<Property Part="ThumbRight" Name="ImageCount" Value="5"/>
+			<Property Part="ThumbRight" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="ThumbRight" Name="SizingType" Value="TrueSize"/>
+			<Property Part="ThumbRight" Name="UniformSizing" Value="True"/>
+			<Property Part="ThumbRight" Name="SizingMargins" Value="6, 6, 0, 0"/>
+			<Property Part="ThumbRight" Name="TrueSizeScalingType" Value="Dpi"/>
+			<Property Part="ThumbRight" Name="BorderSize" Value="0"/>
+			<Property Part="ThumbRight" Name="BorderColor" Value="0 0 0"/>
+			<Property Part="ThumbRight" Name="ImageSelectType" Value="Dpi"/>
+			<Property Part="ThumbRight" Name="MinDpi1" Value="96"/>
+			<Property Part="ThumbRight" Name="FillType" Value="Solid"/>
+			<Property Part="ThumbRight" Name="FillColor" Value="255 153 0"/>
+			<Property Part="ThumbTop" Name="BgType" Value="ImageFile"/>
+			<Property Part="ThumbTop" Name="ImageCount" Value="5"/>
+			<Property Part="ThumbTop" Name="ImageFile1" Value="%ImageFolder%\\trackbar.png"/>
+			<Property Part="ThumbTop" Name="ImageFile2" Value="%ImageFolder%\\trackbar.png"/>
+			<Property Part="ThumbTop" Name="ImageFile3" Value="%ImageFolder%\\trackbar.png"/>
+			<Property Part="ThumbTop" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="ThumbTop" Name="ImageSelectType" Value="Dpi"/>
+			<Property Part="ThumbTop" Name="MinDpi1" Value="96"/>
+			<Property Part="ThumbTop" Name="MinDpi2" Value="118"/>
+			<Property Part="ThumbTop" Name="MinDpi3" Value="185"/>
+			<Property Part="ThumbTop" Name="SizingType" Value="Stretch"/>
+			<Property Part="ThumbTop" Name="SizingMargins" Value="2, 2, 1, 1"/>
+			<Property Part="ThumbTop" Name="Transparent" Value="True"/>
+			<Property Part="ThumbTop" Name="TransparentColor" Value="255 255 255"/>
+			<Property Part="ThumbTop" Name="TrueSizeScalingType" Value="Dpi"/>
+			<Property Part="ThumbTop" Name="TrueSizeStretchMark" Value="100"/>
+			<Property Part="ThumbTop" Name="UniformSizing" Value="True"/>
+			<Property Part="ThumbTop" Name="BorderColor" Value="235 235 228"/>
+			<Property Part="ThumbTop" Name="BorderSize" Value="1"/>
+			<Property Part="ThumbTop" Name="FillColor" Value="24 27 36"/>
+			<Property Part="ThumbTop" Name="FillType" Value="Solid"/>
+		</Class>
+		<Class Name="Tooltip">
+			<Property Name="BgType" Value="BorderFill"/>
+			<Property Name="FillColor" Value="231 231 231"/>
+		</Class>
+		<Class Name="TreeView">
+			<Property Name="BgType" Value="BorderFill"/>
+			<Property Name="BorderSize" Value="1"/>
+		</Class>
+		<Class Name="Spin">
+			<Property Part="Up" Name="BgType" Value="ImageFile"/>
+			<Property Part="Up" Name="ImageFile" Value="%ImageFolder%\\spinupbutton.png"/>
+			<Property Part="Up" Name="SizingType" Value="TrueSize"/>
+			<Property Part="Up" Name="ImageCount" Value="4"/>
+			<Property Part="Up" Name="ImageLayout" Value="Vertical"/>
+			<Property Name="NormalSize" Value="10, 20"/>
+			<Property Part="Down" Name="BgType" Value="ImageFile"/>
+			<Property Part="Down" Name="ImageFile" Value="%ImageFolder%\\spindownbutton.png"/>
+			<Property Part="Down" Name="SizingType" Value="TrueSize"/>
+			<Property Part="Down" Name="ImageCount" Value="4"/>
+			<Property Part="Down" Name="ImageLayout" Value="Vertical"/>
+		</Class>
+		<Class Name="Scrollbar">
+			<Property Part="ThumbBtnVert" Name="BgType" Value="ImageFile"/>
+			<Property Part="ThumbBtnVert" Name="ImageFile" Value="%ImageFolder%\\scrollthumbvertical.png"/>
+			<Property Part="ThumbBtnVert" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="ThumbBtnVert" Name="ImageCount" Value="4"/>
+			<Property Part="ThumbBtnVert" Name="TransparentColor" Value="255 0 255"/>
+			<Property Part="ThumbBtnVert" Name="Transparent" Value="True"/>
+			<Property Part="ThumbBtnVert" Name="SizingType" Value="Stretch"/>
+			<Property Part="ThumbBtnVert" Name="SizingMargins" Value="0, 0, 0, 0"/>
+			<Property Part="ThumbBtnHorz" Name="BgType" Value="ImageFile"/>
+			<Property Part="ThumbBtnHorz" Name="ImageFile" Value="%ImageFolder%\\scrollthumbhorizontal.png"/>
+			<Property Part="ThumbBtnHorz" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="ThumbBtnHorz" Name="ImageCount" Value="4"/>
+			<Property Part="ThumbBtnHorz" Name="TransparentColor" Value="255 0 255"/>
+			<Property Part="ThumbBtnHorz" Name="Transparent" Value="True"/>
+			<Property Part="ThumbBtnHorz" Name="SizingType" Value="Stretch"/>
+			<Property Part="ThumbBtnHorz" Name="SizingMargins" Value="2, 2, 0, 0"/>
+			<Property Part="LowerTrackHorz" Name="BgType" Value="ImageFile"/>
+			<Property Part="LowerTrackHorz" Name="ImageFile" Value="%ImageFolder%\\scrollshafthorizontal.png"/>
+			<Property Part="LowerTrackHorz" Name="ImageLayout" Value="Horizontal"/>
+			<Property Part="LowerTrackHorz" Name="ImageCount" Value="4"/>
+			<Property Part="LowerTrackHorz" Name="TransparentColor" Value="255 0 255"/>
+			<Property Part="LowerTrackHorz" Name="Transparent" Value="True"/>
+			<Property Part="LowerTrackHorz" Name="SizingType" Value="Stretch"/>
+			<Property Part="LowerTrackHorz" Name="SizingMargins" Value="3, 3, 3, 3"/>
+			<Property Part="UpperTrackHorz" Name="BgType" Value="ImageFile"/>
+			<Property Part="UpperTrackHorz" Name="ImageFile" Value="%ImageFolder%\\scrollshafthorizontal1.png"/>
+			<Property Part="UpperTrackHorz" Name="ImageLayout" Value="Horizontal"/>
+			<Property Part="UpperTrackHorz" Name="ImageCount" Value="4"/>
+			<Property Part="UpperTrackHorz" Name="TransparentColor" Value="255 0 255"/>
+			<Property Part="UpperTrackHorz" Name="Transparent" Value="True"/>
+			<Property Part="UpperTrackHorz" Name="SizingType" Value="Stretch"/>
+			<Property Part="UpperTrackHorz" Name="SizingMargins" Value="3, 3, 3, 3"/>
+			<Property Part="LowerTrackVert" Name="BgType" Value="ImageFile"/>
+			<Property Part="LowerTrackVert" Name="ImageFile" Value="%ImageFolder%\\scrollshaftvertical.png"/>
+			<Property Part="LowerTrackVert" Name="ImageLayout" Value="Horizontal"/>
+			<Property Part="LowerTrackVert" Name="ImageCount" Value="4"/>
+			<Property Part="LowerTrackVert" Name="TransparentColor" Value="255 0 255"/>
+			<Property Part="LowerTrackVert" Name="Transparent" Value="True"/>
+			<Property Part="LowerTrackVert" Name="SizingType" Value="Stretch"/>
+			<Property Part="LowerTrackVert" Name="SizingMargins" Value="0, 0, 0, 0"/>
+			<Property Part="UpperTrackVert" Name="BgType" Value="ImageFile"/>
+			<Property Part="UpperTrackVert" Name="ImageFile" Value="%ImageFolder%\\scrollshaftvertical1.png"/>
+			<Property Part="UpperTrackVert" Name="ImageLayout" Value="Horizontal"/>
+			<Property Part="UpperTrackVert" Name="ImageCount" Value="4"/>
+			<Property Part="UpperTrackVert" Name="TransparentColor" Value="255 0 255"/>
+			<Property Part="UpperTrackVert" Name="Transparent" Value="True"/>
+			<Property Part="UpperTrackVert" Name="SizingType" Value="Stretch"/>
+			<Property Part="UpperTrackVert" Name="SizingMargins" Value="0, 0, 0, 0"/>
+			<Property Part="ArrowBtn" Name="BgType" Value="ImageFile"/>
+			<Property Part="ArrowBtn" Name="ContentMargins" Value="0, 0, 0, 0"/>
+			<Property Part="ArrowBtn" Name="GlyphTransparent" Value="True"/>
+			<Property Part="ArrowBtn" Name="GlyphType" Value="ImageGlyph"/>
+			<Property Part="ArrowBtn" Name="ImageCount" Value="16"/>
+			<Property Part="ArrowBtn" Name="ImageFile" Value="%ImageFolder%\\scrollarrows.png"/>
+			<Property Part="ArrowBtn" Name="ImageFile1" Value="%ImageFolder%\\scrollarrowglyphs.png"/>
+			<Property Part="ArrowBtn" Name="ImageFile2" Value="%ImageFolder%\\scrollarrowglyphs.png"/>
+			<Property Part="ArrowBtn" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="ArrowBtn" Name="ImageSelectType" Value="Size"/>
+			<Property Part="ArrowBtn" Name="MinSize1" Value="7, 10"/>
+			<Property Part="ArrowBtn" Name="MinSize2" Value="7, 10"/>
+			<Property Part="ArrowBtn" Name="NormalSize" Value="7, 10"/>
+			<Property Part="ArrowBtn" Name="SizingMargins" Value="0, 0, 0, 0"/>
+			<Property Part="ArrowBtn" Name="SizingType" Value="TrueSize"/>
+			<Property Part="ArrowBtn" Name="SourceShrink" Value="True"/>
+			<Property Part="ArrowBtn" Name="TrueSizeScalingType" Value="Size"/>
+			<Property Part="ArrowBtn" Name="TrueSizeStretchMark" Value="150"/>
+			<Property Part="ArrowBtn" Name="UniformSizing" Value="True"/>
+			<Property Part="GripperHorz" Name="BgType" Value="ImageFile"/>
+			<Property Part="GripperHorz" Name="ImageCount" Value="4"/>
+			<Property Part="GripperHorz" Name="ImageFile" Value="%ImageFolder%\\scrollthumbgripperhorizontal.png"/>
+			<Property Part="GripperHorz" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="GripperHorz" Name="SizingType" Value="TrueSize"/>
+			<Property Part="GripperHorz" Name="Transparent" Value="True"/>
+			<Property Part="GripperVert" Name="BgType" Value="ImageFile"/>
+			<Property Part="GripperVert" Name="ImageCount" Value="4"/>
+			<Property Part="GripperVert" Name="ImageFile" Value="%ImageFolder%\\scrollthumbgrippervertical.png"/>
+			<Property Part="GripperVert" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="GripperVert" Name="SizingType" Value="TrueSize"/>
+			<Property Part="GripperVert" Name="Transparent" Value="True"/>
+			<Property Part="SizeBox" Name="BgType" Value="ImageFile"/>
+			<Property Part="SizeBox" Name="ImageCount" Value="2"/>
+			<Property Part="SizeBox" Name="ImageFile" Value="%ImageFolder%\\resizegrip2.png"/>
+			<Property Part="SizeBox" Name="SizingType" Value="TrueSize"/>
+			<Property Part="SizeBox" Name="Transparent" Value="True"/>
+			<Property Part="SizeBox" Name="TransparentColor" Value="255 0 0"/>
+			<Property Part="SizeBox" Name="VAlign" Value="Bottom"/>
+		</Class>
+		<Class Name="Edit">
+			<Property Name="BgType" Value="BorderFill"/>
+			<Property Name="BorderSize" Value="1"/>
+			<Property Name="BorderColor" Value="0 0 0"/>
+		</Class>
+		<Class Name="ComboBox">
+			<Property Part="DropDownButton" Name="BgType" Value="ImageFile"/>
+			<Property Part="DropDownButton" Name="GlyphImageFile" Value="%ImageFolder%\\combobuttonglyph2.png"/>
+			<Property Part="DropDownButton" Name="ImageCount" Value="4"/>
+			<Property Part="DropDownButton" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="DropDownButton" Name="Transparent" Value="True"/>
+			<Property Part="DropDownButton" Name="TransparentColor" Value="255 0 255"/>
+			<Property Part="DropDownButton" Name="GlyphTransparent" Value="True"/>
+			<Property Part="DropDownButton" Name="GlyphType" Value="ImageGlyph"/>
+			<Property Part="DropDownButton" Name="ContentMargins" Value="1, 1, 1, 1"/>
+			<Property Part="DropDownButton" Name="SizingMargins" Value="2, 4, 2, 1"/>
+			<Property Part="DropDownButton" Name="ImageFile" Value="%ImageFolder%\\combobutton.png"/>
+			<Property Name="BgType" Value="BorderFill"/>
+		</Class>
+		<Class Name="ExplorerBar">
+			<Property Part="Headerpin" Name="BgType" Value="ImageFile"/>
+			<Property Part="Headerpin" Name="ImageFile" Value="%ImageFolder%\\explorerbarheaderpin.png"/>
+			<Property Part="Headerpin" Name="ImageCount" Value="6"/>
+			<Property Part="Headerpin" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="Headerpin" Name="Offset" Value="6, 4"/>
+			<Property Part="Headerpin" Name="OffsetType" Value="TopRight"/>
+			<Property Part="Headerpin" Name="SizingType" Value="TrueSize"/>
+			<Property Part="Headerpin" Name="Transparent" Value="True"/>
+			<Property Part="HeaderClose" Name="ImageFile" Value="%ImageFolder%\\explorerbarheaderclose.png"/>
+			<Property Part="HeaderClose" Name="BgType" Value="ImageFile"/>
+			<Property Part="HeaderClose" Name="ImageCount" Value="3"/>
+			<Property Part="HeaderClose" Name="Transparent" Value="True"/>
+			<Property Part="HeaderClose" Name="Offset" Value="4, 4"/>
+			<Property Part="HeaderClose" Name="OffsetType" Value="TopRight"/>
+			<Property Part="HeaderClose" Name="SizingType" Value="TrueSize"/>
+			<Property Part="HeaderClose" Name="BorderSize" Value="0"/>
+			<Property Part="HeaderClose" Name="ImageLayout" Value="Vertical"/>
+		</Class>
+		<Class Name="Menu">
+			<Property Part="PopupBorders" Name="BorderColor" Value="45 45 48"/>
+			<Property Part="PopupBorders" Name="BorderSize" Value="0"/>
+			<Property Part="PopupBorders" Name="BgType" Value="BorderFill"/>
+			<Property Part="PopupBorders" Name="FillColor" Value="45 45 48"/>
+			<Property Part="PopupItem" Name="BgType" Value="BorderFill"/>
+			<Property Part="PopupItem" Name="BorderSize" Value="1"/>
+			<Property Part="PopupItem" Name="BorderColor" Value="62 62 64"/>
+			<Property Part="PopupItem" Name="SizingMargins" Value="20, 2, 2, 2"/>
+			<Property Name="BorderSize" Value="0"/>
+			<Property Part="PopupBackground" Name="BgType" Value="BorderFill"/>
+			<Property Part="PopupBackground" Name="SizingMargins" Value="20, 2, 2, 2"/>
+			<Property Part="PopupBackground" Name="SizingType" Value="TrueSize"/>
+			<Property Part="PopupCheck" Name="BgType" Value="ImageFile"/>
+			<Property Part="PopupCheck" Name="ImageFile" Value="%ImageFolder%\\check mark.png"/>
+			<Property Part="PopupCheck" Name="ImageCount" Value="4"/>
+			<Property Part="PopupCheck" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="PopupCheck" Name="SizingType" Value="TrueSize"/>
+			<Property Part="PopupCheckBackground" Name="BgType" Value="ImageFile"/>
+			<Property Part="PopupCheckBackground" Name="ImageFile" Value="%ImageFolder%\\check mark bg.png"/>
+			<Property Part="PopupCheckBackground" Name="ImageCount" Value="3"/>
+			<Property Part="PopupCheckBackground" Name="ImageLayout" Value="Vertical"/>
+			<Property Part="PopupCheckBackground" Name="SizingType" Value="Stretch"/>
+			<Property Part="PopupCheckBackground" Name="SizingMargins" Value="1, 1, 1, 1"/>
+			<Property Part="PopupBackground" Name="BorderColor" Value="45 45 48"/>
+			<Property Part="PopupBackground" Name="FillColor" Value="45 45 48"/>
+			<Property Part="PopupItem" Name="FillColor" Value="62 62 64"/>
+		</Class>
+		<ThemeInfo Caption="NormalColor">
+			<ThemeInfo Caption="NormalSize" Selected="1">
+				<Class Name="Documentation">
+					<Property Name="ColorScheme" Value="NormalColor"/>
+					<Property Name="FontSize" Value="NormalSize"/>
+					<Property Name="IniFileName" Value="NormalSkin.ini"/>
+					<Property Name="DisplayName" Value="CryDark"/>
+					<Property Name="Description" Value="Crytek Sandbox Theme"/>
+					<Property Name="Copyright" Value="Copyright ? 2009 Codejock Software"/>
+					<Property Name="Author" Value="Codejock Skin Builder v1.0"/>
+					<Property Name="Company" Value="Codejock Software"/>
+					<Property Name="Url" Value="http://www.codejock.com"/>
+					<Property Name="Version" Value="1.0"/>
+				</Class>
+				<Class Name="SysMetrics">
+					<Property Name="CaptionFont" Value="微软雅黑, 8, bold"/>
+					<Property Name="StatusFont" Value="微软雅黑, 8, bold"/>
+					<Property Name="MsgBoxFont" Value="微软雅黑, 8, bold"/>
+					<Property Name="IconTitleFont" Value="微软雅黑, 8, bold"/>
+					<Property Name="MenuFont" Value="微软雅黑, 8, bold"/>
+					<Property Name="CaptionBarHeight" Value="24"/>
+				</Class>
+			</ThemeInfo>
+		</ThemeInfo>
+	</ThemeInfo>
+</SkinBuilderProject>

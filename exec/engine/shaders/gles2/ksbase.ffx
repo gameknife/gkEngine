@@ -1,0 +1,89 @@
+#version 100
+precision highp float;
+
+#include "include/sampler_def.h"
+#include "include/constant_ps_def.h"
+#include "include/varying_def.h"
+#include "include/shade_lib.h"
+
+
+void main (void)
+{
+#ifdef ZPASS
+	// vector
+	lowp vec3 normalTS = texture2D(texNormal, outTC.xy).xyz;
+	normalTS = normalTS * 2.0 - 1.0;
+	mediump vec3 normal = cross(outTangent.xyz, outBinormal) * outTangent.w;
+	mediump mat3 Tangent2World = mat3(outTangent.xyz, outBinormal, normal);
+	normal = Tangent2World * normalTS;
+	normal = normalize(normal);
+
+	normal = normal * 0.5 + 0.5;
+
+	gl_FragColor = vec4(normal,1);
+#else
+	highp vec3 screenTC = outScreenTC.xyz / outScreenTC.w;
+	lowp float shadow = 1.0;
+	shadow = texture2D(texEnvmap,screenTC.xy).a;
+
+	// pre discard
+	lowp vec4 texcolor = texture2D(texDiffuse,outTC.xy);
+	lowp vec4 glosscolor = vec4(1.0, 1.0, 1.0, 1.0);
+
+	// gloss
+	float shiness = g_Gloss;// * glosscolor.a;
+	float fresnel_bia = g_FresnelBia;
+	float fresnel_pow = g_Fresnel;
+	float fresnel_scale = g_FresnelScale;
+
+#ifdef DIFSPEC
+	glosscolor = vec4(texcolor.a,texcolor.a,texcolor.a,1.0);
+#elif defined(SPCALPHA)
+	lowp vec4 gloss = texture2D(texSpecular, outTC.xy);
+	shiness *= gloss.a;
+	fresnel_bia *= saturate( gloss.a * 1.5 );
+	glosscolor = gloss * gloss;
+#else
+	glosscolor = texture2D(texSpecular, outTC.xy);
+#endif
+	glosscolor = glosscolor * glosscolor;
+
+	mediump vec3 normal = (texture2D(texNormal, screenTC.xy).rgb - 0.5) * 2.0;
+	normal = normalize(normal);
+
+	vec3 view = normalize(g_camPos.xyz - outWorldPos.xyz);
+	float NdotL = dot(normal, g_LightDir);
+	NdotL = saturate(NdotL);// * shadow;
+	float fNdotE = dot(view, normal);
+	vec3 vReflVec = (2.0 * fNdotE * normal) - view;		
+
+	float fFresnel = fresnel_bia + fresnel_scale * pow(1.0 - fNdotE, fresnel_pow); // 4 inst
+	fFresnel = max(0.0, fFresnel);
+
+
+	//fFresnel = 1.0;
+
+	vec4 envColor = vec4(0.0,0.0,0.0,0.0);
+#ifdef ENVMAP
+	// environment
+	envColor = GetEnvironmentCMap( texCubemap, vReflVec, shiness );
+	//envColor = vec4(1.0,0.0,1.0,0.0);
+#endif
+
+	// srgb 2 linear
+	texcolor = texcolor * texcolor * g_MatDiffuse;
+
+	// specular
+	float spec = Blinn(normal, view, g_LightDir, shiness);
+	spec = max(0.0, spec);
+
+	// lighting formula
+	lowp vec4 dif = texture2D(texDetail, screenTC.xy) + g_LightDiffuse * (NdotL * shadow);
+	lowp vec4 lightcolor = dif * texcolor + (glosscolor * g_MatSpecular) * (g_LightSpecular * NdotL * spec * shadow * fFresnel + envColor * (vec4(1.0,1.0,1.0,1.0) + dif)) * fFresnel;
+
+	//lightcolor.a = 1.0f;
+
+	// revert to srgb
+	gl_FragColor = saturate(max(lightcolor, vec4(0,0,0,1)) * (g_ldrbright * g_Glow));
+	#endif
+}

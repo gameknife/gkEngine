@@ -1,0 +1,18 @@
+
+
+<GFX>
+
+<GLES2Shader Name="terrian">
+	<VSShader FileName="engine/shaders/gles2/ksterrian.vfx" />
+	<PSShader FileName="engine/shaders/gles2/ksterrian.ffx" />
+</GLES2Shader>
+
+<D3D9Shader Name="terrian">
+	<Effect Filename="engine/shaders/d3d9/terrian.fx" />
+</D3D9Shader>
+
+<Marco>
+
+</Marco>
+  
+</GFX>

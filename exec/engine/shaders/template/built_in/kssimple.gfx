@@ -1,0 +1,12 @@
+<GFX>
+
+<GLES2Shader Name="kssimple">
+	<VSShader FileName="engine/shaders/gles2/kssimple.vfx" />
+	<PSShader FileName="engine/shaders/gles2/kssimple.ffx" />
+</GLES2Shader>
+
+<D3D9Shader Name="kssimple">
+	<Effect Filename="engine/shaders/d3d9/ksbase.fx" />
+</D3D9Shader>
+  
+</GFX>

@@ -1,0 +1,9 @@
+<Material Name="">
+	<Effect FileName="particle.fx" ParamCount="0">
+		<Param name="texDiffuse" type="texture" value="engine/assets/textures/default/particle.tga"/>
+	</Effect>
+	<Static ParamCount="1">
+		<Param name="uvparams" type="external" value="1 1 0 0"/>
+	</Static>
+</Material>
+

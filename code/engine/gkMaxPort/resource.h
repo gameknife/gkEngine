@@ -1,0 +1,119 @@
+﻿//{{NO_DEPENDENCIES}}
+// Microsoft Visual C++ generated include file.
+// Used by PRIM.RC
+//
+#define IDC_TETRA                       0
+#define IDS_LIBDESCRIPTION              1
+#define IDS_CATEGORY                    2
+#define IDS_CLASS_NAME                  3
+#define IDS_PARAMS                      4
+#define IDS_SPIN                        5
+#define IDD_PANEL                       101
+#define IDD_GSPHERE2                    180
+#define IDD_GSPHERE3                    181
+#define IDB_BITMAP1                     182
+#define IDC_RADIUS                      1000
+#define IDC_SEGMENTS                    1001
+#define IDC_CREATEDIAMETER              1002
+#define IDC_CREATERADIUS                1003
+#define IDC_SEGSPINNER                  1004
+#define IDC_RADSPINNER                  1005
+#define IDC_OBSMOOTH                    1006
+#define IDC_OCTA                        1007
+#define IDC_OBSMOOTH2                   1007
+#define IDC_ICOSA                       1008
+#define IDC_CHOOSE_MESH                 1009
+#define IDC_UPDATE_MESH                 1011
+#define IDC_UPDATE_MESH2                1012
+#define IDC_COMMIT_MESH                 1012
+#define IDC_COMMIT_MESH2                1013
+#define IDC_SYNC                        1013
+#define IDC_REAL_WORLD_MAP_SIZE         1020
+#define IDC_TI_POSX                     3019
+#define IDC_TI_POSXSPIN                 3020
+#define IDC_TI_POSY                     3021
+#define IDC_TI_POSYSPIN                 3022
+#define IDC_TI_CREATE                   3023
+#define IDC_TI_POSZ                     3024
+#define IDC_TI_POSZSPIN                 3025
+#define IDC_HEMI                        3071
+#define IDC_BASEPIVOT                   3073
+#define IDC_MAPPING                     3074
+#define IDC_MESHPATH                    3076
+#define IDC_SCRIPTPATH                  3077
+#define IDC_MESHPATH2                   3078
+#define IDC_MESHNAME                    3078
+#define IDC_RADIO1                      3079
+#define IDC_RADIO2                      3080
+#define IDC_RADIO3                      3081
+#define IDC_RADIO4                      3082
+#define IDC_RADIO5                      3083
+#define IDC_RADIO6                      3084
+#define IDC_RADIO7                      3085
+#define IDC_RADIO8                      3086
+#define IDC_CLOSEBUTTON                 11000
+#define IDC_DOSTUFF                     11000
+#define IDC_EXP_NORMALS                 11001
+#define IDC_EXP_GEOMETRY                11002
+#define IDC_EXP_CONTROLLERS             11003
+#define IDC_EXP_VCOLORS                 11004
+#define IDC_EXP_FACESMGRP               11005
+#define IDC_EXP_MAPCHAN                 11006
+#define IDC_EXP_TEXCOORD                11007
+#define IDC_EXP_MATERIAL                11008
+#define IDC_EXP_MODIFIERS               11009
+#define IDC_EXP_CONSTRAINTS             11010
+#define IDC_EXP_SAMPLECONT              11011
+#define IDC_EXP_SKIN                    11012
+#define IDC_EXP_GENMOD                  11013
+#define IDC_EXP_SPLINES                 11014
+#define IDC_COORD_MAX                   11015
+#define IDC_COORD_D3D                   11016
+#define IDC_COORD_OGL                   11017
+#define IDC_SPLITFILE                   11018
+#define IDC_EXP_OBJECTSPACE             11019
+#define IDC_EXP_QUATERNIONS             11020
+#define IDC_EXP_RELATIVE                11021
+#define IDC_NORMALS_IST                 11022
+#define IDC_NORMALS_LIST                11022
+#define IDC_NORMALS_FACE                11023
+#define IDC_STATIC_FRAME                11161
+#define IDC_STATIC_FRAME_SPIN           11162
+#define IDC_SAMPLE_FRAME                11163
+#define IDC_SAMPLE_FRAME_SPIN           11164
+#define IDC_COLOR                       11456
+#define IDC_EDIT                        11490
+#define IDC_SPIN                        11496
+#define IDS_RB_RADIUS                   30045
+#define IDS_RB_SEGS                     30046
+#define IDS_RB_POS                      30047
+#define IDS_RB_SMOOTH                   30048
+#define IDS_RB_NOPHY                    30049
+#define IDS_RB_DYNPHY                   30050
+#define IDS_RB_BOXSHAPE                 30051
+#define IDS_RB_PRIMITIVES               30264
+#define IDS_GEOSPHERE                   30265
+#define IDS_KEYBOARD_ENTRY              30266
+#define IDS_CREATION_METHOD             30267
+#define IDS_BASETYPE                    30268
+#define IDS_PARAMETERS                  30270
+#define IDS_MESH_PATH                   30271
+#define IDS_BASEPIVOT                   30272
+#define IDS_MAPPING                     30273
+#define IDS_SM_NURBS_SURFACE            30274
+#define IDS_CT_SURF                     30275
+#define IDS_CT_CAP                      30276
+#define IDS_GEOSPHERE_CLASS             30277
+#define IDS_DS_PARAMCHG                 30278
+#define IDC_STATIC                      -1
+
+// Next default values for new objects
+// 
+#ifdef APSTUDIO_INVOKED
+#ifndef APSTUDIO_READONLY_SYMBOLS
+#define _APS_NEXT_RESOURCE_VALUE        183
+#define _APS_NEXT_COMMAND_VALUE         40001
+#define _APS_NEXT_CONTROL_VALUE         3087
+#define _APS_NEXT_SYMED_VALUE           101
+#endif
+#endif

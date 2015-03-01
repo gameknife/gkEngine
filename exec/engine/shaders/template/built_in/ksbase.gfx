@@ -1,0 +1,21 @@
+<GFX>
+
+<GLES2Shader Name="ksBase">
+	<VSShader FileName="engine/shaders/gles2/ksbase.vfx" />
+	<PSShader FileName="engine/shaders/gles2/ksbase.ffx" />
+</GLES2Shader>
+
+<D3D9Shader Name="ksBase">
+	<Effect Filename="engine/shaders/d3d9/ksbase.fx" />
+</D3D9Shader>
+
+<Marco>
+  <Attribute name="SSRL" desc="SSRefl" mask="1" value="" />
+  <Attribute name="ENVMAP" desc="EnviormentMap" mask="2" value=""  />
+  <Attribute name="DETAILNORMAL" desc="DetailNormalMap" mask="4" value=""  />
+  <Attribute name="SPCALPHA" desc="SpcAlphaShiness" mask="8" value=""  />
+  <Attribute name="LIGHTMAP" desc="Lightmap" mask="16" value=""  />
+  <Attribute name="DIFSPEC" desc="DifAlphaSpec" mask="32" value=""  />
+</Marco>
+  
+</GFX>

@@ -1,0 +1,60 @@
+#version 100
+precision highp float;
+
+#include "include/shade_lib.h"
+
+uniform sampler2D texDiffuse;		// diffuse 0
+uniform sampler2D texNormal;		// normal 1
+uniform sampler2D texSpecular;		// specular 2
+uniform sampler2D texDetail;		// detail 3
+uniform sampler2D texCustom1;		// 4
+
+uniform vec3 campos;
+uniform vec4 ViewportParam;
+uniform mat4 g_mViewToLightProj0;
+
+varying mediump vec2  TexCoord0;
+varying highp vec3 FarClipPos;
+
+void main(void)
+{
+    float Wd = SampleDepth(texDiffuse, TexCoord0);
+    vec4 WorldPos = vec4( campos + FarClipPos * Wd, 1.0);
+	vec4 outLightPos = g_mViewToLightProj0 * WorldPos;
+
+	float shadow = 1.0;
+	vec2 ShadowTexC = 0.5 * outLightPos.xy / outLightPos.w + vec2( 0.5, 0.5 );
+
+	if(ShadowTexC.x < 0.0 || ShadowTexC.x > 1.0 || ShadowTexC.y < 0.0 || ShadowTexC.y > 1.0 )
+	{
+		shadow = 1.0;	
+	}
+	else
+	{
+		highp vec4 depth = vec4(0.0,0.0,0.0,0.0);
+
+		//vec3 samplevec = vec2(PIXEL_STEP, PIXEL_STEP);
+		vec2 randomMultiplyer = vec2( 256.0 / 64.0, 256.0 / 64.0 );
+
+		vec2 rand = normalize(texture2D( texSpecular, TexCoord0.xy * randomMultiplyer).xy * 2.0 - 1.0);  
+
+		vec2 samplevec0 = reflect(vec2(1,0), rand) * PIXEL_STEP;
+		vec2 samplevec1 = reflect(vec2(0,1), rand) * PIXEL_STEP;
+		vec2 samplevec2 = reflect(vec2(-1,0), rand) * PIXEL_STEP;
+		vec2 samplevec3 = reflect(vec2(0,-1), rand) * PIXEL_STEP;
+
+		depth.x = texture2D(texNormal,ShadowTexC + samplevec0.xy).x;
+		depth.y = texture2D(texNormal,ShadowTexC + samplevec1.xy).x;
+		depth.z = texture2D(texNormal,ShadowTexC + samplevec2.xy).x;
+		depth.w = texture2D(texNormal,ShadowTexC + samplevec3.xy).x;
+
+		highp float depthNow = outLightPos.z / outLightPos.w * 0.5 + 0.5 - CONST_BIA;
+		highp vec4 comp = vec4(depthNow,depthNow,depthNow,depthNow);
+
+		bvec4 bshadow4 = lessThan(comp , depth);
+		vec4 shadow4 = vec4(bshadow4);
+		shadow = dot(shadow4, vec4(1.0,1.0,1.0,1.0)) * 0.25;
+	}
+
+	gl_FragColor = vec4(shadow,shadow,shadow,shadow);
+}

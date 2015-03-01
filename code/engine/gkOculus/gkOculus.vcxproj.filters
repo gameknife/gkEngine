@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="gkOculus.cpp" />
+    <ClCompile Include="gkOculusDisortationRenderable.cpp" />
+    <ClCompile Include="OculusCVars.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="gkOculus.h" />
+    <ClInclude Include="gkOculusDisortationRenderable.h" />
+    <ClInclude Include="OculusCVars.h" />
+  </ItemGroup>
+</Project>

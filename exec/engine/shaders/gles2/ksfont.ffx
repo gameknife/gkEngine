@@ -1,0 +1,31 @@
+#version 100
+//--------------------------------------------------------------------------------------
+// 	File: Illum.ffx
+//	Desc: The effect file for General Illum.
+//
+//  The files of KnifeShader Lab.
+// 	It could be used in 3dsMax, FxComposer & DirectX
+//
+// 	by Kaimingyi 2012.8.25
+//--------------------------------------------------------------------------------------
+
+precision highp float;
+
+#include "include/sampler_def.h"
+#include "include/constant_ps_def.h"
+#include "include/varying_def.h"
+#include "include/shade_lib.h"
+
+void main (void)
+{
+	// pre discard
+#ifdef GL330
+   float alpha = texture2D(texDiffuse,outTC.xy).x;
+#else
+	float alpha = texture2D(texDiffuse,outTC.xy).a;
+#endif
+	// revert to srgb
+	gl_FragColor = vec4( outWorldPos.xyz, alpha );
+	
+	//gl_FragColor = vec4(1.0,1.0,1.0,1.0);
+}

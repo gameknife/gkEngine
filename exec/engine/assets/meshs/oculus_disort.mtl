@@ -1,0 +1,8 @@
+<Material Name="">
+	<Effect FileName="ksoculus.fx" ParamCount="0">
+	</Effect>
+	<Static ParamCount="1">
+		<Param name="uvparams" type="external" value="1 1 0 0"/>
+	</Static>
+</Material>
+

@@ -1,0 +1,49 @@
+#version 100
+precision highp float;
+
+#include "include/shade_lib.h"
+
+uniform sampler2D texDiffuse;		// diffuse 0
+uniform sampler2D texNormal;		// normal 1
+uniform sampler2D texSpecular;		// specular 2
+uniform sampler2D texDetail;		// detail 3
+uniform sampler2D texCustom1;		// 4
+
+uniform vec3 campos;
+uniform vec4 ViewportParam;
+
+varying mediump vec2  TexCoord0;
+varying highp vec3 FarClipPos;
+
+uniform vec4 vfParams;// = vec4(0.05,0.004,0.0004,0.01);
+uniform vec4 fogColor;
+
+void main(void)
+{
+    //uniform vec4 vfParams;// = vec4(0.05,0.004,0.0004,0.01);
+
+    float Wd = SampleDepth(texDiffuse, TexCoord0);
+    vec3 cameraToWorldPos = FarClipPos * Wd;
+
+    #define atmosphereScale								vfParams.x
+    #define volFogHeightDensityAtViewer                 vfParams.y
+    #define fogDensity									vfParams.z
+    #define artistTweakDensityOffset                    vfParams.w
+
+	float fogInt = 1.0;
+
+    const float c_slopeThreshold = 0.01;
+   	if( abs( cameraToWorldPos.y ) > c_slopeThreshold )
+   	{
+   		float t = atmosphereScale * cameraToWorldPos.z;
+   		fogInt *= ( 1.0 - exp( -t ) ) / t;
+   	}
+
+	float l = length( cameraToWorldPos );
+	float u = l * volFogHeightDensityAtViewer;
+	fogInt = fogInt * u - artistTweakDensityOffset;
+
+	float f = clamp( exp2( -fogInt ), 0.0, 1.0 );
+
+	gl_FragColor = vec4(fogColor.xyz * 10.0, 1.0 - f);
+}

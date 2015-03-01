@@ -1,0 +1,13 @@
+#version 100
+precision highp float;
+
+#include "include/sampler_def.h"
+#include "include/constant_ps_def.h"
+#include "include/varying_def.h"
+#include "include/shade_lib.h"
+
+void main (void)
+{
+    vec4 lit_color = texture2D(texSpecular,outTC.zw);
+	gl_FragColor = g_MatDiffuse * lit_color * lit_color;
+}

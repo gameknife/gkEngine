@@ -1,0 +1,21 @@
+<Material Name="">
+	<Effect FileName="Terrian.fx" ParamCount="16">
+		<Param name="g_LightPos" type="int" value="0"/>
+		<Param name="g_MatDiffuse" type="float4" value="0.5 0.5 0.5 1 "/>
+		<Param name="g_MatSpecular" type="float4" value="1 1 1 1 "/>
+		<Param name="g_Gloss" type="float" value="50"/>
+		<Param name="g_Fresnel" type="float" value="5"/>
+		<Param name="g_FresnelScale" type="float" value="1 "/>
+		<Param name="g_FresnelBia" type="float" value="0.1"/>
+		<Param name="g_EnvironmentBia" type="float" value="5.0"/>
+		<Param name="g_Velvet_Exponent" type="float" value="1 "/>
+		<Param name="g_Rho" type="float" value="1 "/>
+		<Param name="texDiffuse" type="texture" value="engine/assets/textures/default/grey.tga"/>
+		<Param name="texNormal" type="texture" value="engine/assets/textures/default/flat.tga"/>
+		<Param name="g_fBumpScale" type="float" value="1 "/>
+	</Effect>
+	<Static ParamCount="1">
+		<Param name="uvparams" type="external" value="1 1 0 0"/>
+	</Static>
+</Material>
+

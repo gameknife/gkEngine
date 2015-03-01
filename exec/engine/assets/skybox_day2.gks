@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<GameKnifeScene xmlns="urn:maxxml" Version="2.0" Date="Thu Oct 13 00:41:10 2011">
+	<SceneInfo FileName="skyhdr.max" StartFrame="0" EndFrame="100" FrameRate="30" TicksPerFrame="160" CoordinateSystem="3dsmax" RotationFormat="Quaternion" ObjectSpace="false"></SceneInfo>
+	<MaterialList Count="3">
+		<Material Index="0" Name="sky5" Class="DirectX Shader">
+			<Effect FileName="ks_SkyHdr.fx" ParamCount="17">
+				<Param name="g_LightPos" type="int">
+					0
+				</Param>
+				<Param name="g_Diffuse" type="float4">
+					0.125490 0.537255 1.000000 1.000000
+				</Param>
+				<Param name="g_Specular" type="float4">
+					0.125490 0.537255 1.000000 1.000000
+				</Param>
+				<Param name="g_SpecularPow" type="float">
+					32.000000
+				</Param>
+				<Param name="g_LightDiffuse" type="float4">
+					1.000000 1.000000 1.000000 1.000000
+				</Param>
+				<Param name="g_LightAttenuation" type="float4">
+					0.000000 0.000000 0.000000 1.000000
+				</Param>
+				<Param name="g_Roughness" type="float">
+					0.800000
+				</Param>
+				<Param name="g_Fresnel" type="float">
+					0.500000
+				</Param>
+				<Param name="g_Velvet_Exponent" type="float">
+					1.000000
+				</Param>
+				<Param name="g_Rho" type="float">
+					1.000000
+				</Param>
+				<Param name="texDiffuse" type="texture">
+					skybox_5.dds
+				</Param>
+				<Param name="texNormal" type="texture">
+					flat.tga
+				</Param>
+				<Param name="g_CloudConstrat" type="float">
+					1.760000
+				</Param>
+				<Param name="g_CloudBright" type="float">
+					-0.460000
+				</Param>
+				<Param name="g_ZenithHeight" type="float">
+					1.000000
+				</Param>
+			</Effect>
+		</Material>
+		<Material Index="1" Name="sky12" Class="DirectX Shader">
+			<Effect FileName="ks_SkyHdr.fx" ParamCount="17">
+				<Param name="g_LightPos" type="int">
+					0
+				</Param>
+				<Param name="g_Diffuse" type="float4">
+					0.627451 0.756863 0.917647 1.000000
+				</Param>
+				<Param name="g_Specular" type="float4">
+					0.125490 0.537255 1.000000 1.000000
+				</Param>
+				<Param name="g_SpecularPow" type="float">
+					32.000000
+				</Param>
+				<Param name="g_LightDiffuse" type="float4">
+					1.000000 1.000000 1.000000 1.000000
+				</Param>
+				<Param name="g_LightAttenuation" type="float4">
+					0.000000 0.000000 0.000000 1.000000
+				</Param>
+				<Param name="g_Roughness" type="float">
+					0.800000
+				</Param>
+				<Param name="g_Fresnel" type="float">
+					0.500000
+				</Param>
+				<Param name="g_Velvet_Exponent" type="float">
+					1.000000
+				</Param>
+				<Param name="g_Rho" type="float">
+					1.000000
+				</Param>
+				<Param name="texDiffuse" type="texture">
+					skybox_12.dds
+				</Param>
+				<Param name="texNormal" type="texture">
+					flat.tga
+				</Param>
+				<Param name="g_CloudConstrat" type="float">
+					1.760000
+				</Param>
+				<Param name="g_CloudBright" type="float">
+					-0.460000
+				</Param>
+				<Param name="g_ZenithHeight" type="float">
+					0.000000
+				</Param>
+			</Effect>
+		</Material>
+		<Material Index="2" Name="sky34" Class="DirectX Shader">
+			<Effect FileName="ks_SkyHdr.fx" ParamCount="17">
+				<Param name="g_LightPos" type="int">
+					0
+				</Param>
+				<Param name="g_Diffuse" type="float4">
+					0.627451 0.756863 0.917647 1.000000
+				</Param>
+				<Param name="g_Specular" type="float4">
+					0.125490 0.537255 1.000000 1.000000
+				</Param>
+				<Param name="g_SpecularPow" type="float">
+					32.000000
+				</Param>
+				<Param name="g_LightDiffuse" type="float4">
+					1.000000 1.000000 1.000000 1.000000
+				</Param>
+				<Param name="g_LightAttenuation" type="float4">
+					0.000000 0.000000 0.000000 1.000000
+				</Param>
+				<Param name="g_Roughness" type="float">
+					0.800000
+				</Param>
+				<Param name="g_Fresnel" type="float">
+					0.500000
+				</Param>
+				<Param name="g_Velvet_Exponent" type="float">
+					1.000000
+				</Param>
+				<Param name="g_Rho" type="float">
+					1.000000
+				</Param>
+				<Param name="texDiffuse" type="texture">
+					skybox_34.dds
+				</Param>
+				<Param name="texNormal" type="texture">
+					flat.tga
+				</Param>
+				<Param name="g_CloudConstrat" type="float">
+					1.760000
+				</Param>
+				<Param name="g_CloudBright" type="float">
+					-0.460000
+				</Param>
+				<Param name="g_ZenithHeight" type="float">
+					0.000000
+				</Param>
+			</Effect>
+		</Material>
+	</MaterialList>
+	<gkObject Name="Camera01" NodeID="9" WireframeColor="5778ccff" NodeType="Camera">
+		<NodeTM>
+			<Translation>
+				23.720181 17.403782 8.795315
+			</Translation>
+			<Rotation>
+				0.732963 0.303603 0.232963 0.562422
+			</Rotation>
+			<Scale>
+				1.000000 1.000000 1.000000 -0.000000 -0.000000 -0.000000 1.000000
+			</Scale>
+		</NodeTM>
+	</gkObject>
+	<gkObject Name="skybox5" NodeID="12" MaterialName="sky5" NodeType="Mesh" MeshName="skybox_5.obj" EnablePhysX="1" PhysXType="0" PhysXShape="0">
+		<NodeTM>
+			<Translation>
+				0.000163 -0.000163 0.000000
+			</Translation>
+			<Rotation>
+				0.000000 0.000000 -0.707107 0.707107
+			</Rotation>
+			<Scale>
+				1.000000 1.000000 1.000000 -0.000000 -0.000000 -0.000000 1.000000
+			</Scale>
+		</NodeTM>
+	</gkObject>
+	<gkObject Name="skybox12" NodeID="13" MaterialName="sky12" NodeType="Mesh" MeshName="skybox_12.obj" EnablePhysX="1" PhysXType="0" PhysXShape="0">
+		<NodeTM>
+			<Translation>
+				0.000163 -0.000163 0.000000
+			</Translation>
+			<Rotation>
+				0.000000 0.000000 -0.707107 0.707107
+			</Rotation>
+			<Scale>
+				1.000000 1.000000 1.000000 -0.000000 -0.000000 -0.000000 1.000000
+			</Scale>
+		</NodeTM>
+	</gkObject>
+	<gkObject Name="skybox34" NodeID="14" MaterialName="sky34" NodeType="Mesh" MeshName="skybox_34.obj" EnablePhysX="1" PhysXType="0" PhysXShape="0">
+		<NodeTM>
+			<Translation>
+				0.000163 -0.000163 0.000000
+			</Translation>
+			<Rotation>
+				0.000000 0.000000 -0.707107 0.707107
+			</Rotation>
+			<Scale>
+				1.000000 1.000000 1.000000 -0.000000 -0.000000 -0.000000 1.000000
+			</Scale>
+		</NodeTM>
+	</gkObject>
+</GameKnifeScene>

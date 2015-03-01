@@ -1,0 +1,16 @@
+<GFX>
+
+<GLES2Shader Name="vegetation_autoexpand">
+	<VSShader FileName="engine/shaders/gles2/vegetation_autoexpand.vfx" />
+	<PSShader FileName="engine/shaders/gles2/vegetation_autoexpand.ffx" />
+</GLES2Shader>
+
+<D3D9Shader Name="vegetation_autoexpand">
+	<Effect Filename="engine/shaders/d3d9/vegetation_autoexpand.fx" />
+</D3D9Shader>
+
+<Marco>
+
+</Marco>
+  
+</GFX>

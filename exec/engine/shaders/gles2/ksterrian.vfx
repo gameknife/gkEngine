@@ -1,0 +1,75 @@
+#version 100
+precision highp float;
+
+#define TC_HIGHP
+
+#include "include/constant_vs_def.h"
+#include "include/varying_def.h"
+
+uniform mat4 g_mLocalMatrixArray[56];
+
+vec4 HPosToScreenTC(vec4 HPos)
+{
+	vec4 ScrTC = HPos;
+	ScrTC.xy = (HPos.xy * vec2(1.0,1.0) + HPos.ww) * 0.5;
+	return ScrTC;
+}
+
+vec3 skinPosition_simd( vec3 skinPos, vec4 blendWeightsArray, ivec4 indexArray)
+{
+	// calculate the pos/normal using the "normal" weights
+	// and accumulate the weights to calculate the last weight
+	vec3 position = vec3(0.0, 0.0, 0.0);
+
+	position += (g_mLocalMatrixArray[indexArray.x] *  vec4(skinPos.xyz,1.0) * blendWeightsArray.x).xyz;
+	position += (g_mLocalMatrixArray[indexArray.y] *  vec4(skinPos.xyz,1.0) * blendWeightsArray.y).xyz;
+	position += (g_mLocalMatrixArray[indexArray.z] *  vec4(skinPos.xyz,1.0) * blendWeightsArray.z).xyz;
+	position += (g_mLocalMatrixArray[indexArray.w] *  vec4(skinPos.xyz,1.0) * blendWeightsArray.w).xyz;
+
+	return position;
+}
+
+vec3 skinVector_simd( vec3 skinPos, vec4 blendWeightsArray, ivec4 indexArray)
+{
+	// calculate the pos/normal using the "normal" weights
+	// and accumulate the weights to calculate the last weight
+	vec3 position = vec3(0.0, 0.0, 0.0);
+
+	position += (g_mLocalMatrixArray[indexArray.x] *  vec4(skinPos.xyz,0.0) * blendWeightsArray.x).xyz;
+	position += (g_mLocalMatrixArray[indexArray.y] *  vec4(skinPos.xyz,0.0) * blendWeightsArray.y).xyz;
+	position += (g_mLocalMatrixArray[indexArray.z] *  vec4(skinPos.xyz,0.0) * blendWeightsArray.z).xyz;
+	position += (g_mLocalMatrixArray[indexArray.w] *  vec4(skinPos.xyz,0.0) * blendWeightsArray.w).xyz;
+
+	return position;
+}
+
+void main(void)
+{
+	highp vec3 position = inPosition.xyz;
+	mediump vec3 tangent = inTangent.xyz;
+	mediump vec3 binormal = inBinormal.xyz;
+
+#ifdef SKIN
+	mediump ivec4 iIndex = ivec4(inBlendIndex);
+	position = skinPosition_simd( inPosition.xyz, inBlendWight, iIndex );
+#ifdef ZPASS
+	tangent = skinVector_simd( inTangent.xyz, inBlendWight, iIndex );
+	binormal = skinVector_simd( inBinormal.xyz, inBlendWight, iIndex );
+#endif
+
+#endif
+
+	highp vec4 posInWorld = g_matWorld * vec4(position.xyz, 1);
+	highp vec4 hpos = g_matWVP * vec4(position.xyz, 1);
+	outTC = inTexcoord;
+
+#ifdef ZPASS
+	outTangent = vec4( (g_matWorld * vec4(tangent, 0.0) ).xyz, inTangent.w);
+	outBinormal = (g_matWorld * vec4(binormal, 0.0)).xyz;
+#else
+	outScreenTC = HPosToScreenTC( hpos );
+#endif
+
+	outWorldPos = vec4(posInWorld.xyz, 1.0);
+	gl_Position = hpos;
+}

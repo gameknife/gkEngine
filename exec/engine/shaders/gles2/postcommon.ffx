@@ -1,0 +1,10 @@
+#version 100
+
+precision highp float;
+uniform sampler2D texDiffuse;		// diffuse 0
+varying mediump vec2   TexCoord0;
+
+void main()
+{
+	gl_FragColor = vec4( sqrt(texture2D(texDiffuse, TexCoord0).xyz), 1.0);    
+}

@@ -1,0 +1,50 @@
+#version 100
+
+precision highp float;
+
+#include "include/sampler_def.h"
+#include "include/constant_ps_def.h"
+#include "include/varying_def.h"
+#include "include/shade_lib.h"
+#ifdef ZPASS
+void main (void)
+{
+	// pre discard
+	highp vec4 texcolor = texture2D(texDiffuse,outTC.xy);
+
+	if (texcolor.a < 0.3)
+	{
+		discard;
+	}
+
+	mediump vec3 normal = cross(outTangent.xyz, outBinormal) * outTangent.w;
+	normal = normalize(normal);
+	normal = normal * 0.5 + 0.5;
+
+	gl_FragColor = vec4(normal,1);
+
+	gl_FragColor = vec4(normal,1);
+#else
+	highp vec3 screenTC = outScreenTC.xyz / outScreenTC.w;
+	lowp float shadow = 1.0;
+	shadow = texture2D(texEnvmap,screenTC.xy).a;
+
+	// pre discard
+	highp vec4 texcolor = texture2D(texDiffuse,outTC.xy);
+
+	//if (texcolor.a < 0.3)
+	//{
+	//	discard;
+	//}
+	mediump vec3 normal = (texture2D(texNormal, screenTC.xy).rgb - 0.5) * 2.0;
+	normal = normalize(normal);
+	float NdotL = dot(normal, g_LightDir);
+	NdotL = saturate(NdotL);// * shadow;
+
+	lowp vec4 dif = texture2D(texDetail, screenTC.xy);
+	gl_FragColor = (dif + g_LightDiffuse * NdotL * shadow) * texcolor * texcolor * g_MatDiffuse * g_ldrbright;
+	//vec4 lightcolor = (0.1 + clamp( NdotL, 0.0, 1.0)) * texcolor * texcolor;// + 0.01 * clamp(NdotL * 4.0, 0.0, 1.0) * Blinn(normal, view, g_LightDir, 25.0);
+	//gl_FragColor = texcolor * texcolor * g_MatDiffuse * g_LightDiffuse * 5.0;
+	//gl_FragColor = 1;
+	#endif
+}

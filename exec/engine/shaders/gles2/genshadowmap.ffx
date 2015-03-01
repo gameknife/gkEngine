@@ -1,0 +1,14 @@
+#version 100
+
+//precision lowp float;
+
+uniform sampler2D sampler2d;
+varying mediump vec2 outTC;
+
+void main (void)
+{
+	lowp float alpha = texture2D(sampler2d, outTC).a;
+	if(alpha < 0.25)
+		discard;
+	gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+}

@@ -1,0 +1,20 @@
+#version 100
+
+precision highp float;
+
+uniform sampler2D texDiffuse;		// diffuse 0
+uniform sampler2D texNormal;		// normal 1
+uniform sampler2D texSpecular;		// specular 2
+uniform sampler2D texDetail;		// detail 3
+uniform sampler2D texCustom1;		// 4
+uniform sampler2D texCustom2;		// 5
+uniform sampler2D texEnvmap;		// evnmap 6
+
+varying mediump vec2   TexCoord0;
+
+void main()
+{
+	vec4 orgA = texture2D(texDiffuse, TexCoord0);
+    vec4 orgB = texture2D(texNormal, TexCoord0);
+    gl_FragColor = (orgA + orgB) * 0.5;
+}

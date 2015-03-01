@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="System">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Device">
+      <UniqueIdentifier>{e5940327-ae79-4f46-9485-cea3d98ea91d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{dae93104-1b1d-4391-94e9-a97eb5de19d8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\InputStableHeader.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\gkInputDeviceBase.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\gkKeyboard.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\gkKinect.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\gkMouse.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\gkXboxController.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\gkInputManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\gkNuiInterface.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\dllmain.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\gkAndroidInput.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\gkIOSInput.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\InputPrerequisites.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\InputStableHeader.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\gkInputDeviceBase.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\gkKeyboard.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\gkKinect.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\gkMouse.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\gkXboxController.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\gkInputManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\gkNuiInterface.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\dllmain.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\gkAndroidInput.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\gkIOSInput.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameKnifeInput.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+</Project>

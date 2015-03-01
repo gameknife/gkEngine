@@ -1,0 +1,15 @@
+#version 100
+precision highp float;
+varying lowp vec4 colorVarying;
+varying highp vec2 outTc;
+
+#include "include/sampler_def.h"
+
+void main()
+{
+#if defined( TEX )
+	gl_FragColor = texture2D(texDiffuse,outTc.xy);
+#else
+    gl_FragColor = colorVarying;
+#endif
+}

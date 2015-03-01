@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3D993668-0078-41E9-8428-E1E3FA03CA03}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>gkRendererGL320</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\solutions\gkSystemInclude.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\solutions\gkSystemInclude.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GKRENDERERGL320_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKRENDERERGL320_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>StableHeader.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\..\thirdparty\oglsdk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>..\..\thirdparty\OGLSDK\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OpenGL32.lib;glfw.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="gkAuxRenderer.cpp" />
+    <ClCompile Include="gkRendererGL330.cpp" />
+    <ClCompile Include="gkRenderLayer.cpp" />
+    <ClCompile Include="gkRenderSequence.cpp" />
+    <ClCompile Include="gkShaderParamDataSource.cpp" />
+    <ClCompile Include="Platform\Win32\gkRenderContextWin32.cpp" />
+    <ClCompile Include="RenderCamera.cpp" />
+    <ClCompile Include="RendererCVars.cpp" />
+    <ClCompile Include="RenderRes\gkMaterial.cpp" />
+    <ClCompile Include="RenderRes\gkMaterialManager.cpp" />
+    <ClCompile Include="RenderRes\gkMeshGLES2.cpp" />
+    <ClCompile Include="RenderRes\gkMeshManager.cpp" />
+    <ClCompile Include="RenderRes\gkShader.cpp" />
+    <ClCompile Include="RenderRes\gkShaderManager.cpp" />
+    <ClCompile Include="RenderRes\gkTextureGLES2.cpp" />
+    <ClCompile Include="RenderRes\gkTextureManager.cpp" />
+    <ClCompile Include="StableHeader.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DeviceRenderContext.h" />
+    <ClInclude Include="dllmain.h" />
+    <ClInclude Include="gkAuxRenderer.h" />
+    <ClInclude Include="gkRendererGL330.h" />
+    <ClInclude Include="gkRenderLayer.h" />
+    <ClInclude Include="gkRenderSequence.h" />
+    <ClInclude Include="gkShaderParamDataSource.h" />
+    <ClInclude Include="Platform\Win32\gkRenderContextWin32.h" />
+    <ClInclude Include="Prerequisites.h" />
+    <ClInclude Include="RenderCamera.h" />
+    <ClInclude Include="RendererCVars.h" />
+    <ClInclude Include="RenderRes\gkMaterial.h" />
+    <ClInclude Include="RenderRes\gkMaterialManager.h" />
+    <ClInclude Include="RenderRes\gkMeshGLES2.h" />
+    <ClInclude Include="RenderRes\gkMeshManager.h" />
+    <ClInclude Include="RenderRes\gkShader.h" />
+    <ClInclude Include="RenderRes\gkShaderManager.h" />
+    <ClInclude Include="RenderRes\gkTextureGLES2.h" />
+    <ClInclude Include="RenderRes\gkTextureManager.h" />
+    <ClInclude Include="StableHeader.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

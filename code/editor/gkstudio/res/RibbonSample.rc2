@@ -1,0 +1,18 @@
+//
+// RIBBONSAMPLE.RC2 - resources Microsoft Visual C++ does not edit directly
+//
+
+#ifdef APSTUDIO_INVOKED
+	#error this file is not editable by Microsoft Visual C++
+#endif //APSTUDIO_INVOKED
+
+
+#include "CodejockSample.rc"
+
+//#include "Styles\Office2007Blue\Office2007Blue.rc"
+//#include "Styles\Office2007Aqua\Office2007Aqua.rc"
+//#include "Styles\Office2007Black\Office2007Black.rc"
+//#include "Styles\Office2007Silver\Office2007Silver.rc"
+//#include "Styles\Office2007Scenic\Office2007Scenic.rc"
+//#include "Styles\Office2007White\Office2007White.rc"
+

@@ -1,0 +1,44 @@
+#version 100
+precision highp float;
+
+#include "include/shade_lib.h"
+
+uniform sampler2D texDiffuse;		// diffuse 0
+uniform sampler2D texNormal;		// normal 1
+uniform sampler2D texSpecular;		// specular 2
+uniform sampler2D texDetail;		// detail 3
+uniform sampler2D texCustom1;		// 4
+
+uniform highp vec4		g_campos_far;
+uniform highp vec3		g_camdir;
+uniform highp vec3		g_lightpos;
+uniform highp vec4		g_lightcolor;
+
+varying highp vec4 outScreenTC;
+varying highp vec3 outPosInCam;
+
+void main (void)
+{
+	highp vec3 screenTC = outScreenTC.xyz / outScreenTC.w;
+
+	highp vec3 viewdir = outPosInCam.xyz - g_campos_far.xyz;
+	viewdir = normalize(viewdir);
+	float cosAng = dot(viewdir, g_camdir);
+
+	highp vec3 viewwp = viewdir * (g_campos_far.w / cosAng);
+
+	highp float Wd = SampleDepth(texDiffuse, screenTC.xy);
+	highp vec3 WorldPos = g_campos_far.xyz + viewwp * Wd;
+
+	vec3 lightVec = g_lightpos - WorldPos;
+	float att = max(0.0, g_lightcolor.w - abs(length(lightVec)) ) / g_lightcolor.w;
+	lightVec = normalize(lightVec);
+	highp vec3 vNorm = 2.0 * (texture2D(texNormal, screenTC.xy).rgb - 0.5);
+	vNorm = normalize(vNorm);
+
+	vec4 finaldif = vec4( 2.0 * att * att * g_lightcolor.rgb * max(0.0, dot(vNorm, lightVec)), 1.0);
+
+
+
+	gl_FragColor = finaldif;
+}

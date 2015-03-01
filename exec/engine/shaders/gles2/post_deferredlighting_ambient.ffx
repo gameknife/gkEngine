@@ -1,0 +1,37 @@
+#version 100
+precision highp float;
+
+#include "include/shade_lib.h"
+
+uniform sampler2D texDiffuse;		// diffuse 0
+uniform sampler2D texNormal;		// normal 1
+uniform sampler2D texSpecular;		// specular 2
+uniform sampler2D texDetail;		// detail 3
+uniform sampler2D texCustom1;		// 4
+
+uniform vec3 campos;
+uniform vec4 ViewportParam;
+
+uniform lowp vec4 g_Ambient;
+uniform highp vec3 g_LightPos;
+
+varying mediump vec2  TexCoord0;
+varying highp vec3 FarClipPos;
+
+void main(void)
+{
+    highp float Wd = SampleDepth(texDiffuse, TexCoord0);
+    highp vec3 WorldPos = campos + FarClipPos * Wd;
+	highp vec3 vNorm = 2.0 * (texture2D(texNormal, TexCoord0).rgb - 0.5);
+	vNorm = normalize(vNorm);
+
+#ifdef POINTLIGHT
+	gl_FragColor = vec4(1.0,0.0,1.0,1.0);
+#else
+	// simulate sky light, semi-sphere lighting
+	lowp vec3 cAmbient = g_Ambient.rgb;
+	cAmbient *= (vNorm.z*0.25+0.75); // 2 inst
+
+	gl_FragColor = vec4(cAmbient,1.0);
+#endif
+}

@@ -1,0 +1,406 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="GLES2Shaders">
+      <UniqueIdentifier>{f83014bf-4ba6-4055-9778-22bf0cde6689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GLES2Shaders\ForwardShading">
+      <UniqueIdentifier>{406b8224-55de-4661-b66a-6ff4bc2445fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GLES2Shaders\include">
+      <UniqueIdentifier>{c715c185-fcbb-4b1c-ac2a-df6516c2921c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GLES2Shaders\PostProcess">
+      <UniqueIdentifier>{25823ddc-7659-498a-a21a-25233450a619}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gfx">
+      <UniqueIdentifier>{3ef9658e-2f11-40a6-ba19-5cef03a472d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gfx\hidden">
+      <UniqueIdentifier>{7d65cf88-d7ad-4b6f-a28a-2ae356b4cb52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gfx\built-in">
+      <UniqueIdentifier>{40800213-77c5-4deb-97d3-f805c214924d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gfx\extern">
+      <UniqueIdentifier>{7c0c2bcb-da7a-44da-af52-1fa737eee70d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D9Shaders">
+      <UniqueIdentifier>{a390e36a-5e0b-4c82-bdfb-7953a07f62a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D9Shaders\fx">
+      <UniqueIdentifier>{82e5175f-9066-4d76-82d5-9100de20d996}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D9Shaders\fx\Shading">
+      <UniqueIdentifier>{cac36827-6df6-425c-b99b-1d97d56956b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D9Shaders\fx\PostProcess">
+      <UniqueIdentifier>{c436ca29-0390-4c68-8e59-b5c0d32305bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D9Shaders\fx\System">
+      <UniqueIdentifier>{62bdbc5b-7d8d-4575-b192-188184fb99f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D9Shaders\fx\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="D3D9Shaders\fx\Shading\general">
+      <UniqueIdentifier>{fa09dd55-92a8-4fb3-83c7-ee0a7ddd34f6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="gles2\ks_SkyHdr.ffx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\ks_SkyHdr.vfx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\ksBase.ffx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\ksBase.vfx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\ksLightMap.ffx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\ksLightMap.vfx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="d3d9\hwcode\%24BasePara.h">
+      <Filter>D3D9Shaders\fx\Header Files</Filter>
+    </None>
+    <None Include="d3d9\hwcode\%24InOutDefine.h">
+      <Filter>D3D9Shaders\fx\Header Files</Filter>
+    </None>
+    <None Include="d3d9\hwcode\%24ksPixelLib.h">
+      <Filter>D3D9Shaders\fx\Header Files</Filter>
+    </None>
+    <None Include="d3d9\hwcode\%24ksVertexLib.h">
+      <Filter>D3D9Shaders\fx\Header Files</Filter>
+    </None>
+    <None Include="d3d9\hwcode\%24Light_Calc.h">
+      <Filter>D3D9Shaders\fx\Header Files</Filter>
+    </None>
+    <None Include="d3d9\hwcode\%24postlib.h">
+      <Filter>D3D9Shaders\fx\Header Files</Filter>
+    </None>
+    <None Include="d3d9\hwcode\%24SamplerDef.h">
+      <Filter>D3D9Shaders\fx\Header Files</Filter>
+    </None>
+    <None Include="d3d9\hwcode\%24VolumeFog.h">
+      <Filter>D3D9Shaders\fx\Header Files</Filter>
+    </None>
+    <None Include="gles2\Vegetation_AutoExpand.vfx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\Vegetation_AutoExpand.ffx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\postcommon.vfx">
+      <Filter>GLES2Shaders\PostProcess</Filter>
+    </None>
+    <None Include="gles2\postcommon.ffx">
+      <Filter>GLES2Shaders\PostProcess</Filter>
+    </None>
+    <None Include="gles2\showdepthmap.ffx">
+      <Filter>GLES2Shaders\PostProcess</Filter>
+    </None>
+    <None Include="gles2\genshadowmap.ffx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\genshadowmap.vfx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\post_copy.ffx">
+      <Filter>GLES2Shaders\PostProcess</Filter>
+    </None>
+    <None Include="gles2\post_brightpass.ffx">
+      <Filter>GLES2Shaders\PostProcess</Filter>
+    </None>
+    <None Include="gles2\post_bloom.ffx">
+      <Filter>GLES2Shaders\PostProcess</Filter>
+    </None>
+    <None Include="gles2\post_gaussian.ffx">
+      <Filter>GLES2Shaders\PostProcess</Filter>
+    </None>
+    <None Include="gles2\Vegetation.ffx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\ksfont.ffx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\ksfont.vfx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\ksaux.vfx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\ksaux.ffx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\post_bloom_dof.ffx">
+      <Filter>GLES2Shaders\PostProcess</Filter>
+    </None>
+    <None Include="gles2\post_cvtlineardepth.ffx">
+      <Filter>GLES2Shaders\PostProcess</Filter>
+    </None>
+    <None Include="gles2\post_fogprocess.ffx">
+      <Filter>GLES2Shaders\PostProcess</Filter>
+    </None>
+    <None Include="gles2\post_ssao.ffx">
+      <Filter>GLES2Shaders\PostProcess</Filter>
+    </None>
+    <None Include="template\built_in\grass.gfx">
+      <Filter>gfx\built-in</Filter>
+    </None>
+    <None Include="template\built_in\ks_skyhdr.gfx">
+      <Filter>gfx\built-in</Filter>
+    </None>
+    <None Include="template\built_in\ksbase.gfx">
+      <Filter>gfx\built-in</Filter>
+    </None>
+    <None Include="template\built_in\kswatersurface.gfx">
+      <Filter>gfx\built-in</Filter>
+    </None>
+    <None Include="template\built_in\terrian.gfx">
+      <Filter>gfx\built-in</Filter>
+    </None>
+    <None Include="template\built_in\vegetation.gfx">
+      <Filter>gfx\built-in</Filter>
+    </None>
+    <None Include="template\built_in\vegetation_autoexpand.gfx">
+      <Filter>gfx\built-in</Filter>
+    </None>
+    <None Include="template\hidden\ksaux.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\ksfont.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\post_bloom.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\post_brightpass.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\post_copy.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\post_cvtlineardepth.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\post_fogprocess.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\post_gaussian.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\post_ssao.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\postcommon.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\showdepthmap.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksCommonPost.fx">
+      <Filter>D3D9Shaders\fx\PostProcess</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksCompileFailed.fx">
+      <Filter>D3D9Shaders\fx\System</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksAux.fx">
+      <Filter>D3D9Shaders\fx\System</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksDefault.fx">
+      <Filter>D3D9Shaders\fx\System</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksDeferredLighting.fx">
+      <Filter>D3D9Shaders\fx\PostProcess</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksDeferredShading.fx">
+      <Filter>D3D9Shaders\fx\PostProcess</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksDeferredSnow.fx">
+      <Filter>D3D9Shaders\fx\PostProcess</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksfont.fx">
+      <Filter>D3D9Shaders\fx\System</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksHDRProcess.fx">
+      <Filter>D3D9Shaders\fx\PostProcess</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksGenerateSM.fx">
+      <Filter>D3D9Shaders\fx\System</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksShadowStencilGen.fx">
+      <Filter>D3D9Shaders\fx\PostProcess</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksShadowMaskGen.fx">
+      <Filter>D3D9Shaders\fx\PostProcess</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksReflGen.fx">
+      <Filter>D3D9Shaders\fx\System</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksSSAO.fx">
+      <Filter>D3D9Shaders\fx\PostProcess</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksSSRL.fx">
+      <Filter>D3D9Shaders\fx\PostProcess</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksSSDO.fx">
+      <Filter>D3D9Shaders\fx\PostProcess</Filter>
+    </None>
+    <None Include="d3d9\hwcode\kswatersurface.fx">
+      <Filter>D3D9Shaders\fx\Shading</Filter>
+    </None>
+    <None Include="d3d9\hwcode\Particle.fx">
+      <Filter>D3D9Shaders\fx\System</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ParticleUpdate.fx">
+      <Filter>D3D9Shaders\fx\System</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksSpecilEffects.fx">
+      <Filter>D3D9Shaders\fx\System</Filter>
+    </None>
+    <None Include="template\built_in\ksskinhd.gfx">
+      <Filter>gfx\built-in</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksskinhd.fx">
+      <Filter>D3D9Shaders\fx\Shading</Filter>
+    </None>
+    <None Include="gles2\ksskinhd.ffx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksoculus.fx">
+      <Filter>D3D9Shaders\fx\System</Filter>
+    </None>
+    <None Include="template\hidden\kshdrprocess.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\ksspecileffects.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\ksssao.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\ksssrl.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\kszpass.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\particleupdate.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\kscommonpost.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\ksdefault.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\ksdeferredshading.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\ksdeferredsnow.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\ksgeneratesm.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\ksreflgen.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\ksshadowstencilgen.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\ksshadowmaskgen.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\ksdeferredlighting.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="template\hidden\kszpassskinned.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="gles2\ksterrian.ffx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\ksterrian.vfx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\post_deferredlighting_ambient.ffx">
+      <Filter>GLES2Shaders\PostProcess</Filter>
+    </None>
+    <None Include="template\built_in\kssimple.gfx">
+      <Filter>gfx\built-in</Filter>
+    </None>
+    <None Include="gles2\kssimple.vfx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\kssimple.ffx">
+      <Filter>GLES2Shaders\ForwardShading</Filter>
+    </None>
+    <None Include="gles2\post_shadowmask.ffx">
+      <Filter>GLES2Shaders\PostProcess</Filter>
+    </None>
+    <None Include="template\hidden\post_msaa.gfx">
+      <Filter>gfx\hidden</Filter>
+    </None>
+    <None Include="d3d9\hwcode\post_msaa.fx">
+      <Filter>D3D9Shaders\fx\PostProcess</Filter>
+    </None>
+    <None Include="d3d9\hwcode\post_smaa.fx">
+      <Filter>D3D9Shaders\fx\PostProcess</Filter>
+    </None>
+    <None Include="d3d9\hwcode\grass.fx">
+      <Filter>D3D9Shaders\fx\Shading</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksbase.fx">
+      <Filter>D3D9Shaders\fx\Shading</Filter>
+    </None>
+    <None Include="d3d9\hwcode\$ksreflpass.fx">
+      <Filter>D3D9Shaders\fx\Shading\general</Filter>
+    </None>
+    <None Include="d3d9\hwcode\$ksshadowpass.fx">
+      <Filter>D3D9Shaders\fx\Shading\general</Filter>
+    </None>
+    <None Include="d3d9\hwcode\%24kszpass.fx">
+      <Filter>D3D9Shaders\fx\Shading\general</Filter>
+    </None>
+    <None Include="d3d9\hwcode\terrian.fx">
+      <Filter>D3D9Shaders\fx\Shading</Filter>
+    </None>
+    <None Include="d3d9\hwcode\vegetation.fx">
+      <Filter>D3D9Shaders\fx\Shading</Filter>
+    </None>
+    <None Include="d3d9\hwcode\vegetation_autoexpand.fx">
+      <Filter>D3D9Shaders\fx\Shading</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ksstereo_general.fx">
+      <Filter>D3D9Shaders\fx\System</Filter>
+    </None>
+    <None Include="d3d9\hwcode\ks_skyhdr.fx">
+      <Filter>D3D9Shaders\fx\System</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="gles2\include\sampler_def.h">
+      <Filter>GLES2Shaders\include</Filter>
+    </ClInclude>
+    <ClInclude Include="gles2\include\varying_def.h">
+      <Filter>GLES2Shaders\include</Filter>
+    </ClInclude>
+    <ClInclude Include="gles2\include\constant_ps_def.h">
+      <Filter>GLES2Shaders\include</Filter>
+    </ClInclude>
+    <ClInclude Include="gles2\include\constant_vs_def.h">
+      <Filter>GLES2Shaders\include</Filter>
+    </ClInclude>
+    <ClInclude Include="gles2\include\shade_lib.h">
+      <Filter>GLES2Shaders\include</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,421 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A00A4A9C188B73B7005376F7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00A4A9B188B73B7005376F7 /* CFNetwork.framework */; };
+		A00A4A9E188B73D3005376F7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00A4A9D188B73D3005376F7 /* SystemConfiguration.framework */; };
+		A00A4AA0188B758A005376F7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00A4A9F188B758A005376F7 /* CoreData.framework */; };
+		A00A4AA2188B7594005376F7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00A4AA1188B7594005376F7 /* CoreFoundation.framework */; };
+		A013F47819E841360076E11E /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A013F47619E841360076E11E /* logo.png */; };
+		A013F47919E841360076E11E /* logo_retina.png in Resources */ = {isa = PBXBuildFile; fileRef = A013F47719E841360076E11E /* logo_retina.png */; };
+		A04B42F41734038500EF0763 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B42F31734038500EF0763 /* UIKit.framework */; };
+		A04B42F61734038500EF0763 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B42F51734038500EF0763 /* Foundation.framework */; };
+		A04B42F81734038500EF0763 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B42F71734038500EF0763 /* CoreGraphics.framework */; };
+		A04B42FE1734038500EF0763 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A04B42FC1734038500EF0763 /* InfoPlist.strings */; };
+		A04B43001734038500EF0763 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A04B42FF1734038500EF0763 /* main.m */; };
+		A04B43041734038500EF0763 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A04B43031734038500EF0763 /* AppDelegate.mm */; };
+		A04B433517340CE700EF0763 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B433317340CE700EF0763 /* OpenGLES.framework */; };
+		A04B433617340CE700EF0763 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B433417340CE700EF0763 /* QuartzCore.framework */; };
+		A08D66641A3BE06600EA04D3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A08D66631A3BE06600EA04D3 /* Images.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A00A4A9B188B73B7005376F7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		A00A4A9D188B73D3005376F7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		A00A4A9F188B758A005376F7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		A00A4AA1188B7594005376F7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		A013F47619E841360076E11E /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		A013F47719E841360076E11E /* logo_retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_retina.png; sourceTree = "<group>"; };
+		A04B42EF1734038500EF0763 /* gkLauncherIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gkLauncherIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A04B42F31734038500EF0763 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A04B42F51734038500EF0763 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A04B42F71734038500EF0763 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A04B42FB1734038500EF0763 /* gkLauncherIOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "gkLauncherIOS-Info.plist"; sourceTree = "<group>"; };
+		A04B42FD1734038500EF0763 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A04B42FF1734038500EF0763 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A04B43011734038500EF0763 /* gkLauncherIOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "gkLauncherIOS-Prefix.pch"; sourceTree = "<group>"; };
+		A04B43021734038500EF0763 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A04B43031734038500EF0763 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
+		A04B43131734043200EF0763 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		A04B43141734043200EF0763 /* gkIconpAD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gkIconpAD.png; sourceTree = "<group>"; };
+		A04B43151734043200EF0763 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		A04B433317340CE700EF0763 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		A04B433417340CE700EF0763 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A08D66631A3BE06600EA04D3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A04B42EC1734038500EF0763 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A00A4AA2188B7594005376F7 /* CoreFoundation.framework in Frameworks */,
+				A00A4AA0188B758A005376F7 /* CoreData.framework in Frameworks */,
+				A00A4A9E188B73D3005376F7 /* SystemConfiguration.framework in Frameworks */,
+				A00A4A9C188B73B7005376F7 /* CFNetwork.framework in Frameworks */,
+				A04B42F41734038500EF0763 /* UIKit.framework in Frameworks */,
+				A04B42F61734038500EF0763 /* Foundation.framework in Frameworks */,
+				A04B42F81734038500EF0763 /* CoreGraphics.framework in Frameworks */,
+				A04B433517340CE700EF0763 /* OpenGLES.framework in Frameworks */,
+				A04B433617340CE700EF0763 /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A013F47519E841360076E11E /* appres */ = {
+			isa = PBXGroup;
+			children = (
+				A013F47619E841360076E11E /* logo.png */,
+				A013F47719E841360076E11E /* logo_retina.png */,
+			);
+			name = appres;
+			path = gkLauncherIOS/appres;
+			sourceTree = "<group>";
+		};
+		A04B42E41734038500EF0763 = {
+			isa = PBXGroup;
+			children = (
+				A013F47519E841360076E11E /* appres */,
+				A04B43121734043200EF0763 /* res */,
+				A04B42F91734038500EF0763 /* gkLauncherIOS */,
+				A04B42F21734038500EF0763 /* Frameworks */,
+				A04B42F01734038500EF0763 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A04B42F01734038500EF0763 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A04B42EF1734038500EF0763 /* gkLauncherIOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A04B42F21734038500EF0763 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A00A4AA1188B7594005376F7 /* CoreFoundation.framework */,
+				A00A4A9F188B758A005376F7 /* CoreData.framework */,
+				A00A4A9D188B73D3005376F7 /* SystemConfiguration.framework */,
+				A00A4A9B188B73B7005376F7 /* CFNetwork.framework */,
+				A04B433317340CE700EF0763 /* OpenGLES.framework */,
+				A04B433417340CE700EF0763 /* QuartzCore.framework */,
+				A04B42F31734038500EF0763 /* UIKit.framework */,
+				A04B42F51734038500EF0763 /* Foundation.framework */,
+				A04B42F71734038500EF0763 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A04B42F91734038500EF0763 /* gkLauncherIOS */ = {
+			isa = PBXGroup;
+			children = (
+				A04B43021734038500EF0763 /* AppDelegate.h */,
+				A04B43031734038500EF0763 /* AppDelegate.mm */,
+				A08D66631A3BE06600EA04D3 /* Images.xcassets */,
+				A04B42FA1734038500EF0763 /* Supporting Files */,
+			);
+			path = gkLauncherIOS;
+			sourceTree = "<group>";
+		};
+		A04B42FA1734038500EF0763 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A04B42FB1734038500EF0763 /* gkLauncherIOS-Info.plist */,
+				A04B42FC1734038500EF0763 /* InfoPlist.strings */,
+				A04B42FF1734038500EF0763 /* main.m */,
+				A04B43011734038500EF0763 /* gkLauncherIOS-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A04B43121734043200EF0763 /* res */ = {
+			isa = PBXGroup;
+			children = (
+				A04B43131734043200EF0763 /* Default.png */,
+				A04B43141734043200EF0763 /* gkIconpAD.png */,
+				A04B43151734043200EF0763 /* icon.png */,
+			);
+			name = res;
+			path = gkLauncherIOS/res;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A04B42EE1734038500EF0763 /* gkLauncherIOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A04B43071734038500EF0763 /* Build configuration list for PBXNativeTarget "gkLauncherIOS" */;
+			buildPhases = (
+				A04B42EB1734038500EF0763 /* Sources */,
+				A04B42EC1734038500EF0763 /* Frameworks */,
+				A04B42ED1734038500EF0763 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = gkLauncherIOS;
+			productName = gkLauncherIOS;
+			productReference = A04B42EF1734038500EF0763 /* gkLauncherIOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A04B42E61734038500EF0763 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0440;
+				ORGANIZATIONNAME = gameKnife;
+				TargetAttributes = {
+					A04B42EE1734038500EF0763 = {
+						DevelopmentTeam = 5EF477Q8LK;
+					};
+				};
+			};
+			buildConfigurationList = A04B42E91734038500EF0763 /* Build configuration list for PBXProject "gkLauncherIOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A04B42E41734038500EF0763;
+			productRefGroup = A04B42F01734038500EF0763 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A04B42EE1734038500EF0763 /* gkLauncherIOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A04B42ED1734038500EF0763 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A013F47819E841360076E11E /* logo.png in Resources */,
+				A04B42FE1734038500EF0763 /* InfoPlist.strings in Resources */,
+				A08D66641A3BE06600EA04D3 /* Images.xcassets in Resources */,
+				A013F47919E841360076E11E /* logo_retina.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A04B42EB1734038500EF0763 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A04B43001734038500EF0763 /* main.m in Sources */,
+				A04B43041734038500EF0763 /* AppDelegate.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A04B42FC1734038500EF0763 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A04B42FD1734038500EF0763 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A04B43051734038500EF0763 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = armv7;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A04B43061734038500EF0763 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = armv7;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A04B43081734038500EF0763 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
+				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)";
+				DEAD_CODE_STRIPPING = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "gkLauncherIOS/gkLauncherIOS-Prefix.pch";
+				HEADER_SEARCH_PATHS = "gkCommon/**";
+				INFOPLIST_FILE = "gkLauncherIOS/gkLauncherIOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"",
+					../thirdparty/havoksdk/lib/ios_armv7/dev,
+				);
+				OBJROOT = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = (
+					"-lgkFont",
+					"-lgkGameObjectSystem",
+					"-lgkRendererGLES2",
+					"-lgkInput",
+					"-lgkCore",
+					"-lgkGameFramework",
+					"-lgkSystem",
+					"-lTestCases",
+					"-lgkAnimation",
+					"-lhkaAnimation",
+					"-lhkaiInternal",
+					"-lhkaInternal",
+					"-lhkBase",
+					"-lhkbInternal",
+					"-lhkbUtilities",
+					"-lhkcdCollide",
+					"-lhkcdInternal",
+					"-lhkCompat",
+					"-lhkGeometryUtilities",
+					"-lhkInternal",
+					"-lhkSceneData",
+					"-lhkSerialize",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A04B43091734038500EF0763 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
+				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)";
+				DEAD_CODE_STRIPPING = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "gkLauncherIOS/gkLauncherIOS-Prefix.pch";
+				HEADER_SEARCH_PATHS = "gkCommon/**";
+				INFOPLIST_FILE = "gkLauncherIOS/gkLauncherIOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"",
+					../thirdparty/havoksdk/lib/ios_armv7/dev,
+				);
+				LLVM_LTO = YES;
+				OBJROOT = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = (
+					"-lgkFont",
+					"-lgkGameObjectSystem",
+					"-lgkRendererGLES2",
+					"-lgkInput",
+					"-lgkCore",
+					"-lgkGameFramework",
+					"-lgkSystem",
+					"-lTestCases",
+					"-lgkAnimation",
+					"-lhkaAnimation",
+					"-lhkaiInternal",
+					"-lhkaInternal",
+					"-lhkBase",
+					"-lhkbInternal",
+					"-lhkbUtilities",
+					"-lhkcdCollide",
+					"-lhkcdInternal",
+					"-lhkCompat",
+					"-lhkGeometryUtilities",
+					"-lhkInternal",
+					"-lhkSceneData",
+					"-lhkSerialize",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A04B42E91734038500EF0763 /* Build configuration list for PBXProject "gkLauncherIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A04B43051734038500EF0763 /* Debug */,
+				A04B43061734038500EF0763 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A04B43071734038500EF0763 /* Build configuration list for PBXNativeTarget "gkLauncherIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A04B43081734038500EF0763 /* Debug */,
+				A04B43091734038500EF0763 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A04B42E61734038500EF0763 /* Project object */;
+}

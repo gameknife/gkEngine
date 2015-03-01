@@ -1,0 +1,16 @@
+#version 100
+
+precision highp float;
+uniform sampler2D  sTexture;
+varying mediump vec2   TexCoord0;
+
+void main()
+{
+	vec4 vSample = texture2D(sTexture, TexCoord0);
+
+	vSample.rgb *= 3.0;
+	vSample.rgb -= 2.0;
+	vSample.rgb = max(vSample.rgb, vec3(0.0,0.0,0.0));
+
+	gl_FragColor =  vSample;
+}
