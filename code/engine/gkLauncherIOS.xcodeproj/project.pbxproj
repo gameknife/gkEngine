@@ -38,7 +38,6 @@
 		A04B42FB1734038500EF0763 /* gkLauncherIOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "gkLauncherIOS-Info.plist"; sourceTree = "<group>"; };
 		A04B42FD1734038500EF0763 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A04B42FF1734038500EF0763 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		A04B43011734038500EF0763 /* gkLauncherIOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "gkLauncherIOS-Prefix.pch"; sourceTree = "<group>"; };
 		A04B43021734038500EF0763 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A04B43031734038500EF0763 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		A04B43131734043200EF0763 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -131,7 +130,6 @@
 				A04B42FB1734038500EF0763 /* gkLauncherIOS-Info.plist */,
 				A04B42FC1734038500EF0763 /* InfoPlist.strings */,
 				A04B42FF1734038500EF0763 /* main.m */,
-				A04B43011734038500EF0763 /* gkLauncherIOS-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -294,7 +292,6 @@
 				DEAD_CODE_STRIPPING = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "gkLauncherIOS/gkLauncherIOS-Prefix.pch";
 				HEADER_SEARCH_PATHS = "gkCommon/**";
 				INFOPLIST_FILE = "gkLauncherIOS/gkLauncherIOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -351,7 +348,6 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "gkLauncherIOS/gkLauncherIOS-Prefix.pch";
 				HEADER_SEARCH_PATHS = "gkCommon/**";
 				INFOPLIST_FILE = "gkLauncherIOS/gkLauncherIOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;

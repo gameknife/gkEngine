@@ -95,3 +95,17 @@ IMovieActorNode* gkTrackBus::CreateActor( EAnimNodeType type, void* param1, void
 
 	return ret;
 }
+
+void gkTrackBus::DestroyMovieShot(IMovieShot* shot)
+{
+	MovieShotMap::iterator it = m_movieShots.begin();
+	for (; it != m_movieShots.end(); ++it)
+	{
+		if ( it->second == shot  )
+		{
+			delete shot;
+			m_movieShots.erase(it);
+			return;
+		}
+	}
+}

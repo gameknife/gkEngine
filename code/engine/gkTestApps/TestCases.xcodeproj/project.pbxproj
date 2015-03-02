@@ -37,7 +37,6 @@
 		A013F47E19E911FB0076E11E /* TestCase_ArtAnatomy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCase_ArtAnatomy.cpp; sourceTree = "<group>"; };
 		A068A2C1173567410059BCF3 /* libTestCases.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTestCases.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A068A2C4173567410059BCF3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		A068A2C8173567410059BCF3 /* TestCases-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestCases-Prefix.pch"; sourceTree = "<group>"; };
 		A068A2D6173567D70059BCF3 /* TestCaseFramework.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCaseFramework.cpp; sourceTree = "<group>"; };
 		A068A2D7173567D70059BCF3 /* TestCaseFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCaseFramework.h; sourceTree = "<group>"; };
 		A068A2D8173567D70059BCF3 /* TestCase_LoadCharacter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCase_LoadCharacter.cpp; sourceTree = "<group>"; };
@@ -105,7 +104,6 @@
 		A068A2C7173567410059BCF3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				A068A2C8173567410059BCF3 /* TestCases-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -262,7 +260,6 @@
 			buildSettings = {
 				DSTROOT = /tmp/TestCases.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TestCases/TestCases-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -274,7 +271,6 @@
 			buildSettings = {
 				DSTROOT = /tmp/TestCases.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TestCases/TestCases-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -317,7 +313,6 @@
 			buildSettings = {
 				DSTROOT = /tmp/TestCases.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TestCases/TestCases-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -361,7 +356,6 @@
 			buildSettings = {
 				DSTROOT = /tmp/TestCases.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TestCases/TestCases-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

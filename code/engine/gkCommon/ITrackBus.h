@@ -374,6 +374,8 @@ struct ITrackBus
 
 	virtual IMovieActorNode* CreateActor(EAnimNodeType type, void* param1 = 0, void* param2 = 0) =0;
 
+	virtual void DestroyMovieShot( IMovieShot* shot ) =0;
+
 };
 
 

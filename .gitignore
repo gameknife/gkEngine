@@ -12,3 +12,5 @@ exec/bin32/
 code/Lib/
 *.opensdf
 *.gmf
+exec/media/
+*.exp

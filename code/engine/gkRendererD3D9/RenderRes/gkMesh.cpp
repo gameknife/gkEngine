@@ -40,10 +40,11 @@ struct gkHavokMeshStreamingTask : public ITask
 	{
 		// task使用了公共的Loader，要加下锁 [3/27/2013 Kaiming]
 
-		targetMesh->loadHavokMesh(targetMesh->m_pDevice, filename.c_str());
-
-		targetMesh->BindHwBuffer();
-		targetMesh->UpdateHwBuffer();
+		if( targetMesh->loadHavokMesh(targetMesh->m_pDevice, filename.c_str()) )
+		{
+			targetMesh->BindHwBuffer();
+			targetMesh->UpdateHwBuffer();
+		}
 	}
 
 };
@@ -329,41 +330,48 @@ bool gkMesh::loadHavokMesh( IDirect3DDevice9* d3d9Device, const TCHAR* wszFileNa
 	}
 
 	// 将文件内容读到缓存中
-	loader->LoadGeometry(wszFileName);
-
-	m_BoneBaseTransforms.clear();
-	for (uint32 i=0; i < loader->GetBoneBaseTransformCount(); ++i)
+	if( loader->LoadGeometry(wszFileName) )
 	{
-		Matrix44 matrix;
-		loader->GetBoneBaseTransform(matrix, i);
-		m_BoneBaseTransforms.push_back(matrix);
+		m_BoneBaseTransforms.clear();
+		for (uint32 i=0; i < loader->GetBoneBaseTransformCount(); ++i)
+		{
+			Matrix44 matrix;
+			loader->GetBoneBaseTransform(matrix, i);
+			m_BoneBaseTransforms.push_back(matrix);
+		}
+
+
+
+		gkVertexBuffer* loaderVB = loader->getVB();
+		gkIndexBuffer* loaderIB = loader->getIB();
+
+		m_pVB = new gkVertexBuffer(loaderVB->elementSize, loaderVB->elementCount, loaderVB->vertexType, eBF_Discard);
+		memcpy(m_pVB->data, loaderVB->data, loaderVB->getSize() );
+
+		m_pIB = new gkIndexBuffer(loaderIB->count);
+		memcpy(m_pIB->data, loaderIB->data, loaderIB->getSize() );
+
+		subsets.clear();
+
+		for (uint32 i=0; i < loader->getSubsetCount(); ++i)
+		{
+			gkMeshSubset subset;
+			loader->getSubset(i, subset.indexStart, subset.indexCount, subset.mtlname);
+			subsets.push_back( subset );
+		}
+
+
+		loader->FinishLoading();
+		gEnv->pSystem->ReturnMeshLoader(loader);
+		return true;
+	}
+	else
+	{
+		loader->FinishLoading();
+		gEnv->pSystem->ReturnMeshLoader(loader);
+		return false;
 	}
 
-
-
-	gkVertexBuffer* loaderVB = loader->getVB();
-	gkIndexBuffer* loaderIB = loader->getIB();
-
-	m_pVB = new gkVertexBuffer(loaderVB->elementSize, loaderVB->elementCount, loaderVB->vertexType, eBF_Discard);
-	memcpy(m_pVB->data, loaderVB->data, loaderVB->getSize() );
-
-	m_pIB = new gkIndexBuffer(loaderIB->count);
-	memcpy(m_pIB->data, loaderIB->data, loaderIB->getSize() );
-
-	subsets.clear();
-
-	for (uint32 i=0; i < loader->getSubsetCount(); ++i)
-	{
-		gkMeshSubset subset;
-		loader->getSubset(i, subset.indexStart, subset.indexCount, subset.mtlname);
-		subsets.push_back( subset );
-	}
-
-
-	loader->FinishLoading();
-
-	gEnv->pSystem->ReturnMeshLoader(loader);
-	return false;
 }
 
 

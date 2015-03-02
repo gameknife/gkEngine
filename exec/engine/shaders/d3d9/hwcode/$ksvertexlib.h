@@ -115,6 +115,19 @@ struct app2vertGeneral
 
 ///////////////// Shared vertex shader computations //////////////////
 
+void vs_shadow_output( in app2vertGeneral IN, inout vert2FragShadow OUT )
+{
+	// Common data
+	float3 position = IN.vertCommon.Position.xyz;
+#if SKIN
+	float blendWeightsArray[4] = (float[4])IN.vertCommon.BoneWeight;
+	int   indexArray[4] = (int[4])IN.vertCommon.BoneIndex;
+	skinPosition( IN.vertCommon.Position.xyz, blendWeightsArray, indexArray, position);    
+#endif
+	OUT.HPosition = mul( float4(position,1), g_mWorldViewProj);
+	OUT.baseTC = float4(IN.vertCommon.Texcoord.xy, OUT.HPosition.z, OUT.HPosition.w);
+}
+
 void vs_shared_output( in app2vertGeneral IN, inout vert2FragGeneral OUT, bool bUseBump )
 {
 	// Common data

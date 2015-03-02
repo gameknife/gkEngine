@@ -24,8 +24,10 @@ vert2FragShadow ShadowPassVS( app2vertGeneral	IN	)
 {	
 	vert2FragShadow OUT = (vert2FragShadow)0; 
 
-	OUT.HPosition = mul( float4(IN.vertCommon.Position.xyz, 1), g_mWorldViewProj );
-	OUT.baseTC = float4(IN.vertCommon.Texcoord.xy, OUT.HPosition.z, OUT.HPosition.w);
+	vs_shadow_output( IN, OUT );
+
+	//OUT.HPosition = mul( float4(IN.vertCommon.Position.xyz, 1), g_mWorldViewProj );
+	//OUT.baseTC = float4(IN.vertCommon.Texcoord.xy, OUT.HPosition.z, OUT.HPosition.w);
 
 	return OUT;
 }
@@ -33,8 +35,13 @@ vert2FragShadow ShadowPassVS( app2vertGeneral	IN	)
 pixout ShadowPassPS(vert2FragShadow IN)
 {
 	pixout OUT = (pixout)0;
+#if defined( DIFSPEC ) || defined( DIFDMASK )
 
+#else
 	clip( tex2D(samDiffuse, IN.baseTC.xy).a - 0.35f);
+#endif
+
+	
 	//
 	// Depth is z / w
 	//

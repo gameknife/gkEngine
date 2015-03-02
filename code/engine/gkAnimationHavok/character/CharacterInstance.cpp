@@ -18,6 +18,7 @@ gkCharacterInstance::gkCharacterInstance( const TCHAR* name )
 	m_wstrName = name;
 	m_pSkeleton = NULL;
 	m_mapAnimations.clear();
+	m_pPose = NULL;
 }
 //////////////////////////////////////////////////////////////////////////
 bool gkCharacterInstance::loadChrFile( const TCHAR* filename )
@@ -37,31 +38,34 @@ bool gkCharacterInstance::loadChrFile( const TCHAR* filename )
 		m_pSkeleton = new hkaAnimatedSkeleton( pSkeleton );
 
 		m_pPose = new hkaPose(m_pSkeleton->getSkeleton());
-	}
 
-	// building animation list
+		// building animation list
 
-	hkaAnimationBinding* bindings = NULL;
+		hkaAnimationBinding* bindings = NULL;
 
-	CRapidXmlParseNode* pChrAnimations = pChrAnimationList->getChildNode(_T("Animation"));
-	for( ; pChrAnimations; pChrAnimations = pChrAnimations->getNextSiblingNode() )
-	{
-		bindings = getAnimationPtr()->getAnimationManager().loadAnimation(pChrAnimations->GetAttribute(_T("filename")));
-		if (bindings)
+		CRapidXmlParseNode* pChrAnimations = pChrAnimationList->getChildNode(_T("Animation"));
+		for( ; pChrAnimations; pChrAnimations = pChrAnimations->getNextSiblingNode() )
 		{
-			hkaDefaultAnimationControl* animationControl = new hkaDefaultAnimationControl( bindings );
-			m_mapAnimations.insert(AnimationControlMap::value_type(pChrAnimations->GetAttribute(_T("name")), animationControl));
+			bindings = getAnimationPtr()->getAnimationManager().loadAnimation(pChrAnimations->GetAttribute(_T("filename")));
+			if (bindings)
+			{
+				hkaDefaultAnimationControl* animationControl = new hkaDefaultAnimationControl( bindings );
+				m_mapAnimations.insert(AnimationControlMap::value_type(pChrAnimations->GetAttribute(_T("name")), animationControl));
 
-			animationControl->setMasterWeight(1.0f);
-			animationControl->setPlaybackSpeed(1.0f);
-			animationControl->easeOut(0.0f);
-			animationControl->setEaseInCurve(0, 0, 1, 1);	// Smooth
-			animationControl->setEaseOutCurve(1, 1, 0, 0);	// Smooth
+				animationControl->setMasterWeight(1.0f);
+				animationControl->setPlaybackSpeed(1.0f);
+				animationControl->easeOut(0.0f);
+				animationControl->setEaseInCurve(0, 0, 1, 1);	// Smooth
+				animationControl->setEaseOutCurve(1, 1, 0, 0);	// Smooth
 
-			m_pSkeleton->addAnimationControl(animationControl);
+				m_pSkeleton->addAnimationControl(animationControl);
+			}
 		}
 	}
-
+	else
+	{
+		gkLogWarning( _T("Rig [%s] load failed."), pChrRig->GetAttribute(_T("FileName")) );
+	}
 
 	// building mesh & create RenderLayer
 	IGameObjectRenderLayer* pRenderLayer = gEnv->p3DEngine->createRenderLayer(m_wstrName, Vec3(0,0,0), Quat::CreateIdentity());

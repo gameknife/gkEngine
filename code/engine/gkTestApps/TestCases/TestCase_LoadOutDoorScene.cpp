@@ -19,7 +19,7 @@ virtual void OnInit()
 	maincam->setPosition(-2, -36, 2);
 	maincam->setOrientation( Quat::CreateRotationXYZ( Ang3( DEG2RAD(-5), 0,0 ) ) );
 
-	gEnv->pGameFramework->LoadLevel( _T("level/daoguan/daoguan.gks") );
+	gEnv->pGameFramework->LoadLevel( _T("level/village/village.gks") );
 	//gEnv->pGameFramework->LoadLevel( _T("level/conf_room/conf_room.gks") );
 	//gEnv->p3DEngine->getTimeOfDay()->setSpeed( 0.5 );
 }

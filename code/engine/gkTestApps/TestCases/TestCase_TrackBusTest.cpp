@@ -15,6 +15,7 @@ TEST_CASE_FASTIMPL_HEAD( TestCase_TrackBusTest, eTcc_Animation )
 	IGameObject* object;
 	Vec3 m_pos;
 	IMovieShot* shot0;
+	IGameObject* m_plane;
 
 virtual void OnInit() 
 {
@@ -24,7 +25,7 @@ virtual void OnInit()
 	Vec3 zeropos = Vec3(0,0,0);
 	Quat zerorot = Quat::CreateIdentity();
 
-	IGameObject* m_plane = gEnv->pGameObjSystem->CreateStaticGeoGameObject( _T("test_case_plane"), _T("objects/basic/plane.gmf"), zeropos, zerorot );
+	m_plane = gEnv->pGameObjSystem->CreateStaticGeoGameObject( _T("test_case_plane"), _T("objects/basic/plane.gmf"), zeropos, zerorot );
 	if (m_plane)
 	{
 		IGameObjectRenderLayer* pRenderLayer = m_plane->getRenderLayer();
@@ -211,7 +212,12 @@ virtual bool OnUpdate()
 
 virtual void OnDestroy() 
 {
+	gEnv->p3DEngine->getTimeOfDay()->bindSunFocus( NULL );
+	gEnv->pTrackBus->DestroyMovieShot( shot0 );
+
 	gEnv->pGameObjSystem->DestoryGameObject(object);
+	gEnv->pGameObjSystem->DestoryGameObject(m_plane);
+	
 	//gEnv->pGameFramework->LoadLevel( _T("void") );
 	gEnv->pSystem->cleanGarbage();
 }

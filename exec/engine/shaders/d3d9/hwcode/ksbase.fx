@@ -17,6 +17,7 @@ struct fragPassCustom
 	float2 vSurfaceRoughness;
 };
 
+
 struct fragLightPassCustom
 {
 

@@ -22,4 +22,9 @@ for /R %GKENGINE_HOME%\media %%A in (*.dds) do (
     del %%A
 )
 
+for /R %GKENGINE_HOME%\media %%A in (*.atc) do (
+    echo [clean file] %%~nxA
+    del %%A
+)
+
 pause

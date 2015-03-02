@@ -29,6 +29,12 @@ hkaSkeleton* gkRigManager::loadRig( const TCHAR* name )
 	hkStringBuf assetFile(szPath); hkAssetManagementUtil::getFilePath(assetFile);
 	hkRootLevelContainer* container = getAnimationPtr()->getGlobalLoader()->load( szPath );
 	HK_ASSERT2(0x27343437, container != HK_NULL , "Could not load asset");
+
+	if (!container)
+	{
+		return false;
+	}
+
 	hkaAnimationContainer* ac = reinterpret_cast<hkaAnimationContainer*>( container->findObjectByType( hkaAnimationContainerClass.getName() ));
 
 	HK_ASSERT2(0x27343435, ac && (ac->m_skeletons.getSize() > 0), "No skeleton loaded");

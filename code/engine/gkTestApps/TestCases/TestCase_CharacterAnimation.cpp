@@ -10,6 +10,7 @@ TEST_CASE_FASTIMPL_HEAD( TestCase_CharacterAnimation, eTcc_Animation )
 		m_index = 0;
 		m_creations.clear();
 		m_camDist = 5.0f;
+		m_tgt = NULL;
 
 		Vec3 pos;
 		Quat rot;
@@ -18,27 +19,9 @@ TEST_CASE_FASTIMPL_HEAD( TestCase_CharacterAnimation, eTcc_Animation )
 
 		float now = gEnv->pTimer->GetAsyncCurTime();
 
-		Vec3 postmp(0,0,0);
-		Quat rottmp = Quat::CreateRotationZ(DEG2RAD(180));
-		IGameObject* object = gEnv->pGameObjSystem->CreateAnimGameObject( _T("objects/characters/prophet/prophet.chr"), postmp, rottmp);
-		if (object)
-		{
-			m_tgt = object;
-			IGameObjectRenderLayer* pRenderLayer = object->getRenderLayer();
-			if (pRenderLayer)
-			{
-				pRenderLayer->setMaterialName(_T("objects/characters/prophet/prophet.mtl"));
-
-				//object->showBBox(true);
-				object->setOrientation( Quat::CreateRotationZ(DEG2RAD(180)) );
-
-			}
-
-			object->setPosition(pos);
-			//object->showBBox(true);
-
-			m_creations.push_back(object);
-		}
+		const TCHAR* chrfile = _T("objects/characters/prophet/prophet.chr");
+		const TCHAR* mtlfile = _T("objects/characters/prophet/prophet.mtl");
+		create_chr(chrfile, mtlfile);
 
 		Vec3 zeropos = Vec3(0,0,0);
 		Quat zerorot = Quat::CreateIdentity();
@@ -54,6 +37,7 @@ TEST_CASE_FASTIMPL_HEAD( TestCase_CharacterAnimation, eTcc_Animation )
 
 			m_plane->setPosition(0,0,-0.005);
 			m_plane->setScale( 20, 20, 20);
+			m_creations.push_back(m_plane);
 		}
 	}
 
@@ -62,6 +46,20 @@ TEST_CASE_FASTIMPL_HEAD( TestCase_CharacterAnimation, eTcc_Animation )
 		if(!m_tgt)
 		{
 			return true;
+		}
+
+		if( gEnv->pInGUI->gkGUIButton( _T("prophet"), Vec2(gEnv->pRenderer->GetScreenWidth() - 105, 200), 100, 50, ColorB(255,255,255,255), ColorB(0,0,0,128) ) )
+		{
+			const TCHAR* chrfile = _T("objects/characters/prophet/prophet.chr");
+			const TCHAR* mtlfile = _T("objects/characters/prophet/prophet.mtl");
+			create_chr(chrfile, mtlfile);
+		}
+
+		if( gEnv->pInGUI->gkGUIButton( _T("faraa"), Vec2(gEnv->pRenderer->GetScreenWidth() - 105, 251), 100, 50, ColorB(255,255,255,255), ColorB(0,0,0,128) ) )
+		{
+			const TCHAR* chrfile = _T("objects/characters/faraa/faraa.chr");
+			const TCHAR* mtlfile = _T("objects/characters/faraa/faraa.mtl");
+			create_chr(chrfile, mtlfile);
 		}
 
 		if( gEnv->pInGUI->gkGUIButton( _T("idle"), Vec2(10, 100), 100, 50, ColorB(255,255,255,255), ColorB(0,0,0,128) ) )
@@ -112,6 +110,11 @@ TEST_CASE_FASTIMPL_HEAD( TestCase_CharacterAnimation, eTcc_Animation )
 		{
 			gEnv->pGameObjSystem->DestoryGameObject( m_creations[i] );
 		}
+
+		gEnv->pGameObjSystem->DestoryGameObject( m_tgt );
+
+		m_creations.clear();
+		m_tgt = NULL;
 	}
 
 	virtual void OnInputEvent( const SInputEvent &event ) 
@@ -122,6 +125,27 @@ TEST_CASE_FASTIMPL_HEAD( TestCase_CharacterAnimation, eTcc_Animation )
 		if ( (event.keyId == eKI_Android_Touch && event.state == eIS_Pressed ) || (event.keyId == eKI_L && event.state == eIS_Pressed))
 		{
 
+		}
+	}	
+	
+	void create_chr(const TCHAR* chrfile, const TCHAR* mtlfile)
+	{
+		if (m_tgt)
+		{
+			gEnv->pGameObjSystem->DestoryGameObject( m_tgt );
+		}
+		Vec3 postmp(0,0,0);
+		Quat rottmp = Quat::CreateRotationZ(DEG2RAD(180));
+		m_tgt = gEnv->pGameObjSystem->CreateAnimGameObject( chrfile, postmp, rottmp);
+		if (m_tgt)
+		{
+			IGameObjectRenderLayer* pRenderLayer = m_tgt->getRenderLayer();
+			if (pRenderLayer)
+			{
+				pRenderLayer->setMaterialName(mtlfile);
+				m_tgt->setOrientation( Quat::CreateRotationZ(DEG2RAD(180)) );
+			}
+			m_tgt->setPosition(postmp);
 		}
 	}
 

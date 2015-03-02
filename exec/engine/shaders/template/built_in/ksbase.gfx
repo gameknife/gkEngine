@@ -16,6 +16,7 @@
   <Attribute name="SPCALPHA" desc="SpcAlphaShiness" mask="8" value=""  />
   <Attribute name="LIGHTMAP" desc="Lightmap" mask="16" value=""  />
   <Attribute name="DIFSPEC" desc="DifAlphaSpec" mask="32" value=""  />
+  <Attribute name="DIFDMASK" desc="DifAlphaDetalMask" mask="64" value=""  />
 </Marco>
   
 </GFX>

@@ -7,6 +7,8 @@
 
 gkHkxMeshLoader::gkHkxMeshLoader(void)
 {
+	m_cachedVB = NULL;
+	m_cachedIB = NULL;
 }
 
 
@@ -28,6 +30,11 @@ bool gkHkxMeshLoader::LoadGeometry( const TCHAR* filename )
 
 	hkRootLevelContainer* container = getAnimationPtr()->getGlobalLoader()->load( szPath );
 	HK_ASSERT2(0x27343437, container != HK_NULL , "Could not load asset");
+
+	if (!container)
+	{
+		return false;
+	}
 
 	hkaAnimationContainer* ac = reinterpret_cast<hkaAnimationContainer*>( container->findObjectByType( hkaAnimationContainerClass.getName() ));
 	HK_ASSERT2(0x27343435, ac && (ac->m_skins.getSize() > 0), "No skins loaded");

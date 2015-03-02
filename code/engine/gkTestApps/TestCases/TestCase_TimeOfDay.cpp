@@ -32,7 +32,7 @@ virtual void OnInit()
 	now = gEnv->pTimer->GetAsyncCurTime() - now;
 	gkLogMessage(_T("Load Terrian use %.2fms."), now * 1000);
 
-	gEnv->pGameFramework->LoadLevel( _T("level/daoguan/daoguan.gks") );
+	gEnv->pGameFramework->LoadLevel( _T("level/village/village.gks") );
 }
 
 virtual bool OnUpdate() 

@@ -63,6 +63,7 @@ public:
 
 	virtual IMovieActorNode* CreateActor(EAnimNodeType type, void* param1= NULL, void* param2 = NULL);
 
+	virtual void DestroyMovieShot( IMovieShot* shot );
 
 	MovieShotMap m_movieShots;
 

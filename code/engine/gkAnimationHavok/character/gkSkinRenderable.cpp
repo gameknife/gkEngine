@@ -122,6 +122,12 @@ void gkSkinRenderable::RT_Prepare()
 {
 	// decode from character instance
 	// Grab the pose in model space
+
+	if(!m_pCharacter->getPose())
+	{
+		return;
+	}
+
 	const hkArray<hkQsTransform>& poseModelSpace = m_pCharacter->getPose()->getSyncedPoseModelSpace();
 
 	IMesh::BoneBaseTransforms& bonebase = getMesh()->GetBoneBaseTransforms();

@@ -46,7 +46,7 @@ gkBindResReader::~gkBindResReader()
 
 hkBool gkBindResReader::isOk() const
 {
-	if (resfile->IsOpen())
+	if (resfile && resfile->IsOpen())
 	{
 		return hkBool(true);
 	}
@@ -58,7 +58,7 @@ hkBool gkBindResReader::isOk() const
 
 int gkBindResReader::read( void* buf, int nbytes )
 {
-	if (resfile->IsOpen())
+	if (resfile && resfile->IsOpen())
 	{
 		if ( curpos + nbytes > resfile->Size() )
 		{
@@ -108,7 +108,7 @@ hkResult gkBindResReader::rewindToMark()
 
 int gkBindResReader::peek(void* buf, int nbytes)
 {
-	if (resfile->IsOpen())
+	if (resfile && resfile->IsOpen())
 	{
 		if ( curpos + nbytes > resfile->Size() )
 		{
