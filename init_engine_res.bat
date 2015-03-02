@@ -1,5 +1,7 @@
 rem shadercache folder
 mkdir exec\engine\shaders\d3d9\shadercache
+mkdir code\thirdparty
+mkdir exec\media
 
 rem copy cfg
 mkdir exec\media\config
@@ -10,7 +12,5 @@ cd exec\tools\resource_task
 call _tga2dds_engine.bat
 call _tga2pvr_engine.bat
 call _obj2gmf_media.bat
-
-
 
 PAUSE
