@@ -31,13 +31,13 @@ void gkLoadStaticModule_gkTrackBus( SSystemGlobalEnvironment* pEnv )
 	if (pEnv)
 	{
 		gEnv = pEnv;
-		g_font = new gkFont();
-		pEnv->pFont = g_font;
+		g_trackbus = new gkTrackBus();
+		pEnv->pTrackBus = g_trackbus;
 	}
 }
 
 void gkFreeStaticModule_gkTrackBus()
 {
-	delete g_font;
+	delete g_trackbus;
 }
 #endif

@@ -6,34 +6,28 @@
 
 #ifndef _STATIC_LIB
 #include "gkPlatform_impl.h"
-#endif
-
-// Platform initialization
-//#include <Common/Base/System/Init/PlatformInit.cxx>
-
-// Keycode
 #include <Common/Base/keycode.cxx>
-
-// #if !defined HK_FEATURE_PRODUCT_PHYSICS
-// #error Physics is needed to build this demo. It is included in the common package for reference only.
-// #endif
-
-// This excludes libraries that are not going to be linked
-// from the project configuration, even if the keycodes are
-// present
-
 #undef HK_FEATURE_PRODUCT_AI
 #undef HK_FEATURE_PRODUCT_ANIMATION
 #undef HK_FEATURE_PRODUCT_CLOTH
 #undef HK_FEATURE_PRODUCT_DESTRUCTION
 #undef HK_FEATURE_PRODUCT_BEHAVIOR
-//#define HK_FEATURE_REFLECTION_PHYSICS
-//#define HK_CLASSES_FILE <Common/Serialize/Classlist/hkClasses.h>
-// #define HK_EXCLUDE_FEATURE_MemoryTracker
-// #define HK_EXCLUDE_FEATURE_SerializeDeprecatedPre700
-// #define HK_EXCLUDE_FEATURE_RegisterVersionPatches 
-// #define HK_EXCLUDE_LIBRARY_hkGeometryUtilities
 #include <Common/Base/Config/hkProductFeatures.cxx>
+
+int GetEngineOffset( char const* name)
+{
+	return 0xEFFFC5F4;
+}
+
+#ifdef _DEBUG
+const hkQuadFloat32 g_vectorfConstants[HK_QUADREAL_END];
+#endif
+
+#else
+const hkQuadFloat32 g_vectorfConstants[HK_QUADREAL_END];
+#endif
+
+
 
 gkHavok* g_Havok;
 #ifndef _STATIC_LIB
@@ -72,7 +66,3 @@ void gkFreeStaticModule_gkHavok()
 
 #endif
 
-int GetEngineOffset( char const* name)
-{
-	return 0xEFFFC5F4;
-}

@@ -9,8 +9,8 @@
       <Configuration>Profile_MultiBytes</Configuration>
       <Platform>Android</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Profile_StaticLib|Android">
-      <Configuration>Profile_StaticLib</Configuration>
+    <ProjectConfiguration Include="StaticBuild|Android">
+      <Configuration>StaticBuild</Configuration>
       <Platform>Android</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Android">
@@ -29,7 +29,7 @@
     <PlatformToolset>arm-linux-androideabi-4.4.3</PlatformToolset>
     <AndroidStlType>gnustl_static</AndroidStlType>
   </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Profile_StaticLib|Android'">
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Android'">
     <PlatformToolset>arm-linux-androideabi-4.4.3</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Android'">
@@ -67,7 +67,7 @@
       <AdditionalOptions>-lGLESv2 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile_StaticLib|Android'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Android'">
     <AntBuild>
       <AntBuildPath>$(ProjectDir)\AndroidApk</AntBuildPath>
     </AntBuild>

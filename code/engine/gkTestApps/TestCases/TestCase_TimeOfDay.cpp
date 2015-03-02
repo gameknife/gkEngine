@@ -42,8 +42,6 @@ virtual bool OnUpdate()
 	_stprintf( info, _T("time: %.2f"), gEnv->p3DEngine->getTimeOfDay()->getTime() );
 	gEnv->pInGUI->gkGUIButton( info, Vec2(gEnv->pRenderer->GetScreenWidth() / 2 - 100, 100), 200, 60, ColorB(255,255,255,255), ColorB(0,0,0,128));
 
-
-
 	return true;
 }
 

@@ -9,6 +9,7 @@
 
 gkGameDemo* g_Game;
 
+
 extern "C" GKGAMEDEMO_API IGame* gkModuleInitialize(SSystemGlobalEnvironment* pEnv) throw()
 {
 	if (pEnv)

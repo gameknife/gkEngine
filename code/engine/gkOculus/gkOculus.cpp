@@ -6,7 +6,12 @@
 #include "I3DEngine.h"
 #include "ICamera.h"
 
+#ifdef _DEBUG
+#pragma comment(lib,"..\\..\\thirdparty\\libovr\\Lib\\Win32\\VS2010\\libovrd.lib")
+#else
 #pragma comment(lib,"..\\..\\thirdparty\\libovr\\Lib\\Win32\\VS2010\\libovr.lib")
+#endif
+
 #pragma comment(lib,"ws2_32.lib")
 #pragma comment(lib,"winmm.lib")
 ovrHmd HMD = 0;

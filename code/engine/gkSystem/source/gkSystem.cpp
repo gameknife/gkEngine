@@ -48,6 +48,7 @@
 extern CMTRand_int32 g_random_generator;
 
 #ifdef _STATIC_LIB
+
 #ifdef OS_IOS
 void gkLoadStaticModule_gkCore(SSystemGlobalEnvironment* gEnv);
 void gkFreeStaticModule_gkCore();
@@ -79,18 +80,36 @@ void gkLoadStaticModule_gkAnimation(SSystemGlobalEnvironment* pEnv);
 void gkFreeStaticModule_gkAnimation();
 
 #else
-#include "..\gkHavok\include\dllmain.h"
-#include "..\gkCore\include\dllmain.h"
-//#include "..\gkRendererGLES2\include\dllmain.h"
-//#include "..\gkRendererGL330\include\dllmain.h"
-#include "..\gkRendererD3D9\include\dllmain.h"
-#include "..\gkInput\include\dllmain.h"
-#include "..\gkGameObjectSystem\include\dllmain.h"
+
+void gkLoadStaticModule_gkCore(SSystemGlobalEnvironment* gEnv);
+void gkFreeStaticModule_gkCore();
+
+void gkLoadStaticModule_gkRendererD3D9(SSystemGlobalEnvironment* gEnv);
+void gkFreeStaticModule_gkRendererD3D9();
+
+void gkLoadStaticModule_gkGameObjectSystem(SSystemGlobalEnvironment* gEnv);
+void gkFreeStaticModule_gkGameObjectSystem();
+
+void gkLoadStaticModule_gkInput(SSystemGlobalEnvironment* gEnv);
+void gkFreeStaticModule_gkInput();
+
+void gkLoadStaticModule_gkHavok(SSystemGlobalEnvironment* gEnv);
+void gkFreeStaticModule_gkHavok();
+
+void gkLoadStaticModule_gkFont(SSystemGlobalEnvironment* pEnv);
+void gkFreeStaticModule_gkFont();
+
+void gkLoadStaticModule_gkAnimation(SSystemGlobalEnvironment* pEnv);
+void gkFreeStaticModule_gkAnimation();
+
+void gkLoadStaticModule_gkTrackBus(SSystemGlobalEnvironment* pEnv);
+void gkFreeStaticModule_gkTrackBus();
+
+void gkLoadStaticModule_gkSound(SSystemGlobalEnvironment* pEnv);
+void gkFreeStaticModule_gkSound();
 #endif
 
 #endif
-
-
 
 
 
@@ -278,8 +297,10 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 	//LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGLES2 );
 #ifdef OS_APPLE
     LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGL330 );
-#else
+#elif defined( OS_IOS )
     LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGLES2 );
+#else
+	LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererD3D9 );
 #endif
     
 #endif
@@ -350,7 +371,7 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 
 	LOAD_MODULE_GLOBAL(m_moduleHandles.hSound,						gkSound);
 
-	LOAD_MODULE_GLOBAL(m_moduleHandles.hVideo,						gkVideo);
+	//LOAD_MODULE_GLOBAL(m_moduleHandles.hVideo,						gkVideo);
 
 	//LOAD_MODULE_GLOBAL(m_moduleHandles.hStereoDevice,				gkStereoDevice);
 
@@ -594,8 +615,10 @@ bool gkSystem::Destroy()
     //UNLOAD_MODULE_GLOBAL(m_moduleHandles.hRenderer,			gkRendererGL330);
 #ifdef OS_APPLE
     UNLOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGL330 );
-#else
+#elif defined( OS_IOS )
     UNLOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGLES2 );
+#else
+	UNLOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererD3D9 );
 #endif
 	//FreeLib(m_moduleHandles.hNetworkLayer);
 
@@ -614,9 +637,9 @@ bool gkSystem::Destroy()
 	UNLOAD_MODULE_GLOBAL(m_moduleHandles.hTrackBus,			gkTrackBus);
 
 	UNLOAD_MODULE_GLOBAL(m_moduleHandles.hSound,				gkSound);
-	UNLOAD_MODULE_GLOBAL(m_moduleHandles.hVideo,				gkVideo);
+	//UNLOAD_MODULE_GLOBAL(m_moduleHandles.hVideo,				gkVideo);
 
-	UNLOAD_MODULE_GLOBAL(m_moduleHandles.hStereoDevice, VOID);
+	//UNLOAD_MODULE_GLOBAL(m_moduleHandles.hStereoDevice, VOID);
 #endif
 
 

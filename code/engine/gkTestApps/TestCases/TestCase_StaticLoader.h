@@ -44,6 +44,8 @@ Copyright (c) 2011-2015 Kaiming Yi
 #include "TestCase_ThreadTest.cpp"
 #include "TestCase_LoadStaticGeo.cpp"
 #include "TestCase_ArtAnatomy.cpp"
+#include "TestCase_CharacterAnimation.cpp"
+#include "TestCase_TrackBusTest.cpp"
 
 void load_static_testcases()
 {
@@ -52,10 +54,12 @@ void load_static_testcases()
     
     g_cateTestCases[eTcc_Loading].push_back( &g_TestCase_InDoorLoadScene);
     g_cateTestCases[eTcc_Loading].push_back( &g_TestCase_OutDoorLoadScene );
-    g_cateTestCases[eTcc_System].push_back( &g_TestCase_ThreadTest );
+   // g_cateTestCases[eTcc_System].push_back( &g_TestCase_ThreadTest );
     g_cateTestCases[eTcc_Loading].push_back( &g_TestCase_LoadCharacter );
     g_cateTestCases[eTcc_Loading].push_back( &g_TestCase_LoadStaticGeo );
-    g_cateTestCases[eTcc_System].push_back( &g_TestCase_ArtAnatomy );
+	g_cateTestCases[eTcc_Animation].push_back( &g_TestCase_CharacterAnimation );
+	g_cateTestCases[eTcc_Animation].push_back( &g_TestCase_TrackBusTest );
+    //g_cateTestCases[eTcc_System].push_back( &g_TestCase_ArtAnatomy );
 }
 
 #endif

@@ -24,7 +24,7 @@ extern "C" void DLL_EXPORT gkModuleUnload(void)
 	delete g_sound;
 }
 #else
-void gkLoadStaticModule_gkTrackBus( SSystemGlobalEnvironment* pEnv )
+void gkLoadStaticModule_gkSound( SSystemGlobalEnvironment* pEnv )
 {
 	if (pEnv)
 	{
@@ -34,7 +34,7 @@ void gkLoadStaticModule_gkTrackBus( SSystemGlobalEnvironment* pEnv )
 	}
 }
 
-void gkFreeStaticModule_gkTrackBus()
+void gkFreeStaticModule_gkSound()
 {
 	delete g_sound;
 }
