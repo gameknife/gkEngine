@@ -3,7 +3,7 @@
 #include "ITexture.h"
 
 
-gkPhysicsTerrian::gkPhysicsTerrian( const gkTexturePtr& heightmap, float maxHeight )
+gkPhysicsTerrian::gkPhysicsTerrian( const gkTexturePtr& heightmap, float maxHeight, float zeroOffset )
 {
 	if (heightmap.isNull())
 	{
@@ -28,7 +28,7 @@ gkPhysicsTerrian::gkPhysicsTerrian( const gkTexturePtr& heightmap, float maxHeig
 	{
 		for (uint32 y=heightmap->getHeight() - 1; y != -1; --y)
 		{
-			datas[count++] = rawData[ y * heightmap->getWidth() + x ] / 255.f * maxHeight;
+			datas[count++] = rawData[ y * heightmap->getWidth() + x ] / 255.f * maxHeight - zeroOffset;
 		}
 	}
 

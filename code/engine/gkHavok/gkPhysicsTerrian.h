@@ -76,7 +76,7 @@ public:
 class gkPhysicsTerrian
 {
 public:
-	gkPhysicsTerrian( const gkTexturePtr& heightmap, float maxHeight );
+	gkPhysicsTerrian( const gkTexturePtr& heightmap, float maxHeight, float zeroOffset );
 
 	~gkPhysicsTerrian();
 

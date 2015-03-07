@@ -26,6 +26,7 @@ virtual void OnInit()
 
 virtual bool OnUpdate() 
 {
+	gEnv->pInGUI->gkGUIButton( _T("PRESS [L] TO CREATE"), Vec2(gEnv->pRenderer->GetScreenWidth() / 2 - 100, 100), 200, 60, ColorB(255,255,255,255), ColorB(0,0,0,128));
 	if (terrian)
 	{
 		terrian->Update();

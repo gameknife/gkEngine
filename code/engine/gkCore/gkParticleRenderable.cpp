@@ -7,7 +7,7 @@ gkParticleRenderable::gkParticleRenderable( IParticleProxy* proxy, uint32 maxPar
 {
 	m_proxy = proxy;
 
-	int rtsize = 64;
+	int rtsize = XPARA_RT_WIDTH;
 
 	gkNameValuePairList createlist;
 

@@ -22,7 +22,7 @@ void gkParticleInstance::loadPtcFile( const TCHAR* filename )
 	m_proxy = gEnv->pRenderer->createGPUParticleProxy();
 	m_proxy->createFromXmlNode( NULL );
 
-	m_renderable = new gkParticleRenderable( m_proxy, 1000 );
+	m_renderable = new gkParticleRenderable( m_proxy, 100000 );
 	m_renderable->setParent( m_renderLayer );
 
 	m_renderLayer->setMaterialName( _T("engine/assets/meshs/particle.mtl") );

@@ -39,7 +39,7 @@ void gkGpuParticleProxy::Update()
 	// EMIT
 	// hack emit
  	m_emitTimer += fElapsedTime;
- 	if (m_emitTimer > 0.1)
+ 	if (m_emitTimer > 0.025)
  	{
  		m_emitTimer = 0;
  
@@ -59,8 +59,8 @@ void gkGpuParticleProxy::Update()
  
 		m_emitted++;
 		m_emitted = m_emitted % m_maxCount;
-		int x = m_emitted % (64 );
-		int y = m_emitted / (64 );
+		int x = m_emitted % (XPARA_RT_WIDTH );
+		int y = m_emitted / (XPARA_RT_WIDTH );
 
 		//g_pEffect9->SetVectorArray("g_emitIndex", &(D3DXVECTOR4( (float)x / (float)(SQRT_PARTICLE_COUNT - 1), (float)y / (float)(SQRT_PARTICLE_COUNT - 1),0,1)), 1);
 		pShader->FX_SetFloat4("g_emitIndex", Vec4( x, y, 0,1));
@@ -162,10 +162,13 @@ void gkGpuParticleProxy::createFromXmlNode( CRapidXmlParseNode* node )
 
 	gkNameValuePairList createlist;
 
+	TCHAR size[MAX_PATH];
+	_stprintf(size, _T("%d"), XPARA_RT_WIDTH);
+
 	// set params
 	createlist[_T("d3dpool")] =	_T("D3DX_DEFAULT");
 	createlist[_T("usage")] =		_T("RENDERTARGET");
-	createlist[_T("size")] =		_T("64");
+	createlist[_T("size")] =		size;
 	createlist[_T("format")] =		_T("A32B32G32R32F");
 	createlist[_T("initcolor")] =		_T("WHITE");
 
@@ -189,7 +192,7 @@ void gkGpuParticleProxy::createFromXmlNode( CRapidXmlParseNode* node )
 	m_content.Bind( m_updatePOSRT0, m_updatePOSRT1, m_updateVELRT0, m_updateVELRT1 );
 
 	m_emitTimer = 0;
-	m_maxCount = 1000;
+	m_maxCount = XPARA_RT_WIDTH * XPARA_RT_WIDTH;
 }
 
 void gkGpuParticleProxy::ApplyGpuData()

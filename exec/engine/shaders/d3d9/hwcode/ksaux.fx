@@ -77,6 +77,14 @@ void PixScene( float4 inColor : TEXCOORD0,
 	oColor = inColor;	
 }
 
+void PixSceneTextureDirect( float2 inTex : TEXCOORD0,
+	float4 inColor : TEXCOORD1,
+	out float4 oColor : COLOR0
+	) 
+{
+	oColor = float4(tex2D(samTex0, inTex).xyz, 1.0) * inColor;
+}
+
 void PixSceneTexture( float2 inTex : TEXCOORD0,
 	float4 inColor : TEXCOORD1,
 	out float4 oColor : COLOR0
@@ -152,6 +160,9 @@ technique Render2D
 	}
 }
 
+
+
+
 technique Render2DTexture
 {
 	pass P0
@@ -167,5 +178,14 @@ technique Render2DTextureAlpha
 	{
 		VertexShader = compile vs_2_0 Vert2DTex();
 		PixelShader  = compile ps_2_0 PixSceneTextureAlpha();
+	}
+}
+
+technique Render2DTextureDirect
+{
+	pass P0
+	{
+		VertexShader = compile vs_2_0 Vert2DTex();
+		PixelShader  = compile ps_2_0 PixSceneTextureDirect();
 	}
 }

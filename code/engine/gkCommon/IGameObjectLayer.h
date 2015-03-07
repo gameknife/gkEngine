@@ -492,7 +492,7 @@ struct IGameObjectPhysicLayer : public IGameObjectLayer
 
 	virtual bool createDynamic(EPhysicDynamicType type) {return false;}
 
-	virtual bool createHeightMap(const gkStdString& heightMapName, float maxHeight) =0;
+	virtual bool createHeightMap(const gkStdString& heightMapName, float maxHeight, float zeroOffset) =0;
 
 	// create a cc based on charamesh
 	virtual bool createCharacterController() =0;

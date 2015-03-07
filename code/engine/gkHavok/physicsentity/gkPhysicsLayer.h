@@ -65,7 +65,7 @@ public:
 	// create static physics based on mesh
 	virtual bool createStatic();
 	//virtual bool createDynamic() =0;
-	virtual bool createHeightMap(const gkStdString& heightMapName, float maxHeight);
+	virtual bool createHeightMap(const gkStdString& heightMapName, float maxHeight, float zeroOffset);
 
 	// create a cc based on charamesh
 	virtual bool createCharacterController();

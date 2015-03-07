@@ -95,7 +95,7 @@ void pipe_per_light_impl( inout fragPass pPass, inout fragLightPass pLight )
 	float4 SubPart;
 	
 	// HD Lambert
-	nvLambSkin( pLight.fNdotL, 1, tex2D(samCustom1, pPass.IN.baseTC.xy), g_SkinScatter, DifPart, SubPart );
+	nvLambSkin( pLight.fNdotL, 1, tex2D(samCustom1, pPass.IN.baseTC.xy), g_SkinScatter * 0.2, DifPart, SubPart );
 	float3 cDiffuse = pLight.cDiffuse.xyz * DifPart.xyz + SubPart.xyz;
 	float fSpec = SimpleBRDF( pPass.vNormal, pPass.vView, pLight.vLight, pPass.fSpecPow) * pLight.fNdotL;
 

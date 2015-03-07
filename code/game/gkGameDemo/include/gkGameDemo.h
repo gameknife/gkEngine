@@ -65,12 +65,16 @@ public:
 
 	// implement for IInputEventListener [2/11/2012 Kaiming]
 	virtual bool OnInputEvent( const SInputEvent &event );
+
+	void start_player();
+
 	virtual bool OnInputEventUI( const SInputEvent &event ) {	return false;	}
 
 private:
 
 	class gkMainPlayer* m_pMainPlayer;
 	bool				m_bUIMode;
+	IFtFont*			m_subtitleFont;
 };
 
 #endif

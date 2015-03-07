@@ -444,7 +444,7 @@ void gkMesh::BindHwBuffer()
 // 	assert( m_pVB->getSize() > 0 );
 // 	assert( m_pIB->getSize() > 0 );
 
-	if ( m_pVB->getSize() > 0)
+	if ( m_pVB && m_pVB->getSize() > 0)
 	{
 		// bind HW BUFFER
 		m_pDevice->CreateVertexBuffer( m_pVB->getSize(), 
@@ -453,7 +453,7 @@ void gkMesh::BindHwBuffer()
 			D3DPOOL_DEFAULT, 
 			(IDirect3DVertexBuffer9**)(&(m_pVB->userData)), NULL);
 	}
-	if ( m_pIB->getSize() > 0)
+	if ( m_pIB && m_pIB->getSize() > 0)
 	{
 		D3DFORMAT wordbit = D3DFMT_INDEX32;
 		if (m_pIB->wordbit)
@@ -471,8 +471,16 @@ void gkMesh::BindHwBuffer()
 	}
 
 	//m_ready = true;
-	m_pVB->setBind();
-	m_pIB->setBind();
+	if (m_pVB)
+	{
+		m_pVB->setBind();
+	}
+	
+	if (m_pIB)
+	{
+		m_pIB->setBind();
+	}
+	
 }
 
 

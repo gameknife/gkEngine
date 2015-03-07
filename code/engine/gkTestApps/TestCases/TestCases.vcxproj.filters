@@ -65,5 +65,8 @@
     <ClCompile Include="TestCase_CharacterAnimation.cpp">
       <Filter>TestCases</Filter>
     </ClCompile>
+    <ClCompile Include="TestCase_LoadScene.cpp">
+      <Filter>TestCases</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

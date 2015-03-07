@@ -7,7 +7,7 @@
 #include "IGameFramework.h"
 #include "ITimeOfDay.h"
 
-TEST_CASE_FASTIMPL_HEAD( TestCase_InDoorLoadScene, eTcc_Loading )
+TEST_CASE_FASTIMPL_HEAD( TestCase_InDoorRendering, eTcc_Rendering )
 
 virtual void OnInit() 
 {
@@ -45,4 +45,4 @@ virtual void OnInputEvent( const SInputEvent &event )
 	//HandleModelViewCam(event, 0.002f);
 }
 
-TEST_CASE_FASTIMPL_TILE( TestCase_InDoorLoadScene )
+TEST_CASE_FASTIMPL_TILE( TestCase_InDoorRendering )

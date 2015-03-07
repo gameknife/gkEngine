@@ -399,6 +399,7 @@
     <ClCompile Include="TestCase_LoadCharacter.cpp" />
     <ClCompile Include="TestCase_LoadInDoorScene.cpp" />
     <ClCompile Include="TestCase_LoadOutDoorScene.cpp" />
+    <ClCompile Include="TestCase_LoadScene.cpp" />
     <ClCompile Include="TestCase_LoadStaticGeo.cpp" />
     <ClCompile Include="TestCase_LoadTerrian.cpp" />
     <ClCompile Include="TestCase_LoadParticle.cpp" />

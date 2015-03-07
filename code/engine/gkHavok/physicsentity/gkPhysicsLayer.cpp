@@ -155,9 +155,10 @@ bool gkPhysicLayer::createCharacterController()
 	m_phantom = new hkpSimpleShapePhantom( m_standShape, hkTransform::getIdentity() );
 
 	// Add the phantom to the world
+	getHavokPtr()->getPhyicsWorld()->markForWrite();
 	getHavokPtr()->getPhyicsWorld()->addPhantom(m_phantom);
 	m_phantom->removeReference();
-
+	
 	// Construct a character proxy
 	hkpCharacterProxyCinfo cpci;
 	cpci.m_position.set(0, 50, 0);
@@ -174,6 +175,7 @@ bool gkPhysicLayer::createCharacterController()
 
 	m_pCharacterController = new hkpCharacterProxy( cpci );
 
+	getHavokPtr()->getPhyicsWorld()->unmarkForWrite();
 	return true;
 }
 //////////////////////////////////////////////////////////////////////////
@@ -239,6 +241,8 @@ void gkPhysicLayer::PreUpdateLayer( float fElapsedTime )
 		return;
 	}
 
+	getHavokPtr()->getPhyicsWorld()->markForRead();
+
 	hkVector4 posCC = m_pCharacterController->getPosition();
 	IGameObject* pParent = getParentGameObject();
 	if (pParent)
@@ -246,6 +250,8 @@ void gkPhysicLayer::PreUpdateLayer( float fElapsedTime )
 		pParent->setPosition(posCC(0), -posCC(2), posCC(1) - 0.9f);
 		m_cachedPos = pParent->getPosition();
 	}
+
+	getHavokPtr()->getPhyicsWorld()->unmarkForRead();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -323,7 +329,9 @@ bool gkPhysicLayer::teleport( Vec3 worldpos )
 {
 	if (m_pCharacterController)
 	{
+		getHavokPtr()->getPhyicsWorld()->markForWrite();
 		m_pCharacterController->setPosition( hkVector4( worldpos.x, worldpos.y, worldpos.z) );
+		getHavokPtr()->getPhyicsWorld()->unmarkForWrite();
 		return true;
 	}
 
@@ -332,18 +340,19 @@ bool gkPhysicLayer::teleport( Vec3 worldpos )
 	return false;
 }
 
-bool gkPhysicLayer::createHeightMap(const gkStdString& heightMapName, float maxHeight)
+bool gkPhysicLayer::createHeightMap(const gkStdString& heightMapName, float maxHeight, float zeroOffset )
 {
 	gkTexturePtr heightmap = gEnv->pSystem->getTextureMngPtr()->load(heightMapName);
 
-	m_terrian = new gkPhysicsTerrian( heightmap, maxHeight );
+	m_terrian = new gkPhysicsTerrian( heightmap, maxHeight, zeroOffset );
 
 	//	Create terrain as a fixed rigid body
 	{
 		hkpRigidBodyCinfo rci;
 		rci.m_motionType = hkpMotion::MOTION_FIXED;
-		rci.m_position = m_terrian->m_proxy->m_extents; // center the heighfield
-		rci.m_position.mul4( hkVector4(-0.5f, 0, -0.5f, 0) );
+		//rci.m_position = hkVector4(0,0,0,0);
+ 		rci.m_position = m_terrian->m_proxy->m_extents; // center the heighfield
+ 		rci.m_position.mul4( hkVector4(-0.5f, 0, -0.5f, 0) );
 		rci.m_shape = m_terrian->m_proxy;
 		rci.m_friction = 0.5f;
 

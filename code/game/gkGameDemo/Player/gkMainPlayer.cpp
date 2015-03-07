@@ -2,6 +2,7 @@
 #include "gkMainPlayer.h"
 #include "IGameObjectLayer.h"
 #include "IHavok.h"
+#include "ITimeOfDay.h"
 
 #define CAM_DISTANCE_FAR 10.0f
 #define CAM_DISTANCE_NEAR 0.5f
@@ -36,8 +37,8 @@ bool gkMainPlayer::Init(const Quat& camrot)
 		m_pPlayer = gEnv->pGameObjSystem->CreateAnimGameObject(_T("testPlayer"), _T("objects/characters/prophet/prophet.chr"), Vec3(0,0,0), Quat::CreateIdentity());
 		if (m_pPlayer)
 		{
-			//IGameObjectRenderLayer* pRenderLayer = m_pPlayer->getRenderLayer();
-			//pRenderLayer->setMaterialName(_T("objects/characters/faraa/faraa.mtl"));
+			IGameObjectRenderLayer* pRenderLayer = m_pPlayer->getRenderLayer();
+			pRenderLayer->setMaterialName(_T("objects/characters/prophet/prophet.mtl"));
 
 
 
@@ -52,6 +53,9 @@ bool gkMainPlayer::Init(const Quat& camrot)
 
 			m_pPlayer->setPosition(0,0,10);
 			m_pPlayer->setScale(1,1,1);
+
+
+			gEnv->p3DEngine->getTimeOfDay()->bindSunFocus( m_pPlayer );
 
 			m_bInitialized = true;
 		}
@@ -87,12 +91,12 @@ bool gkMainPlayer::Update( float fElapsedTime, bool bUimode )
 	Quat quatPlayerTarget = Quat::CreateSlerp( quatCurrPlayer, m_quatDesirePlayerOrien, PLAYER_ROT_DAMPING);
 	m_pPlayer->setOrientation( quatPlayerTarget );
 
-	Vec3 camPos = cam->getPosition();
-	if (camPos.z < 0.4f)
-	{
-		camPos.z = 0.4f;
-		cam->setPosition(camPos);
-	}
+// 	Vec3 camPos = cam->getPosition();
+// 	if (camPos.z < 0.4f)
+// 	{
+// 		camPos.z = 0.4f;
+// 		cam->setPosition(camPos);
+// 	}
 
 	if (m_nCurrPlayerStatus != m_nPrevPlayerStatus)
 	{
@@ -107,13 +111,13 @@ bool gkMainPlayer::Update( float fElapsedTime, bool bUimode )
 			m_pPlayerAnim->playAnimation(_T("idle"), 0.3f);
 			m_pPlayerAnim->playAnimation(_T("walk_f"), 0.3f);
 			m_pPlayerAnim->playAnimation(_T("run_f"), 0.3f);
-			m_pPlayerAnim->setAnimationSpeed(_T("run_f"), 0.8f);
+			m_pPlayerAnim->setAnimationSpeed(_T("run_f"), 1.0f);
 			break;
 		case eMPS_Run:
 			m_pPlayerAnim->playAnimation(_T("idle"), 0.3f);
 			m_pPlayerAnim->playAnimation(_T("walk_f"), 0.3f);
 			m_pPlayerAnim->playAnimation(_T("run_f"), 0.0f);
-			m_pPlayerAnim->setAnimationSpeed(_T("run_f"), 0.8f);
+			m_pPlayerAnim->setAnimationSpeed(_T("run_f"), 1.0f);
 			break;
 		}
 	}
@@ -145,6 +149,8 @@ bool gkMainPlayer::Update( float fElapsedTime, bool bUimode )
 //////////////////////////////////////////////////////////////////////////
 bool gkMainPlayer::Destroy()
 {
+	gEnv->p3DEngine->getTimeOfDay()->bindSunFocus( NULL );
+
 	// test stuff, init a player [4/7/2012 Kaiming]
 	if (m_pPlayer)
 	{

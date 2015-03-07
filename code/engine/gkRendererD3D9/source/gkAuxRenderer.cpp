@@ -454,6 +454,8 @@ void gkAuxRenderer::_FlushAllHelperDeferred( LPDIRECT3DDEVICE9 pDevice, bool cle
 
 	GKHANDLE hTechT = pShader->FX_GetTechniqueByName("Render2DTexture");
 	GKHANDLE hTechA = pShader->FX_GetTechniqueByName("Render2DTextureAlpha");
+	GKHANDLE hTechD = pShader->FX_GetTechniqueByName("Render2DTextureDirect");
+	
 
 	getRenderer()->SetRenderState(D3DRS_ZENABLE, FALSE);
 	if (!m_vecScreenBoxTexturedVertexBuffer_Render.empty())
@@ -470,9 +472,13 @@ void gkAuxRenderer::_FlushAllHelperDeferred( LPDIRECT3DDEVICE9 pDevice, bool cle
 			{
 				pShader->FX_SetTechnique( hTechA );
 			}
-			else
+			else if(!tex->dynamic())
 			{
 				pShader->FX_SetTechnique( hTechT );
+			}
+			else
+			{
+				pShader->FX_SetTechnique( hTechD );
 			}
 
 			

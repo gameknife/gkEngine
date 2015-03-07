@@ -4,34 +4,44 @@
 #include "TestCase_Template.h"
 #include "I3DEngine.h"
 #include "ICamera.h"
+#include "TestCaseUtil_Cam.h"
+#include "IMaterial.h"
 
 TEST_CASE_FASTIMPL_HEAD( TestCase_LoadStaticGeo, eTcc_Loading )
 
+	float m_camDist;
 	virtual void OnInit() 
 	{
         ICamera* maincam = gEnv->p3DEngine->getMainCamera();
-        maincam->setPosition(0, -25, 10);
-        maincam->setOrientation( Quat::CreateRotationXYZ( Ang3( DEG2RAD(-25), 0,0 ) ) );
+        maincam->setPosition(0, -2, 0);
+        maincam->setOrientation( Quat::CreateRotationXYZ( Ang3( 0, 0,0 ) ) );
         
 		m_timer = 0;
 		m_index = 0;
+		m_camDist = 1.0f;
 		m_creations.clear();
 
-		// create a plane
-		Vec3 postmp(0,0,0);
-		Quat rottmp = Quat::CreateRotationZ(DEG2RAD(180));
-		m_plane = gEnv->pGameObjSystem->CreateStaticGeoGameObject( _T("test_case_plane"), _T("objects/test_case/test_lightmap.gmf"), postmp, rottmp );
+		Vec3 zeropos = Vec3(0,0,0);
+		Quat zerorot = Quat::CreateIdentity();
+		IGameObject* m_plane = gEnv->pGameObjSystem->CreateStaticGeoGameObject( _T("test_case_plane"), _T("objects/basic/plane.gmf"), zeropos, zerorot );
 		if (m_plane)
 		{
 			IGameObjectRenderLayer* pRenderLayer = m_plane->getRenderLayer();
 			if (pRenderLayer)
 			{
-				pRenderLayer->setMaterialName(_T("objects/test_case/test_lightmap.mtl"));
+				pRenderLayer->setMaterialName(_T("objects/basic/grid10.mtl"));
+
+				GKSHADERPARAM* para = pRenderLayer->getMaterial()->getLoadingParameterBlock()->getParam("g_MatDiffuse");
+				if (para)
+				{
+					para->setValue( Vec4(0.3,0.3,0.3,1.0) );
+				}
 			}
 
-			//m_plane->setScale( 10, 10, 10);
+			m_plane->setPosition(0,0,-0.005);
+			m_plane->setScale( 20, 20, 20);
+			m_creations.push_back(m_plane);
 		}
-
 	}
 
 	virtual bool OnUpdate() 
@@ -50,35 +60,54 @@ TEST_CASE_FASTIMPL_HEAD( TestCase_LoadStaticGeo, eTcc_Loading )
 		{
 			gEnv->pGameObjSystem->DestoryGameObject( m_creations[i] );
 		}
-		
-		gEnv->pGameObjSystem->DestoryGameObject( m_plane );
 
 		gEnv->pSystem->cleanGarbage();
 	}
 
 	virtual void OnInputEvent( const SInputEvent &event ) 
 	{
-        static bool first = true;
+        static int count = 0;
+
+		HandleModelViewCam(event, 0.002f, m_camDist, 0);
+
 		if ( (event.keyId == eKI_Android_Touch && event.state == eIS_Pressed ) || (event.keyId == eKI_L && event.state == eIS_Pressed) )
 		{
-            if (!first) {
+            if (count++ > 8) {
                 return;
             }
             
 			Vec3 pos;
 			Quat rot;
-			pos = Vec3(m_index % 10 - 5, m_index / 10,0);
+			pos = Vec3((m_index % 3 - 1) * 0.5, (m_index / 3 - 1) * 0.5,0);
 			rot = Quat::CreateIdentity();
 
 			float now = gEnv->pTimer->GetAsyncCurTime();
 
-			IGameObject* object = gEnv->pGameObjSystem->CreateStaticGeoGameObject( _T("objects/characters/faraa/faraa_rig.gmf"), pos, rot );
+			IGameObject* object = gEnv->pGameObjSystem->CreateStaticGeoGameObject( _T("objects/scene/m_venus.gmf"), pos, rot );
 			if (object)
 			{
 				IGameObjectRenderLayer* pRenderLayer = object->getRenderLayer();
 				if (pRenderLayer)
 				{
-					pRenderLayer->setMaterialName(_T("objects/characters/faraa/faraa.mtl"));
+					switch( count % 5 )
+					{
+						case 0:
+							pRenderLayer->setMaterialName(_T("objects/scene/m_venus.mtl"));
+							break;
+						case 1:
+							pRenderLayer->setMaterialName(_T("objects/scene/m_venus_blue.mtl"));
+							break;
+						case 2:
+							pRenderLayer->setMaterialName(_T("objects/scene/m_venus_gold.mtl"));
+							break;
+						case 3:
+							pRenderLayer->setMaterialName(_T("objects/scene/m_venus_metal.mtl"));
+							break;
+						case 4:
+							pRenderLayer->setMaterialName(_T("objects/scene/m_venus_red.mtl"));
+							break;
+					}
+					
 				}
 
 				object->setPosition(pos);
@@ -107,6 +136,5 @@ TEST_CASE_FASTIMPL_HEAD( TestCase_LoadStaticGeo, eTcc_Loading )
 	float m_timer;
 	int m_index;
 	std::vector<IGameObject*> m_creations;
-	IGameObject* m_plane;
 
 TEST_CASE_FASTIMPL_TILE( TestCase_LoadStaticGeo )

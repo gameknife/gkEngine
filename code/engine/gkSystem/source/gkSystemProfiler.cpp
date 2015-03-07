@@ -515,7 +515,7 @@ void gkSystemProfiler::profileResource()
 						drawWidth = drawHeight * aspect;
 					}
 
-					gEnv->pRenderer->getAuxRenderer()->AuxRenderScreenBox( Vec2(gEnv->pRenderer->GetScreenWidth() / 2 + 50, startY + 130), Vec2(drawWidth, drawHeight), ColorB(90,90,90,128), tex );
+					gEnv->pRenderer->getAuxRenderer()->AuxRenderScreenBox( Vec2(gEnv->pRenderer->GetScreenWidth() / 2 + 50, startY + 130), Vec2(drawWidth, drawHeight), ColorB(255,255,255,255), tex );
 				}
 				break;
 

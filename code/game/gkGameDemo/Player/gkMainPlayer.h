@@ -63,7 +63,7 @@ public:
 	bool Destroy();
 
 	bool TeleportPlayer(const Vec3& worldpos, const Quat& rotation = Quat::CreateIdentity());
-
+	bool IsInit() {return m_bInitialized;}
 	// implement for IInputEventListener [2/11/2012 Kaiming]
 	virtual bool OnInputEvent( const SInputEvent &event );
 	virtual bool OnInputEventUI( const SInputEvent &event ) {	return false;	}

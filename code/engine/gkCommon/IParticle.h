@@ -39,6 +39,8 @@ Copyright (c) 2011-2015 Kaiming Yi
 #ifndef IParticle_h__
 #define IParticle_h__
 
+#define XPARA_RT_WIDTH 256
+
 struct IParticleProxy
 {
 	virtual void Update() =0;

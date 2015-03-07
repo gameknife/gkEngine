@@ -91,7 +91,7 @@ void gkTerrian::Create( const gkStdString& heightMapName, int blockSide, int sid
 	{
 		m_phyLayer = gEnv->pPhysics->CreatePhysicLayer();
 		//m_phyLayer->setParentGameObject(NULL);
-		m_phyLayer->createHeightMap( heightMapName, 100.f );
+		m_phyLayer->createHeightMap( heightMapName, 100.f, m_zeroOffset );
 	}
 #endif
 }
@@ -236,6 +236,8 @@ void gkTerrian::Destroy()
 			//getSceneMngPtr()->destroyMovableObject( group.lods[j] );
 		}
 	}
+
+	m_water->Destroy();
 
     if (gEnv->pPhysics) {
         gEnv->pPhysics->DestroyPhysicLayer( m_phyLayer );
