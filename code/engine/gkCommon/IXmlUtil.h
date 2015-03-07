@@ -54,6 +54,111 @@ Copyright (c) 2011-2015 Kaiming Yi
 #define ColorF Color
 #endif
 
+inline int getRapidWideBufferFromFile(const TCHAR* filename, TCHAR* &buf)
+{
+#ifdef OS_WIN32
+	// OPEN FILE
+	char szFilename[MAX_PATH];
+#ifdef _UNICODE
+	WideCharToMultiByte(CP_ACP, 0,  filename, -1, szFilename, MAX_PATH, NULL, NULL);
+#else
+	strcpy_s(szFilename, filename);
+#endif
+
+	FILE* file = 0;
+	errno_t err = fopen_s( &file, szFilename, "rb" );
+	if ( err || !file )
+		return 0;
+
+	// Get the file size, so we can pre-allocate the string. HUGE speed impact.
+	long length = 0;
+	fseek( file, 0, SEEK_END );
+	length = ftell( file );
+	fseek( file, 0, SEEK_SET );
+
+	// Strange case, but good to handle up front.
+	if ( length <= 0 )
+	{
+		//gkLogMessage(_T("rapidxml::load file [ %s ] failed."), filename);
+		return false;
+	}
+
+	char* szbuf = new char[ length+1 ];
+	szbuf[0] = 0;
+
+#ifdef  _UNICODE
+	//wcscpy_s(buf, length+1, (WCHAR*)(file->_base));
+#else
+	//fscanf( file, "%s\0", szbuf);
+#endif
+	if ( fread( szbuf, length, 1, file ) != 1 ) {
+		delete [] szbuf;
+		return false;
+	}
+
+	//int end = strlen(buf);
+	szbuf[length] = 0;
+
+	fclose(file);
+
+	buf = new TCHAR[ length+1 ];
+
+#ifdef _UNICODE
+	MultiByteToWideChar( CP_ACP, 0, szbuf, -1, buf, length + 1 );
+#else
+	strcpy(buf, szbuf);
+#endif
+
+	delete[] szbuf;
+#endif
+
+	return true;
+}
+
+
+inline int getRapidBufferFromFile(const CHAR* filename, CHAR* &buf)
+{
+#ifdef OS_WIN32
+	// OPEN FILE
+	FILE* file = 0;
+	errno_t err = fopen_s( &file, filename, "rb" );
+	if ( err || !file )
+		return 0;
+
+	// Get the file size, so we can pre-allocate the string. HUGE speed impact.
+	long length = 0;
+	fseek( file, 0, SEEK_END );
+	length = ftell( file );
+	fseek( file, 0, SEEK_SET );
+
+	// Strange case, but good to handle up front.
+	if ( length <= 0 )
+	{
+		//gkLogMessage(_T("rapidxml::load file [ %s ] failed."), filename);
+		return false;
+	}
+
+	buf = new CHAR[ length+1 ];
+	buf[0] = 0;
+
+#ifdef  _UNICODE
+	//wcscpy_s(buf, length+1, (WCHAR*)(file->_base));
+#else
+	//fscanf( file, "%s\0", buf);
+#endif
+	if ( fread( buf, length, 1, file ) != 1 ) {
+		delete [] buf;
+		return false;
+	}
+
+	//int end = strlen(buf);
+	buf[length] = 0;
+
+	fclose(file);
+
+#endif
+	return true;
+}
 
 struct IRapidXmlNode;
 struct CObjectNode;
@@ -101,6 +206,7 @@ struct IRapidXmlParser
 	std::vector<IRapidXmlNode*> m_creatednodes;
 	rapidxml::xml_document<TCHAR> *m_xmlDoc;
 	IResFile* m_file;
+	TCHAR* buf;
 };
 
 	/**
@@ -618,7 +724,15 @@ inline void IRapidXmlParser::initializeReading(const TCHAR* filename)
 {
 	m_xmlDoc = new rapidxml::xml_document<TCHAR>;
 
-	bool bSearch = false;
+
+#ifdef _EXTERN_TOOL
+	getRapidWideBufferFromFile(filename, buf);
+
+	TCHAR* rapidlifebuf = m_xmlDoc->allocate_string( buf );
+	m_xmlDoc->parse<0>(rapidlifebuf);
+
+#else
+		bool bSearch = false;
 	if (gEnv->pSystem->IsEditor())
 	{
 		bSearch = true;
@@ -655,15 +769,17 @@ inline void IRapidXmlParser::initializeReading(const TCHAR* filename)
 	{
 		gkLogError(_T("parsing xml [%s] failed..."), filename);
 	}
-	//getRapidWideBufferFromFile(filename, buf);
-
+#endif
 }
 inline int IRapidXmlParser::finishReading()
 {
 	delete m_xmlDoc;
-	gEnv->pFileSystem->closeResFile(m_file);
-	//delete[] buf;
 
+#ifdef _EXTERN_TOOL
+	delete[] buf;
+#else
+	gEnv->pFileSystem->closeResFile(m_file);
+#endif
 	return true;
 }
 
@@ -699,112 +815,6 @@ inline IRapidXmlAuthor::~IRapidXmlAuthor(void)
 {
 	for(uint32 i=0; i<m_creatednodes.size(); ++i)
 		delete m_creatednodes[i];
-}
-
-inline int getRapidWideBufferFromFile(const TCHAR* filename, TCHAR* &buf)
-{
-#ifdef OS_WIN32
-	// OPEN FILE
-	char szFilename[MAX_PATH];
-#ifdef _UNICODE
-	WideCharToMultiByte(CP_ACP, 0,  filename, -1, szFilename, MAX_PATH, NULL, NULL);
-#else
-	strcpy_s(szFilename, filename);
-#endif
-
-	FILE* file = 0;
-	errno_t err = fopen_s( &file, szFilename, "rb" );
-	if ( err || !file )
-		return 0;
-
-	// Get the file size, so we can pre-allocate the string. HUGE speed impact.
-	long length = 0;
-	fseek( file, 0, SEEK_END );
-	length = ftell( file );
-	fseek( file, 0, SEEK_SET );
-
-	// Strange case, but good to handle up front.
-	if ( length <= 0 )
-	{
-		//gkLogMessage(_T("rapidxml::load file [ %s ] failed."), filename);
-		return false;
-	}
-
-	char* szbuf = new char[ length+1 ];
-	szbuf[0] = 0;
-
-#ifdef  _UNICODE
-	//wcscpy_s(buf, length+1, (WCHAR*)(file->_base));
-#else
-	//fscanf( file, "%s\0", szbuf);
-#endif
-	if ( fread( szbuf, length, 1, file ) != 1 ) {
-		delete [] szbuf;
-		return false;
-	}
-
-	//int end = strlen(buf);
-	szbuf[length] = 0;
-
-	fclose(file);
-
-	buf = new TCHAR[ length+1 ];
-
-#ifdef _UNICODE
-	MultiByteToWideChar( CP_ACP, 0, szbuf, -1, buf, length + 1 );
-#else
-	strcpy(buf, szbuf);
-#endif
-
-	delete[] szbuf;
-#endif
-    
-    return true;
-}
-
-
-inline int getRapidBufferFromFile(const CHAR* filename, CHAR* &buf)
-{
-#ifdef OS_WIN32
-	// OPEN FILE
-	FILE* file = 0;
-	errno_t err = fopen_s( &file, filename, "rb" );
-	if ( err || !file )
-		return 0;
-
-	// Get the file size, so we can pre-allocate the string. HUGE speed impact.
-	long length = 0;
-	fseek( file, 0, SEEK_END );
-	length = ftell( file );
-	fseek( file, 0, SEEK_SET );
-
-	// Strange case, but good to handle up front.
-	if ( length <= 0 )
-	{
-		//gkLogMessage(_T("rapidxml::load file [ %s ] failed."), filename);
-		return false;
-	}
-
-	buf = new CHAR[ length+1 ];
-	buf[0] = 0;
-
-	#ifdef  _UNICODE
-	//wcscpy_s(buf, length+1, (WCHAR*)(file->_base));
-	#else
-	//fscanf( file, "%s\0", buf);
-	#endif
-  	if ( fread( buf, length, 1, file ) != 1 ) {
-  		delete [] buf;
-  		return false;
-	}
-
-	//int end = strlen(buf);
-	buf[length] = 0;
-
-	fclose(file);
-
-#endif
-    return true;
 }
 
 #endif

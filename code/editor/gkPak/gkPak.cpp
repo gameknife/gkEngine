@@ -112,6 +112,7 @@ bool FilterEngineFile( const TCHAR* file)
 			!stricmp(ext, ".o") ||
 			!stricmp(ext, ".tod") ||
 			!stricmp(ext, ".ttf") ||
+			!stricmp(ext, ".gfx") ||
 			!stricmp(ext, ".cfg")			
 			)
 		{

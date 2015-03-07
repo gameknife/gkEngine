@@ -224,17 +224,18 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 {
 	gkLogMessage(_T("Initializing gkSystem..."));
     
-//    m_ResFileManager.openPak( _T("paks/engine.gpk") );
-//	m_ResFileManager.openPak( _T("paks/objects.gpk") );
-//	m_ResFileManager.openPak( _T("paks/terrian.gpk") );
-//	m_ResFileManager.openPak( _T("paks/textures.gpk") );
-//	m_ResFileManager.openPak( _T("paks/config.gpk") );
-//	m_ResFileManager.openPak( _T("paks/level.gpk") );
-//	m_ResFileManager.openPak( _T("paks/fonts.gpk") );
-    
     std::vector<gkStdString> result;
-    enum_all_files_in_folder(gkGetExecRootDir().c_str(), result, false);
-    
+
+	gkStdString path;
+
+#ifdef OS_IOS
+    path = gkGetExecRootDir();
+#else
+	path = gkGetExecRootDir() + _T("/paks/");
+#endif
+
+	enum_all_files_in_folder(path.c_str(), result, false);
+
     for (int i=0; i < result.size(); ++i) {
 
 		gkStdString file = result[i];
@@ -246,8 +247,15 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 			{
 				gkNormalizePath(file);
 				gkStdString filename = gkGetFilename( file.c_str() );
+
+#ifdef OS_IOS
+				
+#else
+				file = _T("/paks") + file;
+#endif
+
 				gkLogMessage( _T("pak file [%s] loaded."), filename.c_str() );
-				m_ResFileManager.openPak( filename.c_str() );
+				m_ResFileManager.openPak( file.c_str() );
 			}
 		}
     }

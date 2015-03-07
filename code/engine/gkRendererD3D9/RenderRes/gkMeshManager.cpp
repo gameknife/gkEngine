@@ -25,6 +25,7 @@ gkMeshManager::gkMeshManager( void )
 gkMeshManager::~gkMeshManager( void )
 {
 	removeAll();
+	ms_generalSphere = NULL;
 }
 
 IResource* gkMeshManager::createImpl( const gkStdString& name, gkResourceHandle handle, const gkStdString& group, gkNameValuePairList* params )

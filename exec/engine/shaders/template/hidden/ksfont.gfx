@@ -1,14 +1,12 @@
-<GLES2Shader Name="ksfont">
-	<VSShader FileName="engine/shaders/gles2/ksfont.vfx" />
-	<PSShader FileName="engine/shaders/gles2/ksfont.ffx" />
-</GLES2Shader>
 
-<D3D9Shader Name="Illum">
-	<Effect Filename="engine/shaders/d3d9/Illum.fx" />
-	<Marco>
-		<Attribute name="%DETAIL" desc="Detailmap" mask="0x00000001" />
-		<Attribute name="%DIFALPHA" desc="DifAlphaSpec" mask="0x00000002" />
-		<Attribute name="%DETAILNORMAL" desc="DetailNormalMap" mask="0x00000004" />
-		<Attribute name="%SPCALPHA" desc="SpcAlphaShiness" mask="0x00000008" />
-	</Marco>
-</D3D9Shader>
+
+<GFX>
+  <GLES2Shader Name="ksfont">
+    <VSShader FileName="engine/shaders/gles2/ksfont.vfx" />
+    <PSShader FileName="engine/shaders/gles2/ksfont.ffx" />
+  </GLES2Shader>
+
+  <D3D9Shader Name="Illum">
+    <Effect Filename="engine/shaders/d3d9/hwcode/ksfont.fx" />
+  </D3D9Shader>
+</GFX>

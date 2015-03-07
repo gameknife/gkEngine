@@ -8,7 +8,7 @@
 </GLES2Shader>
 
 <D3D9Shader Name="ksAux">
-    <Effect Filename="engine/shaders/d3d9/ksaux.fx" />
+    <Effect Filename="engine/shaders/d3d9/hwcode/ksaux.fx" />
 </D3D9Shader>
 
   <Marco>

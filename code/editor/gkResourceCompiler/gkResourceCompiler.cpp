@@ -13,7 +13,11 @@
 #include <iostream>
 #include "icompiler.h"
 
-std::vector<ICompiler*> g_compilers; 
+std::vector<ICompiler*> g_compilers;
+
+#include "compilerlist.h"
+
+ 
 
 #ifndef _STATIC_LIB
 #include "gkPlatform_impl.h"

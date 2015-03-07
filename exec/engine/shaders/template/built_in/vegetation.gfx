@@ -9,7 +9,7 @@
 </GLES2Shader>
 
 <D3D9Shader Name="vegetation">
-	<Effect Filename="engine/shaders/d3d9/vegetation.fx" />
+	<Effect Filename="engine/shaders/d3d9/hwcode/vegetation.fx" />
 </D3D9Shader>
 
 <Marco>

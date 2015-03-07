@@ -6,7 +6,7 @@
   </GLES2Shader>
 
   <D3D9Shader Name="kshdrprocess">
-    <Effect Filename="engine/shaders/d3d9/ksspecileffects.fx" />
+    <Effect Filename="engine/shaders/d3d9/hwcode/ksspecileffects.fx" />
     <Macro />
   </D3D9Shader>
 

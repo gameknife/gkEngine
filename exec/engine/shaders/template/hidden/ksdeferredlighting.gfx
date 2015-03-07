@@ -6,7 +6,7 @@
   </GLES2Shader>
 
   <D3D9Shader Name="kshdrprocess">
-    <Effect Filename="engine/shaders/d3d9/ksdeferredlighting.fx" />
+    <Effect Filename="engine/shaders/d3d9/hwcode/ksdeferredlighting.fx" />
   </D3D9Shader>
   
   <Marco>

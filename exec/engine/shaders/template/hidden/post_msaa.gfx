@@ -1,5 +1,3 @@
-
-
 <GFX>
 
   <GLES2Shader Name="post_msaa">
@@ -8,7 +6,7 @@
   </GLES2Shader>
 
   <D3D9Shader Name="post_msaa">
-    <Effect Filename="engine/shaders/d3d9/post_smaa.fx" />
+    <Effect Filename="engine/shaders/d3d9/hwcode/post_msaa.fx" />
   </D3D9Shader>
   
   <Marco>

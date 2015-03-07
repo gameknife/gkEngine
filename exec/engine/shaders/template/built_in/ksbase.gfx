@@ -6,7 +6,7 @@
 </GLES2Shader>
 
 <D3D9Shader Name="ksBase">
-	<Effect Filename="engine/shaders/d3d9/ksbase.fx" />
+	<Effect Filename="engine/shaders/d3d9/hwcode/ksbase.fx" />
 </D3D9Shader>
 
 <Marco>

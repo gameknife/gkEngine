@@ -356,5 +356,5 @@ const char* copyrightCompiler::getName()
 {
 	return "copyrightCompiler";
 }
-//utf8Compiler g_utf8Compiler;
-copyrightCompiler g_copyrightCompiler;
+
+//copyrightCompiler g_copyrightCompiler;

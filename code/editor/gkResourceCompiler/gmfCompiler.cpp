@@ -245,6 +245,3 @@ const char* gmfCompiler::getName()
 {
 	return "gmfCompiler";
 }
-
-gmfCompiler g_gmfCompiler;
-pvrCompiler g_gatcCompiler;

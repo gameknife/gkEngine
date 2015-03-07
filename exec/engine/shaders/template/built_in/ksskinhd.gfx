@@ -6,7 +6,7 @@
 </GLES2Shader>
 
 <D3D9Shader Name="ksskinhd">
-	<Effect Filename="engine/shaders/d3d9/ksskinhd.fx" />
+	<Effect Filename="engine/shaders/d3d9/hwcode/ksskinhd.fx" />
 </D3D9Shader>
 
 <Marco>

@@ -21,6 +21,7 @@ rem Step1 ×ª»»dds
 call ..\resource_task\_tga2dds_engine.bat
 call ..\resource_task\_tga2dds_media.bat
 call ..\resource_task\_obj2gmf_media.bat
+call ..\resource_task\compile_all_shader.bat
 
 rem Step2 ´ò°ü
 %GKENGINE_HOME%\tools\gkPak -i "media\level" -o "paks\level.gpk" -l 5 -p 0

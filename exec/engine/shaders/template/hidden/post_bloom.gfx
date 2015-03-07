@@ -7,7 +7,7 @@
   </GLES2Shader>
 
   <D3D9Shader Name="postbloom">
-    <Effect Filename="engine/shaders/d3d9/ksaux.fx" />
+    <Effect Filename="engine/shaders/d3d9/hwcode/post_bloom.fx" />
   </D3D9Shader>
 
   <Marco>
