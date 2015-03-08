@@ -336,7 +336,7 @@ EHwTexError PVR_Loader::Load_Bind( GLuint *const texName, const unsigned int nLo
 		}
 	}
 
-	if(	(sTextureHeader.u32Width & (sTextureHeader.u32Width - 1)) | (sTextureHeader.u32Height & (sTextureHeader.u32Height - 1)))
+	if(	 (sTextureHeader.u32Width != sTextureHeader.u32Height) || (sTextureHeader.u32Width & (sTextureHeader.u32Width - 1)) | (sTextureHeader.u32Height & (sTextureHeader.u32Height - 1)) )
 	{
 		/*
 			NPOT textures requires the wrap mode to be set explicitly to

@@ -6,9 +6,10 @@ precision highp float;
 #include "include/constant_ps_def.h"
 #include "include/varying_def.h"
 #include "include/shade_lib.h"
-#ifdef ZPASS
+
 void main (void)
 {
+#ifdef ZPASS
 	// pre discard
 	highp vec4 texcolor = texture2D(texDiffuse,outTC.xy);
 
@@ -46,5 +47,5 @@ void main (void)
 	//vec4 lightcolor = (0.1 + clamp( NdotL, 0.0, 1.0)) * texcolor * texcolor;// + 0.01 * clamp(NdotL * 4.0, 0.0, 1.0) * Blinn(normal, view, g_LightDir, 25.0);
 	//gl_FragColor = texcolor * texcolor * g_MatDiffuse * g_LightDiffuse * 5.0;
 	//gl_FragColor = 1;
-	#endif
+#endif
 }

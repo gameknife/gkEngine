@@ -37,7 +37,6 @@ Copyright (c) 2011-2015 Kaiming Yi
 //////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "..\gkCore\include\gkPrerequisites.h"
 
 #ifdef _STATIC_LIB
 void gkLoadStaticModule_gkCore(SSystemGlobalEnvironment* pEnv);

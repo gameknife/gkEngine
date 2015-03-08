@@ -7,9 +7,10 @@ precision highp float;
 #include "include/varying_def.h"
 #include "include/shade_lib.h"
 
-#ifdef ZPASS
+
 void main (void)
 {
+#ifdef ZPASS
 	// pre discard
 	highp vec4 texcolor = texture2D(texDiffuse,outTC.xy);
 

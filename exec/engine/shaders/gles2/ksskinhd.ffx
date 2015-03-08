@@ -20,41 +20,22 @@ uniform highp float g_SkinScatter;
 
 void main (void)
 {
-	vec3 screenTC = outScreenTC.xyz / outScreenTC.w;
+#ifdef ZPASS
+// vector
+    lowp vec3 normalTS = texture2D(texNormal, outTC.xy).xyz;
+    normalTS = normalTS * 2.0 - 1.0;
+    mediump vec3 normal = cross(outTangent.xyz, outBinormal) * outTangent.w;
+    mediump mat3 Tangent2World = mat3(outTangent.xyz, outBinormal, normal);
+    normal = Tangent2World * normalTS;
+    normal = normalize(normal);
 
-	vec2 ShadowTexC = 0.5 * outLightPos.xy / outLightPos.w + vec2( 0.5, 0.5 );
+    normal = normal * 0.5 + 0.5;
 
-	float shadow = 1.0;
-	if(ShadowTexC.x < 0.0 || ShadowTexC.x > 1.0 || ShadowTexC.y < 0.0 || ShadowTexC.y > 1.0 )
-	{
-		shadow = 1.0;	
-	}
-	else
-	{
-		highp vec4 depth = vec4(0.0,0.0,0.0,0.0);
-
-		//vec3 samplevec = vec2(PIXEL_STEP, PIXEL_STEP);
-		vec2 randomMultiplyer = vec2( 256.0 / 64.0, 256.0 / 64.0 );
-
-		vec2 rand = normalize(texture2D( texDetail, screenTC.xy * randomMultiplyer).xy * 2.0 - 1.0);  
-
-		vec2 samplevec0 = reflect(vec2(1,0), rand) * PIXEL_STEP;
-		vec2 samplevec1 = reflect(vec2(0,1), rand) * PIXEL_STEP;
-		vec2 samplevec2 = reflect(vec2(-1,0), rand) * PIXEL_STEP;
-		vec2 samplevec3 = reflect(vec2(0,-1), rand) * PIXEL_STEP;
-
-		depth.x = texture2D(texEnvmap,ShadowTexC + samplevec0.xy).x;
-		depth.y = texture2D(texEnvmap,ShadowTexC + samplevec1.xy).x;
-		depth.z = texture2D(texEnvmap,ShadowTexC + samplevec2.xy).x;
-		depth.w = texture2D(texEnvmap,ShadowTexC + samplevec3.xy).x;
-
-		highp float depthNow = outLightPos.z / outLightPos.w * 0.5 + 0.5 - CONST_BIA;
-		highp vec4 comp = vec4(depthNow,depthNow,depthNow,depthNow);
-
-		bvec4 bshadow4 = lessThan(comp , depth);
-		vec4 shadow4 = vec4(bshadow4);
-		shadow = dot(shadow4, vec4(1.0,1.0,1.0,1.0)) * 0.25;
-	}
+    gl_FragColor = vec4(normal,1);
+#else
+    highp vec3 screenTC = outScreenTC.xyz / outScreenTC.w;
+    lowp float shadow = 1.0;
+    shadow = texture2D(texEnvmap,screenTC.xy).a;
 
 	// pre discard
 	vec4 texcolor = texture2D(texDiffuse,outTC.xy);
@@ -65,13 +46,8 @@ void main (void)
 	vec4 glosscolor = vec4(texcolor.a, texcolor.a, texcolor.a, texcolor.a);
 			
 	// vector
-	
-	vec3 normalTS = texture2D(texNormal, outTC.xy).xyz;
-	normalTS = normalTS * 2.0 - 1.0;
-	vec3 normal = cross(outTangent.xyz, outBinormal) * outTangent.w;
-	mat3 Tangent2World = mat3(outTangent.xyz, outBinormal, normal);
-	normal = Tangent2World * normalTS;
-	normal = normalize(normal);
+    mediump vec3 normal = (texture2D(texNormal, screenTC.xy).rgb - 0.5) * 2.0;
+    normal = normalize(normal);
 
 
 	vec3 view = normalize(g_camPos.xyz - outWorldPos.xyz);
@@ -118,5 +94,7 @@ void main (void)
 	vec4 lightcolor = texcolor * ( ambient + Diffuse * shadow )  + NdotL * spec * specular + envColor * specular;
 		
 	// revert to srgb
-	gl_FragColor = lightcolor * HDR_SCALE;
+    gl_FragColor = saturate(max(lightcolor, vec4(0,0,0,1)) * (g_ldrbright * g_Glow));
+	//gl_FragColor = lightcolor * HDR_SCALE;
+#endif
 }

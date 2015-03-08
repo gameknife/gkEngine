@@ -16,7 +16,7 @@ for /R %GKENGINE_HOME%\media %%A in (*.tga) do (
     
     IF NOT EXIST %%~dpnA.pvr (
     	echo [convert file] %%~nxA to %%~nA.pvr
-    	%GKENGINE_HOME%\tools\pvrtextool -m -fOGLPVRTC4 -dither -yflip0 -silent -i %%~fA
+    	%GKENGINE_HOME%\tools\pvrtextool -m -fOGLPVRTC4 -dither -yflip0 -silent -square -i %%~fA
     ) ELSE (
     	echo [file exist] %%~nA.pvr
     )
