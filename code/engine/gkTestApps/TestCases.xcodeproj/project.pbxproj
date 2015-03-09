@@ -17,6 +17,7 @@
 		A068A2E4173567D70059BCF3 /* TestCase_LoadStaticGeo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A068A2DB173567D70059BCF3 /* TestCase_LoadStaticGeo.cpp */; };
 		A068A2E5173567D70059BCF3 /* TestCase_LoadTerrian.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A068A2DC173567D70059BCF3 /* TestCase_LoadTerrian.cpp */; };
 		A068A2E6173567D70059BCF3 /* TestCase_TimeOfDay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A068A2DE173567D70059BCF3 /* TestCase_TimeOfDay.cpp */; };
+		A08667451AAD446D00281C3C /* TestCase_TrackBusTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A08667441AAD446D00281C3C /* TestCase_TrackBusTest.cpp */; };
 		A09D68B7177C0D4F0011CA83 /* TestCase_ThreadTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A09D68B6177C0D4F0011CA83 /* TestCase_ThreadTest.cpp */; };
 		A0F0BF26177BC5A30014D6CA /* TestCase_LoadInDoorScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0F0BF24177BC5A30014D6CA /* TestCase_LoadInDoorScene.cpp */; };
 		A0F0BF27177BC5A30014D6CA /* TestCase_LoadOutDoorScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0F0BF25177BC5A30014D6CA /* TestCase_LoadOutDoorScene.cpp */; };
@@ -50,6 +51,7 @@
 		A068A2DD173567D70059BCF3 /* TestCase_Template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCase_Template.h; sourceTree = "<group>"; };
 		A068A2DE173567D70059BCF3 /* TestCase_TimeOfDay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCase_TimeOfDay.cpp; sourceTree = "<group>"; };
 		A068A2DF173567D70059BCF3 /* TestCaseUtil_Cam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCaseUtil_Cam.h; sourceTree = "<group>"; };
+		A08667441AAD446D00281C3C /* TestCase_TrackBusTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCase_TrackBusTest.cpp; sourceTree = "<group>"; };
 		A09D68B6177C0D4F0011CA83 /* TestCase_ThreadTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCase_ThreadTest.cpp; sourceTree = "<group>"; };
 		A0F0BF24177BC5A30014D6CA /* TestCase_LoadInDoorScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCase_LoadInDoorScene.cpp; sourceTree = "<group>"; };
 		A0F0BF25177BC5A30014D6CA /* TestCase_LoadOutDoorScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCase_LoadOutDoorScene.cpp; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 		A09D68B8177C0D530011CA83 /* TestCases */ = {
 			isa = PBXGroup;
 			children = (
+				A08667441AAD446D00281C3C /* TestCase_TrackBusTest.cpp */,
 				A02A0DD71AABEF65005DE775 /* TestCase_CharacterAnimation.cpp */,
 				A02A0DD81AABEF65005DE775 /* TestCase_LoadScene.cpp */,
 				A068A2DD173567D70059BCF3 /* TestCase_Template.h */,
@@ -191,6 +194,7 @@
 				A068A2E5173567D70059BCF3 /* TestCase_LoadTerrian.cpp in Sources */,
 				A068A2E6173567D70059BCF3 /* TestCase_TimeOfDay.cpp in Sources */,
 				A0F0BF26177BC5A30014D6CA /* TestCase_LoadInDoorScene.cpp in Sources */,
+				A08667451AAD446D00281C3C /* TestCase_TrackBusTest.cpp in Sources */,
 				A0F0BF27177BC5A30014D6CA /* TestCase_LoadOutDoorScene.cpp in Sources */,
 				A02A0DD91AABEF65005DE775 /* TestCase_CharacterAnimation.cpp in Sources */,
 				A09D68B7177C0D4F0011CA83 /* TestCase_ThreadTest.cpp in Sources */,

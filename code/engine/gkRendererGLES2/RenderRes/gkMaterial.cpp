@@ -384,6 +384,13 @@ bool gkMaterial::loadMaterialFormRapidXmlNode( CRapidXmlParseNode* rootXmlNode )
 	gkLogMessage(_T("Loading MaterialParams..."));
 	releaseParameterBlock();
 	m_pLoadingParamBlock = &sParamBlock;
+    
+    // yikaiming glow hack
+    if (!getLoadingParameterBlock()->getParam(_T("g_Glow"))) {
+        //GKSHADERPARAM* para = getLoadingParameterBlock()->getParam("g_Glow");
+        GKSHADERPARAM* param = new GKSHADERPARAM( _T("g_Glow"), 1.0f );
+        m_pLoadingParamBlock->m_vecParams.push_back(param);
+    }
 
     
     m_vecTextureArray.assign(8, gkTexturePtr(NULL));

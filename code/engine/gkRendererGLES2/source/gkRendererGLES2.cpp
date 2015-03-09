@@ -426,7 +426,7 @@ bool gkRendererGLES2::RT_StartRender()
 
 
 
-		if( g_pRendererCVars->r_SSAO )
+		if( 0 /*g_pRendererCVars->r_SSAO*/ )
 		{
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

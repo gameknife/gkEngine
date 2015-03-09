@@ -45,8 +45,9 @@ Copyright (c) 2011-2015 Kaiming Yi
 #include "TestCase_LoadStaticGeo.cpp"
 #include "TestCase_ArtAnatomy.cpp"
 #include "TestCase_CharacterAnimation.cpp"
-#include "TestCase_TrackBusTest.cpp"
+//#include "TestCase_TrackBusTest.cpp"
 #include "TestCase_LoadScene.cpp"
+#include "TestCase_TimeOfDay.cpp"
 
 void load_static_testcases()
 {
@@ -59,7 +60,8 @@ void load_static_testcases()
     g_cateTestCases[eTcc_Loading].push_back( &g_TestCase_LoadCharacter );
     g_cateTestCases[eTcc_Loading].push_back( &g_TestCase_LoadStaticGeo );
 	g_cateTestCases[eTcc_Animation].push_back( &g_TestCase_CharacterAnimation );
-	g_cateTestCases[eTcc_Animation].push_back( &g_TestCase_TrackBusTest );
+    g_cateTestCases[eTcc_Rendering].push_back( &g_TestCase_TimeOfDay);
+	//g_cateTestCases[eTcc_Animation].push_back( &g_TestCase_TrackBusTest );
 }
 
 #endif

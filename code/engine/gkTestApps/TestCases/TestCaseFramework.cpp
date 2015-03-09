@@ -19,9 +19,6 @@
 #include "ITask.h"
 #include "IFont.h"
 
-//gEnv->pRenderer->getAuxRenderer()->AuxRenderText( text, 35, gEnv->pRenderer->GetScreenHeight() * 0.3f + 80 + i * 30, m_menuFont, ColorB(255,255,255,255) );
-//gEnv->pRenderer->getAuxRenderer()->AuxRenderText( s_category[i], 58, gEnv->pRenderer->GetScreenHeight() * 0.3f + 80 + i * 30, m_menuFont, ColorB(0,0,0,128) );
-
 #define MAIN_CATEGORY_X 58
 #define SUB_CATEGORY_X 288
 

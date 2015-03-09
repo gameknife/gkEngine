@@ -507,26 +507,28 @@ inline bool HandleModelViewCam( const SInputEvent &input_event, float speed, flo
 
                 //return false;
             }
+            
+            //static float startCamHeight = camDist;
+            static float startScale = 1.0;
+            static float startDist = 1.0;
+            
             if (input_event.keyId == eKI_Gesture_Zoom)
             {
-                //static float startCamHeight = camDist;
-                static float startScale = 1.0;
-                if( input_event.state == eIS_Down )
+                if( input_event.state == eIS_Pressed )
                 {
-                    //startCamHeight = camDist;
                     startScale = input_event.value;
+                    startDist = camDist;
                 }
                 if( input_event.state == eIS_Changed )
                 {
-                    float delta = input_event.value - startScale;
-                    startScale = input_event.value;
-                    camDist = camDist - delta * 10.f;
+                    float delta = startScale - input_event.value;
+                    camDist = startDist + delta * 5.f;
                 
-                    TCHAR dist[MAX_PATH];
-                    _stprintf(dist, _T("scale: %f"), input_event.value);
+                    //TCHAR dist[MAX_PATH];
+                    //_stprintf(dist, _T("start dist: %f | cam dist: %f"), startDist, camDist);
                     
-                    IFtFont* m_consoleFont = gEnv->pFont->CreateFont( _T("engine/fonts/msyh.ttf"), 14, GKFONT_OUTLINE_0PX );
-                    gEnv->pRenderer->getAuxRenderer()->AuxRenderText( dist, 50, 150, m_consoleFont );
+                    //IFtFont* m_consoleFont = gEnv->pFont->CreateFont( _T("engine/fonts/msyh.ttf"), 14, GKFONT_OUTLINE_0PX );
+                    //gEnv->pRenderer->getAuxRenderer()->AuxRenderText( dist, 50, 150, m_consoleFont );
                 }
                 
                 //return false;
