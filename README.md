@@ -1,4 +1,4 @@
-gkEngine
+![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/gkengine_logo.png "logo")
 ========
 
 a cross-platform game engine
