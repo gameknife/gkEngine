@@ -44,3 +44,11 @@ gkENGINE的技术特性
 
 * 支持oculus rift dk1/dk2,
 * 支持3d显示，支持左右分割/上下分割3d模式
+
+gkENGINE截图
+---
+![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/out1.jpg "gkEngine室外截图1")
+![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/out2.jpg "gkEngine室外截图2")
+![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/indoor1.jpg "gkEngine室内截图1")
+![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/indoor2.jpg "gkEngine室内截图2")
+![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/indoor3.jpg "gkEngine室内截图3")
