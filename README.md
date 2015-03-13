@@ -47,8 +47,18 @@ gkENGINE的技术特性
 
 gkENGINE截图
 ---
+
+**gkStudio  ↓**
+
+![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/gkstudio.jpg "gkStudio截图")
+
+**gkEngine室外效果  ↓**
+
 ![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/out1.jpg "gkEngine室外截图1")
 ![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/out2.jpg "gkEngine室外截图2")
+
+**gkEngine室内效果  ↓**
+
 ![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/indoor1.jpg "gkEngine室内截图1")
 ![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/indoor2.jpg "gkEngine室内截图2")
 ![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/indoor3.jpg "gkEngine室内截图3")
