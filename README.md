@@ -14,6 +14,8 @@ gkENGINE的技术特性
 * 现代后处理技术：HDR, SSAO, DOF, GODRAY, COLORGRADING
 * 多线程渲染：渲染提交在单独线程，与其他事务并行
 * 多渲染API：支持DX9，GL3，GLES2渲染api并灵活切换
+* 多LOD层级地形系统
+* TIME OF DAY：全天候环境参数插值
 
 ##### 系统
 
