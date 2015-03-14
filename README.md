@@ -16,6 +16,7 @@ gkENGINE的技术特性
 * 多渲染API：支持DX9，GL3，GLES2渲染api并灵活切换
 * 多LOD层级地形系统
 * TIME OF DAY：全天候环境参数插值
+* 内建的实时gpu profiler.
 
 ##### 系统
 
@@ -24,6 +25,7 @@ gkENGINE的技术特性
 * TASK和TASK分发系统：可将任何独立事务包装为TASK供分发器进行多线程执行
 * PAK文件系统：将文件进行lzma压缩打包，pak系统提供接管文件系统，做到无缝切换
 * gameobject系统：将对象抽象为gameobject，组合gameobjectlayer实现灵活的功能组装和扩展
+* 强大的profiler，提供对场景渲染量级，帧/步骤耗时，内存占用的精确统计和展示
 
 ##### 物理&动画
 
