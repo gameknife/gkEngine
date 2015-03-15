@@ -180,7 +180,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>GKANIMATIONHAVOK_EXPORTS;HK_DEBUG;HK_ANARCHY;PROFILING;_VISION_POSIX;_VISION_ANDROID;_VISION_NO_WARNING_IMAGE_FORMAT;VBASE_LIB;LINK_WITH_VISION;VISIONDLL_LIB;PARTICLEMODULE_IMPORTS;EFFECTSMODULE_IMPORTS;GUI_ENGINEPLUGIN_IMPORTS;SCRIPTMODULE_IMPORTS;VTERRAINPLUGIN_IMPORTS;ANIMATIONMODULE_IMPORTS;DEFERREDMODULE_IMPORTS;SCENEMODULE_IMPORTS;PATHRENDERINGMODULE_IMPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GKANIMATIONHAVOK_EXPORTS;HK_DEBUG;HK_ANARCHY;PROFILING;_VISION_POSIX;_VISION_ANDROID;_VISION_NO_WARNING_IMAGE_FORMAT;VBASE_LIB;LINK_WITH_VISION;VISIONDLL_LIB;PARTICLEMODULE_IMPORTS;EFFECTSMODULE_IMPORTS;GUI_ENGINEPLUGIN_IMPORTS;SCRIPTMODULE_IMPORTS;VTERRAINPLUGIN_IMPORTS;ANIMATIONMODULE_IMPORTS;DEFERREDMODULE_IMPORTS;SCENEMODULE_IMPORTS;PATHRENDERINGMODULE_IMPORTS;HK_DISABLE_NEON</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\ThirdParty\HavokSDK\Source;</AdditionalIncludeDirectories>
       <AdditionalOptions>-march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -W -Wno-overflow -Wno-ignored-qualifiers -Wno-sign-compare -Wno-unknown-pragmas -Wno-type-limits -Wno-multichar -Wno-unused -Wno-shadow -Wundef -Wno-inline -Wno-psabi -g -fno-strict-aliasing -fpic -ffunction-sections -fno-exceptions -funwind-tables -fno-short-enums -fno-rtti -funwind-tables %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -188,11 +188,9 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\..\thirdparty\havoksdk\Lib\android_arm\dev;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Base;Vision;VisionEnginePlugin;VisionApp;RPGPlugin;vHavokAi;vHavokBehavior;vHavok;hkBase;hkCompat;hkSceneData;hkSerialize;hkVisualize;hkInternal;hkGeometryUtilities;hkcdInternal;hkcdCollide;hkpUtilities;hkpVehicle;hkpDynamics;hkpCollide;hkpInternal;hkpConstraintSolver;hkpConstraint;hkaPhysics2012Bridge;hkaInternal;hkaAnimation;hkbBehavior;hkbInternal;hkbUtilities;hkbPhysics2012Bridge;hkbAiBridge;hkbScript;hkaiPathfinding;hkaiInternal;hkaiVisualize;hkaiSpatialAnalysis;hkaiPhysics2012Bridge;vFmodEnginePlugin</AdditionalDependencies>
+      <AdditionalDependencies>hkCompat;hkSceneData;hkSerialize;hkGeometryUtilities;hkcdInternal;hkcdCollide;hkaAnimation;hkaInternal;hkInternal;hkBase</AdditionalDependencies>
       <AndroidSystemLibs>android;c;m;log;gcc;dl</AndroidSystemLibs>
-      <LinkGccLibThumb>true</LinkGccLibThumb>
       <AdditionalOptions>-g -Wl,--fix-cortex-a8 -Wl,-shared %(AdditionalOptions)</AdditionalOptions>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

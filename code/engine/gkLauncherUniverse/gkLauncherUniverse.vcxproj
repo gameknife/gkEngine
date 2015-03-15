@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="NsightTegraProject">
+    <NsightTegraProjectRevisionNumber>9</NsightTegraProjectRevisionNumber>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Tegra-Android">
+      <Configuration>Debug</Configuration>
+      <Platform>Tegra-Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Develop|Win32">
+      <Configuration>Develop</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Tegra-Android">
+      <Configuration>Release</Configuration>
+      <Platform>Tegra-Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Develop|Tegra-Android">
+      <Configuration>Develop</Configuration>
+      <Platform>Tegra-Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidBuild Include="..\..\..\exec\android\AndroidManifest.xml" />
+    <AndroidBuild Include="..\..\..\exec\android\build.xml" />
+    <AndroidBuild Include="..\..\..\exec\android\project.properties">
+      <FileType>Document</FileType>
+    </AndroidBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="jni\main.cpp" />
+    <ClCompile Include="jni\nv_and_util\nv_native_app_glue.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidBuild Include="AndroidManifest.xml" />
+    <AndroidBuild Include="build.xml" />
+    <AndroidBuild Include="project.properties" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="gkLauncherUniverse.rc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">true</ExcludedFromBuild>
+    </ResourceCompile>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{AC987DFE-1F02-43B3-B2A2-F3157A449497}</ProjectGuid>
+    <RootNamespace>NativeBasic</RootNamespace>
+    <ProjectName>gkLauncherUniverse</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
+    <Import Project="..\solutions\gkAndroid.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="..\solutions\gkSystemInclude.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
+    <Import Project="..\solutions\gkAndroid.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="..\solutions\gkSystemInclude.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'">
+    <Import Project="..\solutions\gkAndroid.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'" Label="PropertySheets">
+    <Import Project="..\solutions\gkSystemInclude.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
+    <NdkToolchainVersion>Default</NdkToolchainVersion>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <NdkToolchainVersion>Default</NdkToolchainVersion>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
+    <NdkToolchainVersion>Default</NdkToolchainVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <NdkToolchainVersion>Default</NdkToolchainVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'">
+    <NdkToolchainVersion>Default</NdkToolchainVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">
+    <NdkToolchainVersion>Default</NdkToolchainVersion>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
+    <AndroidStlType>gnustl_static</AndroidStlType>
+    <ConfigurationType>Application</ConfigurationType>
+    <AndroidTargetAPI>android-15</AndroidTargetAPI>
+    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <AndroidStlType>gnustl_static</AndroidStlType>
+    <ConfigurationType>Application</ConfigurationType>
+    <AndroidTargetAPI>android-15</AndroidTargetAPI>
+    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
+    <AndroidStlType>gnustl_static</AndroidStlType>
+    <ConfigurationType>Application</ConfigurationType>
+    <AndroidTargetAPI>android-15</AndroidTargetAPI>
+    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <AndroidStlType>gnustl_static</AndroidStlType>
+    <ConfigurationType>Application</ConfigurationType>
+    <AndroidTargetAPI>android-15</AndroidTargetAPI>
+    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'">
+    <AndroidStlType>gnustl_static</AndroidStlType>
+    <ConfigurationType>Application</ConfigurationType>
+    <AndroidTargetAPI>android-15</AndroidTargetAPI>
+    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'" Label="Configuration">
+    <AndroidStlType>gnustl_static</AndroidStlType>
+    <ConfigurationType>Application</ConfigurationType>
+    <AndroidTargetAPI>android-15</AndroidTargetAPI>
+    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
+    <AntBuild />
+    <Link>
+      <AdditionalDependencies>android;stdc++;c;m;log;dl;GLESv2;EGL;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+    <ClCompile />
+    <AntBuild />
+    <AntBuild>
+      <NativeLibDirectories>$(SolutionDir)$(Platform)\$(Configuration)</NativeLibDirectories>
+      <NativeLibDependencies>libgkCore;libgkFont;libgkGameFramework;libgkGameObjectSystem;libgkInput;libgkRendererGLES2;libgkSystem;libgkAnimationHavok;libTestCases</NativeLibDependencies>
+    </AntBuild>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <AntBuild />
+    <Link>
+      <AdditionalDependencies>android;stdc++;c;m;log;dl;GLESv2;EGL;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+    <ClCompile />
+    <AntBuild />
+    <AntBuild>
+      <NativeLibDirectories>$(SolutionDir)$(Platform)\$(Configuration)</NativeLibDirectories>
+      <NativeLibDependencies>libgkCore;libgkFont;libgkGameFramework;libgkGameObjectSystem;libgkInput;libgkRendererGLES2;libgkSystem;libgkAnimationHavok;libTestCases</NativeLibDependencies>
+    </AntBuild>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
+    <AntBuild>
+      <AntBuildPath>$(ProjectDir)\</AntBuildPath>
+      <AdditionalOptions>-verbose %(AdditionalOptions)</AdditionalOptions>
+      <AntBuildType>Debug</AntBuildType>
+      <SigningType>None</SigningType>
+    </AntBuild>
+    <Link>
+      <AdditionalLibraryDirectories>../../libs/jni/nv_obj/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>android;nv_and_util;nv_bitfont;nv_egl_util;nv_file;nv_glesutil;nv_hhdds;nv_log;nv_math;nv_shader;nv_thread;stdc++;c;m;log;dl;GLESv2;EGL;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+    </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../libs/jni</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <AntBuild>
+      <AntBuildPath>$(ProjectDir)\</AntBuildPath>
+      <AdditionalOptions>-verbose %(AdditionalOptions)</AdditionalOptions>
+      <AntBuildType>Debug</AntBuildType>
+      <SigningType>None</SigningType>
+    </AntBuild>
+    <Link>
+      <AdditionalLibraryDirectories>../../libs/jni/nv_obj/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>android;nv_and_util;nv_bitfont;nv_egl_util;nv_file;nv_glesutil;nv_hhdds;nv_log;nv_math;nv_shader;nv_thread;stdc++;c;m;log;dl;GLESv2;EGL;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+    </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../libs/jni</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'">
+    <AntBuild>
+      <AntBuildPath>$(ProjectDir)\</AntBuildPath>
+      <AdditionalOptions>-verbose %(AdditionalOptions)</AdditionalOptions>
+    </AntBuild>
+    <Link>
+      <AdditionalLibraryDirectories>../../libs/jni/nv_obj/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>android;nv_and_util;nv_bitfont;nv_egl_util;nv_file;nv_glesutil;nv_hhdds;nv_log;nv_math;nv_shader;nv_thread;stdc++;c;m;log;dl;GLESv2;EGL;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+    </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../libs/jni</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">
+    <AntBuild>
+      <AntBuildPath>$(ProjectDir)\</AntBuildPath>
+      <AdditionalOptions>-verbose %(AdditionalOptions)</AdditionalOptions>
+    </AntBuild>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+    <ClCompile />
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

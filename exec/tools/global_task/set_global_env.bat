@@ -12,10 +12,10 @@
 
 chcp 936
 	
-rem 根目录生成
+rem root path setted
 set GKENGINE_HOME=%cd%\..\..\
-echo 已设置根路径: %GKENGINE_HOME%
+echo root path setted: %GKENGINE_HOME%
 
-rem 版本号生成
+rem root version setted
 set BUILD_NUMBER=1.0.0.%date:~5,2%%date:~8,2%
-echo 已生成版本号: %BUILD_NUMBER%
+echo root version setted: %BUILD_NUMBER%

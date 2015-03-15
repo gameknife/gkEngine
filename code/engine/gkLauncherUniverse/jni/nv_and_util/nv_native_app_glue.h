@@ -1,49 +1,35 @@
-﻿//////////////////////////////////////////////////////////////////////////
-/*
-Copyright (c) 2011-2015 Kaiming Yi
-	
-	Permission is hereby granted, free of charge, to any person obtaining a copy
-	of this software and associated documentation files (the "Software"), to deal
-	in the Software without restriction, including without limitation the rights
-	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	copies of the Software, and to permit persons to whom the Software is
-	furnished to do so, subject to the following conditions:
-	
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
-	
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-	THE SOFTWARE.
-	
-*/
-//////////////////////////////////////////////////////////////////////////
-
-
-
-/*
- * Copyright (C) 2010 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
+//----------------------------------------------------------------------------------
+// File:        jni/nv_and_util/nv_native_app_glue.h
+// SDK Version: v10.14 
+// Email:       tegradev@nvidia.com
+// Site:        http://developer.nvidia.com/
+//
+//
+// Copyright (C) 2010 The Android Open Source Project
+// Copyright (c) 2011, NVIDIA CORPORATION.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//
+//----------------------------------------------------------------------------------
+/* NVIDIA has modified this Android file to extend the behavior.  The original license
+ * is provided above for reference and legal purposes.  Where possible, original
+ * code is left as-is for easy updates.  NVIDIA extensions, where possible, use
+ * nv_app_/NV_ prefixing instead of android_app_/APP_ prefixing
  */
 
-#ifndef _ANDROID_NATIVE_APP_GLUE_H
-#define _ANDROID_NATIVE_APP_GLUE_H
+#ifndef _NV_NATIVE_APP_GLUE_H
+#define _NV_NATIVE_APP_GLUE_H
 
 #include <poll.h>
 #include <pthread.h>
@@ -180,16 +166,26 @@ struct android_app {
     // window's content should be placed to be seen by the user.
     ARect contentRect;
 
-    // Current state of the app's activity.  May be either APP_CMD_START,
-    // APP_CMD_RESUME, APP_CMD_PAUSE, or APP_CMD_STOP; see below.
-    int activityState;
+	// To avoid confusion, destroyRequested has been removed.
+	// To check whether the app should exit its main thread,
+	// test nv_app_status_running instead.  On zero, exit the mainloop ASAP
+    // int destroyRequested;
 
-    // This is non-zero when the application's NativeActivity is being
-    // destroyed and waiting for the app thread to complete.
-    int destroyRequested;
+	// These are the JNI environment handles for the thread in which
+	// android_main runs.  Do NOT use the ones in NativeActivity, as
+	// those are for the NativeActivity callback threads
+    JNIEnv* appThreadEnv;
+    jobject appThreadThis;
 
     // -------------------------------------------------
     // Below are "private" implementation of the glue code.
+
+	// NVIDIA has moved this to the "private" section - instead of using this
+	// member to find the state of the activity, we recommend the new functions:
+	// nv_app_status_* (listed below)
+	// Current state of the app's activity.  May be either APP_CMD_START,
+    // APP_CMD_RESUME, APP_CMD_PAUSE, or APP_CMD_STOP; see below.
+    int activityState;
 
     pthread_mutex_t mutex;
     pthread_cond_t cond;
@@ -198,6 +194,8 @@ struct android_app {
     int msgwrite;
 
     pthread_t thread;
+
+	unsigned int lifecycleFlags;
 
     struct android_poll_source cmdPollSource;
     struct android_poll_source inputPollSource;
@@ -209,6 +207,9 @@ struct android_app {
     AInputQueue* pendingInputQueue;
     ANativeWindow* pendingWindow;
     ARect pendingContentRect;
+
+	jobject appThreadDisp;
+	jmethodID appThreadDispGetRotation;
 };
 
 enum {
@@ -338,6 +339,39 @@ enum {
     APP_CMD_DESTROY,
 };
 
+// NV extensions to return the current status of the app's activity
+// Yes, SOME of this overlaps with the public members:
+// android_app.activityState
+// android_app.destroyRequested
+// but those variables do not expose all of the states that we care about
+// in practice.  So we provide these to make the lifecycle process easier
+// (also, activityState is used internally, so we need to be careful reusing it)
+
+// Between onCreate and onDestroy, returns nonzero.  Else returns 0
+int nv_app_status_running(struct android_app* android_app);
+
+// Between onResume and onPause, returns nonzero.  Else returns 0
+int nv_app_status_active(struct android_app* android_app);
+
+// Between onFocusChanged(true) and onFocusChanged(false), returns nonzero.  Else returns 0
+int nv_app_status_focused(struct android_app* android_app);
+
+// If there is a current Android surface (not EGLSurface) 
+// and it has nonzero width and height, returns nonzero.  Else returns 0
+int nv_app_status_valid_surface(struct android_app* android_app);
+
+// Logical AND of nv_app_status_running, _active, _focused and _valid_surface
+int nv_app_status_interactable(struct android_app* android_app);
+
+// Returns the current rotation of the device compared to its native orientation
+// (0=ROTATION_0, 1=ROTATION_90, 2=ROTATION_180, 3=ROTATION_180
+int nv_app_get_display_rotation(struct android_app* android_app);
+
+// Call to force an exit from the app.  Note that this will null out any callbacks
+// for onAppCmd and onInputEvent.  This is mainly for extreme errors during startup.
+// It is not recommended for general use, since it circumvents the app's handling code
+void nv_app_force_quit_no_cleanup(struct android_app* android_app);
+
 /**
  * Call when ALooper_pollAll() returns LOOPER_ID_MAIN, reading the next
  * app command message.
@@ -358,6 +392,7 @@ void android_app_pre_exec_cmd(struct android_app* android_app, int8_t cmd);
  */
 void android_app_post_exec_cmd(struct android_app* android_app, int8_t cmd);
 
+
 /**
  * Dummy function you can call to ensure glue code isn't stripped.
  */
@@ -369,8 +404,16 @@ void app_dummy();
  */
 extern void android_main(struct android_app* app);
 
+
+/**
+  * OPTIONAL.  NVIDIA added.  If defined in the app's code, this will be called pre-android_main
+  * on the main Java thread, meaning that your activity's class loader is available
+  * DO NOT forget that this is extern-"C"'ed, like android_main
+  */
+extern void nv_android_init(ANativeActivity *act) __attribute__((weak)); 
+
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _ANDROID_NATIVE_APP_GLUE_H */
+#endif /* _NV_NATIVE_APP_GLUE_H */

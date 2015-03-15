@@ -1,35 +1,103 @@
-﻿/******************************************************************************
+//----------------------------------------------------------------------------------
+// File:        native_basic/jni/main.cpp
+// SDK Version: v10.14 
+// Email:       tegradev@nvidia.com
+// Site:        http://developer.nvidia.com/
+//
+// Copyright (c) 2007-2012, NVIDIA CORPORATION.  All rights reserved.
+//
+// TO  THE MAXIMUM  EXTENT PERMITTED  BY APPLICABLE  LAW, THIS SOFTWARE  IS PROVIDED
+// *AS IS*  AND NVIDIA AND  ITS SUPPLIERS DISCLAIM  ALL WARRANTIES,  EITHER  EXPRESS
+// OR IMPLIED, INCLUDING, BUT NOT LIMITED  TO, IMPLIED WARRANTIES OF MERCHANTABILITY
+// AND FITNESS FOR A PARTICULAR PURPOSE.  IN NO EVENT SHALL  NVIDIA OR ITS SUPPLIERS
+// BE  LIABLE  FOR  ANY  SPECIAL,  INCIDENTAL,  INDIRECT,  OR  CONSEQUENTIAL DAMAGES
+// WHATSOEVER (INCLUDING, WITHOUT LIMITATION,  DAMAGES FOR LOSS OF BUSINESS PROFITS,
+// BUSINESS INTERRUPTION, LOSS OF BUSINESS INFORMATION, OR ANY OTHER PECUNIARY LOSS)
+// ARISING OUT OF THE  USE OF OR INABILITY  TO USE THIS SOFTWARE, EVEN IF NVIDIA HAS
+// BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+//
+//
+//----------------------------------------------------------------------------------
+#include "gkPlatform.h"
 
- @File         PVRShellOS.cpp
+#ifdef OS_WIN32
 
- @Title        Android/PVRShellOS
+#include "IGameframework.h"
+#include "ISystem.h"
+#include "gkPlatform_impl.h"
 
- @Version      
+IGameFramework* gkLoadStaticModule_gkGameFramework();
+void gkFreeStaticModule_gkGameFramework();
 
- @Copyright    Copyright (c) Imagination Technologies Limited.
+#include "gkIniParser.h"
 
- @Platform     Non-windowed support for any Linux
+#include "gkMemoryLeakDetecter.h"
 
- @Description  Makes programming for 3D APIs easier by wrapping window creation
-               and other functions for use by a demo.
+typedef IGameFramework* (*GET_SYSTEM)(void);
+typedef void (*DESTROY_END)(void);
 
-******************************************************************************/
-// #include "PVRShell.h"
-// #include "PVRShellAPI.h"
-// #include "PVRShellOS.h" 
-// #include "PVRShellImpl.h"
-#include "..\android_native_app_glue.h"
+//--------------------------------------------------------------------------------------
+// Initialize everything and go into a render loop
+//--------------------------------------------------------------------------------------
+INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, int )
+{
+	// Enable run-time memory check for debug builds.
+#if (defined(DEBUG) || defined(_DEBUG)) && defined( OS_WIN32 )
+	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+#endif
 
-#include <stdio.h>
-#include <stdarg.h> 
-#include <unistd.h>
-#include <string.h>   
+#ifdef _STATIC_LIB
+	IGameFramework* game = gkLoadStaticModule_gkGameFramework();
+#else
+	// load gkSystem dll
+	HINSTANCE hHandle = 0;
+	gkOpenModule(hHandle, _T("gkGameFramework"));//, NULL, LOAD_WITH_ALTERED_SEARCH_PATH);
+	GET_SYSTEM pFuncStart = (GET_SYSTEM)DLL_GETSYM(hHandle, "gkModuleInitialize");
+	IGameFramework* game = pFuncStart();
+#endif
 
-#include <android/sensor.h>  
-#include <android/log.h> 
-#include <android/window.h> 
-   
+	int width = 1280;
+	int height = 720;
+
+	// init
+	ISystemInitInfo sii;
+	sii.fWidth = width;
+	sii.fHeight = height;
+
+	game->Init( sii );
+	game->PostInit( NULL, sii );
+
+	game->InitGame( NULL );
+
+	// run
+	game->Run();
+
+	// destroy
+	game->DestroyGame(false);
+	game->Destroy();
+
+	// free
+#ifdef _STATIC_LIB
+	gkFreeStaticModule_gkGameFramework();
+#else
+	gkFreeModule( hHandle );
+#endif
+	return 0;
+}
+
+#elif defined( OS_ANDROID )
+
 #include "ISystem.h"   
+
+#include <EGL/egl.h>
+#include <EGL/eglplatform.h>
+#include <GLES2/gl2.h>
+
+#include <android/log.h>
+#include "nv_and_util/nv_native_app_glue.h"
+//#include "nv_and_util/nv_native_app_glue.c"
+
+
 #include "IGameFramework.h"  
 #include "gkPlatform_impl.h"  
 #include "IInputManager.h"   
@@ -207,30 +275,27 @@ static void handle_cmd(struct android_app* app, int32_t cmd)
     }
 }
 
-
-
-/*!***************************************************************************
-@function		android_main
-@input			state	the android app state
-@description	Main function of the program
-*****************************************************************************/
-void android_main(struct android_app* state)
+/**
+ * This is the main entry point of a native application that is using
+ * android_native_app_glue.  It runs in its own thread, with its own
+ * event loop for receiving input events and doing other things.
+ */
+void android_main(struct android_app* app)
 {
-	 // Make sure glue isn't stripped.
+    // Make sure glue isn't stripped.
     app_dummy();
 
-	OsDisplayDebugString( "coming..." );
-
-	// check the tf card dog.
-	//system(  );
-
-	
-
-    // Initialise the demo, process the command line, create the OS initialiser.
+// 	NvEGLUtil* egl = NvEGLUtil::create();
+//     if (!egl) 
+//     {
+//         // if we have a basic EGL failure, we need to exit immediately; nothing else we can do
+//         nv_app_force_quit_no_cleanup(app);
+//         return;
+//     }
 
 	void* gHandle;
 	LOAD_MODULE_GLOBAL( gHandle, gkGameFramework );
-	
+
 	//= dlopen("/data/data/com.kkstudio.gklauncher/lib/libgkGameFrame.so", RTLD_LAZY |RTLD_GLOBAL );
 	OsDisplayDebugString( "libloaded..." );
 	if(gHandle)
@@ -245,62 +310,79 @@ void android_main(struct android_app* state)
 			return;
 		}
 	}
+	else
+	{
+		OsDisplayDebugString( "gkFramework not find..." );
+	}
+
+	OsDisplayDebugString( "system initialized..." );
+
+    //Engine* engine = new Engine(*egl, app);
+
+	//long lastTime = egl->getSystemTime();
+
+    // loop waiting for stuff to do.
 
 	OsDisplayDebugString( "system initialized..." );
 	// Setup our android state
 	//state->userData = &init;
 
-	state->onAppCmd = handle_cmd;
-	state->onInputEvent = handle_input;
-	
-	//init.m_pAndroidState = state;
-	//g_AssetManager = state->activity->assetManager;
+	app->onAppCmd = handle_cmd;
+	app->onInputEvent = handle_input;
 
-	// Handle our events until we have a valid window or destroy has been requested
-	int ident;
-	int events;
-    struct android_poll_source* source;
+	while (nv_app_status_running(app))
+    {
+        // Read all pending events.
+        int ident;
+        int events;
+        struct android_poll_source* source;
 
-	//	Initialise our window/run/shutdown
-	for(;;)
-	{
-		while ((ident = ALooper_pollAll(/*(init.m_eState == ePVRShellRender && init.m_bRendering) ? 0 : -1*/ 0, NULL, &events, (void**)&source)) >= 0)
-		{
-			// Process this event.
-			if (source != NULL)
-			{
-				source->process(state, source);
-			}
+        // If not rendering, we will block 250ms waiting for events.
+        // If animating, we loop until all events are read, then continue
+        // to draw the next frame of animation.
+        while ((ident = ALooper_pollAll(((nv_app_status_focused(app)/* && engine->isGameplayMode()*/) ? 1 : 250),
+        								NULL,
+        								&events,
+        								(void**)&source)) >= 0)
+        {
+            // Process this event. 
+            if (source != NULL)
+                source->process(app, source);
 
-			// Check if we are exiting.
-			if (state->destroyRequested != 0)
-			{
-				return;
-			}
-		}
+            // Check if we are exiting.  If so, dump out
+            if (!nv_app_status_running(app))
+				break;
+        }
 
-		// Render our scene
-// 		if(!init.Run())
-// 		{
-// 			ANativeActivity_finish(state->activity);
-// 			break;
-// 		}
 		if (gIntialized)
 		{
 			gGameFramework->Update();
 		}
-		
-// 		if( gGameFramework->Update() )
-// 		{
-// 			gGameFramework->PostUpdate();
-// 		}
-		
-	}
+
+// 		long currentTime = egl->getSystemTime();
+// 
+// 		// clamp time - it must not go backwards, and we don't
+// 		// want it to be more than a half second to avoid huge
+// 		// delays causing issues.  Note that we do not clamp to above
+// 		// zero because some tools will give us zero delta
+// 		long deltaTime = currentTime - lastTime;
+// 		if (deltaTime < 0)
+// 			deltaTime = 0;
+// 		else if (deltaTime > 500)
+// 			deltaTime = 500;
+// 
+// 		lastTime = currentTime;
+
+		// Update the frame, which optionally updates time and animations
+		// and renders
+		//engine->updateFrame(nv_app_status_interactable(app), deltaTime);
+    }
+
+	//delete engine;
+    //delete egl;
 }
 
-
-/*****************************************************************************
- End of file (PVRShellOS.cpp)
-*****************************************************************************/
+#else
 
 
+#endif
