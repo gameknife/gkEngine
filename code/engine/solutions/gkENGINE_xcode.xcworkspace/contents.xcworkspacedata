@@ -15,6 +15,6 @@
       location = "group:../gkLauncherMac.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../gkLauncherIOS.xcodeproj">
+      location = "group:../gkLauncherUniverse.xcodeproj">
    </FileRef>
 </Workspace>

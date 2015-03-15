@@ -521,6 +521,7 @@ inline bool HandleModelViewCam( const SInputEvent &input_event, float speed, flo
                 }
                 if( input_event.state == eIS_Changed )
                 {
+                    
                     float delta = startScale - input_event.value;
                     camDist = startDist + delta * 5.f;
                 
