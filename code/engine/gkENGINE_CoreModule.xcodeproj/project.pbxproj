@@ -2600,7 +2600,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../thirdparty/freetype/lib/macosx/$(CONFIGURATION)\"",
+					"\"$(SRCROOT)/../thirdparty/freetype/lib/ios/$(CONFIGURATION)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2867,7 +2867,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../thirdparty/freetype/lib/macosx/$(CONFIGURATION)\"",
+					"\"$(SRCROOT)/../thirdparty/freetype/lib/ios/$(CONFIGURATION)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
