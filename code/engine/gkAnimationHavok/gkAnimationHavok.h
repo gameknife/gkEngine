@@ -43,8 +43,8 @@ Copyright (c) 2011-2015 Kaiming Yi
 #define _gkAnimationHavok_h_
 
 #include "prerequistes.h"
-#include "assets/AnimationManager.h"
-#include "assets/RigManager.h"
+#include "AnimationManager.h"
+#include "RigManager.h"
 
 struct IGameObjectAnimLayer;
 struct IMeshLoader;

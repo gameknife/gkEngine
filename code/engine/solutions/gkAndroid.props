@@ -2,23 +2,23 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir>..\..\..\exec\$(PlatformName)\libs\armeabi\</OutDir>
+    <OutDir>..\..\..\exec\Android\libs\armeabi\</OutDir>
     <IntDir>..\..\..\INTERMEDIATE\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>.\;.\Include;..\gkCommon;..\gkCommon\serializer;..\gkCommon\Mathlib;..\..\ThirdParty\rapidxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\;.\Include;..\gkCommon;..\gkCommon\serializer;..\gkCommon\Mathlib;..\..\ThirdParty\rapidxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-fexceptions %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <ImportLibrary>..\..\Lib\$(Configuration)\$(ProjectName).lib</ImportLibrary>
-      <OutputFile>$(OutDir)lib$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <AntBuild>
-      <AntBuildPath>..\..\..\exec\$(PlatformName)\</AntBuildPath>
+      <AntBuildPath>..\..\..\exec\Android\</AntBuildPath>
     </AntBuild>
   </ItemDefinitionGroup>
 </Project>

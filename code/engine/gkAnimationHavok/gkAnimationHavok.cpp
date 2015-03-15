@@ -1,7 +1,7 @@
 #include "gkAnimationHavok.h"
 #include "gkHavokLoader.h"
-#include "character/CharacterInstance.h"
-#include "assets/gkHkxMeshLoader.h"
+#include "CharacterInstance.h"
+#include "gkHkxMeshLoader.h"
 
 #include <Common/Base/Memory/System/Util/hkMemoryInitUtil.h>
 #include <Common/Base/Memory/Allocator/Malloc/hkMallocAllocator.h>

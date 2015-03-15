@@ -30,28 +30,28 @@
     <ClCompile Include="gkAnimationHavok.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="assets\RigManager.cpp">
+    <ClCompile Include="StableHeader.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationManager.cpp">
       <Filter>assets</Filter>
     </ClCompile>
-    <ClCompile Include="assets\AnimationManager.cpp">
+    <ClCompile Include="RigManager.cpp">
       <Filter>assets</Filter>
     </ClCompile>
-    <ClCompile Include="assets\gkHkxMeshLoader.cpp">
-      <Filter>assets</Filter>
-    </ClCompile>
-    <ClCompile Include="character\gkSkinRenderable.cpp">
-      <Filter>character</Filter>
-    </ClCompile>
-    <ClCompile Include="character\CharacterInstance.cpp">
-      <Filter>character</Filter>
+    <ClCompile Include="gkHavokAssetManagementUtil.cpp">
+      <Filter>loader</Filter>
     </ClCompile>
     <ClCompile Include="gkHavokLoader.cpp">
       <Filter>loader</Filter>
     </ClCompile>
-    <ClCompile Include="StableHeader.cpp">
-      <Filter>Header Files</Filter>
+    <ClCompile Include="CharacterInstance.cpp">
+      <Filter>character</Filter>
     </ClCompile>
-    <ClCompile Include="utils\gkHavokAssetManagementUtil.cpp">
+    <ClCompile Include="gkSkinRenderable.cpp">
+      <Filter>character</Filter>
+    </ClCompile>
+    <ClCompile Include="gkHkxMeshLoader.cpp">
       <Filter>loader</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,29 +62,29 @@
     <ClInclude Include="prerequistes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="assets\gkHkxMeshLoader.h">
+    <ClInclude Include="gkAnimationHavok.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="RigManager.h">
       <Filter>assets</Filter>
     </ClInclude>
-    <ClInclude Include="assets\RigManager.h">
+    <ClInclude Include="AnimationManager.h">
       <Filter>assets</Filter>
     </ClInclude>
-    <ClInclude Include="assets\AnimationManager.h">
-      <Filter>assets</Filter>
-    </ClInclude>
-    <ClInclude Include="character\CharacterInstance.h">
-      <Filter>character</Filter>
-    </ClInclude>
-    <ClInclude Include="character\gkSkinRenderable.h">
-      <Filter>character</Filter>
+    <ClInclude Include="gkHavokAssetManagementUtil.h">
+      <Filter>loader</Filter>
     </ClInclude>
     <ClInclude Include="gkHavokLoader.h">
       <Filter>loader</Filter>
     </ClInclude>
-    <ClInclude Include="utils\gkHavokAssetManagementUtil.h">
-      <Filter>loader</Filter>
+    <ClInclude Include="CharacterInstance.h">
+      <Filter>character</Filter>
     </ClInclude>
-    <ClInclude Include="gkAnimationHavok.h">
-      <Filter>System</Filter>
+    <ClInclude Include="gkSkinRenderable.h">
+      <Filter>character</Filter>
+    </ClInclude>
+    <ClInclude Include="gkHkxMeshLoader.h">
+      <Filter>loader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

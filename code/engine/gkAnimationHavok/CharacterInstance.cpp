@@ -9,7 +9,7 @@
 #include "I3DEngine.h"
 #include "IResourceManager.h"
 #include "gkSkinRenderable.h"
-#include "../utils/gkHavokAssetManagementUtil.h"
+#include "gkHavokAssetManagementUtil.h"
 
 
 //////////////////////////////////////////////////////////////////////////

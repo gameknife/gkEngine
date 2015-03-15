@@ -34,20 +34,22 @@
     <None Include="..\..\..\exec\Android\res\values\strings.xml">
       <Filter>AndroidApk\res</Filter>
     </None>
-    <None Include="..\..\..\exec\Android\AndroidManifest.xml">
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidBuild Include="..\..\..\exec\Android\AndroidManifest.xml">
       <Filter>AndroidApk</Filter>
-    </None>
-    <None Include="..\..\..\exec\Android\project.properties">
+    </AndroidBuild>
+    <AndroidBuild Include="..\..\..\exec\Android\ant.properties">
       <Filter>AndroidApk</Filter>
-    </None>
-    <None Include="..\..\..\exec\Android\ant.properties">
+    </AndroidBuild>
+    <AndroidBuild Include="..\..\..\exec\Android\build.xml">
       <Filter>AndroidApk</Filter>
-    </None>
-    <None Include="..\..\..\exec\Android\build.xml">
+    </AndroidBuild>
+    <AndroidBuild Include="..\..\..\exec\Android\local.properties">
       <Filter>AndroidApk</Filter>
-    </None>
-    <None Include="..\..\..\exec\Android\local.properties">
+    </AndroidBuild>
+    <AndroidBuild Include="..\..\..\exec\Android\project.properties">
       <Filter>AndroidApk</Filter>
-    </None>
+    </AndroidBuild>
   </ItemGroup>
 </Project>

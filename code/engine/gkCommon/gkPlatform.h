@@ -212,6 +212,9 @@ inline void gkLoadModule( HINSTANCE& hHandle, const TCHAR* moduleName)
 	else
 	{
 		gkLogError( _T("loading lib[ %s ] failed."), moduleName );
+#ifdef OS_ANDROID
+		gkLogError( _T("dlerr: %s"), dlerror());
+#endif
 	}
 }
 
