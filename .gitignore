@@ -17,3 +17,4 @@ exec/media/
 *.gpk
 exec/builds/
 code/engine/solutions/Tegra-Android/
+exec/bin64/
