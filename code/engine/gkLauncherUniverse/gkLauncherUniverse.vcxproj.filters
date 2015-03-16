@@ -16,4 +16,10 @@
   <ItemGroup>
     <ResourceCompile Include="gkLauncherUniverse.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidBuild Include="..\..\..\exec\android\AndroidManifest.xml" />
+    <AndroidBuild Include="..\..\..\exec\android\build.xml" />
+    <AndroidBuild Include="..\..\..\exec\android\project.properties" />
+    <AndroidBuild Include="project.properties" />
+  </ItemGroup>
 </Project>

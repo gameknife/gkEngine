@@ -9,8 +9,6 @@
     rem echo %%~fA abspathname
     rem echo %%~xA ext
     rem echo %%~pA dik
-
-chcp 936
 	
 rem root path setted
 set GKENGINE_HOME=%cd%\..\..\

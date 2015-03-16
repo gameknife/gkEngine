@@ -48,6 +48,6 @@ float gk_frand()
 	return g_random_generator.GenerateFloat();
 }
 
-gkStdString GKNULLSTR(_T("GKNULLSTR"));
+//gkStdString GKNULLSTR(_T("GKNULLSTR"));
 
 //////////////////////////////////////////////////////////////////////////

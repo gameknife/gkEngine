@@ -337,7 +337,9 @@ inline void gkOpenModule( HINSTANCE& hHandle, const TCHAR* moduleName)
 #	define gkStdIFstream ifstream
 #endif
 
-extern gkStdString GKNULLSTR;
+//extern gkStdString GKNULLSTR;
+
+#define GKNULLSTR _T("GKNULLSTR");
 
 #ifndef UNIQUE_IFACE
 #define UNIQUE_IFACE

@@ -17,13 +17,13 @@
 rem global env
 call ..\global_task\set_global_env.bat
 	
-rem Step1 ×ª»»dds
+rem Step1 trans dds
 call ..\resource_task\_tga2pvr_engine.bat
 call ..\resource_task\_tga2pvr_media.bat
 
 mkdir %GKENGINE_HOME%\paks
 
-rem Step2 ´ò°ü
+rem Step2 pak
 %GKENGINE_HOME%\tools\gkPak -i "media\level" -o "paks\level.gpk" -l 5 -p 1
 %GKENGINE_HOME%\tools\gkPak -i "media\objects" -o "paks\objects.gpk" -l 5 -p 1
 %GKENGINE_HOME%\tools\gkPak -i "media\terrian" -o "paks\terrian.gpk" -l 5 -p 1
