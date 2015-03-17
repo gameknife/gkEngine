@@ -23,7 +23,6 @@ hkRootLevelContainer* gkHavokLoader::load( const char* filename )
 #else
 	gkBindResReader  reader(filename);
 #endif
-
 	
 	return m_hkLoader->load( &reader );
 }

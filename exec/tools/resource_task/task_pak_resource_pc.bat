@@ -17,13 +17,13 @@
 rem global env
 call ..\global_task\set_global_env.bat
 
-rem Step1 ×ª»»dds
+rem Step1 trans dds
 call ..\resource_task\_tga2dds_engine.bat
 call ..\resource_task\_tga2dds_media.bat
 call ..\resource_task\_obj2gmf_media.bat
 call ..\resource_task\compile_all_shader.bat
 
-rem Step2 ´ò°ü
+rem Step2 pak
 %GKENGINE_HOME%\tools\gkPak -i "media\level" -o "paks\level.gpk" -l 5 -p 0
 %GKENGINE_HOME%\tools\gkPak -i "media\objects" -o "paks\objects.gpk" -l 5 -p 0
 %GKENGINE_HOME%\tools\gkPak -i "media\terrian" -o "paks\terrian.gpk" -l 5 -p 0

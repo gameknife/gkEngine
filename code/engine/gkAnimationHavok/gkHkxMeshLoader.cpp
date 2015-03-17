@@ -1,6 +1,6 @@
 ﻿#include "StableHeader.h"
 #include "gkHkxMeshLoader.h"
-#include "../utils/gkHavokAssetManagementUtil.h"
+#include "gkHavokAssetManagementUtil.h"
 #include <Animation/Animation/hkaAnimationContainer.h>
 #include <Common/Serialize/Util/hkLoader.h>
 #include <Common/Serialize/Util/hkRootLevelContainer.h>

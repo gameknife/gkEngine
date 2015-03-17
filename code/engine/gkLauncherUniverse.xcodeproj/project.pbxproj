@@ -11,17 +11,16 @@
 		A00A4A9E188B73D3005376F7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00A4A9D188B73D3005376F7 /* SystemConfiguration.framework */; };
 		A00A4AA0188B758A005376F7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00A4A9F188B758A005376F7 /* CoreData.framework */; };
 		A00A4AA2188B7594005376F7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00A4AA1188B7594005376F7 /* CoreFoundation.framework */; };
-		A013F47819E841360076E11E /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A013F47619E841360076E11E /* logo.png */; };
-		A013F47919E841360076E11E /* logo_retina.png in Resources */ = {isa = PBXBuildFile; fileRef = A013F47719E841360076E11E /* logo_retina.png */; };
 		A04B42F41734038500EF0763 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B42F31734038500EF0763 /* UIKit.framework */; };
 		A04B42F61734038500EF0763 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B42F51734038500EF0763 /* Foundation.framework */; };
 		A04B42F81734038500EF0763 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B42F71734038500EF0763 /* CoreGraphics.framework */; };
-		A04B42FE1734038500EF0763 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A04B42FC1734038500EF0763 /* InfoPlist.strings */; };
-		A04B43001734038500EF0763 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A04B42FF1734038500EF0763 /* main.m */; };
-		A04B43041734038500EF0763 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A04B43031734038500EF0763 /* AppDelegate.mm */; };
 		A04B433517340CE700EF0763 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B433317340CE700EF0763 /* OpenGLES.framework */; };
 		A04B433617340CE700EF0763 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B433417340CE700EF0763 /* QuartzCore.framework */; };
-		A08D66641A3BE06600EA04D3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A08D66631A3BE06600EA04D3 /* Images.xcassets */; };
+		A0F485B11AB5A77900DD38D8 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0F485B01AB5A77900DD38D8 /* AppDelegate.mm */; };
+		A0F485B31AB5A78300DD38D8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0F485B21AB5A78300DD38D8 /* Images.xcassets */; };
+		A0F485B71AB5A85100DD38D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F485B61AB5A85100DD38D8 /* main.m */; };
+		A0F485BA1AB5A87500DD38D8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0F485B81AB5A87500DD38D8 /* InfoPlist.strings */; };
+		A0F485BC1AB5A8B900DD38D8 /* gkLauncherUniverse-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F485BB1AB5A8B900DD38D8 /* gkLauncherUniverse-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,23 +28,18 @@
 		A00A4A9D188B73D3005376F7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A00A4A9F188B758A005376F7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		A00A4AA1188B7594005376F7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		A013F47619E841360076E11E /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
-		A013F47719E841360076E11E /* logo_retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_retina.png; sourceTree = "<group>"; };
 		A04B42EF1734038500EF0763 /* gkLauncherIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gkLauncherIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A04B42F31734038500EF0763 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A04B42F51734038500EF0763 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A04B42F71734038500EF0763 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		A04B42FB1734038500EF0763 /* gkLauncherIOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "gkLauncherIOS-Info.plist"; sourceTree = "<group>"; };
-		A04B42FD1734038500EF0763 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		A04B42FF1734038500EF0763 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		A04B43021734038500EF0763 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		A04B43031734038500EF0763 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
-		A04B43131734043200EF0763 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		A04B43141734043200EF0763 /* gkIconpAD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gkIconpAD.png; sourceTree = "<group>"; };
-		A04B43151734043200EF0763 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		A04B433317340CE700EF0763 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A04B433417340CE700EF0763 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		A08D66631A3BE06600EA04D3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		A0F485AF1AB5A77900DD38D8 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = gkLauncherUniverse/AppDelegate.h; sourceTree = SOURCE_ROOT; };
+		A0F485B01AB5A77900DD38D8 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = gkLauncherUniverse/AppDelegate.mm; sourceTree = SOURCE_ROOT; };
+		A0F485B21AB5A78300DD38D8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = gkLauncherUniverse/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		A0F485B61AB5A85100DD38D8 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = gkLauncherUniverse/main.m; sourceTree = SOURCE_ROOT; };
+		A0F485B91AB5A87500DD38D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = gkLauncherUniverse/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		A0F485BB1AB5A8B900DD38D8 /* gkLauncherUniverse-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "gkLauncherUniverse-Info.plist"; path = "gkLauncherUniverse/gkLauncherUniverse-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,22 +62,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A013F47519E841360076E11E /* appres */ = {
-			isa = PBXGroup;
-			children = (
-				A013F47619E841360076E11E /* logo.png */,
-				A013F47719E841360076E11E /* logo_retina.png */,
-			);
-			name = appres;
-			path = gkLauncherIOS/appres;
-			sourceTree = "<group>";
-		};
 		A04B42E41734038500EF0763 = {
 			isa = PBXGroup;
 			children = (
-				A013F47519E841360076E11E /* appres */,
-				A04B43121734043200EF0763 /* res */,
-				A04B42F91734038500EF0763 /* gkLauncherIOS */,
+				A04B42F91734038500EF0763 /* gkLauncherUniverse */,
 				A04B42F21734038500EF0763 /* Frameworks */,
 				A04B42F01734038500EF0763 /* Products */,
 			);
@@ -113,36 +95,26 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		A04B42F91734038500EF0763 /* gkLauncherIOS */ = {
+		A04B42F91734038500EF0763 /* gkLauncherUniverse */ = {
 			isa = PBXGroup;
 			children = (
-				A04B43021734038500EF0763 /* AppDelegate.h */,
-				A04B43031734038500EF0763 /* AppDelegate.mm */,
-				A08D66631A3BE06600EA04D3 /* Images.xcassets */,
+				A0F485B21AB5A78300DD38D8 /* Images.xcassets */,
+				A0F485AF1AB5A77900DD38D8 /* AppDelegate.h */,
+				A0F485B01AB5A77900DD38D8 /* AppDelegate.mm */,
 				A04B42FA1734038500EF0763 /* Supporting Files */,
 			);
+			name = gkLauncherUniverse;
 			path = gkLauncherIOS;
 			sourceTree = "<group>";
 		};
 		A04B42FA1734038500EF0763 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				A04B42FB1734038500EF0763 /* gkLauncherIOS-Info.plist */,
-				A04B42FC1734038500EF0763 /* InfoPlist.strings */,
-				A04B42FF1734038500EF0763 /* main.m */,
+				A0F485BB1AB5A8B900DD38D8 /* gkLauncherUniverse-Info.plist */,
+				A0F485B81AB5A87500DD38D8 /* InfoPlist.strings */,
+				A0F485B61AB5A85100DD38D8 /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		A04B43121734043200EF0763 /* res */ = {
-			isa = PBXGroup;
-			children = (
-				A04B43131734043200EF0763 /* Default.png */,
-				A04B43141734043200EF0763 /* gkIconpAD.png */,
-				A04B43151734043200EF0763 /* icon.png */,
-			);
-			name = res;
-			path = gkLauncherIOS/res;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,7 +151,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A04B42E91734038500EF0763 /* Build configuration list for PBXProject "gkLauncherIOS" */;
+			buildConfigurationList = A04B42E91734038500EF0763 /* Build configuration list for PBXProject "gkLauncherUniverse" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -201,10 +173,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A013F47819E841360076E11E /* logo.png in Resources */,
-				A04B42FE1734038500EF0763 /* InfoPlist.strings in Resources */,
-				A08D66641A3BE06600EA04D3 /* Images.xcassets in Resources */,
-				A013F47919E841360076E11E /* logo_retina.png in Resources */,
+				A0F485BC1AB5A8B900DD38D8 /* gkLauncherUniverse-Info.plist in Resources */,
+				A0F485B31AB5A78300DD38D8 /* Images.xcassets in Resources */,
+				A0F485BA1AB5A87500DD38D8 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,18 +186,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A04B43001734038500EF0763 /* main.m in Sources */,
-				A04B43041734038500EF0763 /* AppDelegate.mm in Sources */,
+				A0F485B71AB5A85100DD38D8 /* main.m in Sources */,
+				A0F485B11AB5A77900DD38D8 /* AppDelegate.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		A04B42FC1734038500EF0763 /* InfoPlist.strings */ = {
+		A0F485B81AB5A87500DD38D8 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A04B42FD1734038500EF0763 /* en */,
+				A0F485B91AB5A87500DD38D8 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -293,7 +264,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				HEADER_SEARCH_PATHS = "gkCommon/**";
-				INFOPLIST_FILE = "gkLauncherIOS/gkLauncherIOS-Info.plist";
+				INFOPLIST_FILE = "gkLauncherUniverse/gkLauncherUniverse-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -349,7 +320,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				HEADER_SEARCH_PATHS = "gkCommon/**";
-				INFOPLIST_FILE = "gkLauncherIOS/gkLauncherIOS-Info.plist";
+				INFOPLIST_FILE = "gkLauncherUniverse/gkLauncherUniverse-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -393,7 +364,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A04B42E91734038500EF0763 /* Build configuration list for PBXProject "gkLauncherIOS" */ = {
+		A04B42E91734038500EF0763 /* Build configuration list for PBXProject "gkLauncherUniverse" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A04B43051734038500EF0763 /* Debug */,

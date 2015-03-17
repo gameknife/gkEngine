@@ -289,91 +289,6 @@
 			};
 			name = Release;
 		};
-		A07D4AD01799AC3D00C36005 /* Debug-OSX */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
-				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)";
-				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = NO;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = _STATIC_LIB;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"../gkCommon/**",
-					"./../../thirdparty/rapidxml/**",
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				OBJROOT = "../../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
-				SDKROOT = macosx;
-				SYMROOT = "../../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
-			};
-			name = "Debug-OSX";
-		};
-		A07D4AD11799AC3D00C36005 /* Debug-OSX */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DSTROOT = /tmp/TestCases.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = "Debug-OSX";
-		};
-		A0950F0B179C3F0E002C8759 /* Release-OSX */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
-				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)";
-				COPY_PHASE_STRIP = YES;
-				DEAD_CODE_STRIPPING = NO;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREPROCESSOR_DEFINITIONS = _STATIC_LIB;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"../gkCommon/**",
-					"./../../thirdparty/rapidxml/**",
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				OBJROOT = "../../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
-				SDKROOT = macosx;
-				SYMROOT = "../../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Release-OSX";
-		};
-		A0950F0C179C3F0E002C8759 /* Release-OSX */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DSTROOT = /tmp/TestCases.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = "Release-OSX";
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -381,8 +296,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A068A2CD173567410059BCF3 /* Debug */,
-				A07D4AD01799AC3D00C36005 /* Debug-OSX */,
-				A0950F0B179C3F0E002C8759 /* Release-OSX */,
 				A068A2CE173567410059BCF3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -392,8 +305,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A068A2D0173567410059BCF3 /* Debug */,
-				A07D4AD11799AC3D00C36005 /* Debug-OSX */,
-				A0950F0C179C3F0E002C8759 /* Release-OSX */,
 				A068A2D1173567410059BCF3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

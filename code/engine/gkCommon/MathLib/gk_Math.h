@@ -39,10 +39,6 @@ Copyright (c) 2011-2015 Kaiming Yi
 #ifndef GKMATH_H
 #define GKMATH_H
 
-#if _MSC_VER > 1000
-# pragma once
-#endif
-
 //========================================================================================
 
 #include "gkPlatform.h"

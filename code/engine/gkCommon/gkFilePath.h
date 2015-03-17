@@ -749,6 +749,7 @@ inline void enum_all_files_in_folder( const TCHAR* root_path,std::vector<gkStdSt
 				//gkLogMessage( addpath );
 				gkStdString normedpath(addpath);
 				gkNormalizePath(normedpath);
+				normedpath = gkGetFilename(normedpath.c_str());
 				result.push_back( normedpath.c_str() );
 			}
 		}  

@@ -620,5 +620,5 @@ uint32 CObjMeshLoader::GetBoneBaseTransformCount()
 
 void CObjMeshLoader::GetBoneBaseTransform( Matrix44& matrix, uint32 index )
 {
-	
+	return;
 }

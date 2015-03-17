@@ -20,7 +20,7 @@ call ..\global_task\set_global_env.bat
 rem Step1 Pak
 call ..\resource_task\task_pak_resource_pc.bat
 
-rem Step2 生成目标
+rem Step2 gen target
 set FOLDER_NAME=pc_%BUILD_NUMBER%
 echo %FOLDER_NAME%	
 
@@ -30,7 +30,7 @@ xcopy %GKENGINE_HOME%\bin32\Styles\*.dll 	%GKENGINE_HOME%\builds\%FOLDER_NAME%\b
 xcopy %GKENGINE_HOME%\paks\*.gpk 			%GKENGINE_HOME%\builds\%FOLDER_NAME%\paks\ /Y
 xcopy %GKENGINE_HOME%\*.* 					%GKENGINE_HOME%\builds\%FOLDER_NAME%\ /Y
 
-rem Step3 再次打压缩包
+rem Step3 re pak
 rem 7z
 %GKENGINE_HOME%\tools\7zr a -mmt=4 -mx=9 %GKENGINE_HOME%\builds\%FOLDER_NAME%.7z %GKENGINE_HOME%\builds\%FOLDER_NAME%\ 
 

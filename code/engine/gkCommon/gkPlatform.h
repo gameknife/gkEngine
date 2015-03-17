@@ -140,7 +140,8 @@ Copyright (c) 2011-2015 Kaiming Yi
 #define DLL_GETSYM(a,b) dlsym(a,b)
 #define DLL_FREE(a) dlclose(a)
 
-#define DLL_PREFIX _T("/data/data/com.kkstudio.gklauncher/lib/lib")
+#define DLL_PREFIX _T("/data/app-lib/com.kkstudio.gkLauncherUniverse-1/lib")
+#define DLL_PREFIX_2 _T("/data/app-lib/com.kkstudio.gkLauncherUniverse-2/lib")
 #define DLL_SUFFIX _T(".so")
 
 #else
@@ -152,6 +153,7 @@ Copyright (c) 2011-2015 Kaiming Yi
 #define DLL_FREE(a) FreeLibrary(a)
 
 #define DLL_PREFIX _T("")
+#define DLL_PREFIX_2 _T("")
 #define DLL_SUFFIX _T(".dll")
 
 #endif
@@ -194,24 +196,44 @@ inline void gkLoadModule( HINSTANCE& hHandle, const TCHAR* moduleName)
 	// load input dll [7/20/2011 Kaiming-Desktop]
 	// cat .dll or .so
 	gkLogMessage( _T("loading lib[ %s ]..."), moduleName );
-	TCHAR finalModuleName[MAX_PATH] = DLL_PREFIX;
-	_tcscat( finalModuleName, moduleName );
-	_tcscat( finalModuleName, DLL_SUFFIX);
+	TCHAR finalModuleName[MAX_PATH];
 
-	hHandle = DLL_OPEN(finalModuleName);
-	if (hHandle)
+	bool load_ok = false;
+
+	for(int i=0; i < 2; ++i)
 	{
-		gkLogMessage( _T("lib[ %s ] entry calling..."), moduleName );
-		MODULE_START pFunc = (MODULE_START)DLL_GETSYM(hHandle, "gkModuleInitialize");
-		if(pFunc)
+		if(i == 0)
 		{
-			pFunc(gEnv);
+			_tcscpy( finalModuleName, DLL_PREFIX);
 		}
-				
+		else
+		{
+			_tcscpy( finalModuleName, DLL_PREFIX_2);
+		}
+		_tcscat( finalModuleName, moduleName );
+		_tcscat( finalModuleName, DLL_SUFFIX);
+
+
+		hHandle = DLL_OPEN(finalModuleName);
+		if (hHandle)
+		{
+			gkLogMessage( _T("lib[ %s ] entry calling..."), moduleName );
+			MODULE_START pFunc = (MODULE_START)DLL_GETSYM(hHandle, "gkModuleInitialize");
+			if(pFunc)
+			{
+				pFunc(gEnv);
+				load_ok = true;
+				break;
+			}
+		}
 	}
-	else
+	
+	if(!load_ok)
 	{
 		gkLogError( _T("loading lib[ %s ] failed."), moduleName );
+#ifdef OS_ANDROID
+		gkLogError( _T("dlerr: %s"), dlerror());
+#endif
 	}
 }
 
@@ -220,16 +242,33 @@ inline void gkOpenModule( HINSTANCE& hHandle, const TCHAR* moduleName)
 	// load input dll [7/20/2011 Kaiming-Desktop]
 	// cat .dll or .so
 	gkLogMessage( _T("loading lib[ %s ]..."), moduleName );
-	TCHAR finalModuleName[MAX_PATH] = DLL_PREFIX;
-	_tcscat( finalModuleName, moduleName );
-	_tcscat( finalModuleName, DLL_SUFFIX);
+	TCHAR finalModuleName[MAX_PATH];
 
-	hHandle = DLL_OPEN(finalModuleName);
-	if (hHandle)
+	bool load_ok = false;
+
+	for(int i=0; i < 2; ++i)
 	{
-		gkLogMessage( _T("loading lib[ %s ] successed."), moduleName );
+		if(i == 0)
+		{
+			_tcscpy( finalModuleName, DLL_PREFIX);
+		}
+		else
+		{
+			_tcscpy( finalModuleName, DLL_PREFIX_2);
+		}
+		_tcscat( finalModuleName, moduleName );
+		_tcscat( finalModuleName, DLL_SUFFIX);
+
+		hHandle = DLL_OPEN(finalModuleName);
+		if (hHandle)
+		{
+			gkLogMessage( _T("loading lib[ %s ] successed."), moduleName );
+			load_ok = true;
+			break;
+		}
 	}
-	else
+
+	if(!load_ok)
 	{
 		gkLogMessage( _T("loading lib[ %s ] failed."), moduleName );
 	}
@@ -298,7 +337,9 @@ inline void gkOpenModule( HINSTANCE& hHandle, const TCHAR* moduleName)
 #	define gkStdIFstream ifstream
 #endif
 
-extern gkStdString GKNULLSTR;
+//extern gkStdString GKNULLSTR;
+
+#define GKNULLSTR _T("GKNULLSTR");
 
 #ifndef UNIQUE_IFACE
 #define UNIQUE_IFACE
