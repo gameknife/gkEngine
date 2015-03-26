@@ -103,23 +103,36 @@ bool gkShaderGLES2::loadImpl( void )
 	}
 
 	bool ret = false;
+    
+    CRapidXmlParseNode* rootNode = parser.getRootXmlNode();
 
 	if (parser.getRootXmlNode()->getChildNode(_T("GLES2Shader")) )
 	{
-		ret = loadFromGfxShader( parser.getRootXmlNode()->getChildNode(_T("GLES2Shader")) );
+		ret = loadFromGfxShader( rootNode->getChildNode(_T("GLES2Shader")) );
 	}
 	else
 	{
-		ret = loadFromGfxShader( parser.getRootXmlNode() );
+		ret = loadFromGfxShader( rootNode );
 	}
 	
+    CRapidXmlParseNode* layerNode = rootNode->getChildNode(_T("RenderLayer"));
+    
+    if (layerNode)
+    {
+        if ( !_tcsicmp( layerNode->GetAttribute(_T("layer")), _T("WATER") ) )
+        {
+            m_uDefaultRenderLayer = RENDER_LAYER_WATER;
+        }
+        
+        if ( !_tcsicmp( layerNode->GetAttribute(_T("layer")), _T("RENDER_LAYER_SKIES_EARLY") ) )
+        {
+            m_uDefaultRenderLayer = RENDER_LAYER_SKIES_EARLY;
+        }
+    }
+    
+
 
 	parser.finishReading();
-
-	if ( !_tcsicmp( m_wstrFileName.c_str(), _T("ks_SkyHdr.fx") ) )
-	{
-		m_uDefaultRenderLayer = RENDER_LAYER_SKIES_EARLY;
-	}
 
 	return ret;
 }

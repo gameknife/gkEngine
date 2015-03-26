@@ -105,7 +105,7 @@ bool gkMeshGLES2::loadImpl( void )
 					elementSize = sizeof(GKVL_P3F2F4F3);
 				}
 				else
-					if ( _T("P3T2U4") )
+					//if ( _T("P3T2U4") )
 					{
 						vertexType = eVI_P3T2U4;
 						elementSize = sizeof(GKVL_P3T2U4);

@@ -177,6 +177,7 @@ private:
 	virtual void RC_SetMainCamera(const CCamera* cam);
 	virtual void RC_SetShadowCascadeCamera(const CCamera* cam, uint8 index);
 
+    virtual Vec3 ScreenPosToViewportPos(Vec3 screenPos);
 private:
 	uint32 m_screenWidth;
 	uint32 m_screenHeight;

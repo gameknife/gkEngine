@@ -21,6 +21,8 @@ gkShaderPtr gkShaderManager::ms_ReflGen;
 
 gkShaderPtr gkShaderManager::ms_ShowDepth;
 gkShaderPtr gkShaderManager::ms_AuxRenderer;
+gkShaderPtr gkShaderManager::ms_AuxRenderer_Tex;
+
 gkShaderPtr gkShaderManager::ms_DefaultRender;
 
 
@@ -72,6 +74,8 @@ gkShaderManager::gkShaderManager( void )
 
 	ms_AuxRenderer = create(_T("ksaux"), _T(""));
 
+    ms_AuxRenderer_Tex = create(_T("ksaux@1"), _T(""));
+    
 	ms_DefaultRender = create(_T("ksDefault"), _T(""));
 
 	ms_postcopy = create(_T("post_copy"), _T(""));

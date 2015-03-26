@@ -73,6 +73,9 @@ public:
 	static gkShaderPtr ms_GeneralZpassSkinned;
 	static gkShaderPtr ms_ReflGen;
 	static gkShaderPtr ms_AuxRenderer;
+    
+    static gkShaderPtr ms_AuxRenderer_Tex;
+    
 	static gkShaderPtr ms_DefaultRender;
 
 	static gkShaderPtr ms_postcopy;

@@ -120,10 +120,18 @@ inline void::gkIniParser::Parse()
 
 					gkStdString strValue = strline.substr(keyPos+1,gkStdString::npos);
 					// trim the \n
+
+// 					strimpos = strValue.find_last_not_of(_T('\r'));
+// 					if (strimpos != gkStdString::npos)
+// 					{
+// 						strValue = strValue.substr(0, strimpos);
+// 					}
+
 					strimpos = strValue.find_last_not_of(_T('\n'));
 					if ( strimpos != gkStdString::npos )
 					{
-						strValue = strValue.substr(0, strimpos);
+						strValue = strValue.substr(0, gkStdString::npos);
+						//strValue = strValue.substr(0, )
 					}
 
 					// trim the space

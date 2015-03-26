@@ -10,9 +10,6 @@ void main(void)
 {
 	vec4 hpos = vec4(inPosition.xyz, 1.0);
 
-	//hpos.x = hpos.x * g_screenSize.z * 2.0 - 1.0;
-	//hpos.y = 1.0 - hpos.y * g_screenSize.w * 2.0;
-	
 	outTC = inTexcoord;
 	outWorldPos = inTangent;
 	

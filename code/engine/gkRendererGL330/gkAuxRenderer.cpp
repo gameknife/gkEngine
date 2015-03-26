@@ -8,6 +8,7 @@
 
 #define AUX_VERTEX_ARRAY				0
 #define AUX_COLOR_ARRAY					1
+#define AUX_TEXCOORD_ARRAY				1
 //REFACTOR FIX
 
 gkAuxRendererGLES2::gkAuxRendererGLES2( void )
@@ -671,6 +672,11 @@ void gkAuxRendererGLES2::_swapBufferForRendering()
 	m_vecScreenBoxVertexBuffer_Render = m_vecScreenBoxVertexBuffer;
 	m_vecScreenBoxVertexBuffer.clear();
 
+    m_vecScreenBoxTexturedVertexBuffer_Render = m_vecScreenBoxTexturedVertexBuffer;
+    m_vecScreenBoxTexturedVertexBuffer.clear();
+    
+    m_vecScreenBoxTexture_Render = m_vecScreenBoxTexture;
+    m_vecScreenBoxTexture.clear();
 }
 
 void gkAuxRendererGLES2::AuxRenderText( const TCHAR* text, int posx, int posy, const IFtFont* font, const ColorB& color /*= ColorB(255,255,255,200 ) */, uint32 alignment /*= eTra_HLeft | eTra_VTop */, uint32 style  )
@@ -780,6 +786,35 @@ void gkAuxRendererGLES2::_FlushAllHelper()
 
 
 	gkShaderManager::ms_AuxRenderer->FX_End();
+    
+    
+    gkShaderManager::ms_AuxRenderer_Tex->FX_Begin(0, 0);
+    
+    
+    
+    if (!m_vecScreenBoxTexturedVertexBuffer_Render.empty())
+    {
+        int count = m_vecScreenBoxTexturedVertexBuffer_Render.size() / 6;
+        
+        for (int i=0; i < count; ++i)
+        {
+            ITexture* tex = m_vecScreenBoxTexture_Render[i];
+            
+            tex->Apply(0,0);
+            
+            // draw polys
+            glEnableVertexAttribArray(AUX_VERTEX_ARRAY);
+            //glEnableVertexAttribArray(AUX_COLOR_ARRAY);
+            glEnableVertexAttribArray(AUX_TEXCOORD_ARRAY);
+            glVertexAttribPointer(AUX_VERTEX_ARRAY, 3, GL_FLOAT, GL_FALSE, sizeof(GK_HELPER_2DVERTEX_TEXTURED), &(m_vecScreenBoxTexturedVertexBuffer_Render[i * 6].m_vPosition.x));
+            glVertexAttribPointer(AUX_TEXCOORD_ARRAY, 2, GL_FLOAT, GL_FALSE, sizeof(GK_HELPER_2DVERTEX_TEXTURED), &(m_vecScreenBoxTexturedVertexBuffer_Render[i * 6].m_vTexcorrd.x));
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+        }
+    }
+    
+    gkShaderManager::ms_AuxRenderer_Tex->FX_End();
+    
+
 
 // 	glDisable(GL_BLEND);
 // 	glEnable(GL_DEPTH_TEST);
@@ -877,6 +912,33 @@ void gkAuxRendererGLES2::AuxRenderScreenBox( const Vec2& pos, const Vec2& wh, co
 
 void gkAuxRendererGLES2::AuxRenderScreenBox( const Vec2& pos, const Vec2& wh, const ColorB& color, ITexture* texture )
 {
+    GK_HELPER_2DVERTEX_TEXTURED point[4];
+    point[0].m_vPosition = gEnv->pRenderer->ScreenPosToViewportPos(Vec3(pos.x, pos.y, 0.5));
+    point[1].m_vPosition = gEnv->pRenderer->ScreenPosToViewportPos(Vec3(pos.x + wh.x, pos.y,0.5));
+    point[2].m_vPosition = gEnv->pRenderer->ScreenPosToViewportPos(Vec3(pos.x, pos.y + wh.y,0.5));
+    point[3].m_vPosition = gEnv->pRenderer->ScreenPosToViewportPos(Vec3(pos.x + wh.x, pos.y + wh.y,0.5));
+    
+    point[0].m_vTexcorrd = Vec2(0,0);
+    point[1].m_vTexcorrd = Vec2(1,0);
+    point[2].m_vTexcorrd = Vec2(0,1);
+    point[3].m_vTexcorrd = Vec2(1,1);
+    
+    if( texture->dynamic() )
+    {
+        point[0].m_vTexcorrd = Vec2(0,1);
+        point[1].m_vTexcorrd = Vec2(1,1);
+        point[2].m_vTexcorrd = Vec2(0,0);
+        point[3].m_vTexcorrd = Vec2(1,0);
+    }
+    
+    m_vecScreenBoxTexturedVertexBuffer.push_back( point[0] );
+    m_vecScreenBoxTexturedVertexBuffer.push_back( point[2] );
+    m_vecScreenBoxTexturedVertexBuffer.push_back( point[1] );
+    m_vecScreenBoxTexturedVertexBuffer.push_back( point[1] );
+    m_vecScreenBoxTexturedVertexBuffer.push_back( point[2] );
+    m_vecScreenBoxTexturedVertexBuffer.push_back( point[3] );
+    
+    m_vecScreenBoxTexture.push_back( texture );
 
 }
 

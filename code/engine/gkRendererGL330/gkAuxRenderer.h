@@ -66,6 +66,12 @@ protected:
 	std::vector<GK_HELPER_2DVERTEX> m_vecScreenBoxVertexBuffer;
 	std::vector<GK_HELPER_2DVERTEX> m_vecScreenBoxVertexBuffer_Render;
 
+    std::vector<GK_HELPER_2DVERTEX_TEXTURED> m_vecScreenBoxTexturedVertexBuffer;
+    std::vector<GK_HELPER_2DVERTEX_TEXTURED> m_vecScreenBoxTexturedVertexBuffer_Render;
+    
+    std::vector<ITexture*> m_vecScreenBoxTexture;
+    std::vector<ITexture*> m_vecScreenBoxTexture_Render;
+    
 	std::vector<IGameObjectRenderLayer*> m_vecMeshFrameBuffer;
 	std::vector<IGameObjectRenderLayer*> m_vecMeshFrameBuffer_Render;
 

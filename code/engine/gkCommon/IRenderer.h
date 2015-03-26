@@ -303,7 +303,7 @@ public:
 	virtual void SetPixelReSize(float scale) {}
 	virtual float GetPixelReSize() {return 1.0f;}
 
-	virtual Vec3 ScreenPosToViewportPos(Vec3 screenPos) { return Vec3(0,0,0);}
+    virtual Vec3 ScreenPosToViewportPos(Vec3 screenPos) =0;
 
 	virtual bool FullScreenMode() {return true;}
 };

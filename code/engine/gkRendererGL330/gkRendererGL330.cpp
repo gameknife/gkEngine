@@ -175,7 +175,7 @@ void gkRendererGL330::RT_CleanRenderSequence()
 void gkRendererGL330::RP_ProcessRenderLayer( uint8 layerID )
 {
 	gkRenderLayer* pLayer = m_pRenderingRenderSequence->getRenderLayer(layerID);
-	// ������Ⱦѭ����ѭ����Ⱦshader�Ӳ�
+	// ª˘±æ‰÷»æ—≠ª∑£¨—≠ª∑‰÷»æshader◊”≤„
 	gkRenderLayer::ShaderGroupMapIterator shaderGroupIter = pLayer->_getShaderGroupIterator();
 
 	while (shaderGroupIter.hasMoreElements())
@@ -199,8 +199,8 @@ void gkRendererGL330::RP_ProcessShaderGroup( const gkShaderGroup* pShaderGroup, 
 	}
 	pShader->FX_Begin( 0, 0 );
 
-	if ( !_tcsicmp( pShader->getName().c_str(),   _T("ks_SkyHdr.fx")))
-	{
+    if ( pShader->getDefaultRenderLayer() == RENDER_LAYER_SKIES_EARLY )
+    {
 		const STimeOfDayKey& tod = gEnv->p3DEngine->getTimeOfDay()->getCurrentTODKey();
 		pShader->FX_SetFloat4( "g_SkyBottom", (tod.clZenithBottom * 0.85f).toVec4() );
 		pShader->FX_SetFloat4( "g_SkyTop", (tod.clZenithTop * 0.85f).toVec4() );
@@ -264,7 +264,7 @@ void gkRendererGL330::RP_ProcessShaderGroup( const gkShaderGroup* pShaderGroup, 
 
 void gkRendererGL330::RP_ProcessRenderList( const gkRenderableList* obj, gkShaderGLES2* pShader, int shadowcascade )
 {
-	// ��Ⱦlist�е�ÿһ��renderable
+	// ‰÷»ælist÷–µƒ√ø“ª∏ˆrenderable
 	std::list<gkRenderable*>::const_iterator iter, iterend;
 	iterend = obj->m_vecRenderable.end();
 	for (iter = obj->m_vecRenderable.begin(); iter != iterend; ++iter)
@@ -301,7 +301,7 @@ void gkRendererGL330::RP_ProcessRenderList( const gkRenderableList* obj, gkShade
 			(*iter)->getMaterial()->getTexture(eMS_Diffuse)->Apply(0,0);
 		}
 
-		// ���ȡ��vb��ib
+		// ◊Ó∫Û£¨»°≥ˆvb∫Õib
 		gkRenderOperation op; 
 		(*iter)->getRenderOperation(op);
 
@@ -314,7 +314,7 @@ void gkRendererGL330::RP_ProcessRenderList( const gkRenderableList* obj, gkShade
 
 bool gkRendererGL330::RT_StartRender()
 {
-	glClearColor(1.0,0.0,0.0,1.0);
+	glClearColor(0.5,0.5,0.5,1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 	//return true;
 	FX_PushRenderTarget( 0, NULL, gkTextureManager::ms_ShadowCascade1 );
@@ -625,13 +625,19 @@ bool gkRendererGL330::RT_StartRender()
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
+    m_deviceContext->swapBuffer();
+    
 	return true;
 }
 
 bool gkRendererGL330::RT_EndRender()
 {
 	//glfwSwapBuffers();
-	m_deviceContext->swapBuffer();
+	
+    // kaimingyi 2015.03.26
+    // here do not need mt rendering, put it in StartRender, to poll event at a right place.
+    
+    //m_deviceContext->swapBuffer();
 	return true;
 }
 
@@ -1149,4 +1155,13 @@ void gkRendererGL330::FX_TexBlurGaussian( gkTexturePtr tgt, int nAmount, float f
 	}
 
 	pShader->FX_End();
+}
+
+Vec3 gkRendererGL330::ScreenPosToViewportPos(Vec3 screenPos)
+{
+    Vec3 output = screenPos;
+    output.x = ( screenPos.x / (float)GetScreenWidth() - 0.5f ) * 2.0f;
+    output.y = - ( screenPos.y / (float)GetScreenHeight()- 0.5f ) * 2.0f;
+    
+    return output;
 }

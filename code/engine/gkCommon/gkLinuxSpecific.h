@@ -169,7 +169,7 @@ typedef unsigned char				byte;
 //typedef const TCHAR *const TCHAR*;
 #define CHAR char
 #define MAX_PATH          260
-#define _T(x) x  
+#define _T(varr)	varr
 
 #ifndef FALSE
 #define FALSE               0

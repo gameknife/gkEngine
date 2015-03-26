@@ -101,23 +101,6 @@ struct gkTexture2DGLES2StreamingTask : public ITask
 
 		if( 0 >= iMipCount )
 			iMipCount = 1;
-
-//  		EHwTexError loaderror;
-//  		//loaderror = LoadPVR(pTextureFile->DataPtr(), m_hw_texptr, 0);
-// 
-// 		loaderror = loader.LoadPVR_Data(pTextureFile->DataPtr() );
-// 
-// 		if(loaderror != PVR_SUCCESS)
-// 		{
-// 			gkLogWarning(_T("loading %s failed."), m_filepath);
-// 			//*pErrorStr = "ERROR: Failed to load texture.";
-// 			gEnv->pFileSystem->closeResFile( pTextureFile );
-// 			return;
-// 		}
-		
-
-
-		//getRenderer()->getDeviceContex()->makeThreadContext(true);
 	}
 
 	virtual void Complete_MT()
@@ -169,7 +152,7 @@ struct gkTexture2DGLES2StreamingTask : public ITask
 						iWidth,
 						iHeight,
 						0,
-						GL_BGRA,
+						GL_RGBA,
 						GL_UNSIGNED_BYTE,
 						pSrcBits
 						);
@@ -363,6 +346,10 @@ bool gkTextureGLES2::loadImpl( void )
 				glBindTexture(GL_TEXTURE_2D, m_uHwTexture2D);
 
 				glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_uWidth, m_uHeight, 0, format, type, 0);
+                GLenum err = glGetError();
+                if (err) {
+                    gkLogError("create dynamic texture failed.");
+                }
 			}
 			else if ( itusage->second == _T("RAW") )
 			{
@@ -389,7 +376,12 @@ bool gkTextureGLES2::loadImpl( void )
 				// finally, created it
 				glGenTextures(1, &m_uHwTexture2D);
 				glBindTexture(GL_TEXTURE_2D, m_uHwTexture2D);
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_uWidth, m_uHeight, 0, GL_ALPHA, GL_UNSIGNED_BYTE, 0);
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_R8, m_uWidth, m_uHeight, 0, GL_RED, GL_UNSIGNED_BYTE, 0);
+                
+                GLenum err = glGetError();
+                if (err) {
+                    gkLogError("create raw texture failed.");
+                }
 			}
 
 			m_rt = true;
@@ -672,7 +664,7 @@ void gkTextureGLES2::RawDataFlush()
 	if( m_uHwTexture2D && m_rawData && m_rawDirty )
 	{
 		glBindTexture( GL_TEXTURE_2D, m_uHwTexture2D );
-		glTexImage2D( GL_TEXTURE_2D, 0, GL_RED, m_uWidth, m_uHeight, 0, GL_RED, GL_UNSIGNED_BYTE, m_rawData  );
+		glTexImage2D( GL_TEXTURE_2D, 0, GL_R8, m_uWidth, m_uHeight, 0, GL_RED, GL_UNSIGNED_BYTE, m_rawData  );
 
 		GLenum error = glGetError();
 		if (error)
