@@ -410,23 +410,26 @@ IGameObject* gkGameObjectSystem::CreateStaticGeoGameObject( CRapidXmlParseNode* 
 
 #ifdef OS_WIN32
 
-
-			if (node->GetAttribute(_T("Physical")) && !_tcsicmp(node->GetAttribute(_T("Physical")), _T("true")))
+			if (gEnv->pPhysics)
 			{
-				IGameObjectPhysicLayer* pPhysicLayer = gEnv->pPhysics->CreatePhysicLayer();
-				statObj->setGameObjectLayer(pPhysicLayer);
-				pPhysicLayer->createStatic();
+				if (node->GetAttribute(_T("Physical")) && !_tcsicmp(node->GetAttribute(_T("Physical")), _T("true")))
+				{
+					IGameObjectPhysicLayer* pPhysicLayer = gEnv->pPhysics->CreatePhysicLayer();
+					statObj->setGameObjectLayer(pPhysicLayer);
+					pPhysicLayer->createStatic();
 
-				
-			}
-			else if (node->GetAttribute(_T("Physical")) && !_tcsicmp(node->GetAttribute(_T("Physical")), _T("rigidsphere")))
-			{
-				IGameObjectPhysicLayer* pPhysicLayer = gEnv->pPhysics->CreatePhysicLayer();
-				statObj->setGameObjectLayer(pPhysicLayer);
-				pPhysicLayer->createDynamic(IGameObjectPhysicLayer::ePDT_Sphere);
 
-				
+				}
+				else if (node->GetAttribute(_T("Physical")) && !_tcsicmp(node->GetAttribute(_T("Physical")), _T("rigidsphere")))
+				{
+					IGameObjectPhysicLayer* pPhysicLayer = gEnv->pPhysics->CreatePhysicLayer();
+					statObj->setGameObjectLayer(pPhysicLayer);
+					pPhysicLayer->createDynamic(IGameObjectPhysicLayer::ePDT_Sphere);
+
+
+				}
 			}
+
 
 
 			

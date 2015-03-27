@@ -1,25 +1,25 @@
 ﻿//////////////////////////////////////////////////////////////////////////
 /*
 Copyright (c) 2011-2015 Kaiming Yi
-	
-	Permission is hereby granted, free of charge, to any person obtaining a copy
-	of this software and associated documentation files (the "Software"), to deal
-	in the Software without restriction, including without limitation the rights
-	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	copies of the Software, and to permit persons to whom the Software is
-	furnished to do so, subject to the following conditions:
-	
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
-	
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-	THE SOFTWARE.
-	
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
 */
 //////////////////////////////////////////////////////////////////////////
 
@@ -46,11 +46,11 @@ class CCamera;
 class gkShaderParamDataSource
 {
 public:
-// 	mutable D3DXMATRIX mWorldMatrix[256];
-// 	mutable size_t mWorldMatrixCount;
-// 	mutable const D3DXMATRIX* m_matWorldMatrixArray;
+	// 	mutable D3DXMATRIX mWorldMatrix[256];
+	// 	mutable size_t mWorldMatrixCount;
+	// 	mutable const D3DXMATRIX* m_matWorldMatrixArray;
 
-// 常用矩阵
+	// 常用矩阵
 	mutable Matrix44 m_matWorldMatrix;
 	mutable Matrix44 m_matViewMatrix;
 	mutable Matrix44 m_matProjectionMatrix;
@@ -70,11 +70,11 @@ public:
 	mutable Matrix44 m_matInverseViewMatrix_ShadowCascade[3];
 
 
-// backup matrix
+	// backup matrix
 	mutable Matrix44 m_matBackupViewMatrix;
 	mutable Matrix44 m_matBackupProjMatrix;
 	mutable Matrix44 m_matBackupViewProjMatrix;
-// 相机位置
+	// 相机位置
 	mutable Vec4 m_vCameraPosition;
 	mutable Vec4 m_vCameraPositionObjectSpace;
 
@@ -83,7 +83,7 @@ public:
 	mutable Vec3 m_vCamDir;
 	mutable Vec3 m_vCamPos;
 
-// 过期标志
+	// 过期标志
 	mutable bool m_bIsWorldMatrixOutOfDate;
 	mutable bool m_bIsViewMatrixOutOfDate;
 	mutable bool m_bIsProjectionMatrixOutOfDate;
@@ -99,7 +99,7 @@ public:
 	mutable bool m_bIsCameraPositionOutOfDate;
 	mutable bool m_bIsCameraPositionObjectSpaceOutOfDate;
 
-// 渲染使用数据
+	// 渲染使用数据
 	const gkRenderable*  m_pCurrentRenderable;
 	CRenderCamera* m_pCurrentCamera;
 	CRenderCamera* m_pShadowsCamera[3];
@@ -110,9 +110,9 @@ public:
 	const CCamera*			m_pCam;
 
 	STimeOfDayKey	m_sCurrTODKey;
-    
-    Vec3 m_ScreenFarVerts[4];
-    Vec4 m_viewparam;
+
+	Vec3 m_ScreenFarVerts[4];
+	Vec4 m_viewparam;
 public:
 	gkShaderParamDataSource();
 	virtual ~gkShaderParamDataSource();
@@ -124,42 +124,45 @@ public:
 	virtual void setMainCamera(const CCamera* cam);
 	virtual void setShadowCascadeCamera(const CCamera* cam, uint8 index);
 
-	void setCurrTodKey(const STimeOfDayKey& todkey) {m_sCurrTODKey = todkey;}
-	STimeOfDayKey& getCurrTodKey() {return m_sCurrTODKey;}
+	void setCurrTodKey(const STimeOfDayKey& todkey) { m_sCurrTODKey = todkey; }
+	STimeOfDayKey& getCurrTodKey() { return m_sCurrTODKey; }
 
-    inline const Vec3& getCamFarVerts(uint32 index) {return m_ScreenFarVerts[index];}
-    
+	inline const Vec3& getCamFarVerts(uint32 index) { return m_ScreenFarVerts[index]; }
+
 	/// 设置当前的RT
 	//virtual void setCurrentRenderTarget(const gkRenderTarget* target);
 	void setLightDir(const Vec3& lightdir);
-	inline const Vec3& getLightDir() {return m_vLightDir;}
-	inline const Vec3& getLightDirViewSpace() {return m_vLightDirInViewSpace;}
-	inline const Vec3& getCamDir() {return m_vCamDir;}
-	inline const Vec3& getCamPos() {return m_vCamPos;}
-    inline const CCamera* getMainCamera() const {return m_pCam;}
-    inline const Vec4& getViewParam() {return m_viewparam;}
-    
+	inline const Vec3& getLightDir() { return m_vLightDir; }
+	inline const Vec3& getLightDirViewSpace() { return m_vLightDirInViewSpace; }
+	inline const Vec3& getCamDir() { return m_vCamDir; }
+	inline const Vec3& getCamPos() { return m_vCamPos; }
+	inline const CCamera* getMainCamera() const { return m_pCam; }
+	inline const Vec4& getViewParam() { return m_viewparam; }
+	inline void changeCurrentRT(uint32 width, uint32 height)
+	{
+		m_viewparam.x = width;
+		m_viewparam.y = height;
+	}
+
 	/// 返回现有值
 	virtual const Matrix44& getWorldMatrix(void) const;
 	virtual const Matrix44& getViewMatrix(void) const;
 	virtual const Matrix44& getProjectionMatrix(void) const;
- 	virtual const Matrix44& getWorldViewProjMatrix(void) const;
- 	virtual const Matrix44& getWorldViewMatrix(void) const;
- 	virtual const Matrix44& getInverseWorldMatrix(void) const;
- 	virtual const Matrix44& getInverseViewMatrix(void) const;
+	virtual const Matrix44& getWorldViewProjMatrix(void) const;
+	virtual const Matrix44& getWorldViewMatrix(void) const;
+	virtual const Matrix44& getInverseWorldMatrix(void) const;
+	virtual const Matrix44& getInverseViewMatrix(void) const;
 	virtual const Matrix44& getViewProjMatrix(void) const;
 
-	//virtual const Matrix44& getWorldMatrix_ShadowCascade(uint8 index) const;
 	virtual const Matrix44& getViewMatrix_ShadowCascade(uint8 index)  const;
 	virtual const Matrix44& getProjectionMatrix_ShadowCascade(uint8 index)  const;
 	virtual const Matrix44& getWorldViewProjMatrix_ShadowCascade(uint8 index)  const;
 	virtual const Matrix44& getWorldViewMatrix_ShadowCascade(uint8 index)  const;
-	//virtual const Matrix44& getInverseWorldMatrix_ShadowCascade(uint8 index)  const;
 	virtual const Matrix44& getInverseViewMatrix_ShadowCascade(uint8 index)  const;
 
-	virtual const Matrix44& getMainCamViewMatrix(void) const {return m_matBackupViewMatrix;}
-	virtual const Matrix44& getMainCamProjectionMatrix(void) const {return m_matBackupProjMatrix;}
-	virtual const Matrix44& getMainCamViewProjMatrix(void) const {return m_matBackupViewProjMatrix;}
-	
+	virtual const Matrix44& getMainCamViewMatrix(void) const { return m_matBackupViewMatrix; }
+	virtual const Matrix44& getMainCamProjectionMatrix(void) const { return m_matBackupProjMatrix; }
+	virtual const Matrix44& getMainCamViewProjMatrix(void) const { return m_matBackupViewProjMatrix; }
+
 	/// 返回加工值
 };

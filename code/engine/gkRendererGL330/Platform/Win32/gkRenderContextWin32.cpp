@@ -262,6 +262,7 @@ gkDeviceRenderContext::~gkDeviceRenderContext()
 	wglMakeCurrent( NULL, NULL );
 	wglDeleteContext( m_mainContext );
 
+	return;
 
 	int flags, i = 0, attribs[40];
 

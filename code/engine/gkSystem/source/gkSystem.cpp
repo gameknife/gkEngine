@@ -327,10 +327,10 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 	// load physics module
 #ifndef MUTE_PHYSICS
 #	ifdef WIN32
-	TCHAR wszPhysicDll[MAX_PATH] = _T("gkHavok");
+	TCHAR wszPhysicDll[MAX_PATH] = _T("");
 
 	gkStdString cfgfile = gkGetExecRootDir() + _T("media/config/startup.cfg");
-	GetPrivateProfileString( _T("launcher"), _T("physicsengine"), _T("gkHavok"), wszPhysicDll, MAX_PATH, cfgfile.c_str() );
+	GetPrivateProfileString( _T("launcher"), _T("physicsengine"), _T(""), wszPhysicDll, MAX_PATH, cfgfile.c_str() );
 #	else 
 	TCHAR wszPhysicDll[MAX_PATH] = _T("gkHavok");
 #	endif // WIN32

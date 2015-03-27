@@ -1,4 +1,4 @@
-#version 100
+
 
 attribute highp   vec3  inPosition;
 attribute mediump vec2  inTexcoord;

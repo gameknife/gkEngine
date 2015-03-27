@@ -53,6 +53,8 @@ public:
 	virtual void swapBuffer() =0;
     
     virtual void makeThreadContext(bool close = false) =0;
+
+	virtual void resizeBackBuffer(int width, int height) {}
 };
 
 #endif

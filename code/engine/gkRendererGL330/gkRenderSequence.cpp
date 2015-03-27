@@ -8,7 +8,7 @@
 
 
 
-gkRenderSequence::gkRenderSequence( void ):m_bIsReady(false)
+gkRenderSequence::gkRenderSequence(void) :m_bIsReady(false)
 {
 	// 创建基本渲染层
 	m_mapRenderLayer.insert(
@@ -28,8 +28,8 @@ gkRenderSequence::gkRenderSequence( void ):m_bIsReady(false)
 
 }
 
-gkRenderSequence::~gkRenderSequence( void )
-{	
+gkRenderSequence::~gkRenderSequence(void)
+{
 	// Clear the queues
 	gkRenderLayerMap::iterator i, iend;
 	i = m_mapRenderLayer.begin();
@@ -44,7 +44,7 @@ gkRenderSequence::~gkRenderSequence( void )
 	m_yDefaultLayer = RENDER_LAYER_OPAQUE;
 }
 
-gkRenderLayer* gkRenderSequence::getRenderLayer( BYTE yId )
+gkRenderLayer* gkRenderSequence::getRenderLayer(BYTE yId)
 {
 	// 在容器中寻找渲染层
 	gkRenderLayerMap::iterator groupIt;
@@ -68,20 +68,20 @@ gkRenderLayer* gkRenderSequence::getRenderLayer( BYTE yId )
 	return pLayer;
 }
 
-void gkRenderSequence::addToRenderSequence( gkRenderable* pRend, BYTE yId )
+void gkRenderSequence::addToRenderSequence(gkRenderable* pRend, BYTE yId)
 {
 	// GetLayer
 	gkRenderLayer* pLayer = getRenderLayer(yId);
 	IShader* pShader = NULL;
-	
+
 	// Touch Material
 	if (pRend->getMaterial())
 		pRend->getMaterial()->touch();
 
 	// Check Material & getShader
-	if(!pRend->getMaterial())
+	if (!pRend->getMaterial())
 	{
-		GK_ASSERT( 0 );
+		GK_ASSERT(0);
 		gkLogWarning(_T("gkRenderSequence::1 Object has no material, can not Render it."));
 		return;
 	}
@@ -93,12 +93,12 @@ void gkRenderSequence::addToRenderSequence( gkRenderable* pRend, BYTE yId )
 
 	if (m_yCacheMode == eRFMode_ShadowCas0 ||
 		m_yCacheMode == eRFMode_ShadowCas1 ||
-		m_yCacheMode == eRFMode_ShadowCas2 )
+		m_yCacheMode == eRFMode_ShadowCas2)
 	{
 		uint32 tmp = 0;
-		if ( yId >= RENDER_LAYER_OPAQUE && yId <= RENDER_LAYER_TERRIAN)
+		if (yId >= RENDER_LAYER_OPAQUE && yId <= RENDER_LAYER_TERRIAN && pRend->castShadow() && pRend->getMaterial()->getCastShadow())
 		{
-			switch(m_yCacheMode)
+			switch (m_yCacheMode)
 			{
 			case eRFMode_ShadowCas0:
 
@@ -136,12 +136,12 @@ void gkRenderSequence::addToRenderSequence( gkRenderable* pRend, BYTE yId )
 
 	// in general list generation
 	// if Opaque, add to ShadowGen List
-	if ( yId >= RENDER_LAYER_OPAQUE && yId <= RENDER_LAYER_TERRIAN)
+	if (yId >= RENDER_LAYER_OPAQUE && yId <= RENDER_LAYER_TERRIAN)
 	{
 		pLayer->addRenderable(pRend, pShader);
 
 		uint32 tmp;
-		if (pRend->getSkinnedMatrix(0,tmp))
+		if (pRend->getSkinnedMatrix(0, tmp))
 		{
 			m_lstZprepassSkinned.m_vecRenderable.push_back(pRend);
 		}
@@ -149,17 +149,17 @@ void gkRenderSequence::addToRenderSequence( gkRenderable* pRend, BYTE yId )
 		{
 			m_lstZprepass.m_vecRenderable.push_back(pRend);
 		}
-		
+
 	}
 	// if Not, Just Add
 	else
 	{
 		pLayer->addRenderable(pRend, pShader);
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------
-void gkRenderSequence::addToRenderSequence( gkRenderable* pRend )
+void gkRenderSequence::addToRenderSequence(gkRenderable* pRend)
 {
 	// Judge the layer we should use [4/8/2012 Kaiming]
 
@@ -170,9 +170,9 @@ void gkRenderSequence::addToRenderSequence( gkRenderable* pRend )
 		pRend->getMaterial()->touch();
 
 	// Check Material & getShader
-	if(!pRend->getMaterial())
+	if (!pRend->getMaterial())
 	{
-		GK_ASSERT( 0 );
+		GK_ASSERT(0);
 		gkLogWarning(_T("gkRenderSequence::1 Object has no material, can not Render it."));
 		return;
 	}
@@ -187,7 +187,7 @@ void gkRenderSequence::addToRenderSequence( gkRenderable* pRend )
 		return;
 	}
 
-	if( pMtl->getOpacity() == 100)
+	if (pMtl->getOpacity() == 100)
 		addToRenderSequence(pRend, RENDER_LAYER_OPAQUE);
 	else
 		addToRenderSequence(pRend, RENDER_LAYER_TRANSPARENT);
@@ -228,13 +228,13 @@ void gkRenderSequence::clear()
 }
 
 //-----------------------------------------------------------------------
-gkRenderSequence::LayerMapIterator gkRenderSequence::_getLayerIterator( void )
+gkRenderSequence::LayerMapIterator gkRenderSequence::_getLayerIterator(void)
 {
 	return LayerMapIterator(m_mapRenderLayer.begin(), m_mapRenderLayer.end());
 }
 
 //-----------------------------------------------------------------------
-gkRenderSequence::ConstLayerMapIterator gkRenderSequence::_getLayerIterator( void ) const
+gkRenderSequence::ConstLayerMapIterator gkRenderSequence::_getLayerIterator(void) const
 {
 	return ConstLayerMapIterator(m_mapRenderLayer.begin(), m_mapRenderLayer.end());
 }
@@ -244,13 +244,13 @@ void gkRenderSequence::reduceShadowCascadeList()
 	// the relation is, zprepass < cascade1 < cascade2 [10/27/2011 Kaiming]
 	// so first, cut 2 from 1
 	std::list<gkRenderable*>::iterator it = m_lstShadowCascade2.m_vecRenderable.begin();
-	for(; it != m_lstShadowCascade2.m_vecRenderable.end();)
+	for (; it != m_lstShadowCascade2.m_vecRenderable.end();)
 	{
 		bool flag = false;
 		std::list<gkRenderable*>::iterator it0 = m_lstShadowCascade1.m_vecRenderable.begin();
-		for(; it0 != m_lstShadowCascade1.m_vecRenderable.end(); ++it0)
+		for (; it0 != m_lstShadowCascade1.m_vecRenderable.end(); ++it0)
 		{
-			if ( (*it0) == (*it))
+			if ((*it0) == (*it))
 			{
 				// find, erase from list2
 				flag = true;
@@ -270,13 +270,13 @@ void gkRenderSequence::reduceShadowCascadeList()
 
 	// clean from cascade0
 	std::list<gkRenderable*>::iterator it1 = m_lstShadowCascade1.m_vecRenderable.begin();
-	for(; it1 != m_lstShadowCascade1.m_vecRenderable.end();)
+	for (; it1 != m_lstShadowCascade1.m_vecRenderable.end();)
 	{
 		bool flag = false;
 		std::list<gkRenderable*>::iterator it0 = m_lstShadowCascade0.m_vecRenderable.begin();
-		for(; it0 != m_lstShadowCascade0.m_vecRenderable.end(); ++it0)
+		for (; it0 != m_lstShadowCascade0.m_vecRenderable.end(); ++it0)
 		{
-			if ( (*it0) == (*it1))
+			if ((*it0) == (*it1))
 			{
 				// find, erase from list2
 				flag = true;
@@ -295,9 +295,9 @@ void gkRenderSequence::reduceShadowCascadeList()
 	}
 }
 
-void gkRenderSequence::setCamera( ICamera* pCam, BYTE yMode )
+void gkRenderSequence::setCamera(ICamera* pCam, BYTE yMode)
 {
-	switch(yMode)
+	switch (yMode)
 	{
 	case eRFMode_General:
 		m_MainCam = pCam;
@@ -314,9 +314,9 @@ void gkRenderSequence::setCamera( ICamera* pCam, BYTE yMode )
 	}
 }
 
-ICamera* gkRenderSequence::getCamera( BYTE yMode )
+ICamera* gkRenderSequence::getCamera(BYTE yMode)
 {
-	switch(yMode)
+	switch (yMode)
 	{
 	case eRFMode_General:
 		return m_MainCam;
@@ -335,12 +335,12 @@ ICamera* gkRenderSequence::getCamera( BYTE yMode )
 	return NULL;
 }
 
-void gkRenderSequence::addRenderLight( gkRenderLight& pLight )
+void gkRenderSequence::addRenderLight(gkRenderLight& pLight)
 {
 
 	if (m_yCacheMode == eRFMode_ShadowCas0 ||
 		m_yCacheMode == eRFMode_ShadowCas1 ||
-		m_yCacheMode == eRFMode_ShadowCas2 )
+		m_yCacheMode == eRFMode_ShadowCas2)
 	{
 		return;
 	}
@@ -375,7 +375,7 @@ void gkRenderSequence::PrepareRenderSequence()
 					(*itrenderable)->RT_Prepare();
 				}
 			}
-			
+
 
 		}
 	}

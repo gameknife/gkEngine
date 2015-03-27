@@ -73,9 +73,8 @@ public:
 	static gkShaderPtr ms_GeneralZpassSkinned;
 	static gkShaderPtr ms_ReflGen;
 	static gkShaderPtr ms_AuxRenderer;
-    
-    static gkShaderPtr ms_AuxRenderer_Tex;
-    
+	static gkShaderPtr ms_AuxRenderer_Tex;
+
 	static gkShaderPtr ms_DefaultRender;
 
 	static gkShaderPtr ms_postcopy;
@@ -83,10 +82,16 @@ public:
 	static gkShaderPtr ms_postbloom;
 	static gkShaderPtr ms_postbloomdof;
 	static gkShaderPtr ms_postgaussian;
-    
-    static gkShaderPtr ms_postcvtlineardepth;
+	static gkShaderPtr ms_postmsaa;
+
+	static gkShaderPtr ms_postcvtlineardepth;
 	static gkShaderPtr ms_postssao;
-    static gkShaderPtr ms_postforprocess;
+	static gkShaderPtr ms_postforprocess;
+
+	static gkShaderPtr ms_DeferredLighting_Ambient;
+	static gkShaderPtr ms_DeferredLighting_PointLight;
+
+	static gkShaderPtr ms_Simple;
 
 protected:
 	virtual IResource* createImpl(const gkStdString& name, gkResourceHandle handle, const gkStdString& group, gkNameValuePairList* params = NULL);

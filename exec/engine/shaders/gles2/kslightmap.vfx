@@ -1,4 +1,4 @@
-#version 100
+
 
 #include "include/constant_vs_def.h"
 #include "include/varying_def.h"

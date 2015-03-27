@@ -1,25 +1,25 @@
 ﻿//////////////////////////////////////////////////////////////////////////
 /*
 Copyright (c) 2011-2015 Kaiming Yi
-	
-	Permission is hereby granted, free of charge, to any person obtaining a copy
-	of this software and associated documentation files (the "Software"), to deal
-	in the Software without restriction, including without limitation the rights
-	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	copies of the Software, and to permit persons to whom the Software is
-	furnished to do so, subject to the following conditions:
-	
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
-	
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-	THE SOFTWARE.
-	
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
 */
 //////////////////////////////////////////////////////////////////////////
 
@@ -61,27 +61,27 @@ public:
 	virtual void addToRenderSequence(gkRenderable* pRend, BYTE yId);
 	virtual void addToRenderSequence(gkRenderable* pRend);
 	virtual void addRenderLight(gkRenderLight& pLight);
-	virtual void setRenderableFillMode(BYTE yMode) {m_yCacheMode = yMode;}
+	virtual void setRenderableFillMode(BYTE yMode) { m_yCacheMode = yMode; }
 	void setCamera(ICamera* pCam, BYTE yMode);
 	virtual void clear();
-	virtual void markFinished() {m_bIsReady = true;}
+	virtual void markFinished() { m_bIsReady = true; }
 
 	LayerMapIterator _getLayerIterator(void);
 	ConstLayerMapIterator _getLayerIterator(void) const;
 
-	virtual gkRenderableList* getZprepassObjects() {return &m_lstZprepass;}
-	virtual gkRenderableList* getZprepassObjectsSkinned() {return &m_lstZprepassSkinned;}
+	virtual gkRenderableList* getZprepassObjects() { return &m_lstZprepass; }
+	virtual gkRenderableList* getZprepassObjectsSkinned() { return &m_lstZprepassSkinned; }
 
-	virtual gkRenderableList* getShadowCascade0Objects() {return &m_lstShadowCascade0;}
-	virtual gkRenderableList* getShadowCascade1Objects() {return &m_lstShadowCascade1;}
-	virtual gkRenderableList* getShadowCascade0ObjectsSkinned() {return &m_lstShadowCascade0Skinned;}
-	virtual gkRenderableList* getShadowCascade1ObjectsSkinned() {return &m_lstShadowCascade1Skinned;}
-	virtual gkRenderableList* getShadowCascade2Objects() {return &m_lstShadowCascade2;}
-	virtual gkRenderLightList& getRenderLightList() {return m_lstRenderLight;}
+	virtual gkRenderableList* getShadowCascade0Objects() { return &m_lstShadowCascade0; }
+	virtual gkRenderableList* getShadowCascade1Objects() { return &m_lstShadowCascade1; }
+	virtual gkRenderableList* getShadowCascade0ObjectsSkinned() { return &m_lstShadowCascade0Skinned; }
+	virtual gkRenderableList* getShadowCascade1ObjectsSkinned() { return &m_lstShadowCascade1Skinned; }
+	virtual gkRenderableList* getShadowCascade2Objects() { return &m_lstShadowCascade2; }
+	virtual gkRenderLightList& getRenderLightList() { return m_lstRenderLight; }
 
 	virtual void reduceShadowCascadeList();
 
-	ICamera* getCamera( BYTE yMode);
+	ICamera* getCamera(BYTE yMode);
 
 
 	void PrepareRenderSequence();

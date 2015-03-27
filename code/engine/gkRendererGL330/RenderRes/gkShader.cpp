@@ -523,6 +523,9 @@ void gkShaderGLES2::PreProcess( std::string &vsSource )
     //                includepos = vsSource.find("precision highp float;");
     //            }
     //        }
+
+	vsSource.insert(0, "#version 120 \n");
+
     {
     
         size_t includepos = vsSource.find("#version");
@@ -588,36 +591,36 @@ void gkShaderGLES2::PreProcess( std::string &vsSource )
         includepos = vsSource.find("#include");
     }
     
-    //	{
-    //		size_t includepos = vsSource.find("highp");
-    //		while ( std::string::npos != includepos )
-    //		{
-    //			vsSource.replace(includepos, 5, "", 0);
-    //			includepos = vsSource.find("highp");
-    //		}
-    //	}
-    //
-    //	{
-    //		size_t includepos = vsSource.find("mediump");
-    //		while ( std::string::npos != includepos )
-    //		{
-    //			vsSource.replace(includepos, 7, "", 0);
-    //			includepos = vsSource.find("mediump");
-    //		}
-    //	}
-    //
-    //	{
-    //		size_t includepos = vsSource.find("lowp");
-    //		while ( std::string::npos != includepos )
-    //		{
-    //			vsSource.replace(includepos, 4, "", 0);
-    //			includepos = vsSource.find("lowp");
-    //		}
-    //	}
+// 		{
+// 			size_t includepos = vsSource.find("highp");
+// 			while (std::string::npos != includepos)
+// 			{
+// 				vsSource.replace(includepos, 5, "", 0);
+// 				includepos = vsSource.find("highp");
+// 			}
+// 		}
+// 
+// 		{
+// 			size_t includepos = vsSource.find("mediump");
+// 			while (std::string::npos != includepos)
+// 			{
+// 				vsSource.replace(includepos, 7, "", 0);
+// 				includepos = vsSource.find("mediump");
+// 			}
+// 		}
+// 
+// 		{
+// 			size_t includepos = vsSource.find("lowp");
+// 			while (std::string::npos != includepos)
+// 			{
+// 				vsSource.replace(includepos, 4, "", 0);
+// 				includepos = vsSource.find("lowp");
+// 			}
+// 		}
     
     
     
-    //vsSource.insert(0, "#version 100\n");
+    //vsSource.insert(0, "\n");
     
 }
 

@@ -1,4 +1,4 @@
-#version 100
+
 precision highp float;
 
 #include "include/constant_vs_def.h"

@@ -8,7 +8,7 @@
 
 #include "gkRendererGL330.h"
 
-gkRendererGL330* g_RendererModule;
+gkRendererGL* g_RendererModule;
 
 #ifndef _STATIC_LIB
 extern "C" void DLL_EXPORT gkModuleInitialize(SSystemGlobalEnvironment* pEnv) throw()
@@ -16,7 +16,7 @@ extern "C" void DLL_EXPORT gkModuleInitialize(SSystemGlobalEnvironment* pEnv) th
 	if (pEnv)
 	{
 		gEnv = pEnv;
-		g_RendererModule = new gkRendererGL330();
+		g_RendererModule = new gkRendererGL();
 		pEnv->pRenderer = g_RendererModule;
 	}
 }
@@ -32,7 +32,7 @@ void gkLoadStaticModule_gkRendererGL330( SSystemGlobalEnvironment* pEnv )
 	if (pEnv)
 	{
 		gEnv = pEnv;
-		g_RendererModule = new gkRendererGL330();
+		g_RendererModule = new gkRendererGL();
 		pEnv->pRenderer = g_RendererModule;
 	}
 }

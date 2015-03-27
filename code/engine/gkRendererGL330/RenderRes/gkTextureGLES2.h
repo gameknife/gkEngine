@@ -73,6 +73,8 @@ protected:
 
 	ETexutureFormat m_format;
 
+	bool m_dynamic;
+
 public:
 	gkTextureGLES2(IResourceManager* creator, const gkStdString& name, gkResourceHandle handle,
 		const gkStdString& group = _T("none"), gkNameValuePairList* params = NULL);
@@ -91,8 +93,11 @@ public:
 
 	virtual ETexutureFormat format() {return m_format;}
 
+	void setCube(bool isCube) { m_bCubemap = isCube; }
+
 	GLuint getGLHandle() {return m_uHwTexture2D;}
-	
+
+	virtual bool dynamic(){ return m_dynamic; }
 protected:
 	virtual bool loadImpl(void);			// 继承实现
 	virtual bool unloadImpl(void);

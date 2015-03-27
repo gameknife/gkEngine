@@ -1,4 +1,4 @@
-#version 100
+
 precision highp float;
 
 uniform lowp vec4 g_SkyBottom;

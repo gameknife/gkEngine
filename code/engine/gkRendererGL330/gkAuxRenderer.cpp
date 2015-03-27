@@ -760,8 +760,8 @@ void gkAuxRendererGLES2::_FlushAllHelper()
 
 	//////////////////////////////////////////////////////////////////////////
 	// draw
-	Matrix44 viewMat = gkRendererGL330::getShaderContent().getViewMatrix();
-	Matrix44 projMat = gkRendererGL330::getShaderContent().getProjectionMatrix();
+	Matrix44 viewMat = gkRendererGL::getShaderContent().getViewMatrix();
+	Matrix44 projMat = gkRendererGL::getShaderContent().getProjectionMatrix();
 	Matrix44 MVPMat = viewMat * projMat;
 	gkShaderManager::ms_AuxRenderer->FX_SetMatrix( "modelViewProjectionMatrix", MVPMat );
 

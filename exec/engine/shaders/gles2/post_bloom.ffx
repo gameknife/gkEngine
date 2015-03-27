@@ -1,5 +1,3 @@
-#version 100
-
 precision highp float;
 
 #include "include/shade_lib.h"

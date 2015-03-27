@@ -1,4 +1,4 @@
-#version 100
+
 
 precision highp float;
 
@@ -28,7 +28,7 @@ void main (void)
 #else
 	highp vec3 screenTC = outScreenTC.xyz / outScreenTC.w;
 	lowp float shadow = 1.0;
-	shadow = texture2D(texEnvmap,screenTC.xy).a;
+	shadow = getShadow(texEnvmap, screenTC.xy);
 
 	// pre discard
 	highp vec4 texcolor = texture2D(texDiffuse,outTC.xy);

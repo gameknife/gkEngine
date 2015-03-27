@@ -23,6 +23,8 @@ struct gkTexture2DGLES2StreamingTask : public ITask
 	uint32 iWidth;
 	uint32 iHeight;
 	uint32 iMipCount;
+	uint32 iArraySize;
+
 	uint32 fmt;
 	const BYTE* pSrcBits;
     
@@ -74,12 +76,17 @@ struct gkTexture2DGLES2StreamingTask : public ITask
 		iMipCount = pHeader->dwMipMapCount;
 
 
+		iArraySize = 1;
 
 		if (pHeader->dwCubemapFlags != 0
 			|| (pHeader->dwHeaderFlags & DDS_HEADER_FLAGS_VOLUME) )
 		{
 			// For now only support 2D textures, not cubemaps or volumes
-			return;
+			// return;
+
+			// load cubemap dds
+			// load just as 6 arrayable dds
+			iArraySize = 6;
 		}
 
 		fmt = GetGLInternalFormat( pHeader->ddspf );
@@ -112,98 +119,176 @@ struct gkTexture2DGLES2StreamingTask : public ITask
         {
             pTexturePtr->m_uWidth = iWidth;
             pTexturePtr->m_uHeight = iHeight;
-        }
-        
-// 		loader.LoadPVR_Bind( m_hw_texptr, 0 );
-// 		gEnv->pFileSystem->closeResFile( pTextureFile );
-		glActiveTexture(GL_TEXTURE0);
-		glGenTextures(1, m_hw_texptr);
-		glBindTexture(GL_TEXTURE_2D, *m_hw_texptr);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, iMipCount);
 
-		uint32 RowBytes, NumRows;
-		for( int i = 0; i < iMipCount; i++ )
-		{
-			GetSurfaceInfo( iWidth, iHeight, fmt, NULL, &RowBytes, &NumRows );
-
-			
+			if (iArraySize > 1)
 			{
-				//BYTE* pDestBits = ( BYTE* )LockedRect.pBits;
-				if (IsCompressedTex(fmt))
-				{
-					glCompressedTexImage2D(
-						GL_TEXTURE_2D,
-						i,
-						fmt,
-						iWidth, 
-						iHeight, 
-						0, 
-						RowBytes * NumRows, 
-						pSrcBits);
-
-					GLenum error = glGetError();
-					if (error)
-					{
-						gkLogWarning(_T("bind compress texture error."));
-					}		
-				}
-				else
-				{
-
-					//uint8* white = new uint8[iWidth * iHeight * 4];
-					//memset(white, 0xff, iWidth * iHeight * 4);
-
-					glTexImage2D(
-						GL_TEXTURE_2D,
-						i,
-						fmt,
-						iWidth,
-						iHeight,
-						0,
-						GL_BGRA,
-						GL_UNSIGNED_BYTE,
-						pSrcBits
-						);
-
-					//delete white;
-
-					GLenum error = glGetError();
-					if (error)
-					{
-						gkLogWarning(_T("bind texture error."));
-					}		
-				}
-
-				//glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-
-
-				pSrcBits += (RowBytes * NumRows);
-
+				pTexturePtr->setCube(true);
+				//return;
 			}
-
-			GLenum error = glGetError();
-			if (error)
-			{
-				gkLogWarning(_T("bind texture error."));
-			}			
-
-			iWidth = iWidth >> 1;
-			iHeight = iHeight >> 1;
-			if( iWidth == 0 )
-				iWidth = 1;
-			if( iHeight == 0 )
-				iHeight = 1;
+        }
+		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		//glActiveTexture(GL_TEXTURE0);
+		GLenum error = glGetError();
+		if (error)
+		{
+			//gkLogWarning(_T("gen texture failed."));
 		}
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+		glGenTextures(1, m_hw_texptr);
+		error = glGetError();
+		if (error)
+		{
+			gkLogWarning(_T("gen texture failed."));
+		}
+		GLint eTarget = GL_TEXTURE_2D;
+		if (iArraySize > 1)
+		{
+			eTarget = GL_TEXTURE_CUBE_MAP;
+		}
+
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+		error = glGetError();
+		if (error)
+		{
+			gkLogWarning(_T("unbind texture failed."));
+		}
+
+		glBindTexture(eTarget, *m_hw_texptr);
+
+		error = glGetError();
+		if (error)
+		{
+			gkLogWarning(_T("bind texture failed."));
+		}
+
+// 		glTexParameteri(eTarget, GL_TEXTURE_BASE_LEVEL, 0);
+// 		glTexParameteri(eTarget, GL_TEXTURE_MAX_LEVEL, iMipCount);
+
+		if (iArraySize > 1)
+		{
+			//glEnable(GL_TEXTURE_CUBE_MAP);
+			eTarget = GL_TEXTURE_CUBE_MAP_POSITIVE_X;
+		}
+
+		uint32 RowBytes, NumRows;
+
+		uint32 initIwidth = iWidth;
+		uint32 initIheight = iHeight;
+
+// 		static uint8* red256bitmap = NULL;
+// 		if (red256bitmap == NULL)
+// 		{
+// 			red256bitmap = new uint8[256 * 256 * 4 * 2];
+// 			memset(red256bitmap, 0xff, 256 * 256 * 4 * 2);
+// 		}
+
+		for (int a = 0; a < iArraySize; ++a)
+		{
+
+			iWidth = initIwidth;
+			iHeight = initIheight;
+
+			for (int i = 0; i < iMipCount; i++)
+			{
+				GetSurfaceInfo(iWidth, iHeight, fmt, NULL, &RowBytes, &NumRows);
+
+
+				{
+					//BYTE* pDestBits = ( BYTE* )LockedRect.pBits;
+					if (IsCompressedTex(fmt))
+					{
+						glCompressedTexImage2D(
+							eTarget + a,
+							i,
+							fmt,
+							iWidth,
+							iHeight,
+							0,
+							RowBytes * NumRows,
+							pSrcBits);
+
+						GLenum error = glGetError();
+						if (error)
+						{
+							gkLogWarning(_T("bind compress texture error."));
+						}
+					}
+					else
+					{
+
+						//uint8* white = new uint8[iWidth * iHeight * 4];
+						//memset(white, 0xff, iWidth * iHeight * 4);
+
+						glTexImage2D(
+							eTarget + a,
+							i,
+							fmt,
+							iWidth,
+							iHeight,
+							0,
+							GL_BGRA,
+							GL_UNSIGNED_BYTE,
+							pSrcBits
+							);
+
+
+						//delete white;
+
+						GLenum error = glGetError();
+						if (error)
+						{
+							gkLogWarning(_T("bind texture error."));
+						}
+					}
+
+					//glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+
+
+					pSrcBits += (RowBytes * NumRows);
+
+				}
+
+				GLenum error = glGetError();
+				if (error)
+				{
+					gkLogWarning(_T("bind texture error."));
+				}
+
+				iWidth = iWidth >> 1;
+				iHeight = iHeight >> 1;
+				if (iWidth == 0)
+					iWidth = 1;
+				if (iHeight == 0)
+					iHeight = 1;
+			}
+
+		}
+
+		if (eTarget != GL_TEXTURE_2D)
+		{
+			eTarget = GL_TEXTURE_CUBE_MAP;
+		}
+
+
+		glTexParameteri(eTarget, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		if (eTarget != GL_TEXTURE_2D)
+		{
+			glTexParameteri(eTarget, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		}
+		else
+		{
+			glTexParameteri(eTarget, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		}
+
+		
+		glTexParameteri(eTarget, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(eTarget, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(eTarget, GL_TEXTURE_WRAP_R, GL_REPEAT);
 		//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 128, 128, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, 0);
+		glBindTexture(eTarget, 0);
 
 
 
@@ -244,7 +329,7 @@ bool gkTextureGLES2::loadImpl( void )
 	HRESULT hr = S_OK;
 
 	m_rawData = NULL;
-
+	m_dynamic = false;
 	// if defaultpool, just create
 	gkNameValuePairList::iterator it = loadingParams.find(_T("d3dpool"));
 	if (it != loadingParams.end())
@@ -262,6 +347,7 @@ bool gkTextureGLES2::loadImpl( void )
 
 			if ( itusage->second == _T("RENDERTARGET") )
 			{
+				m_dynamic = true;
 				gkNameValuePairList::iterator itsize = loadingParams.find(_T("size"));
 				if (itsize == loadingParams.end())
 				{ gkLogError(_T("gkTexture[ %s ] LoadingFailed."), m_wstrFileName.c_str()); return false; }
@@ -359,7 +445,7 @@ bool gkTextureGLES2::loadImpl( void )
 				glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_uWidth, m_uHeight, 0, format, type, 0);
                 GLenum err = glGetError();
                 if (err) {
-                    gkLogError("create dynamic texture failed.");
+                    gkLogError(_T("create dynamic texture failed."));
                 }
 			}
 			else if ( itusage->second == _T("RAW") )
@@ -391,7 +477,7 @@ bool gkTextureGLES2::loadImpl( void )
                 
                 GLenum err = glGetError();
                 if (err) {
-                    gkLogError("create raw texture failed.");
+                    gkLogError(_T("create raw texture failed."));
                 }
 			}
 
@@ -508,58 +594,63 @@ void gkTextureGLES2::Apply( uint32 channel, uint8 filter )
 
 	glActiveTexture(GL_TEXTURE0 + channel);
 	//glUniform1i(userData->samplerLoc, 0);
+
+	GLenum texUnit = GL_TEXTURE_2D;
+
 	if (m_bCubemap)
 	{
-		glBindTexture(GL_TEXTURE_CUBE_MAP, m_uHwTexture2D);
+		texUnit = GL_TEXTURE_CUBE_MAP;
+	}
+
+	GLenum error = glGetError();
+
+
+	glBindTexture(texUnit, m_uHwTexture2D);
+	error = glGetError();
+	if (error)
+	{
+		gkLogWarning(_T("bind tex failed.") );
+	}
+	if (m_rt)
+	{
+		if (filter)
+		{
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		}
+		else
+		{
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		}
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
 	}
 	else
 	{
-		glBindTexture(GL_TEXTURE_2D, m_uHwTexture2D);
-        
-		if (m_rt)
+		if (m_rawData)
 		{
-			if (filter)
-			{
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			}
-			else
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		}
+		else
+		{
+			if (filter == 2)
 			{
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			}
-
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-
+			else
+			{
+				//glTexParameteri(texUnit, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				//glTexParameteri(texUnit, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+			}
 		}
-		else
-		{
-            if (m_rawData)
-            {
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            }
-            else
-            {
-                if(filter == 2)
-                {
-                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
-                }
-        		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-                // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
-            }
-            
 
-            
-           // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
- 			//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-		}
 
 	}
-	
-
 }
 
 float gkTextureGLES2::Tex2DRAW( const Vec2& texcoord, int filter /*= 1*/ )

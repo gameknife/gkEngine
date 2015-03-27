@@ -184,6 +184,7 @@
     <None Include="gles2\post_deferredlighting_ambient.ffx" />
     <None Include="gles2\post_fogprocess.ffx" />
     <None Include="gles2\post_gaussian.ffx" />
+    <None Include="gles2\post_msaa.ffx" />
     <None Include="gles2\post_shadowmask.ffx" />
     <None Include="gles2\post_ssao.ffx" />
     <None Include="gles2\showdepthmap.ffx" />
