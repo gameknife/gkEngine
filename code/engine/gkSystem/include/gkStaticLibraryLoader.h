@@ -59,7 +59,7 @@ Copyright (c) 2011-2015 Kaiming Yi
 struct gkStaticLibraryLoader
 {
 	gk3DEngine* m_p3DEngine;
-	gkRendererGLES2* m_pRendererGLES2;
+	gkRendererGL* m_pRendererGLES2;
 	gkGameObjectSystem* m_pGameObjectSystem;
 
 #ifdef OS_WIN32
@@ -74,7 +74,7 @@ struct gkStaticLibraryLoader
 	void load()
 	{
 		m_p3DEngine = new gk3DEngine;
-		m_pRendererGLES2 = new gkRendererGLES2;
+		m_pRendererGLES2 = new gkRendererGL;
 
 		m_pGameObjectSystem = new gkGameObjectSystem;
 

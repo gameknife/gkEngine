@@ -306,7 +306,7 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 #ifdef OS_APPLE
     LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGL330 );
 #elif defined( OS_IOS )
-    LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGLES2 );
+    LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGL );
 #else
 	LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererD3D9 );
 #endif
@@ -624,7 +624,7 @@ bool gkSystem::Destroy()
 #ifdef OS_APPLE
     UNLOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGL330 );
 #elif defined( OS_IOS )
-    UNLOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGLES2 );
+    UNLOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGL );
 #else
 	UNLOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererD3D9 );
 #endif

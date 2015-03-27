@@ -1,69 +1,83 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="include\RenderThread.h" />
     <ClInclude Include="resource.h">
       <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gkAuxRenderer.h">
-      <Filter>RenderSys</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gkShaderParamDataSource.h">
-      <Filter>RenderSys</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Prerequisites.h">
-      <Filter>DllMain</Filter>
-    </ClInclude>
-    <ClInclude Include="include\StableHeader.h">
-      <Filter>DllMain</Filter>
-    </ClInclude>
-    <ClInclude Include="include\dllmain.h">
-      <Filter>DllMain</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gkRendererGLES2.h">
-      <Filter>RenderSys</Filter>
     </ClInclude>
     <ClInclude Include="Platform\Android\gkRenderContextAndroid.h">
       <Filter>Platform\Android</Filter>
     </ClInclude>
-    <ClInclude Include="Platform\Win32\gkRenderContextWin32.h">
-      <Filter>Platform\Win32</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gkRenderSequence.h" />
-    <ClInclude Include="include\gkRenderLayer.h" />
-    <ClInclude Include="RenderRes\gkMeshManager.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderRes\gkMaterial.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderRes\gkMaterialManager.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderRes\gkShader.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderRes\gkShaderManager.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderRes\gkTextureManager.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderRes\gkTextureGLES2.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderRes\gkMeshGLES2.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="HwTextureLoader.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="glExtension.h" />
-    <ClInclude Include="RendererCVars.h">
-      <Filter>CVars</Filter>
-    </ClInclude>
     <ClInclude Include="include\DeviceRenderContext.h">
       <Filter>Platform\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Win32Sim\gkRenderContextWin32.h">
+      <Filter>Platform\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\DeviceRenderContext.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\dllmain.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\gkAuxRenderer.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\gkRendererGL330.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\gkRenderLayer.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\gkRenderSequence.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\gkShaderParamDataSource.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\Prerequisites.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderCamera.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RendererCVars.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\DDS.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkMaterial.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkMaterialManager.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkMeshGLES2.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkMeshManager.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkShader.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkShaderManager.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkTextureGLES2.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkTextureManager.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="StableHeader.h">
+      <Filter>DllMain</Filter>
+    </ClInclude>
+    <ClInclude Include="glExtension.h">
+      <Filter>DllMain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\HwTextureLoader.h">
+      <Filter>DllMain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -96,59 +110,68 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\gkAuxRenderer.cpp">
-      <Filter>RenderSys</Filter>
-    </ClCompile>
-    <ClCompile Include="source\gkShaderParamDataSource.cpp">
-      <Filter>RenderSys</Filter>
-    </ClCompile>
-    <ClCompile Include="source\dllmain.cpp">
-      <Filter>DllMain</Filter>
-    </ClCompile>
-    <ClCompile Include="source\StableHeader.cpp">
-      <Filter>DllMain</Filter>
-    </ClCompile>
-    <ClCompile Include="source\gkRendererGLES2.cpp">
-      <Filter>RenderSys</Filter>
-    </ClCompile>
     <ClCompile Include="Platform\Android\gkRenderContextAndroid.cpp">
       <Filter>Platform\Android</Filter>
     </ClCompile>
-    <ClCompile Include="Platform\Win32\gkRenderContextWin32.cpp">
+    <ClCompile Include="Platform\Win32Sim\gkRenderContextWin32.cpp">
       <Filter>Platform\Win32</Filter>
     </ClCompile>
-    <ClCompile Include="source\gkRenderSequence.cpp" />
-    <ClCompile Include="include\gkRenderLayer.cpp" />
-    <ClCompile Include="RenderRes\gkMeshManager.cpp">
+    <ClCompile Include="..\gkRendererGL\dllmain.cpp">
+      <Filter>RenderSys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\gkAuxRenderer.cpp">
+      <Filter>RenderSys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\gkRendererGL330.cpp">
+      <Filter>RenderSys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\gkRenderLayer.cpp">
+      <Filter>RenderSys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\gkRenderSequence.cpp">
+      <Filter>RenderSys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\gkShaderParamDataSource.cpp">
+      <Filter>RenderSys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\RenderCamera.cpp">
+      <Filter>RenderSys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\RendererCVars.cpp">
+      <Filter>RenderSys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkMaterial.cpp">
       <Filter>RenderRes</Filter>
     </ClCompile>
-    <ClCompile Include="RenderRes\gkMaterial.cpp">
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkMaterialManager.cpp">
       <Filter>RenderRes</Filter>
     </ClCompile>
-    <ClCompile Include="RenderRes\gkMaterialManager.cpp">
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkMeshGLES2.cpp">
       <Filter>RenderRes</Filter>
     </ClCompile>
-    <ClCompile Include="RenderRes\gkShader.cpp">
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkMeshManager.cpp">
       <Filter>RenderRes</Filter>
     </ClCompile>
-    <ClCompile Include="RenderRes\gkShaderManager.cpp">
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkShader.cpp">
       <Filter>RenderRes</Filter>
     </ClCompile>
-    <ClCompile Include="RenderRes\gkTextureManager.cpp">
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkShaderManager.cpp">
       <Filter>RenderRes</Filter>
     </ClCompile>
-    <ClCompile Include="RenderRes\gkTextureGLES2.cpp">
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkTextureGLES2.cpp">
       <Filter>RenderRes</Filter>
     </ClCompile>
-    <ClCompile Include="RenderRes\gkMeshGLES2.cpp">
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkTextureManager.cpp">
       <Filter>RenderRes</Filter>
     </ClCompile>
-    <ClCompile Include="HwTextureLoader.cpp">
-      <Filter>RenderRes</Filter>
+    <ClCompile Include="StableHeader.cpp">
+      <Filter>DllMain</Filter>
     </ClCompile>
-    <ClCompile Include="glExtension.cpp" />
-    <ClCompile Include="RendererCVars.cpp">
-      <Filter>CVars</Filter>
+    <ClCompile Include="glExtension.cpp">
+      <Filter>DllMain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\HwTextureLoader.cpp">
+      <Filter>DllMain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -39,40 +39,14 @@ Copyright (c) 2011-2015 Kaiming Yi
 // 
 //////////////////////////////////////////////////////////////////////////
 
-#ifndef _HwTextureLoader_h_
-#define _HwTextureLoader_h_
+#ifndef _DDsTextureLoader_h_
+#define _DDsTextureLoader_h_
 
 #include "Prerequisites.h"
-#include "pvrtex_def.h"
+#include "ITextureLoader.h"
 
-#define ATC_SIGNATURE        0xCCC40002
 
-#define ATC_RGB              0x00000001
-#define ATC_RGBA             0x00000002
-#define ATC_TILED            0X00000004
-
-enum EHwTexError
-{
-	PVR_SUCCESS = 0,
-	PVR_FAIL = 1,
-	PVR_OVERFLOW = 2
-};
-
-EHwTexError LoadPVR(const void* pointer,
-	GLuint *const texName,
-	const unsigned int nLoadFromLevel);
-
-struct HWT_Loader
-{
-	virtual EHwTexError Load_Data(const void* pointer ) =0;
-	virtual EHwTexError Load_Bind(GLuint *const texName, const unsigned int nLoadFromLevel) =0;
-	virtual bool Load_IsCube(const void* pointer ) =0;
-
-	virtual uint32 getWidth() =0;
-	virtual uint32 getHeight() =0;
-};
-
-class PVR_Loader : public HWT_Loader
+class DDS_Loader : public HWT_Loader
 {
 public:
 	virtual EHwTexError Load_Data(const void* pointer, uint32 size );
@@ -82,16 +56,17 @@ public:
 
 	virtual bool Load_IsCube(const void* pointer );
 
-	virtual uint32 getWidth() {return sTextureHeader.u32Width;}
-	virtual uint32 getHeight() {return sTextureHeader.u32Height;}
+	virtual uint32 getWidth() {return iWidth;}
+	virtual uint32 getHeight() {return iHeight;}
 
-	bool bIsCompressedFormat;
-	GLenum eTextureFormat;
-	GLenum eTextureInternalFormat;
-	GLenum eTextureType;
+	uint32 iWidth;
+	uint32 iHeight;
+	uint32 iMipCount;
+	uint32 iArraySize;
 
-	PVRTextureHeaderV3 sTextureHeader;
-	uint8* pTextureData;
+	uint32 fmt;
+	const BYTE* pSrcBits;
+	GLuint* m_hw_texptr;
 };
 
 

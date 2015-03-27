@@ -60,6 +60,20 @@ void gkGLExtension::Init()
 		EXT_VAO = true;
 #endif
 	}
+
+
+	glMapBufferOES = (PFNGLMAPBUFFEROESPROC) GLEXTGetProcAddress(glMapBufferOES);
+	glUnmapBufferOES = (PFNGLUNMAPBUFFEROESPROC) GLEXTGetProcAddress(glUnmapBufferOES);
+	glGetBufferPointervOES = (PFNGLGETBUFFERPOINTERVOESPROC) GLEXTGetProcAddress(glGetBufferPointervOES);
+
+	if (glMapBufferOES || glUnmapBufferOES || glGetBufferPointervOES )
+	{
+		gkLogMessage( _T("RendererGLES2: Device support ext [map_buffer_oes].") );
+#ifdef OS_IOS
+		//EXT_VAO = true;
+#endif
+	}
+
     
     int max_vs_uniforms = 0;
     glGetIntegerv(GL_MAX_VERTEX_UNIFORM_VECTORS , &max_vs_uniforms);

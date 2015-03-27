@@ -66,69 +66,65 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\gkRendererGL\DeviceRenderContext.h" />
+    <ClInclude Include="..\gkRendererGL\dllmain.h" />
+    <ClInclude Include="..\gkRendererGL\gkAuxRenderer.h" />
+    <ClInclude Include="..\gkRendererGL\gkRendererGL330.h" />
+    <ClInclude Include="..\gkRendererGL\gkRenderLayer.h" />
+    <ClInclude Include="..\gkRendererGL\gkRenderSequence.h" />
+    <ClInclude Include="..\gkRendererGL\gkShaderParamDataSource.h" />
+    <ClInclude Include="..\gkRendererGL\HwTextureLoader.h" />
+    <ClInclude Include="..\gkRendererGL\Prerequisites.h" />
+    <ClInclude Include="..\gkRendererGL\RenderCamera.h" />
+    <ClInclude Include="..\gkRendererGL\RendererCVars.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\DDS.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkMaterial.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkMaterialManager.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkMeshGLES2.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkMeshManager.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkShader.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkShaderManager.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkTextureGLES2.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkTextureManager.h" />
     <ClInclude Include="glExtension.h" />
-    <ClInclude Include="HwTextureLoader.h" />
     <ClInclude Include="include\DeviceRenderContext.h" />
-    <ClInclude Include="include\dllmain.h" />
-    <ClInclude Include="include\gkAuxRenderer.h" />
-    <ClInclude Include="include\gkRendererGLES2.h" />
-    <ClInclude Include="include\gkRenderLayer.h" />
-    <ClInclude Include="include\gkRenderSequence.h" />
-    <ClInclude Include="include\gkShaderParamDataSource.h" />
-    <ClInclude Include="include\Prerequisites.h" />
-    <ClInclude Include="include\RenderThread.h" />
-    <ClInclude Include="include\StableHeader.h" />
     <ClInclude Include="Platform\Android\gkRenderContextAndroid.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="Platform\Win32\gkRenderContextWin32.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="RendererCVars.h" />
-    <ClInclude Include="RenderRes\gkMaterial.h" />
-    <ClInclude Include="RenderRes\gkMaterialManager.h" />
-    <ClInclude Include="RenderRes\gkMeshGLES2.h" />
-    <ClInclude Include="RenderRes\gkMeshManager.h" />
-    <ClInclude Include="RenderRes\gkShader.h" />
-    <ClInclude Include="RenderRes\gkShaderManager.h" />
-    <ClInclude Include="RenderRes\gkTextureGLES2.h" />
-    <ClInclude Include="RenderRes\gkTextureManager.h" />
+    <ClInclude Include="Platform\Win32Sim\gkRenderContextWin32.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="StableHeader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\gkRendererGL\dllmain.cpp" />
+    <ClCompile Include="..\gkRendererGL\gkAuxRenderer.cpp" />
+    <ClCompile Include="..\gkRendererGL\gkRendererGL330.cpp" />
+    <ClCompile Include="..\gkRendererGL\gkRenderLayer.cpp" />
+    <ClCompile Include="..\gkRendererGL\gkRenderSequence.cpp" />
+    <ClCompile Include="..\gkRendererGL\gkShaderParamDataSource.cpp" />
+    <ClCompile Include="..\gkRendererGL\HwTextureLoader.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderCamera.cpp" />
+    <ClCompile Include="..\gkRendererGL\RendererCVars.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkMaterial.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkMaterialManager.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkMeshGLES2.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkMeshManager.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkShader.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkShaderManager.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkTextureGLES2.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkTextureManager.cpp" />
     <ClCompile Include="glExtension.cpp" />
-    <ClCompile Include="HwTextureLoader.cpp" />
-    <ClCompile Include="include\gkRenderLayer.cpp" />
     <ClCompile Include="Platform\Android\gkRenderContextAndroid.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="Platform\Win32\gkRenderContextWin32.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="RendererCVars.cpp" />
-    <ClCompile Include="RenderRes\gkMaterial.cpp" />
-    <ClCompile Include="RenderRes\gkMaterialManager.cpp" />
-    <ClCompile Include="RenderRes\gkMeshGLES2.cpp" />
-    <ClCompile Include="RenderRes\gkMeshManager.cpp" />
-    <ClCompile Include="RenderRes\gkShader.cpp" />
-    <ClCompile Include="RenderRes\gkShaderManager.cpp" />
-    <ClCompile Include="RenderRes\gkTextureGLES2.cpp" />
-    <ClCompile Include="RenderRes\gkTextureManager.cpp" />
-    <ClCompile Include="source\dllmain.cpp" />
-    <ClCompile Include="source\gkAuxRenderer.cpp" />
-    <ClCompile Include="source\gkRendererGLES2.cpp" />
-    <ClCompile Include="source\gkRenderSequence.cpp" />
-    <ClCompile Include="source\gkShaderParamDataSource.cpp" />
-    <ClCompile Include="source\StableHeader.cpp">
+    <ClCompile Include="Platform\Win32Sim\gkRenderContextWin32.cpp" />
+    <ClCompile Include="StableHeader.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -206,51 +202,74 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
+    <Import Project="..\solutions\gl_include.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
     <Import Project="..\Solutions\gkStaticLib.props" />
+    <Import Project="..\solutions\gl_include.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
+    <Import Project="..\solutions\gl_include.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkPropRelease.props" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
+    <Import Project="..\solutions\gl_include.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
     <Import Project="..\solutions\DebugWin.props" />
+    <Import Project="..\solutions\gl_include.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
+    <Import Project="..\solutions\gl_include.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
+    <Import Project="..\solutions\gl_include.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
+    <Import Project="..\solutions\gl_include.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkPropRelease.props" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
+    <Import Project="..\solutions\gl_include.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
     <Import Project="..\solutions\DebugWin.props" />
+    <Import Project="..\solutions\gl_include.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
     <Import Project="..\Solutions\gkSystemInclude.props" />
     <Import Project="..\Solutions\gkAndroid.props" />
+    <Import Project="..\solutions\gl_include.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Tegra-Android'">
+    <Import Project="..\solutions\gl_include.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Tegra-Android'">
+    <Import Project="..\solutions\gl_include.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'">
+    <Import Project="..\solutions\gl_include.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
+    <Import Project="..\solutions\gl_include.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -300,7 +319,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\ThirdParty\rapidxml;..\..\ThirdParty\OGLSDK\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GKRENDERERGLES2_EXPORTS;RENDERER_GLES;BUILD_OGLES2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GKRENDERERGLES2_EXPORTS;RENDERER_GLES;BUILD_OGLES2;RENDERAPI_GLES2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -344,7 +363,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>.\DXUT;..\..\ThirdParty\DXSDK\include;..\..\ThirdParty\tinyxml;..\..\ThirdParty\rapidxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKRENDERERD3D9_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKRENDERERD3D9_EXPORTS;RENDERAPI_GLES2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -395,7 +414,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>..\..\ThirdParty\rapidxml;..\..\ThirdParty\OGLSDK\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKRENDERERGLES2_EXPORTS;RENDERER_GLES;BUILD_OGLES2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKRENDERERGLES2_EXPORTS;RENDERER_GLES;BUILD_OGLES2;RENDERAPI_GLES2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -417,7 +436,7 @@
       <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>..\..\ThirdParty\rapidxml;..\..\ThirdParty\OGLSDK\include;.\PVR\;.\PVR\OGLES2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKRENDERERGLES2_EXPORTS;RENDERER_GLES;BUILD_OGLES2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKRENDERERGLES2_EXPORTS;RENDERER_GLES;BUILD_OGLES2;RENDERAPI_GLES2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -441,7 +460,7 @@
       <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>..\..\ThirdParty\rapidxml;..\..\ThirdParty\OGLSDK\include;.\PVR\;.\PVR\OGLES2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKRENDERERGLES2_EXPORTS;RENDERER_GLES;BUILD_OGLES2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKRENDERERGLES2_EXPORTS;RENDERER_GLES;BUILD_OGLES2;RENDERAPI_GLES2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>Use</PrecompiledHeader>

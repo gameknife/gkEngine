@@ -43,6 +43,9 @@ Copyright (c) 2011-2015 Kaiming Yi
 #define _HwTextureLoader_h_
 
 #include "Prerequisites.h"
+
+#include "ITextureLoader.h"
+
 #include "pvrtex_def.h"
 
 #define ATC_SIGNATURE        0xCCC40002
@@ -51,26 +54,6 @@ Copyright (c) 2011-2015 Kaiming Yi
 #define ATC_RGBA             0x00000002
 #define ATC_TILED            0X00000004
 
-enum EHwTexError
-{
-	PVR_SUCCESS = 0,
-	PVR_FAIL = 1,
-	PVR_OVERFLOW = 2
-};
-
-EHwTexError LoadPVR(const void* pointer,
-	GLuint *const texName,
-	const unsigned int nLoadFromLevel);
-
-struct HWT_Loader
-{
-	virtual EHwTexError Load_Data(const void* pointer ) =0;
-	virtual EHwTexError Load_Bind(GLuint *const texName, const unsigned int nLoadFromLevel) =0;
-	virtual bool Load_IsCube(const void* pointer ) =0;
-
-	virtual uint32 getWidth() =0;
-	virtual uint32 getHeight() =0;
-};
 
 class PVR_Loader : public HWT_Loader
 {

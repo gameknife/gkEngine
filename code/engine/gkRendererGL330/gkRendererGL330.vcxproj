@@ -44,14 +44,17 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\solutions\gkSystemInclude.props" />
     <Import Project="..\solutions\DebugWin.props" />
+    <Import Project="..\solutions\gl_include.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\solutions\gkSystemInclude.props" />
+    <Import Project="..\solutions\gl_include.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\solutions\gkSystemInclude.props" />
+    <Import Project="..\solutions\gl_include.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -65,12 +68,12 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GKRENDERERGL320_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GKRENDERERGL320_EXPORTS;RENDERAPI_GL330;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\thirdparty\oglsdk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>StableHeader.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -86,7 +89,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKRENDERERGL320_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKRENDERERGL320_EXPORTS;RENDERAPI_GL330;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>StableHeader.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>..\..\thirdparty\oglsdk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -109,7 +112,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKRENDERERGL320_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKRENDERERGL320_EXPORTS;RENDERAPI_GL330;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>StableHeader.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>..\..\thirdparty\oglsdk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -126,48 +129,53 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="gkAuxRenderer.cpp" />
-    <ClCompile Include="gkRendererGL330.cpp" />
-    <ClCompile Include="gkRenderLayer.cpp" />
-    <ClCompile Include="gkRenderSequence.cpp" />
-    <ClCompile Include="gkShaderParamDataSource.cpp" />
+    <ClCompile Include="..\gkRendererGL\DDsTextureLoader.cpp" />
+    <ClCompile Include="..\gkRendererGL\dllmain.cpp" />
+    <ClCompile Include="..\gkRendererGL\gkAuxRenderer.cpp" />
+    <ClCompile Include="..\gkRendererGL\gkRendererGL330.cpp" />
+    <ClCompile Include="..\gkRendererGL\gkRenderLayer.cpp" />
+    <ClCompile Include="..\gkRendererGL\gkRenderSequence.cpp" />
+    <ClCompile Include="..\gkRendererGL\gkShaderParamDataSource.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderCamera.cpp" />
+    <ClCompile Include="..\gkRendererGL\RendererCVars.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkMaterial.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkMaterialManager.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkMeshGLES2.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkMeshManager.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkShader.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkShaderManager.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkTextureGLES2.cpp" />
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkTextureManager.cpp" />
     <ClCompile Include="Platform\Win32\gkRenderContextWin32.cpp" />
-    <ClCompile Include="RenderCamera.cpp" />
-    <ClCompile Include="RendererCVars.cpp" />
-    <ClCompile Include="RenderRes\gkMaterial.cpp" />
-    <ClCompile Include="RenderRes\gkMaterialManager.cpp" />
-    <ClCompile Include="RenderRes\gkMeshGLES2.cpp" />
-    <ClCompile Include="RenderRes\gkMeshManager.cpp" />
-    <ClCompile Include="RenderRes\gkShader.cpp" />
-    <ClCompile Include="RenderRes\gkShaderManager.cpp" />
-    <ClCompile Include="RenderRes\gkTextureGLES2.cpp" />
-    <ClCompile Include="RenderRes\gkTextureManager.cpp" />
     <ClCompile Include="StableHeader.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\gkRendererGL\DDsTextureLoader.h" />
+    <ClInclude Include="..\gkRendererGL\DeviceRenderContext.h" />
+    <ClInclude Include="..\gkRendererGL\dllmain.h" />
+    <ClInclude Include="..\gkRendererGL\gkAuxRenderer.h" />
+    <ClInclude Include="..\gkRendererGL\gkRendererGL330.h" />
+    <ClInclude Include="..\gkRendererGL\gkRenderLayer.h" />
+    <ClInclude Include="..\gkRendererGL\gkRenderSequence.h" />
+    <ClInclude Include="..\gkRendererGL\gkShaderParamDataSource.h" />
+    <ClInclude Include="..\gkRendererGL\ITextureLoader.h" />
+    <ClInclude Include="..\gkRendererGL\Prerequisites.h" />
+    <ClInclude Include="..\gkRendererGL\RenderCamera.h" />
+    <ClInclude Include="..\gkRendererGL\RendererCVars.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\DDS.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkMaterial.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkMaterialManager.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkMeshGLES2.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkMeshManager.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkShader.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkShaderManager.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkTextureGLES2.h" />
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkTextureManager.h" />
     <ClInclude Include="DeviceRenderContext.h" />
-    <ClInclude Include="dllmain.h" />
-    <ClInclude Include="gkAuxRenderer.h" />
-    <ClInclude Include="gkRendererGL330.h" />
-    <ClInclude Include="gkRenderLayer.h" />
-    <ClInclude Include="gkRenderSequence.h" />
-    <ClInclude Include="gkShaderParamDataSource.h" />
     <ClInclude Include="Platform\Win32\gkRenderContextWin32.h" />
-    <ClInclude Include="Prerequisites.h" />
-    <ClInclude Include="RenderCamera.h" />
-    <ClInclude Include="RendererCVars.h" />
-    <ClInclude Include="RenderRes\gkMaterial.h" />
-    <ClInclude Include="RenderRes\gkMaterialManager.h" />
-    <ClInclude Include="RenderRes\gkMeshGLES2.h" />
-    <ClInclude Include="RenderRes\gkMeshManager.h" />
-    <ClInclude Include="RenderRes\gkShader.h" />
-    <ClInclude Include="RenderRes\gkShaderManager.h" />
-    <ClInclude Include="RenderRes\gkTextureGLES2.h" />
-    <ClInclude Include="RenderRes\gkTextureManager.h" />
     <ClInclude Include="StableHeader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
