@@ -45,6 +45,10 @@ Copyright (c) 2011-2015 Kaiming Yi
 
 
 class gkTextureGLES2 : public ITexture {
+    
+public:
+    friend class gkTexture2DGLES2StreamingTask;
+    
 protected:
 	bool	m_bIsManaged;					// 是否由别人托管
 

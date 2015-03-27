@@ -31,6 +31,8 @@ gkMaterial::gkMaterial( IResourceManager* creator, const gkStdString& name, gkRe
 	m_vecTextureArray.clear();
 	m_vecTextureArray.assign(8, gkTexturePtr(NULL));
 
+	m_marcoMask = -1;
+
 	if (params)
 	{
 		loadingParams = *params;
@@ -132,13 +134,13 @@ bool gkMaterial::loadImpl( void )
 			}
 			else
 			{
-				succesed = loadFromParamBlock();
+				//succesed = loadFromParamBlock();
 
 				// if sub
 				SubMaterialList::iterator it = m_vecSubMtlList.begin();
 				for (; it != m_vecSubMtlList.end(); ++it)
 				{
-					succesed = ((gkMaterial*)((*it).getPointer()))->loadFromParamBlock();
+					//succesed = ((gkMaterial*)((*it).getPointer()))->loadFromParamBlock();
 				}
 			}
 
@@ -148,7 +150,7 @@ bool gkMaterial::loadImpl( void )
 
 	case GKMATERIAL_LOADTYPE_SCENE:
 		{
-			return loadFromParamBlock();
+			//return loadFromParamBlock();
 		}
 		break;
 	}
@@ -181,7 +183,7 @@ void gkMaterial::ApplyParameterBlock( bool texture, IShader* shader)
 {
 	BasicApply(m_pShader.getPointer());
 
-	int32 nIndex = 0;
+	//int32 nIndex = 0;
 	for (int i=0; i<8; ++i)
 	{
 		if (!(m_vecTextureArray[i].isNull()))
@@ -191,7 +193,7 @@ void gkMaterial::ApplyParameterBlock( bool texture, IShader* shader)
 	}
 
 	gkMaterialParams::ParameterList::iterator it = m_pLoadingParamBlock->m_vecParams.begin();
-	for ( it ; it != m_pLoadingParamBlock->m_vecParams.end(); ++it )
+	for ( ; it != m_pLoadingParamBlock->m_vecParams.end(); ++it )
 	{
  		if( (*it)->Type != GKSHADERT_STRING )
  		{
@@ -199,102 +201,6 @@ void gkMaterial::ApplyParameterBlock( bool texture, IShader* shader)
 		}
 	}
 
-}
-//-----------------------------------------------------------------------
-bool gkMaterial::loadFromParamBlock()
-{
-	if (!m_pLoadingParamBlock)
-	{
-		gkLogWarning(_T("MatSystem:: Material: [%s] loaded failed. not find paramblock."), m_wstrFileName.c_str());
-		return false;
-	}
-
-	// this texture array should be reallocate
-	m_vecTextureArray.assign(8, gkTexturePtr(NULL));
-
-	// assign basic texture
-	m_vecTextureArray[eMS_Diffuse] = gkTextureManager::ms_DefaultDiffuse;
-	m_vecTextureArray[eMS_Normal] = gkTextureManager::ms_DefaultNormal;
-	m_vecTextureArray[eMS_Specular] = gkTextureManager::ms_DefaultDiffuse;
-	m_vecTextureArray[eMS_Detail] = gkTextureManager::ms_DefaultNormal;
-	m_vecTextureArray[eMS_Custom1] = gkTextureManager::ms_DefaultDiffuse;
-	m_vecTextureArray[eMS_Custom2] = gkTextureManager::ms_DefaultDiffuse;
-	m_vecTextureArray[eMS_EnvMap] = gkTextureManager::ms_DefaultDiffuse;
-
-	HRESULT hr = S_OK;
-
-	gkMaterialParams::ParameterList::iterator it = m_pLoadingParamBlock->m_vecParams.begin();
-	for ( it ; it != m_pLoadingParamBlock->m_vecParams.end(); ++it )
-	{
-		GKSHADERPARAM* param = *it;
-		if( param->Type == GKSHADERT_STRING )
-		{
-			EMaterialSlot slot = eMS_Invalid;
-			if (!_stricmp(param->pParamName, "texDiffuse"))
-			{
-				slot = eMS_Diffuse;
-			}
-			else if (!_stricmp(param->pParamName, "texNormal"))
-			{
-				slot = eMS_Normal;
-			}
-			else if (!_stricmp(param->pParamName, "texSpec"))
-			{
-				slot = eMS_Specular;
-			}
-			else if (!_stricmp(param->pParamName, "texDetail"))
-			{
-				slot = eMS_Detail;
-			}
-			else if (!_stricmp(param->pParamName, "texCustom1"))
-			{
-				slot = eMS_Custom1;
-			}
-			else if (!_stricmp(param->pParamName, "texCustom2"))
-			{
-				slot = eMS_Custom2;
-			}
-			else if (!_stricmp(param->pParamName, "IBLenvmap"))
-			{
-				slot = eMS_EnvMap;
-			}
-			else if (!_stricmp(param->pParamName, "IBLcubemap"))
-			{
-				slot = eMS_CubeMap;
-			}
-
-			if ( slot < eMS_Invalid )
-			{
-
-				// 字符串的情况：1.贴图，2.脚本(暂时不支持)
-				const TCHAR* texturename = (const TCHAR*)(param->pValue);
-				gkTexturePtr pTexture = gEnv->pSystem->getTextureMngPtr()->load(texturename, _T("external"));
-
-				if (!pTexture.isNull())
-				{
-					m_vecTextureArray[slot] = pTexture;
-				}
-                else
-                {
-                    gkLogWarning(_T("MatIns Tex %s not find, use default."), texturename);
-                }
-			}
-			else
-			{
-				GK_ASSERT(0);
-			}
-		}
-		
-	}
-
-	gkLogMessage(_T("Mtl Textures Loaded"));
-	return true;
-}
-//-----------------------------------------------------------------------
-bool gkMaterial::loadFromFileX()
-{
-	// 以后换材质文件格式以后，这边重写
-	return true;
 }
 
 gkTexturePtr& gkMaterial::getTexture( EMaterialSlot index )
@@ -351,23 +257,18 @@ bool gkMaterial::loadMaterialFormRapidXmlNode( CRapidXmlParseNode* rootXmlNode )
 		return false;
 	}
 
-	CRapidXmlParseNode* staticXmlNode = fxXmlNode->getNextSiblingNode();
+	CRapidXmlParseNode* staticXmlNode = rootXmlNode->getChildNode(_T("Static"));
 
 	if (staticXmlNode)
 	{
-		if (!_tcsicmp(staticXmlNode->GetName(), _T("Static")))
-		{
-			CRapidXmlParseNode* uvXmlNode = staticXmlNode->getChildNode();
-			if (uvXmlNode->GetAttribute(_T("value")) == 0)
-			{
-				return false;
-			}
-			gkStdStringstream stream(uvXmlNode->GetAttribute(_T("value")));
-			stream>> m_vUVTill.x >> m_vUVTill.y >> m_vUVOffset.x >> m_vUVOffset.y;
-		}
+        CRapidXmlParseNode* uvXmlNode = staticXmlNode->getChildNode();
+        if (uvXmlNode->GetAttribute(_T("value")) == 0)
+        {
+            return false;
+        }
+        gkStdStringstream stream(uvXmlNode->GetAttribute(_T("value")));
+        stream>> m_vUVTill.x >> m_vUVTill.y >> m_vUVOffset.x >> m_vUVOffset.y;
 	}
-
-	// now we begin
 
 	// 构建一个临时的ParamBlock
 	// FIXME [11/2/2011 Kaiming]
@@ -380,16 +281,26 @@ bool gkMaterial::loadMaterialFormRapidXmlNode( CRapidXmlParseNode* rootXmlNode )
 	// 赋值
 	m_shaderFilename = fxXmlNode->GetAttribute(_T("FileName"));
 
-	// 在这里建立MARCOS，加载shader
-	m_pShader = gEnv->pSystem->getShaderMngPtr()->load(m_shaderFilename, _T(""));
+	fxXmlNode->GetAttribute(_T("CastShadow"), m_castShadow);
 
-	gkLogMessage(_T("Shader Loaded"));
+	// macro
 
-	//assert( !m_pShader.isNull() );
-	if (m_pShader.isNull())
+	// 合并mask
+	if (m_marcoMask == -1)
 	{
-		return false;
+		int mask = 0;
+		fxXmlNode->GetAttribute(_T("Mask"), mask);
+		m_marcoMask = mask;
 	}
+
+	// remove extension
+	m_shaderFilename = gkGetPureFilename(m_shaderFilename.c_str());
+
+	gkStdStringstream ss;
+	ss << m_shaderFilename << _T("@") << m_marcoMask;
+
+	// 在这里建立MARCOS，加载shader
+	m_pShader = gEnv->pSystem->getShaderMngPtr()->load(ss.str(), _T(""));
 
 	gkLogMessage(_T("Parsing MaterialParams..."));
 
@@ -397,7 +308,7 @@ bool gkMaterial::loadMaterialFormRapidXmlNode( CRapidXmlParseNode* rootXmlNode )
 	CRapidXmlParseNode *pParamChild = fxXmlNode->getChildNode();
 
 	// 遍历params
-	for ( pParamChild ; pParamChild != 0; pParamChild = pParamChild->getNextSiblingNode()) 
+	for ( ; pParamChild != 0; pParamChild = pParamChild->getNextSiblingNode()) 
 	{
 		//GKSHADERPARAM sParam;
 		gkStdString typeName;
@@ -473,8 +384,124 @@ bool gkMaterial::loadMaterialFormRapidXmlNode( CRapidXmlParseNode* rootXmlNode )
 	gkLogMessage(_T("Loading MaterialParams..."));
 	releaseParameterBlock();
 	m_pLoadingParamBlock = &sParamBlock;
-	//return true;
-	return loadFromParamBlock();
+    
+    // yikaiming glow hack
+    if (!getLoadingParameterBlock()->getParam("g_Glow")) {
+        //GKSHADERPARAM* para = getLoadingParameterBlock()->getParam("g_Glow");
+        GKSHADERPARAM* param = new GKSHADERPARAM("g_Glow", 1.0f );
+        m_pLoadingParamBlock->m_vecParams.push_back(param);
+    }
+
+    
+    m_vecTextureArray.assign(8, gkTexturePtr(NULL));
+    
+	// assign basic texture
+	m_vecTextureArray[eMS_Diffuse] = gkTextureManager::ms_DefaultDiffuse;
+	m_vecTextureArray[eMS_Normal] = gkTextureManager::ms_DefaultNormal;
+	m_vecTextureArray[eMS_Specular] = gkTextureManager::ms_DefaultDiffuse;
+	m_vecTextureArray[eMS_Detail] = gkTextureManager::ms_DefaultNormal;
+	m_vecTextureArray[eMS_Custom1] = gkTextureManager::ms_DefaultDiffuse;
+	m_vecTextureArray[eMS_Custom2] = gkTextureManager::ms_DefaultDiffuse;
+	m_vecTextureArray[eMS_EnvMap] = gkTextureManager::ms_DefaultDiffuse;
+	//m_vecTextureArray[eMS_CubeMap] = gkTextureManager::ms_DefaultDiffuse;
+    
+    CRapidXmlParseNode* texChannelNode = rootXmlNode->getChildNode(_T("TexChannel"));
+    
+	if (texChannelNode)
+	{
+		CRapidXmlParseNode* texchn = texChannelNode->getChildNode();
+        
+		// 遍历params
+		for ( ; texchn != 0; texchn = texchn->getNextSiblingNode())
+		{
+			int slot = 0;
+			texchn->GetAttribute(_T("chn"), slot);
+            
+			// 字符串的情况：1.贴图，2.脚本(暂时不支持)
+			const TCHAR* texturename = texchn->GetAttribute(_T("value"));
+            
+			if (texturename)
+			{
+				gkTexturePtr pTexture = gEnv->pSystem->getTextureMngPtr()->load(texturename, _T("external"));
+                
+				if (!pTexture.isNull())
+				{
+					m_vecTextureArray[slot] = pTexture;
+				}
+			}
+            
+		}
+	}
+	else
+	{
+		//////////////////////////////////////////////////////////////////////////
+		// 老版本纹理读取
+		CRapidXmlParseNode* fxXmlNode = rootXmlNode->getChildNode();
+		CRapidXmlParseNode *pParamChild = fxXmlNode->getChildNode();
+        
+		// 遍历params
+		for ( ; pParamChild != 0; pParamChild = pParamChild->getNextSiblingNode())
+		{
+			gkStdString typeName = pParamChild->GetAttribute(_T("type"));
+			gkStdString elementName = pParamChild->GetAttribute(_T("name"));
+			if ( typeName == _T("texture") || typeName == _T("string") )
+			{
+				EMaterialSlot slot = eMS_Diffuse;
+				if (elementName == _T("texDiffuse"))
+				{
+					slot = eMS_Diffuse;
+				}
+				else if (elementName == _T("texNormal"))
+				{
+					slot = eMS_Normal;
+				}
+				else if (elementName == _T("texSpec"))
+				{
+					slot = eMS_Specular;
+				}
+				else if (elementName == _T("texDetail"))
+				{
+					slot = eMS_Detail;
+				}
+				else if (elementName == _T("texCustom1"))
+				{
+					slot = eMS_Custom1;
+				}
+				else if (elementName == _T("texCustom2"))
+				{
+					slot = eMS_Custom2;
+				}
+				else if (elementName == _T("IBLenvmap"))
+				{
+					slot = eMS_EnvMap;
+				}
+				else if (elementName == _T("IBLcubemap"))
+				{
+					slot = eMS_CubeMap;
+				}
+                
+				if ( slot < eMS_Invalid )
+				{
+                    
+					// 字符串的情况：1.贴图，2.脚本(暂时不支持)
+					const TCHAR* texturename = pParamChild->GetAttribute(_T("value"));
+					gkTexturePtr pTexture = gEnv->pSystem->getTextureMngPtr()->load(texturename, _T("external"));
+                    
+					if (!pTexture.isNull())
+					{
+						m_vecTextureArray[slot] = pTexture;
+					}
+				}
+				else
+				{
+					GK_ASSERT(0);
+				}
+			}
+		}
+	}
+    
+    return true;
+	
 }
 
 

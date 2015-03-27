@@ -142,4 +142,7 @@ protected:
 	GLuint m_vertexVAO;
 	GLuint m_hudBoxBuffer;
 	GLuint m_hudBoxVAO;
+    
+    GLuint m_hudBoxTexBuffer;
+    GLuint m_hudBoxTexVAO;
 };

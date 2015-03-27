@@ -758,7 +758,6 @@ void gkAuxRendererGLES2::_FlushAllHelper()
 		glBindBuffer( GL_ARRAY_BUFFER, 0 );
 	}
 
-
 	//////////////////////////////////////////////////////////////////////////
 	// draw
 	Matrix44 viewMat = gkRendererGL330::getShaderContent().getViewMatrix();
@@ -799,16 +798,33 @@ void gkAuxRendererGLES2::_FlushAllHelper()
         for (int i=0; i < count; ++i)
         {
             ITexture* tex = m_vecScreenBoxTexture_Render[i];
+            tex->Apply(0,2);
             
-            tex->Apply(0,0);
+            //////////////////////////////////////////////////////////////////////////
+            {
+                glBindBuffer( GL_ARRAY_BUFFER, m_hudBoxTexBuffer );
+                //int size = m_vecScreenBoxTexturedVertexBuffer_Render.size() * sizeof(GK_HELPER_2DVERTEX_TEXTURED);
+                
+                int size = 6 * sizeof(GK_HELPER_2DVERTEX_TEXTURED);
+                glBufferData(GL_ARRAY_BUFFER, size, 0, GL_STATIC_DRAW);
+                
+                GLvoid* Data = glMapBufferRange(GL_ARRAY_BUFFER, 0,	size,
+                                                GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_FLUSH_EXPLICIT_BIT);
+                
+                if (Data)
+                {
+                    memcpy(Data, &(m_vecScreenBoxTexturedVertexBuffer_Render[i * 6]),  size);
+                }
+                
+                glFlushMappedBufferRange(GL_ARRAY_BUFFER, 0,  size);
+                glUnmapBuffer(GL_ARRAY_BUFFER);
+                glBindBuffer( GL_ARRAY_BUFFER, 0 );
+                
+            }
             
-            // draw polys
-            glEnableVertexAttribArray(AUX_VERTEX_ARRAY);
-            //glEnableVertexAttribArray(AUX_COLOR_ARRAY);
-            glEnableVertexAttribArray(AUX_TEXCOORD_ARRAY);
-            glVertexAttribPointer(AUX_VERTEX_ARRAY, 3, GL_FLOAT, GL_FALSE, sizeof(GK_HELPER_2DVERTEX_TEXTURED), &(m_vecScreenBoxTexturedVertexBuffer_Render[i * 6].m_vPosition.x));
-            glVertexAttribPointer(AUX_TEXCOORD_ARRAY, 2, GL_FLOAT, GL_FALSE, sizeof(GK_HELPER_2DVERTEX_TEXTURED), &(m_vecScreenBoxTexturedVertexBuffer_Render[i * 6].m_vTexcorrd.x));
-            glDrawArrays(GL_TRIANGLES, 0, 6);
+            glBindVertexArray(m_hudBoxTexVAO);
+            glDrawArraysInstanced( GL_TRIANGLES, 0, 6,1 );
+            glBindVertexArray(0);
         }
     }
     
@@ -834,6 +850,7 @@ void gkAuxRendererGLES2::init()
 	glGenBuffers(1, &m_lineBuffer);
 	glGenBuffers(1, &m_vertexBuffer);
 	glGenBuffers(1, &m_hudBoxBuffer);
+    glGenBuffers(1, &m_hudBoxTexBuffer);
 
 	glGenVertexArrays(1, &m_lineVAO);
 	glBindVertexArray(m_lineVAO);
@@ -870,6 +887,18 @@ void gkAuxRendererGLES2::init()
 	glEnableVertexAttribArray(AUX_COLOR_ARRAY);
 
 	glBindVertexArray(0);
+    
+    glGenVertexArrays(1, &m_hudBoxTexVAO);
+    glBindVertexArray(m_hudBoxTexVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, m_hudBoxTexBuffer);
+    glVertexAttribPointer(AUX_VERTEX_ARRAY, 3, GL_FLOAT, GL_FALSE, sizeof(GK_HELPER_2DVERTEX_TEXTURED), GLF_BUFFER_OFFSET(0));
+    glVertexAttribPointer(AUX_TEXCOORD_ARRAY, 2, GL_FLOAT, GL_FALSE, sizeof(GK_HELPER_2DVERTEX_TEXTURED), GLF_BUFFER_OFFSET(sizeof(Vec3)) );
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    glEnableVertexAttribArray(AUX_VERTEX_ARRAY);
+    glEnableVertexAttribArray(AUX_COLOR_ARRAY);
+    
+    glBindVertexArray(0);
 }
 
 void gkAuxRendererGLES2::destroy()
@@ -877,6 +906,7 @@ void gkAuxRendererGLES2::destroy()
 	glDeleteBuffers(1, &m_lineBuffer);
 	glDeleteBuffers(1, &m_vertexBuffer);
 	glDeleteBuffers(1, &m_hudBoxBuffer);
+    glDeleteBuffers(1, &m_hudBoxTexBuffer);
 }
 
 void gkAuxRendererGLES2::AuxRenderScreenBox( const Vec2& pos, const Vec2& wh, const ColorB& color )

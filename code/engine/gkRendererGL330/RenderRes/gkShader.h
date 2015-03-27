@@ -63,6 +63,7 @@ protected:
 	GLuint				m_FragmentShader;
 	GLuint				m_Program;
 	gkStdString			m_internalName;
+	std::map<uint32, GLuint> m_macroPrograms;
 
 public:
 	//gkTexture(void);
@@ -103,10 +104,12 @@ public:
 
 	virtual ShaderMacros& getShaderMarcos() {return m_shaderMacros;}
 	virtual uint32 getShaderMarcoMask() {return m_macroMask;}
+    virtual uint32 getRealTimeShaderMarco() {return m_rtMacroMask;}
 private:
 
 	bool loadFromGfxShader( CRapidXmlParseNode* rootNode);
 
+	bool buildShader( uint32 marco_mask );
 	bool CompileShader( const char* source, GLuint& shader, GLenum type );
 
 	void PreProcess( std::string &vsSource );
@@ -149,11 +152,17 @@ private:
 
 	virtual void OnFileChange( const TCHAR* filename );
 
+	virtual void switchSystemMacro(uint32 systemMarcro = 0);
+
 	ShaderState m_prevState;
 	ShaderState m_thisState;
 
 	ShaderMacros m_shaderMacros;
 	uint32 m_macroMask;
+    uint32 m_rtMacroMask;
+    
+	gkStdString				m_vs_file_name;
+	gkStdString				m_ps_file_name;
 };
 
 #endif // gkShader_h_78475478_d43a_4cd8_9350_e5472ab43ee3

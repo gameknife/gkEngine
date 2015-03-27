@@ -34,63 +34,58 @@ gkShaderGLES2::~gkShaderGLES2( void )
 
 bool gkShaderGLES2::loadImpl( void )
 {
+	gkLogMessage( _T("start load shader[%s]"), m_wstrFileName.c_str());
+
 	HRESULT hr = S_OK;
+
 	// 先在目录内查找名字 [9/18/2010 Kaiming-Desktop]
-	TCHAR wszPath[MAX_PATH] = _T("engine/shaders/");
-	TCHAR wszPrevPath[MAX_PATH] = _T("");
-
-	_tcscpy(wszPrevPath, m_wstrFileName.c_str());
-
 	TCHAR pureName[MAX_PATH];
 	_tcscpy(pureName, m_wstrFileName.c_str());
-	// chop it's path
+
 	TCHAR* strLastSlash = NULL;
+	// 摘除扩展名
 	strLastSlash = _tcsrchr( pureName, _T( '.' ) );
 	if( strLastSlash )
 	{
 		*strLastSlash = 0;
 	}
 
-	// chop it's path
-	strLastSlash = NULL;
-	TCHAR* strLastBackSlash = NULL;
-	strLastBackSlash = _tcsrchr( wszPrevPath, _T( '/' ) );
-	strLastSlash = _tcsrchr( wszPrevPath, _T( '\\' ) );
-	strLastSlash = max( strLastSlash, strLastBackSlash );
-
+	// 取得MASK并摘除
+	strLastSlash = _tcsrchr( pureName, _T( '@' ) );
+	uint32 mask = 0;
 	if (strLastSlash)
 	{
-		_tcscpy(wszPrevPath, strLastSlash);
+		TCHAR strmask[MAX_PATH];
+		_tcscpy(strmask, strLastSlash + 1);
+		*strLastSlash = 0;
+
+		gkStdStringstream ss(strmask);
+		ss >> mask;
 	}
+	m_macroMask = mask;
 
-	_tcscat(wszPath, wszPrevPath);
+	bool legacy_routine = false;
 
+	gkStdString gfxPath = _T("engine/shaders/template/built_in/") + gkStdString(pureName) + _T(".gfx");
 
-    bool legacy_routine = false;
-    
-    gkStdString gfxPath = _T("engine/shaders/template/built_in/") + gkStdString(pureName) + _T(".gfx");
-    
-    if( gEnv->pFileSystem->checkFileExist( gfxPath.c_str() ) == eFS_notExsit )
-    {
-        gfxPath = _T("engine/shaders/template/hidden/") + gkStdString(pureName) + _T(".gfx");
-        
-        if( gEnv->pFileSystem->checkFileExist( gfxPath.c_str() )  == eFS_notExsit )
-        {
-            gfxPath = _T("engine/shaders/template/extern/") + gkStdString(pureName) + _T(".gfx");
-            
-            if( gEnv->pFileSystem->checkFileExist( gfxPath.c_str() )  == eFS_notExsit )
-            {
-                legacy_routine = true;
-            }
-        }
-    }
-    
-	strLastSlash = _tcsrchr( wszPath, _T( '.' ) );
-	if( strLastSlash )
+	if( gEnv->pFileSystem->checkFileExist( gfxPath.c_str() ) == eFS_notExsit )
 	{
-		_tcscpy( strLastSlash, _T(".gfx") );
+		gfxPath = _T("engine/shaders/template/hidden/") + gkStdString(pureName) + _T(".gfx");
+
+		if( gEnv->pFileSystem->checkFileExist( gfxPath.c_str() )  == eFS_notExsit )
+		{
+			gfxPath = _T("engine/shaders/template/extern/") + gkStdString(pureName) + _T(".gfx");
+
+			if( gEnv->pFileSystem->checkFileExist( gfxPath.c_str() )  == eFS_notExsit )
+			{
+				legacy_routine = true;
+			}
+		}
 	}
+
 	m_internalName = gkStdString(_T("engine/shaders/gles2/")) + gkStdString(pureName) + gkStdString(_T(".ffx"));
+
+	gkLogMessage( _T("start process shadefiler[%s]"), gfxPath.c_str());
 
 	// load gfx
 	IRapidXmlParser parser;
@@ -103,34 +98,8 @@ bool gkShaderGLES2::loadImpl( void )
 	}
 
 	bool ret = false;
-    
-    CRapidXmlParseNode* rootNode = parser.getRootXmlNode();
 
-	if (parser.getRootXmlNode()->getChildNode(_T("GLES2Shader")) )
-	{
-		ret = loadFromGfxShader( rootNode->getChildNode(_T("GLES2Shader")) );
-	}
-	else
-	{
-		ret = loadFromGfxShader( rootNode );
-	}
-	
-    CRapidXmlParseNode* layerNode = rootNode->getChildNode(_T("RenderLayer"));
-    
-    if (layerNode)
-    {
-        if ( !_tcsicmp( layerNode->GetAttribute(_T("layer")), _T("WATER") ) )
-        {
-            m_uDefaultRenderLayer = RENDER_LAYER_WATER;
-        }
-        
-        if ( !_tcsicmp( layerNode->GetAttribute(_T("layer")), _T("RENDER_LAYER_SKIES_EARLY") ) )
-        {
-            m_uDefaultRenderLayer = RENDER_LAYER_SKIES_EARLY;
-        }
-    }
-    
-
+	ret = loadFromGfxShader( parser.getRootXmlNode() );
 
 	parser.finishReading();
 
@@ -140,77 +109,90 @@ bool gkShaderGLES2::loadImpl( void )
 
 bool gkShaderGLES2::loadFromGfxShader( CRapidXmlParseNode* rootNode )
 {
+	CRapidXmlParseNode* marcoNode = rootNode->getChildNode(_T("Marco"));
+	CRapidXmlParseNode* layerNode = rootNode->getChildNode(_T("RenderLayer"));
+
+	if (layerNode)
+	{
+		if ( !_tcsicmp( layerNode->GetAttribute(_T("layer")), _T("WATER") ) )
+		{
+			m_uDefaultRenderLayer = RENDER_LAYER_WATER;
+		}
+
+		if ( !_tcsicmp( layerNode->GetAttribute(_T("layer")), _T("RENDER_LAYER_SKIES_EARLY") ) )
+		{
+			m_uDefaultRenderLayer = RENDER_LAYER_SKIES_EARLY;
+		}
+	}
+
+	if (marcoNode)
+	{
+		m_shaderMacros.clear();
+
+		// add system macro
+		m_shaderMacros[eSSM_Skinned].m_name = _T("SKIN");
+		m_shaderMacros[eSSM_Skinned].m_value = _T("");
+		m_shaderMacros[eSSM_Skinned].m_desc = _T("Skinning");
+		m_shaderMacros[eSSM_Skinned].m_active = false;
+		m_shaderMacros[eSSM_Skinned].m_hidden = true;
+
+		m_shaderMacros[eSSM_Zpass].m_name = _T("ZPASS");
+		m_shaderMacros[eSSM_Zpass].m_value = _T("");
+		m_shaderMacros[eSSM_Zpass].m_desc = _T("Zpass");
+		m_shaderMacros[eSSM_Zpass].m_active = false;
+		m_shaderMacros[eSSM_Zpass].m_hidden = true;
+
+		CRapidXmlParseNode* marco_sub = marcoNode->getChildNode();
+		for (; marco_sub; marco_sub = marco_sub->getNextSiblingNode())
+		{
+			// every marco
+			TCHAR* name = marco_sub->GetAttribute( _T("name") );
+			TCHAR* value = marco_sub->GetAttribute( _T("value") );
+			TCHAR* desc = marco_sub->GetAttribute(_T("desc") );
+
+			int maskflag = 0;
+			marco_sub->GetAttribute( _T("mask"), maskflag );
+
+			if (maskflag != 0)
+			{
+				m_shaderMacros[maskflag].m_name = name;
+				m_shaderMacros[maskflag].m_value = value;
+				m_shaderMacros[maskflag].m_desc = desc;
+				m_shaderMacros[maskflag].m_active = false;
+			}
+
+
+			if ( m_macroMask & maskflag)
+			{
+				m_shaderMacros[maskflag].m_active = true;
+			}
+		}
+	}
+
+	CRapidXmlParseNode* glesNode = NULL;
+	if (rootNode->getChildNode(_T("GLES2Shader")) )
+	{
+		glesNode = rootNode->getChildNode(_T("GLES2Shader"));
+	}
+	else
+	{
+		glesNode = rootNode;
+	}
+
 	// read vfx & ffx file
-	CRapidXmlParseNode* vsnode = rootNode->getChildNode(_T("VSShader"));
-	CRapidXmlParseNode* psnode = rootNode->getChildNode(_T("PSShader"));
-	CRapidXmlParseNode* statenode = rootNode->getChildNode(_T("StateStage"));
+	CRapidXmlParseNode* vsnode = glesNode->getChildNode(_T("VSShader"));
+	CRapidXmlParseNode* psnode = glesNode->getChildNode(_T("PSShader"));
+	CRapidXmlParseNode* statenode = glesNode->getChildNode(_T("StateStage"));
 
 	if (vsnode && psnode)
 	{
-		IResFile* pVertexShaderSource = gEnv->pFileSystem->loadResFile(vsnode->GetAttribute(_T("FileName")), true);
-		if (!pVertexShaderSource)
-		{
-			return false;
-		}
+		m_vs_file_name = vsnode->GetAttribute(_T("FileName"));
+		m_ps_file_name = psnode->GetAttribute(_T("FileName"));
 
-		IResFile* pPixelShaderSource = gEnv->pFileSystem->loadResFile(psnode->GetAttribute(_T("FileName")), true);
-		if (!pPixelShaderSource)
-		{
-			return false;
-		}
+		// compile shader
+		//switchSystemMacro( eSSM_Skinned );
 
-		std::string vsSource( (char*)(pVertexShaderSource->DataPtr()),  pVertexShaderSource->Size() );
-		std::string psSource( (char*)(pPixelShaderSource->DataPtr()),  pPixelShaderSource->Size() );
-
-		PreProcess(vsSource);
-		PreProcess(psSource);
-		
-		bool bRes = true;
-		GLint Linked;
-
-		/* Create and compile the shader object */
-		bRes = CompileShader(vsSource.c_str(), m_VertexShader, GL_VERTEX_SHADER);
-		bRes = ( bRes && CompileShader(psSource.c_str(), m_FragmentShader, GL_FRAGMENT_SHADER) );
-
-		gEnv->pFileSystem->closeResFile(pVertexShaderSource);
-		gEnv->pFileSystem->closeResFile(pPixelShaderSource);
-
-		if (!bRes)
-		{
-			return false;
-		}
-
-
-
-		m_Program = glCreateProgram();
-		glAttachShader(m_Program, m_VertexShader);
-		glAttachShader(m_Program, m_FragmentShader);
-
-		//////////////////////////////////////////////////////////////////////////
-		// that is general
-		glBindAttribLocation(m_Program, GK_SHADER_VERTEX_ARRAY,		"inPosition");
-		glBindAttribLocation(m_Program, GK_SHADER_TEXCOORD_ARRAY,	"inTexcoord");
-		glBindAttribLocation(m_Program, GK_SHADER_TANGENT_ARRAY,     "inTangent");
-		glBindAttribLocation(m_Program, GK_SHADER_BINORMAL_ARRAY,	"inBinormal");
-        glBindAttribLocation(m_Program, GK_SHADER_BLENDWIGHT_ARRAY,	"inBlendWight");
-        glBindAttribLocation(m_Program, GK_SHADER_BLENDINDEX_ARRAY,	"inBlendIndex");
-    
-        
-		//////////////////////////////////////////////////////////////////////////
-		// this is post process
-		glBindAttribLocation(m_Program, GK_SHADER_DWORDCOLOR_ARRAY, "inColor");
-
-		glLinkProgram(m_Program);
-		glGetProgramiv(m_Program, GL_LINK_STATUS, &Linked);
-
-		if (!Linked)
-			bRes = false;
-
-		if(!bRes)
-		{
-			gkLogMessage(_T("Compile Shader %s failed."), m_wstrFileName.c_str());
-			return false;
-		}
+		switchSystemMacro( 0 );
 	}
 	else
 	{
@@ -275,6 +257,13 @@ bool gkShaderGLES2::loadFromGfxShader( CRapidXmlParseNode* rootNode )
 
 bool gkShaderGLES2::unloadImpl(void)
 {
+	std::map<uint32, GLuint>::iterator it = m_macroPrograms.begin();
+	for (;it != m_macroPrograms.end();++it)
+	{
+		GLuint program = it->second;
+		glDeleteProgram(program); 
+	}
+	m_macroPrograms.clear();
 	return true;
 }
 
@@ -391,7 +380,7 @@ void gkShaderGLES2::FX_Begin( uint32* pPasses, DWORD flag )
 		glUniform1i( glGetUniformLocation(m_Program, "texNormal"), 1 );
 		glUniform1i( glGetUniformLocation(m_Program, "texSpecular"), 2 );
 		glUniform1i( glGetUniformLocation(m_Program, "texDetail"), 3 );
-        glUniform1i( glGetUniformLocation(m_Program, "texCustom1"), 4 );
+		glUniform1i( glGetUniformLocation(m_Program, "texCustom1"), 4 );
         glUniform1i( glGetUniformLocation(m_Program, "texCustom2"), 5 );
         glUniform1i( glGetUniformLocation(m_Program, "texEnvmap"), 6 );
         glUniform1i( glGetUniformLocation(m_Program, "texCubemap"), 7 );
@@ -467,7 +456,7 @@ void gkShaderGLES2::FX_SetMatrixArray( GKHANDLE hParam, D3DXMATRIX* data, uint32
 {
 	int location = glGetUniformLocation(m_Program, hParam);
 	//Matrix44 mvpMat = gkRendererGLES2::getShaderContent().getWorldViewProjMatrix();
-	glUniformMatrix4fv( location, size, GL_FALSE, (float*)(&(data)) );
+	glUniformMatrix4fv( location, size, GL_FALSE, (float*)(data) );
 }
 
 bool gkShaderGLES2::ApplyState()
@@ -523,91 +512,115 @@ bool gkShaderGLES2::StateRestoreInternal( ShaderState& state )
 
 void gkShaderGLES2::PreProcess( std::string &vsSource )
 {
-	// include insert
+    // include insert
     
     
-//        {
-//            size_t includepos = vsSource.find("precision highp float;");
-//            while ( std::string::npos != includepos )
-//            {
-//                vsSource.replace(includepos, strlen("precision highp float;"), "", 0);
-//                includepos = vsSource.find("precision highp float;");
-//            }
-//        }
-
-	{
-		size_t includepos = vsSource.find("#version");
-		if (std::string::npos != includepos) {
-			includepos = vsSource.find("\n");
-		}
-
-		if (std::string::npos == includepos) {
-			includepos = 0;
-		}
-
-		vsSource.insert(includepos, "\n #define GL330 \n");
-	}
+    //        {
+    //            size_t includepos = vsSource.find("precision highp float;");
+    //            while ( std::string::npos != includepos )
+    //            {
+    //                vsSource.replace(includepos, strlen("precision highp float;"), "", 0);
+    //                includepos = vsSource.find("precision highp float;");
+    //            }
+    //        }
+    {
     
-	size_t includepos = vsSource.find("#include");
-	while ( std::string::npos != includepos )
-	{
-		// find one
-		size_t firstOne = vsSource.find('"', includepos);
-		size_t SecondOne = vsSource.find('"', firstOne + 1);
-
-		// get the filename
-		std::string filename("engine/shaders/gles2/");
-		filename += vsSource.substr( firstOne + 1, SecondOne - firstOne - 1 );
-
-#ifdef _UNICODE
-		TCHAR* textbuf = new TCHAR[filename.size() + 1];
-		MultiByteToWideChar( CP_ACP, 0, filename.c_str(), -1, textbuf, filename.size() + 1 );
-		textbuf[filename.size()] = 0;
-		IResFile* includeFile = gEnv->pFileSystem->loadResFile(textbuf, false);
+        size_t includepos = vsSource.find("#version");
+        if (std::string::npos != includepos) {
+            includepos = vsSource.find("\n");
+        }
+        
+        if (std::string::npos == includepos) {
+            includepos = 0;
+        }
+        
+        vsSource.insert(includepos, "\n #define GL330 \n");
+    
+    
+    // insert macros
+    ShaderMacros::iterator it = m_shaderMacros.begin();
+    for ( ; it != m_shaderMacros.end(); ++it)
+    {
+        if ( it->second.m_active )
+        {
+            gkStdString macroline = _T("\n#define ");
+            macroline += it->second.m_name;
+            macroline += _T("\n");
+#ifdef UNICODE
+            char macrolineA[MAX_PATH];
+            WideCharToMultiByte( CP_ACP, 0, macroline.c_str(), -1, macrolineA, MAX_PATH, 0, 0 );
+            
+            vsSource.insert(includepos, macrolineA);
 #else
-		IResFile* includeFile = gEnv->pFileSystem->loadResFile(filename.c_str(), false);
-#endif		
+            vsSource.insert(includepos, macroline);
+#endif
+            
+        }
+    }
 
-		if ( includeFile )
-		{
-			vsSource.replace(includepos, SecondOne - includepos + 1, (char*)(includeFile->DataPtr()), includeFile->Size() );
-		}
-
-		includepos = vsSource.find("#include");
-	}
-
-//	{
-//		size_t includepos = vsSource.find("highp");
-//		while ( std::string::npos != includepos )
-//		{
-//			vsSource.replace(includepos, 5, "", 0);
-//			includepos = vsSource.find("highp");
-//		}
-//	}
-//
-//	{
-//		size_t includepos = vsSource.find("mediump");
-//		while ( std::string::npos != includepos )
-//		{
-//			vsSource.replace(includepos, 7, "", 0);
-//			includepos = vsSource.find("mediump");
-//		}
-//	}
-//
-//	{
-//		size_t includepos = vsSource.find("lowp");
-//		while ( std::string::npos != includepos )
-//		{
-//			vsSource.replace(includepos, 4, "", 0);
-//			includepos = vsSource.find("lowp");
-//		}
-//	}
+    }
     
-
+    size_t includepos = vsSource.find("#include");
+    while ( std::string::npos != includepos )
+    {
+        // find one
+        size_t firstOne = vsSource.find('"', includepos);
+        size_t SecondOne = vsSource.find('"', firstOne + 1);
+        
+        // get the filename
+        std::string filename("engine/shaders/gles2/");
+        filename += vsSource.substr( firstOne + 1, SecondOne - firstOne - 1 );
+        
+#ifdef _UNICODE
+        TCHAR* textbuf = new TCHAR[filename.size() + 1];
+        MultiByteToWideChar( CP_ACP, 0, filename.c_str(), -1, textbuf, filename.size() + 1 );
+        textbuf[filename.size()] = 0;
+        IResFile* includeFile = gEnv->pFileSystem->loadResFile(textbuf, false);
+#else
+        IResFile* includeFile = gEnv->pFileSystem->loadResFile(filename.c_str(), false);
+#endif
+        
+        if ( includeFile )
+        {
+            vsSource.replace(includepos, SecondOne - includepos + 1, (char*)(includeFile->DataPtr()), includeFile->Size() );
+        }
+        
+        includepos = vsSource.find("#include");
+    }
+    
+    //	{
+    //		size_t includepos = vsSource.find("highp");
+    //		while ( std::string::npos != includepos )
+    //		{
+    //			vsSource.replace(includepos, 5, "", 0);
+    //			includepos = vsSource.find("highp");
+    //		}
+    //	}
+    //
+    //	{
+    //		size_t includepos = vsSource.find("mediump");
+    //		while ( std::string::npos != includepos )
+    //		{
+    //			vsSource.replace(includepos, 7, "", 0);
+    //			includepos = vsSource.find("mediump");
+    //		}
+    //	}
+    //
+    //	{
+    //		size_t includepos = vsSource.find("lowp");
+    //		while ( std::string::npos != includepos )
+    //		{
+    //			vsSource.replace(includepos, 4, "", 0);
+    //			includepos = vsSource.find("lowp");
+    //		}
+    //	}
+    
+    
     
     //vsSource.insert(0, "#version 100\n");
-
+    
 }
+
 
 GKHANDLE gkShaderGLES2::FX_GetTechnique( EShaderInternalTechnique tech )
 {
@@ -622,7 +635,12 @@ bool gkShaderGLES2::FX_TechniqueSkinned( EShaderInternalTechnique tech )
 void gkShaderGLES2::OnFileChange( const TCHAR* filename )
 {
 	// 文件更改，检查是否需要重新读取
-	if ( !_tcsicmp(filename, m_internalName.c_str()))
+	gkStdString changeFile = filename;
+	gkStdString myFile = m_internalName;
+	gkNormalizePath(changeFile);
+	gkNormalizePath(myFile);
+
+	if ( !_tcsicmp(changeFile.c_str(), myFile.c_str()))
 	{
 		gkLogMessage(_T("Shader Change, Recompile."));
 		reload();
@@ -655,7 +673,8 @@ bool gkShaderGLES2::CompileShader( const char* source, GLuint& shader, GLenum ty
 #else
 		const char* warning_info = pszInfoLog;
 #endif
-		gkLogWarning(_T("Compile VS Shader %s failed. %s"), m_wstrFileName.c_str(), warning_info);
+		//gkLogWarning(_T("shader file %s"), source);
+		gkLogWarning(_T("Compile Shader %s failed. %s"), m_wstrFileName.c_str(), warning_info);
 
 #ifdef UNICODE
 		delete[] warning_info;
@@ -691,5 +710,113 @@ bool gkShaderGLES2::CompileShader( const char* source, GLuint& shader, GLenum ty
 		}
 
 		return true;
+	}
+}
+
+void gkShaderGLES2::switchSystemMacro(uint32 systemMarcro /*= 0*/)
+{
+	std::map<uint32, GLuint>::iterator it = m_macroPrograms.find(systemMarcro);
+	if (it != m_macroPrograms.end())
+	{
+        m_rtMacroMask = systemMarcro;
+		m_Program = it->second;
+		return;
+	}
+
+	uint32 final_mask = (systemMarcro & 0xff000000) | m_macroMask;
+
+    m_rtMacroMask = systemMarcro;
+	buildShader( final_mask );
+
+	m_macroPrograms.insert( std::map<uint32, GLuint>::value_type( systemMarcro, m_Program ) );
+}
+
+bool gkShaderGLES2::buildShader(uint32 marco_mask)
+{
+	// reprocess the marco list
+
+	ShaderMacros::iterator it = m_shaderMacros.begin();
+	for ( ; it != m_shaderMacros.end(); ++it)
+	{
+		it->second.m_active = false;
+
+		if (it->first & marco_mask)
+		{
+			it->second.m_active = true;
+		}
+	}
+
+	// build shader
+	IResFile* pVertexShaderSource = gEnv->pFileSystem->loadResFile( m_vs_file_name.c_str(), true);
+	if (!pVertexShaderSource)
+	{
+		return false;
+	}
+
+	IResFile* pPixelShaderSource = gEnv->pFileSystem->loadResFile( m_ps_file_name.c_str(), true);
+	if (!pPixelShaderSource)
+	{
+		return false;
+	}
+
+	std::string vsSource( (char*)(pVertexShaderSource->DataPtr()),  pVertexShaderSource->Size() );
+	std::string psSource( (char*)(pPixelShaderSource->DataPtr()),  pPixelShaderSource->Size() );
+
+
+
+
+	PreProcess(vsSource);
+	PreProcess(psSource);
+
+
+	//gkLogMessage( _T("shader vs[%s]"), vsSource.c_str());
+	//gkLogMessage( _T("shader ps[%s]"), psSource.c_str());
+	bool bRes = true;
+	GLint Linked;
+
+	/* Create and compile the shader object */
+	bRes = CompileShader(vsSource.c_str(), m_VertexShader, GL_VERTEX_SHADER);
+	bRes = ( bRes && CompileShader(psSource.c_str(), m_FragmentShader, GL_FRAGMENT_SHADER) );
+
+	gEnv->pFileSystem->closeResFile(pVertexShaderSource);
+	gEnv->pFileSystem->closeResFile(pPixelShaderSource);
+
+	if (!bRes)
+	{
+		gkLogMessage(_T("Compile Shader %s failed."), m_wstrFileName.c_str());
+		return false;
+	}
+
+	m_Program = glCreateProgram();
+	glAttachShader(m_Program, m_VertexShader);
+	glAttachShader(m_Program, m_FragmentShader);
+
+	//////////////////////////////////////////////////////////////////////////
+	// that is general
+	glBindAttribLocation(m_Program, GK_SHADER_VERTEX_ARRAY,		"inPosition");
+	glBindAttribLocation(m_Program, GK_SHADER_TEXCOORD_ARRAY,	"inTexcoord");
+	glBindAttribLocation(m_Program, GK_SHADER_TANGENT_ARRAY,    "inTangent");
+	glBindAttribLocation(m_Program, GK_SHADER_BINORMAL_ARRAY,	"inBinormal");
+	glBindAttribLocation(m_Program, GK_SHADER_BLENDWIGHT_ARRAY,	"inBlendWight");
+	glBindAttribLocation(m_Program, GK_SHADER_BLENDINDEX_ARRAY,	"inBlendIndex");
+
+	//////////////////////////////////////////////////////////////////////////
+	// this is post process
+	glBindAttribLocation(m_Program, GK_SHADER_DWORDCOLOR_ARRAY, "inColor");
+
+	glLinkProgram(m_Program);
+	glGetProgramiv(m_Program, GL_LINK_STATUS, &Linked);
+
+	if (!Linked)
+		bRes = false;
+
+	if(!bRes)
+	{
+		gkLogMessage(_T("Compile Shader %s failed."), m_wstrFileName.c_str());
+		return false;
+	}
+	else
+	{
+		gkLogMessage(_T("Compile Shader %s success."), m_wstrFileName.c_str());
 	}
 }

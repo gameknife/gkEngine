@@ -25,6 +25,8 @@ struct gkTexture2DGLES2StreamingTask : public ITask
 	uint32 iMipCount;
 	uint32 fmt;
 	const BYTE* pSrcBits;
+    
+    gkTextureGLES2* pTexturePtr;
 
 	virtual void Execute() 
 	{
@@ -105,6 +107,13 @@ struct gkTexture2DGLES2StreamingTask : public ITask
 
 	virtual void Complete_MT()
 	{
+        
+        if(pTexturePtr)
+        {
+            pTexturePtr->m_uWidth = iWidth;
+            pTexturePtr->m_uHeight = iHeight;
+        }
+        
 // 		loader.LoadPVR_Bind( m_hw_texptr, 0 );
 // 		gEnv->pFileSystem->closeResFile( pTextureFile );
 		glActiveTexture(GL_TEXTURE0);
@@ -152,7 +161,7 @@ struct gkTexture2DGLES2StreamingTask : public ITask
 						iWidth,
 						iHeight,
 						0,
-						GL_RGBA,
+						GL_BGRA,
 						GL_UNSIGNED_BYTE,
 						pSrcBits
 						);
@@ -198,6 +207,8 @@ struct gkTexture2DGLES2StreamingTask : public ITask
 
 
 
+
+        
 		gEnv->pFileSystem->closeResFile( pFile );
 	}
 };
@@ -452,6 +463,7 @@ bool gkTextureGLES2::loadImpl( void )
 	gkTexture2DGLES2StreamingTask* task = new gkTexture2DGLES2StreamingTask;
 	_tcscpy(task->m_filepath, wszPath);
 	task->m_hw_texptr = &m_uHwTexture2D;
+    task->pTexturePtr = this;
 
 	gEnv->pCommonTaskDispatcher->PushTask( task,m_syncLoad ? -1 : 0 );
 
@@ -532,8 +544,8 @@ void gkTextureGLES2::Apply( uint32 channel, uint8 filter )
             {
                 if(filter == 2)
                 {
-                    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-                    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
                 }
         		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
                 // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);

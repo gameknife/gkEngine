@@ -88,9 +88,6 @@ public:
 	virtual uint8 getSubMtlCount() {return m_uSubMtlCount;}
 	virtual IMaterial* getSubMaterial(uint8 index);
 
-	// 目前方式，通过定义的paramblock来生成
-	virtual bool loadFromParamBlock();
-
 	virtual ShaderMacros& getShaderMarcos() {return m_shaderMacros;}
 	virtual uint32 getShaderMarcoMask() {return m_marcoMask;}
 	virtual const gkStdString& getShaderName() {return m_shaderFilename;}
@@ -99,13 +96,7 @@ protected:
 	virtual bool loadImpl(void);			// 继承实现
 	virtual bool unloadImpl(void);
 
-	// 最初的方式，从x文件的effectInstance读取出材质参数
-	virtual bool loadFromFileX();
-
-
 	virtual bool loadMaterialFormRapidXmlNode( CRapidXmlParseNode* node );
-
-
 
 	void releaseParameterBlock();
 
@@ -117,9 +108,6 @@ private:
 	TextureArray m_vecTextureArray;				// 该材质所包含的贴图对象
 
 	gkNameValuePairList loadingParams;
-// 	D3DXHANDLE m_hTechnique;
-// 	D3DXHANDLE m_hParameterBlock;				// 该材质的参数块
-// 	D3DXHANDLE m_hMainDiffuse;
 
 	bool		m_bTransparent;					// 是否为半透明材质
 	bool		m_bDoubleSide;
@@ -127,7 +115,8 @@ private:
 	float		m_fGlossness;
 	int			m_nOpacity;
 	bool		m_castShadow;
-	gkStdString m_shaderFilename;
+
+	gkStdString		m_shaderFilename;
 	gkStdString		m_wstrIndividualFileName;
 	BYTE				m_yLoadType;
 	gkMaterialParams*	m_pLoadingParamBlock;

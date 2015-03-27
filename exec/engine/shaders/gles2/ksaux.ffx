@@ -8,7 +8,7 @@ varying highp vec2 outTc;
 void main()
 {
 #if defined( TEX )
-	gl_FragColor = texture2D(texDiffuse,outTc.xy);
+    gl_FragColor = texture2D(texDiffuse,outTc.xy);
 #else
     gl_FragColor = colorVarying;
 #endif
