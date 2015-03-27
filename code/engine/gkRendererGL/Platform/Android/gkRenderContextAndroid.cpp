@@ -2,7 +2,7 @@
 
 #ifdef OS_ANDROID
 #include "gkRenderContextAndroid.h"
-#include "gkRendererGLES2.h"
+#include "gkRendererGL330.h"
 
 bool gkDeviceRenderContext::destroyDevice()
 {
@@ -205,7 +205,7 @@ HWND gkDeviceRenderContext::initDevice(ISystemInitInfo& sii)
 	//ApiActivatePreferences();
 
 	//glViewport(0,0,sii.fWidth, sii.fHeight);
-	return 0;
+	return (HWND)1;
 }
 
 void gkDeviceRenderContext::swapBuffer()

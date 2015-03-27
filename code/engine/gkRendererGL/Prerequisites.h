@@ -85,6 +85,10 @@ Copyright (c) 2011-2015 Kaiming Yi
 #include <GLES2/gl2ext.h>
 #include <EGL/egl.h>
 
+#elif defined( OS_APPLE )
+
+#include <glo/glo.hpp>
+
 #elif defined( OS_IOS )
 
 #import <OpenGLES/ES2/gl.h>

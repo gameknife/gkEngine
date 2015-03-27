@@ -17,15 +17,17 @@
 rem global env
 call ..\global_task\set_global_env.bat
 	
-rem Step1 ×ª»»dds
-call ..\resource_task\_tga2pvr_engine.bat
-call ..\resource_task\_tga2pvr_media_adreno.bat
+rem Step1 dd
+call ..\resource_task\adreno_tga2atc_engine.bat
+call ..\resource_task\adreno_tga2atc_media.bat
 
-rem Step2 ´ò°ü
-%GKENGINE_HOME%\tools\gkPak -i "media\level" -o "paks\level.gpk" -l 5 -p 1
-%GKENGINE_HOME%\tools\gkPak -i "media\objects" -o "paks\objects.gpk" -l 5 -p 1
-%GKENGINE_HOME%\tools\gkPak -i "media\terrian" -o "paks\terrian.gpk" -l 5 -p 1
-%GKENGINE_HOME%\tools\gkPak -i "media\textures" -o "paks\textures.gpk" -l 5 -p 1
-%GKENGINE_HOME%\tools\gkPak -i "engine" -o "paks\engine.gpk" -l 5 -p 1
-%GKENGINE_HOME%\tools\gkPak -i "media\config" -o "paks\config.gpk" -l 5 -p 1
-%GKENGINE_HOME%\tools\gkPak -i "media\fonts" -o "paks\fonts.gpk" -l 5 -p 1
+rem Step2 dd
+%GKENGINE_HOME%\tools\gkPak -i "media\level" -o "paks\level.gpk" -l 5 -p 2
+%GKENGINE_HOME%\tools\gkPak -i "media\objects" -o "paks\objects.gpk" -l 5 -p 2
+%GKENGINE_HOME%\tools\gkPak -i "media\terrian" -o "paks\terrian.gpk" -l 5 -p 2
+%GKENGINE_HOME%\tools\gkPak -i "media\textures" -o "paks\textures.gpk" -l 5 -p 2
+%GKENGINE_HOME%\tools\gkPak -i "engine" -o "paks\engine.gpk" -l 5 -p 2
+%GKENGINE_HOME%\tools\gkPak -i "media\config" -o "paks\config.gpk" -l 5 -p 2
+%GKENGINE_HOME%\tools\gkPak -i "media\fonts" -o "paks\fonts.gpk" -l 5 -p 2
+
+pause

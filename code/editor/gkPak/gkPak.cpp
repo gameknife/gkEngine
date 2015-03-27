@@ -133,7 +133,7 @@ bool FilterEngineFile( const TCHAR* file)
 			!stricmp(ext, ".hkx") ||
 			!stricmp(ext, ".hkt") ||
 			!stricmp(ext, ".chr") ||
-			!stricmp(ext, ".o") ||
+			//!stricmp(ext, ".o") ||
 			!stricmp(ext, ".tod") ||
 			!stricmp(ext, ".ttf") ||
 			!stricmp(ext, ".cfg")			
@@ -142,7 +142,29 @@ bool FilterEngineFile( const TCHAR* file)
 			return true;
 		}
 	}
-
+	else if (ext && g_platform == 2)
+	{
+		if (!stricmp(ext, ".gmf") ||
+			!stricmp(ext, ".atc") ||
+			!stricmp(ext, ".raw") ||
+			!stricmp(ext, ".mtl") ||
+			!stricmp(ext, ".gks") ||
+			!stricmp(ext, ".gfx") ||
+			!stricmp(ext, ".ffx") ||
+			!stricmp(ext, ".vfx") ||
+			!stricmp(ext, ".h") ||
+			!stricmp(ext, ".hkx") ||
+			!stricmp(ext, ".hkt") ||
+			!stricmp(ext, ".chr") ||
+			//!stricmp(ext, ".o") ||
+			!stricmp(ext, ".tod") ||
+			!stricmp(ext, ".ttf") ||
+			!stricmp(ext, ".cfg")
+			)
+		{
+			return true;
+		}
+	}
 
 	return false;
 }

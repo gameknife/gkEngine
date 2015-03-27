@@ -107,6 +107,12 @@ HWND gkDeviceRenderContext::initDevice(ISystemInitInfo& sii)
 	PFNWGLGETPIXELFORMATATTRIBIVARBPROC GetPixelFormatAttribivARB = (PFNWGLGETPIXELFORMATATTRIBIVARBPROC)
 			wglGetProcAddress( "wglGetPixelFormatAttribivARB" );
 
+	if (!CreateContextAttribsARB || !GetExtensionsStringEXT || !GetExtensionsStringARB || !SwapIntervalEXT || !GetPixelFormatAttribivARB)
+	{
+		gkLogError(_T("Can not Create GL330 device, driver may not support."));
+		return NULL;
+	}
+
 	// delete tmp context
 
 	wglMakeCurrent( NULL, NULL );

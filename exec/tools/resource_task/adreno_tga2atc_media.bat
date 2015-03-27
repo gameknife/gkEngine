@@ -12,9 +12,15 @@
 
 call ..\global_task\set_global_env.bat
 
-for /R %GKENGINE_HOME%\engine\assets %%A in (*.dds *.pvr *atc) do (
-    echo [clean file] %%~nxA
-    del %%A
-)
+for /R %GKENGINE_HOME%\media %%A in (*.tga) do (
+    
+    IF NOT EXIST %%~dpnA.atc (
+    	echo [convert file] %%~nxA to %%~nA.atc
+    	%GKENGINE_HOME%\tools\gkResourceCompiler -i %%~fA -o %%~dpnA.atc -l 5 -p 0 -cfg atc
+    ) ELSE (
+    	echo [file exist] %%~nA.atc
+    )
 
-pause
+)
+rem -fOGL4444
+rem pause

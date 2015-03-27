@@ -12,7 +12,7 @@
 
 #ifdef RENDERAPI_GLES2
 #include "HwTextureLoader.h"
-#include "../glExtension.h"
+#include "glExtension.h"
 #endif
 
 
@@ -332,7 +332,11 @@ bool gkTextureGLES2::loadImpl( void )
 #ifdef RENDERAPI_GL330
 	TCHAR wszExtendedName[MAX_PATH] = _T(".dds");
 #else
+#ifdef OS_ANDROID
+	TCHAR wszExtendedName[MAX_PATH] = _T(".atc");
+#else
 	TCHAR wszExtendedName[MAX_PATH] = _T(".pvr");
+#endif
 #endif
 	TCHAR* strLastSlash = NULL;
 	strLastSlash = _tcsrchr( wszPath, _T( '.' ) );

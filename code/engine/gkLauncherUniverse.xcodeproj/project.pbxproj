@@ -297,7 +297,7 @@
 					"-lhkSceneData",
 					"-lhkSerialize",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = gkENGINE;
 				PROVISIONING_PROFILE = "";
 				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -354,7 +354,7 @@
 					"-lhkSceneData",
 					"-lhkSerialize",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = gkENGINE;
 				PROVISIONING_PROFILE = "";
 				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				WRAPPER_EXTENSION = app;

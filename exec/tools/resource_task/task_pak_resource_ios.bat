@@ -18,8 +18,8 @@ rem global env
 call ..\global_task\set_global_env.bat
 	
 rem Step1 trans dds
-call ..\resource_task\_tga2pvr_engine.bat
-call ..\resource_task\_tga2pvr_media.bat
+call ..\resource_task\sgx_tga2pvr_engine.bat
+call ..\resource_task\sgx_tga2pvr_media.bat
 
 mkdir %GKENGINE_HOME%\paks
 

@@ -136,6 +136,7 @@
     <ClCompile Include="..\gkRendererGL\gkRenderLayer.cpp" />
     <ClCompile Include="..\gkRendererGL\gkRenderSequence.cpp" />
     <ClCompile Include="..\gkRendererGL\gkShaderParamDataSource.cpp" />
+    <ClCompile Include="..\gkRendererGL\Platform\Win32\gkRenderContextWin32.cpp" />
     <ClCompile Include="..\gkRendererGL\RenderCamera.cpp" />
     <ClCompile Include="..\gkRendererGL\RendererCVars.cpp" />
     <ClCompile Include="..\gkRendererGL\RenderRes\gkMaterial.cpp" />
@@ -146,7 +147,6 @@
     <ClCompile Include="..\gkRendererGL\RenderRes\gkShaderManager.cpp" />
     <ClCompile Include="..\gkRendererGL\RenderRes\gkTextureGLES2.cpp" />
     <ClCompile Include="..\gkRendererGL\RenderRes\gkTextureManager.cpp" />
-    <ClCompile Include="Platform\Win32\gkRenderContextWin32.cpp" />
     <ClCompile Include="StableHeader.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -162,6 +162,7 @@
     <ClInclude Include="..\gkRendererGL\gkRenderSequence.h" />
     <ClInclude Include="..\gkRendererGL\gkShaderParamDataSource.h" />
     <ClInclude Include="..\gkRendererGL\ITextureLoader.h" />
+    <ClInclude Include="..\gkRendererGL\Platform\Win32\gkRenderContextWin32.h" />
     <ClInclude Include="..\gkRendererGL\Prerequisites.h" />
     <ClInclude Include="..\gkRendererGL\RenderCamera.h" />
     <ClInclude Include="..\gkRendererGL\RendererCVars.h" />
@@ -175,7 +176,6 @@
     <ClInclude Include="..\gkRendererGL\RenderRes\gkTextureGLES2.h" />
     <ClInclude Include="..\gkRendererGL\RenderRes\gkTextureManager.h" />
     <ClInclude Include="DeviceRenderContext.h" />
-    <ClInclude Include="Platform\Win32\gkRenderContextWin32.h" />
     <ClInclude Include="StableHeader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

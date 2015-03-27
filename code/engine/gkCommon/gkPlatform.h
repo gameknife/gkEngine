@@ -101,7 +101,7 @@ Copyright (c) 2011-2015 Kaiming Yi
 #   if __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__ >= 40000 || __IPHONE_OS_VERSION_MIN_REQUIRED >= 40000
 #       define OS_IOS
 #   else
-#       //define OS_IOS
+#       define OS_IOS
 #       define OS_APPLE
 #   endif
 #elif defined(__ANDROID__)

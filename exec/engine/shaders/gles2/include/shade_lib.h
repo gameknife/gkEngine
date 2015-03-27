@@ -23,11 +23,11 @@ vec4 DecodeRGBK(in vec4 Color, float fMultiplier)
 vec4 GetEnvironmentCMap(samplerCube envMap, in vec3 envTC, in float fSpecPower)
 {
 	float fGlossinessLod = 6.16231 - 0.497418 * sqrt(fSpecPower);
-//#ifdef GL330
-//	vec4 envColor = textureCubeLod(envMap, envTC.xyz, fGlossinessLod);// DecodeRGBK(textureCube(envMap, envTC.xzy), 16.0);
-//#else
+#ifdef GL330
+	vec4 envColor = DecodeRGBK(textureCube(envMap, envTC.xyz), 16.0);
+#else
 	vec4 envColor = DecodeRGBK(textureCubeLod( envMap, envTC.xyz, fGlossinessLod ), 16.0);
-//#endif
+#endif
 	
 	return envColor;
 }

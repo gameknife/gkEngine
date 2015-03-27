@@ -306,7 +306,7 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 #ifdef OS_APPLE
     LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGL330 );
 #elif defined( OS_IOS )
-    LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGL );
+    LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGLES2 );
 #else
 	LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererD3D9 );
 #endif
@@ -464,6 +464,12 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 		if( sii.pProgressCallBack )
 			sii.pProgressCallBack->OnInitProgress( szProgressInfo );
 		m_hWnd = gEnv->pRenderer->Init(sii);
+
+		if (m_hWnd == NULL)
+		{
+			gkLogError(_T("FATAL ERROR: Renderer Load Failed. exit."));
+			return false;
+		}
 
 		gkLogMessage(_T("Renderer Initialized."));
 	}
@@ -624,7 +630,7 @@ bool gkSystem::Destroy()
 #ifdef OS_APPLE
     UNLOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGL330 );
 #elif defined( OS_IOS )
-    UNLOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGL );
+    UNLOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGLES2 );
 #else
 	UNLOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererD3D9 );
 #endif

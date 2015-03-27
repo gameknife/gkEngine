@@ -513,7 +513,7 @@ bool gkShaderGLES2::StateRestoreInternal( ShaderState& state )
 void gkShaderGLES2::PreProcess( std::string &vsSource )
 {
 #ifdef RENDERAPI_GL330
-	vsSource.insert(0, "#version 120 \n");
+	vsSource.insert(0, "#version 100 \n");
 
     {
         size_t includepos = vsSource.find("#version");

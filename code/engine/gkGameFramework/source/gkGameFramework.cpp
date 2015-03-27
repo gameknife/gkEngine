@@ -36,10 +36,8 @@ gkGameFramework::gkGameFramework( void ):
 //////////////////////////////////////////////////////////////////////////
 	bool gkGameFramework::Init( ISystemInitInfo& sii )
 	{
-	gEnv->pSystem->Init(sii);
-	
-	return true;
-}
+		return gEnv->pSystem->Init(sii);
+	}
 //////////////////////////////////////////////////////////////////////////
 bool gkGameFramework::PostInit( HWND hWnd, ISystemInitInfo& sii )
 {

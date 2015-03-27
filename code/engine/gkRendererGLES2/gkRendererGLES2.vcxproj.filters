@@ -4,15 +4,6 @@
     <ClInclude Include="resource.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="Platform\Android\gkRenderContextAndroid.h">
-      <Filter>Platform\Android</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DeviceRenderContext.h">
-      <Filter>Platform\Win32</Filter>
-    </ClInclude>
-    <ClInclude Include="Platform\Win32Sim\gkRenderContextWin32.h">
-      <Filter>Platform\Win32</Filter>
-    </ClInclude>
     <ClInclude Include="..\gkRendererGL\DeviceRenderContext.h">
       <Filter>RenderSys</Filter>
     </ClInclude>
@@ -73,10 +64,16 @@
     <ClInclude Include="StableHeader.h">
       <Filter>DllMain</Filter>
     </ClInclude>
-    <ClInclude Include="glExtension.h">
+    <ClInclude Include="..\gkRendererGL\HwTextureLoader.h">
       <Filter>DllMain</Filter>
     </ClInclude>
-    <ClInclude Include="..\gkRendererGL\HwTextureLoader.h">
+    <ClInclude Include="..\gkRendererGL\Platform\Win32Sim\gkRenderContextWin32.h">
+      <Filter>Platform\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\Platform\Android\gkRenderContextAndroid.h">
+      <Filter>Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\glExtension.h">
       <Filter>DllMain</Filter>
     </ClInclude>
   </ItemGroup>
@@ -110,12 +107,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Platform\Android\gkRenderContextAndroid.cpp">
-      <Filter>Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="Platform\Win32Sim\gkRenderContextWin32.cpp">
-      <Filter>Platform\Win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\gkRendererGL\dllmain.cpp">
       <Filter>RenderSys</Filter>
     </ClCompile>
@@ -167,10 +158,16 @@
     <ClCompile Include="StableHeader.cpp">
       <Filter>DllMain</Filter>
     </ClCompile>
-    <ClCompile Include="glExtension.cpp">
+    <ClCompile Include="..\gkRendererGL\HwTextureLoader.cpp">
       <Filter>DllMain</Filter>
     </ClCompile>
-    <ClCompile Include="..\gkRendererGL\HwTextureLoader.cpp">
+    <ClCompile Include="..\gkRendererGL\Platform\Win32Sim\gkRenderContextWin32.cpp">
+      <Filter>Platform\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\Platform\Android\gkRenderContextAndroid.cpp">
+      <Filter>Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\glExtension.cpp">
       <Filter>DllMain</Filter>
     </ClCompile>
   </ItemGroup>

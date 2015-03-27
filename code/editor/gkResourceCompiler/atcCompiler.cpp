@@ -318,6 +318,10 @@ bool pvrCompiler::supportInput(const char* ext)
 bool pvrCompiler::supportOutput(const char* ext)
 {
 	//throw std::logic_error("The method or operation is not implemented.");
+	if (!stricmp(ext, ".atc"))
+	{
+		return true;
+	}
 	if (!stricmp(ext, ".pvr"))
 	{
 		return true;

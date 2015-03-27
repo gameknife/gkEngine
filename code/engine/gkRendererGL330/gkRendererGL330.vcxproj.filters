@@ -27,9 +27,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Platform\Win32\gkRenderContextWin32.cpp">
-      <Filter>Platform\Win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\gkRendererGL\dllmain.cpp">
       <Filter>RenderRes</Filter>
     </ClCompile>
@@ -84,11 +81,11 @@
     <ClCompile Include="..\gkRendererGL\DDsTextureLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\gkRendererGL\Platform\Win32\gkRenderContextWin32.cpp">
+      <Filter>Platform\Win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Platform\Win32\gkRenderContextWin32.h">
-      <Filter>Platform\Win32</Filter>
-    </ClInclude>
     <ClInclude Include="DeviceRenderContext.h">
       <Filter>Platform</Filter>
     </ClInclude>
@@ -157,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="..\gkRendererGL\DDsTextureLoader.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\Platform\Win32\gkRenderContextWin32.h">
+      <Filter>Platform\Win32</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -22,15 +22,15 @@
 #include "Platform/Win32Sim/gkRenderContextWin32.h"
 #endif
 #elif defined( OS_ANDROID )
-#include "../Platform/Android/gkRenderContextAndroid.h"
-#elif defined( OS_IOS )
-#include "../Platform/IOS/gkRenderContextIOS.h"
+#include "Platform/Android/gkRenderContextAndroid.h"
 #elif defined( OS_APPLE )
 #include "Platform/OSX/gkRenderContextOSX.h"
+#elif defined( OS_IOS )
+#include "Platform/IOS/gkRenderContextIOS.h"
 #endif
 
 #ifdef RENDERAPI_GLES2
-#include "../glExtension.h"
+#include "glExtension.h"
 #endif
 
 // Index to bind the attributes to vertex shaders
@@ -81,6 +81,11 @@ HWND gkRendererGL::Init(ISystemInitInfo& sii)
 {
 	m_pDeviceContext = new gkDeviceRenderContext;
 	m_hWnd = m_pDeviceContext->initDevice(sii);
+
+	if (m_hWnd == NULL)
+	{
+		return NULL;
+	}
 
 #ifdef RENDERAPI_GLES2
 	gkGLExtension::Init();

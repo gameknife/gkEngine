@@ -32,6 +32,8 @@ extern "C" void DLL_EXPORT gkModuleUnload(void)
 }
 
 #else
+
+#ifdef RENDERAPI_GL330
 void gkLoadStaticModule_gkRendererGL330( SSystemGlobalEnvironment* pEnv )
 {
 	if (pEnv)
@@ -46,4 +48,20 @@ void gkFreeStaticModule_gkRendererGL330()
 {
 	delete g_RendererModule;
 }
+#else
+void gkLoadStaticModule_gkRendererGLES2( SSystemGlobalEnvironment* pEnv )
+{
+    if (pEnv)
+    {
+        gEnv = pEnv;
+        g_RendererModule = new gkRendererGL();
+        pEnv->pRenderer = g_RendererModule;
+    }
+}
+
+void gkFreeStaticModule_gkRendererGLES2()
+{
+    delete g_RendererModule;
+}
+#endif
 #endif

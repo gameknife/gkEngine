@@ -64,7 +64,12 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, int )
 	sii.fWidth = width;
 	sii.fHeight = height;
 
-	game->Init( sii );
+	if (!(game->Init(sii)))
+	{
+		return 0;
+	}
+
+
 	game->PostInit( NULL, sii );
 
 	game->InitGame( NULL );
@@ -107,6 +112,7 @@ typedef IGameFramework* (*STARTFUNC)(void);
 void* gHandle = 0;
 ISystemInitInfo gSii;
 bool gIntialized = false;
+bool exit_req = false;
 
 /*!***********************************************************************
  @Function		OsDisplayDebugString
@@ -241,14 +247,21 @@ static void handle_cmd(struct android_app* app, int32_t cmd)
 				gSii.fWidth = 854;
 				gSii.fHeight = 480;
 				OsDisplayDebugString( "preinit..." );
-				gGameFramework->Init(gSii);
-				gGameFramework->PostInit( 0, gSii);
-				gGameFramework->InitGame( 0 );
-				OsDisplayDebugString( "windowinit..." );
+				if (!(gGameFramework->Init(gSii)) )
+				{
+					exit_req = true;
+				}
+				else
+				{
+					gGameFramework->PostInit(0, gSii);
+					gGameFramework->InitGame(0);
+					OsDisplayDebugString("windowinit...");
 
-				app->onInputEvent = gGameFramework->getENV()->pInputManager->getAndroidHandler();
-				OsDisplayDebugString( "input device binded..." );
-				gIntialized = true;
+					app->onInputEvent = gGameFramework->getENV()->pInputManager->getAndroidHandler();
+					OsDisplayDebugString("input device binded...");
+					gIntialized = true;
+				}
+
 			}
 
 				
@@ -357,6 +370,11 @@ void android_main(struct android_app* app)
 		if (gIntialized)
 		{
 			gGameFramework->Update();
+		}
+
+		if (exit_req)
+		{
+			break;
 		}
 
 // 		long currentTime = egl->getSystemTime();
