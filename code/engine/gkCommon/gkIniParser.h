@@ -77,19 +77,32 @@ inline void::gkIniParser::Parse()
 	{
 		dict.clear();
 
+		//////////////////////////////////////////////////////////////////////////
+		// change CRLF -> LF
+
+		std::string copyout((char*)file->DataPtr());
+
+		size_t pos = 0;
+		pos = copyout.find_first_of("\r\n", pos);
+		while (std::string::npos != pos)
+		{
+			copyout.replace(pos, 2, "\n");
+			pos = copyout.find_first_of("\r\n", pos + 1);
+		}
+		
+
 #ifdef _UNICODE
 		int size = file->Size() / sizeof(char);
 		TCHAR* textbuf = new TCHAR[size + 1];
-		MultiByteToWideChar( CP_ACP, 0, (char*)file->DataPtr(), file->Size(), textbuf, size + 1 );
+		MultiByteToWideChar(CP_ACP, 0, copyout.c_str(), copyout.length(), textbuf, size + 1);
 		textbuf[size] = 0;
 
 		gkStdStringstream ss( textbuf );
 		delete[] textbuf;
 #else
-		gkStdStringstream ss( (char*)file->DataPtr() );
+		gkStdStringstream ss(copyout.c_str());
 #endif
 
-		
 		gkStdString  strline;  //saves per line from INI file 
 		gkStdString  strSection ;  //saves section+key
 		const gkStdString   jointor = _T("__@@__");  // a map key may like this:section__@@__key;

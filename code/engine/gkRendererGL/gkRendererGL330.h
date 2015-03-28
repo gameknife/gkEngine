@@ -116,8 +116,6 @@ struct gkFBOMap
 typedef std::vector<gkDynTex> gkRenderTargetStack;
 typedef std::map<gkVertexBuffer*, GLuint> gkVAOmapping;
 
-
-
 class gkRendererGL : public IRenderer
 {
 public:

@@ -47,27 +47,6 @@ struct ITexture;
 struct IGameObject;
 struct IGameObjectRenderLayer;
 
-// 顶点渲染的顶点定义
-struct GK_HELPER_LINEVERTEX
-{
-	Vec3 m_vPosition;
-	DWORD m_dwDiffuse;
-
-	GK_HELPER_LINEVERTEX()
-	{
-	}
-
-	GK_HELPER_LINEVERTEX( Vec3 pos, DWORD color)
-	{
-		m_vPosition = Vec3(pos.x, pos.y, pos.z);
-		m_dwDiffuse = color;
-	}
-	~GK_HELPER_LINEVERTEX()
-	{
-
-	}
-};
-
 struct GK_HELPER_2DVERTEX
 {
 	Vec3 m_vPosition;

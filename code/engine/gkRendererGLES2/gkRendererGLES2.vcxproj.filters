@@ -76,6 +76,9 @@
     <ClInclude Include="..\gkRendererGL\glExtension.h">
       <Filter>DllMain</Filter>
     </ClInclude>
+    <ClInclude Include="..\gkRendererGL\gkVirtualAPI.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resource Files">
@@ -169,6 +172,9 @@
     </ClCompile>
     <ClCompile Include="..\gkRendererGL\glExtension.cpp">
       <Filter>DllMain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\gkVirtualAPI.cpp">
+      <Filter>RenderSys</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

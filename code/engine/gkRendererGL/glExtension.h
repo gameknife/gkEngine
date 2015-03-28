@@ -90,6 +90,7 @@ struct gkGLExtension
 	static bool EXT_VAO;
 	static bool COMPRESS_VERTEX;
 	static bool INDEX_32BIT;
+	static bool MAP_BUFFER;
 
 	static PFNGLBINDVERTEXARRAYOESPROC glBindVertexArrayOES;
 	static PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArraysOES;

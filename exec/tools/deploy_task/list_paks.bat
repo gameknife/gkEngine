@@ -17,9 +17,7 @@ set FOLDER_NAME=android_%BUILD_NUMBER%
 echo %FOLDER_NAME%	
 
 rem Step1 upload resource file to android device
-%GKENGINE_HOME%\tools\adb shell mkdir -p /storage/emulated/legacy/gkENGINE/paks
-%GKENGINE_HOME%\tools\adb push %GKENGINE_HOME%/paks /storage/emulated/legacy/gkENGINE/paks/
-%GKENGINE_HOME%\tools\adb shell ls /storage/emulated/legacy/gkENGINE/paks
+%GKENGINE_HOME%\tools\adb shell ls /storage/emulated/legacy/gkENGINE
 
 rem Step2 reinstall app
 rem %GKENGINE_HOME%\tools\adb install -r %GKENGINE_HOME%/builds/%FOLDER_NAME%/apk/gklauncher-debug.apk

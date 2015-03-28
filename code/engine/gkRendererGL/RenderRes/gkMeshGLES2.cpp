@@ -490,7 +490,7 @@ void gkMeshGLES2::UpdateHwBuffer()
 	glBindBuffer(GL_ARRAY_BUFFER, (GLuint)(m_pVB->userData));
 
 	// Set the buffer's data
-	glBufferData(GL_ARRAY_BUFFER, m_pVB->elementCount * m_pVB->elementSize, m_pVB->data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, m_pVB->elementCount * m_pVB->elementSize, m_pVB->data, GL_DYNAMIC_DRAW);
 
 	// Unbind the VBO
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -504,7 +504,7 @@ void gkMeshGLES2::UpdateHwBuffer()
  
  	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, (GLuint)(m_pIB->userData));
  
- 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_pIB->count * sizeof(uint32), (uint32*)(m_pIB->data) , GL_STATIC_DRAW );
+ 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_pIB->count * sizeof(uint32), (uint32*)(m_pIB->data) , GL_DYNAMIC_DRAW );
  
  	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 

@@ -60,17 +60,17 @@ struct STextRenderInfo
 class gkAuxRenderer : public Singleton<gkAuxRenderer>, public IAuxRenderer
 {
 protected:
-	std::vector<GK_HELPER_LINEVERTEX> m_vecLineVertexBuffer;
-	std::vector<GK_HELPER_LINEVERTEX> m_vecSolidVertexBuffer;
+	std::vector<GK_HELPER_2DVERTEX> m_vecLineVertexBuffer;
+	std::vector<GK_HELPER_2DVERTEX> m_vecSolidVertexBuffer;
 
-	std::vector<GK_HELPER_LINEVERTEX> m_vecOverHudLineVertexBuffer;
-	std::vector<GK_HELPER_LINEVERTEX> m_vecOverHudSolidVertexBuffer;
+	std::vector<GK_HELPER_2DVERTEX> m_vecOverHudLineVertexBuffer;
+	std::vector<GK_HELPER_2DVERTEX> m_vecOverHudSolidVertexBuffer;
 
-	std::vector<GK_HELPER_LINEVERTEX> m_vecLineVertexBuffer_Render;
-	std::vector<GK_HELPER_LINEVERTEX> m_vecSolidVertexBuffer_Render;
+	std::vector<GK_HELPER_2DVERTEX> m_vecLineVertexBuffer_Render;
+	std::vector<GK_HELPER_2DVERTEX> m_vecSolidVertexBuffer_Render;
 
-	std::vector<GK_HELPER_LINEVERTEX> m_vecOverHudLineVertexBuffer_Render;
-	std::vector<GK_HELPER_LINEVERTEX> m_vecOverHudSolidVertexBuffer_Render;
+	std::vector<GK_HELPER_2DVERTEX> m_vecOverHudLineVertexBuffer_Render;
+	std::vector<GK_HELPER_2DVERTEX> m_vecOverHudSolidVertexBuffer_Render;
 
 	std::vector<GK_HELPER_2DVERTEX> m_vecScreenBoxVertexBuffer;
 	std::vector<GK_HELPER_2DVERTEX> m_vecScreenBoxVertexBuffer_Render;

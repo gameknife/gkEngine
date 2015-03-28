@@ -46,8 +46,8 @@ void gkAuxRenderer::SetDrawColor( ColorF& color )
 void gkAuxRenderer::AuxRender3DLine( const Vec3& from, const Vec3& to, ColorF& color, bool ignoreZ)
 {
 	SetDrawColor(color);
-	GK_HELPER_LINEVERTEX vertexFrom(from, m_curColor);
-	GK_HELPER_LINEVERTEX vertexTo(to, m_curColor);
+	GK_HELPER_2DVERTEX vertexFrom(from, m_curColor);
+	GK_HELPER_2DVERTEX vertexTo(to, m_curColor);
 	if (ignoreZ)
 	{
 		m_vecOverHudLineVertexBuffer.push_back(vertexFrom);
@@ -289,13 +289,13 @@ void gkAuxRenderer::_FlushAllHelper( LPDIRECT3DDEVICE9 pDevice, bool clean )
 			if (!m_vecLineVertexBuffer_Render.empty())
 			{
 				int size = m_vecLineVertexBuffer_Render.size();
-				pDevice->DrawPrimitiveUP(D3DPT_LINELIST, m_vecLineVertexBuffer_Render.size() / 2, &(m_vecLineVertexBuffer_Render[0]), sizeof(GK_HELPER_LINEVERTEX));
+				pDevice->DrawPrimitiveUP(D3DPT_LINELIST, m_vecLineVertexBuffer_Render.size() / 2, &(m_vecLineVertexBuffer_Render[0]), sizeof(GK_HELPER_2DVERTEX));
 			}
 			
 			if (!m_vecSolidVertexBuffer_Render.empty())
 			{
 				int size = m_vecSolidVertexBuffer_Render.size();
-				pDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, m_vecSolidVertexBuffer_Render.size() / 3, &(m_vecSolidVertexBuffer_Render[0]), sizeof(GK_HELPER_LINEVERTEX));
+				pDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, m_vecSolidVertexBuffer_Render.size() / 3, &(m_vecSolidVertexBuffer_Render[0]), sizeof(GK_HELPER_2DVERTEX));
 			}
 			
 
@@ -305,14 +305,14 @@ void gkAuxRenderer::_FlushAllHelper( LPDIRECT3DDEVICE9 pDevice, bool clean )
 			if (!m_vecOverHudLineVertexBuffer_Render.empty())
 			{
 				int size = m_vecOverHudLineVertexBuffer_Render.size();
-				pDevice->DrawPrimitiveUP(D3DPT_LINELIST, m_vecOverHudLineVertexBuffer_Render.size() / 2, &(m_vecOverHudLineVertexBuffer_Render[0]), sizeof(GK_HELPER_LINEVERTEX));
+				pDevice->DrawPrimitiveUP(D3DPT_LINELIST, m_vecOverHudLineVertexBuffer_Render.size() / 2, &(m_vecOverHudLineVertexBuffer_Render[0]), sizeof(GK_HELPER_2DVERTEX));
 			}
 			
 
 			if (!m_vecOverHudSolidVertexBuffer_Render.empty())
 			{
 				int size = m_vecOverHudSolidVertexBuffer_Render.size();
-				pDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, m_vecOverHudSolidVertexBuffer_Render.size() / 3, &(m_vecOverHudSolidVertexBuffer_Render[0]), sizeof(GK_HELPER_LINEVERTEX));
+				pDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, m_vecOverHudSolidVertexBuffer_Render.size() / 3, &(m_vecOverHudSolidVertexBuffer_Render[0]), sizeof(GK_HELPER_2DVERTEX));
 			}
 			
 
@@ -551,7 +551,7 @@ void gkAuxRenderer::AuxRenderPyramid( const Vec3& center, const Vec3& dir, const
 	Vec3 down = dir % right; // -2
 	down.normalize();
 
-	GK_HELPER_LINEVERTEX point[5];
+	GK_HELPER_2DVERTEX point[5];
 	point[0].m_vPosition  = center + dir * radius * 1.5f;
 	point[1].m_vPosition = center + right * radius * 0.5f;
 	point[2].m_vPosition = center + down * radius * 0.5f;
@@ -633,7 +633,7 @@ void gkAuxRenderer::AuxRender3DBoxSolid( const Vec3& center, Vec3& size, ColorF&
 {
 	SetDrawColor( color );
 
-	GK_HELPER_LINEVERTEX point[8];
+	GK_HELPER_2DVERTEX point[8];
 	point[0].m_vPosition = center + Vec3(-size.x, size.y, -size.z) * 0.5f;
 	point[1].m_vPosition  = center + Vec3(-size.x, -size.y, -size.z) * 0.5f;
 	point[2].m_vPosition  = center + Vec3(size.x, size.y, -size.z) * 0.5f;
@@ -818,7 +818,7 @@ void gkAuxRenderer::_swapBufferForRendering()
 	m_vecMeshFrameBuffer_Render = m_vecMeshFrameBuffer;
 	m_vecMeshFrameBuffer.clear();
 
-	std::vector<GK_HELPER_LINEVERTEX> voidvector;
+	std::vector<GK_HELPER_2DVERTEX> voidvector;
 	m_vecLineVertexBuffer_Render = m_vecLineVertexBuffer;//.assign(m_vecLineVertexBuffer.begin(), m_vecLineVertexBuffer.end());
 	m_vecLineVertexBuffer.clear();
 	//m_vecLineVertexBuffer.swap(0);

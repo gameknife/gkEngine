@@ -231,7 +231,7 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 #ifdef OS_IOS
     path = gkGetExecRootDir();
 #else
-	path = gkGetExecRootDir() + _T("/paks/");
+	path = gkGetExecRootDir() + _T("paks/");
 #endif
 
 	enum_all_files_in_folder(path.c_str(), result, false);

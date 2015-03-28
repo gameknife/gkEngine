@@ -23,18 +23,38 @@ Copyright (c) 2011-2015 Kaiming Yi
 */
 //////////////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////////////////////////
+//
+// yikaiming (C) 2014
+// gkENGINE Source File 
+//
+// Name:   	gkVirtualAPI.h
+// Desc:	
+// 	
+// 
+// Author:  gameKnife
+// Date:	2015/3/28
+// 
+//////////////////////////////////////////////////////////////////////////
+
+#ifndef _gkVirtualAPI_h_
+#define _gkVirtualAPI_h_
+
+struct gkVirtualAPI
+{
+	enum MapFlag
+	{
+		eVAPI_MapWrite,
+		eVAPI_MapRead,
+		eVAPI_MapRW,
+	};
+
+	static void gkVAPI_MapBuffer(GLvoid* *data, GLenum target, uint32 size, MapFlag flag);
+	static void gkVAPI_UnMapBuffer(GLvoid* data, GLenum target, uint32 size);
+	static void gen_or_bind_vao(GLuint& vao, GLuint& vbo);
+	static void unbind_vao();
+};
 
 
-#pragma once
+#endif
 
-#include "gkPlatform.h"
-#include "ISystem.h"
-#include "IRenderer.h"
-#include "I3DEngine.h"
-#include "ISystemProfiler.h"
-
-#include "Prerequisites.h"
-
-
-#define VEC32D3DXVEC3( a ) D3DXVECTOR3(a.x, a.y, a.z)
-#define VEC32D3DXVEC3T( a ) D3DXVECTOR3(a.x, a.z, -a.y)

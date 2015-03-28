@@ -136,6 +136,7 @@
     <ClCompile Include="..\gkRendererGL\gkRenderLayer.cpp" />
     <ClCompile Include="..\gkRendererGL\gkRenderSequence.cpp" />
     <ClCompile Include="..\gkRendererGL\gkShaderParamDataSource.cpp" />
+    <ClCompile Include="..\gkRendererGL\gkVirtualAPI.cpp" />
     <ClCompile Include="..\gkRendererGL\Platform\Win32\gkRenderContextWin32.cpp" />
     <ClCompile Include="..\gkRendererGL\RenderCamera.cpp" />
     <ClCompile Include="..\gkRendererGL\RendererCVars.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="..\gkRendererGL\gkRenderLayer.h" />
     <ClInclude Include="..\gkRendererGL\gkRenderSequence.h" />
     <ClInclude Include="..\gkRendererGL\gkShaderParamDataSource.h" />
+    <ClInclude Include="..\gkRendererGL\gkVirtualAPI.h" />
     <ClInclude Include="..\gkRendererGL\ITextureLoader.h" />
     <ClInclude Include="..\gkRendererGL\Platform\Win32\gkRenderContextWin32.h" />
     <ClInclude Include="..\gkRendererGL\Prerequisites.h" />

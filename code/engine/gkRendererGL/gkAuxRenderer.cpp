@@ -5,10 +5,12 @@
 #include "IGameObjectLayer.h"
 #include "RenderRes/gkShaderManager.h"
 #include "IMesh.h"
+#include "gkVirtualAPI.h"
 
 #ifdef RENDERAPI_GLES2
 #include "glExtension.h"
 #endif
+
 
 
 #define AUX_VERTEX_ARRAY				0
@@ -39,8 +41,8 @@ void gkAuxRendererGLES2::SetDrawColor( ColorF& color )
 void gkAuxRendererGLES2::AuxRender3DLine( const Vec3& from, const Vec3& to, ColorF& color, bool ignoreZ)
 {
 	SetDrawColor(color);
-	GK_HELPER_LINEVERTEX vertexFrom(from, m_curColor);
-	GK_HELPER_LINEVERTEX vertexTo(to, m_curColor);
+	GK_HELPER_2DVERTEX vertexFrom(from, m_curColor);
+	GK_HELPER_2DVERTEX vertexTo(to, m_curColor);
 	if (ignoreZ)
 	{
 		m_vecOverHudLineVertexBuffer.push_back(vertexFrom);
@@ -297,7 +299,7 @@ void gkAuxRendererGLES2::AuxRenderGizmo(const Matrix44& xform, float size, uint8
 // 
 // 		pDevice->SetFVF(GKFVF_HELPER_LINEVERTEX);
 // 		int size = m_vecLineVertexBuffer_Render.size();
-// 		pDevice->DrawPrimitiveUP(D3DPT_LINELIST, m_vecLineVertexBuffer_Render.size() / 2, &(m_vecLineVertexBuffer_Render[0]), sizeof(GK_HELPER_LINEVERTEX));
+// 		pDevice->DrawPrimitiveUP(D3DPT_LINELIST, m_vecLineVertexBuffer_Render.size() / 2, &(m_vecLineVertexBuffer_Render[0]), sizeof(GK_HELPER_2DVERTEX));
 // 	}
 // 	m_vecLineVertexBuffer_Render.clear();
 // 
@@ -308,7 +310,7 @@ void gkAuxRendererGLES2::AuxRenderGizmo(const Matrix44& xform, float size, uint8
 //  		//pDevice->SetRenderState( D3DRS_LIGHTING, FALSE );
 //  		pDevice->SetFVF(GKFVF_HELPER_LINEVERTEX);
 //  		int size = m_vecSolidVertexBuffer_Render.size();
-//  		pDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, m_vecSolidVertexBuffer_Render.size() / 3, &(m_vecSolidVertexBuffer_Render[0]), sizeof(GK_HELPER_LINEVERTEX));
+//  		pDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, m_vecSolidVertexBuffer_Render.size() / 3, &(m_vecSolidVertexBuffer_Render[0]), sizeof(GK_HELPER_2DVERTEX));
 //  	}
 //  	m_vecSolidVertexBuffer_Render.clear();
 // 
@@ -369,7 +371,7 @@ void gkAuxRendererGLES2::AuxRenderGizmo(const Matrix44& xform, float size, uint8
 // 
 // 		pDevice->SetFVF(GKFVF_HELPER_LINEVERTEX);
 // 		int size = m_vecOverHudLineVertexBuffer_Render.size();
-// 		pDevice->DrawPrimitiveUP(D3DPT_LINELIST, m_vecOverHudLineVertexBuffer_Render.size() / 2, &(m_vecOverHudLineVertexBuffer_Render[0]), sizeof(GK_HELPER_LINEVERTEX));
+// 		pDevice->DrawPrimitiveUP(D3DPT_LINELIST, m_vecOverHudLineVertexBuffer_Render.size() / 2, &(m_vecOverHudLineVertexBuffer_Render[0]), sizeof(GK_HELPER_2DVERTEX));
 // 	}
 // 	m_vecOverHudLineVertexBuffer_Render.clear();
 // 
@@ -380,7 +382,7 @@ void gkAuxRendererGLES2::AuxRenderGizmo(const Matrix44& xform, float size, uint8
 // 		//pDevice->SetRenderState( D3DRS_LIGHTING, FALSE );
 // 		pDevice->SetFVF(GKFVF_HELPER_LINEVERTEX);
 // 		int size = m_vecOverHudSolidVertexBuffer_Render.size();
-// 		pDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, m_vecOverHudSolidVertexBuffer_Render.size() / 3, &(m_vecOverHudSolidVertexBuffer_Render[0]), sizeof(GK_HELPER_LINEVERTEX));
+// 		pDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, m_vecOverHudSolidVertexBuffer_Render.size() / 3, &(m_vecOverHudSolidVertexBuffer_Render[0]), sizeof(GK_HELPER_2DVERTEX));
 // 	}
 // 	m_vecOverHudSolidVertexBuffer_Render.clear();
 // 
@@ -419,7 +421,7 @@ void gkAuxRendererGLES2::AuxRenderPyramid( const Vec3& center, const Vec3& dir, 
 	Vec3 down = dir % right; // -2
 	down.normalize();
 
-	GK_HELPER_LINEVERTEX point[5];
+	GK_HELPER_2DVERTEX point[5];
 	point[0].m_vPosition  = center + dir * radius * 1.5f;
 	point[1].m_vPosition = center + right * radius * 0.5f;
 	point[2].m_vPosition = center + down * radius * 0.5f;
@@ -500,7 +502,7 @@ void gkAuxRendererGLES2::AuxRender3DBoxSolid( const Vec3& center, float length, 
 void gkAuxRendererGLES2::AuxRender3DBoxSolid( const Vec3& center, Vec3& size, ColorF& color /*= ColorF(1.0,1.0,1.0,1.0)*/, bool ignoreZ /*= false*/ )
 {
 
-	GK_HELPER_LINEVERTEX point[8];
+	GK_HELPER_2DVERTEX point[8];
 	point[0].m_vPosition = center + Vec3(-size.x, size.y, -size.z) * 0.5f;
 	point[1].m_vPosition  = center + Vec3(-size.x, -size.y, -size.z) * 0.5f;
 	point[2].m_vPosition  = center + Vec3(size.x, size.y, -size.z) * 0.5f;
@@ -659,7 +661,7 @@ void gkAuxRendererGLES2::_swapBufferForRendering()
 	m_vecMeshFrameBuffer.clear();
 	//m_vecMeshFrameBuffer.swap(0);
 
-	std::vector<GK_HELPER_LINEVERTEX> voidvector;
+	std::vector<GK_HELPER_2DVERTEX> voidvector;
 	m_vecLineVertexBuffer_Render = m_vecLineVertexBuffer;//.assign(m_vecLineVertexBuffer.begin(), m_vecLineVertexBuffer.end());
 	m_vecLineVertexBuffer.clear();
 	//m_vecLineVertexBuffer.swap(0);
@@ -709,33 +711,19 @@ void gkAuxRendererGLES2::_FlushAllHelper()
 	if( m_vecLineVertexBuffer_Render.size() > 0 )
 	{
 		glBindBuffer( GL_ARRAY_BUFFER, m_lineBuffer );
-		int size = m_vecLineVertexBuffer_Render.size() * sizeof(GK_HELPER_LINEVERTEX);
-		glBufferData(GL_ARRAY_BUFFER, size, 0, GL_STATIC_DRAW);
+		
+		int size = m_vecLineVertexBuffer_Render.size() * sizeof(GK_HELPER_2DVERTEX);
+		
+		GLvoid* Data;
 
-#ifdef RENDERAPI_GL330
-		GLvoid* Data = glMapBufferRange(GL_ARRAY_BUFFER, 0,	size,	
-			GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_FLUSH_EXPLICIT_BIT);
-#endif
-
-#ifdef RENDERAPI_GLES2
-		GLvoid* Data = gkGLExtension::glMapBufferOES( GL_ARRAY_BUFFER, GL_WRITE_ONLY_OES );
-#endif
+		gkVirtualAPI::gkVAPI_MapBuffer( &Data, GL_ARRAY_BUFFER, size, gkVirtualAPI::eVAPI_MapWrite );
 
 		if (Data)
 		{
 			memcpy(Data, m_vecLineVertexBuffer_Render.data(),  size);
 		}
 
-#ifdef RENDERAPI_GL330
-		glFlushMappedBufferRange(GL_ARRAY_BUFFER, 0,  size);
-		glUnmapBuffer(GL_ARRAY_BUFFER);
-#endif
-
-#ifdef RENDERAPI_GLES2
-		gkGLExtension::glUnmapBufferOES( GL_ARRAY_BUFFER );
-#endif
-
-
+		gkVirtualAPI::gkVAPI_UnMapBuffer( Data, GL_ARRAY_BUFFER, size );
 
 		glBindBuffer( GL_ARRAY_BUFFER, 0 );
 	}
@@ -745,31 +733,20 @@ void gkAuxRendererGLES2::_FlushAllHelper()
 	if(m_vecSolidVertexBuffer_Render.size() > 0)
 	{
 		glBindBuffer( GL_ARRAY_BUFFER, m_vertexBuffer );
-		int size = m_vecSolidVertexBuffer_Render.size() * sizeof(GK_HELPER_LINEVERTEX);
-		glBufferData(GL_ARRAY_BUFFER, size, 0, GL_STATIC_DRAW);
+		int size = m_vecSolidVertexBuffer_Render.size() * sizeof(GK_HELPER_2DVERTEX);
 
-#ifdef RENDERAPI_GL330
-		GLvoid* Data = glMapBufferRange(GL_ARRAY_BUFFER, 0,	size,	
-			GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_FLUSH_EXPLICIT_BIT);
-#endif
+		GLvoid* Data = NULL;
 
-#ifdef RENDERAPI_GLES2
-		GLvoid* Data = gkGLExtension::glMapBufferOES( GL_ARRAY_BUFFER, GL_WRITE_ONLY_OES );
-#endif
+		gkVirtualAPI::gkVAPI_MapBuffer( &Data, GL_ARRAY_BUFFER, size, gkVirtualAPI::eVAPI_MapWrite );
+
+		
 
 		if (Data)
 		{
 			memcpy(Data, m_vecSolidVertexBuffer_Render.data(),  size);
 		}
 
-#ifdef RENDERAPI_GL330
-		glFlushMappedBufferRange(GL_ARRAY_BUFFER, 0,  size);
-		glUnmapBuffer(GL_ARRAY_BUFFER);
-#endif
-
-#ifdef RENDERAPI_GLES2
-		gkGLExtension::glUnmapBufferOES( GL_ARRAY_BUFFER );
-#endif
+		gkVirtualAPI::gkVAPI_UnMapBuffer( Data, GL_ARRAY_BUFFER, size );
 
 		glBindBuffer( GL_ARRAY_BUFFER, 0 );
 	}
@@ -779,31 +756,21 @@ void gkAuxRendererGLES2::_FlushAllHelper()
 	if(m_vecScreenBoxVertexBuffer_Render.size() > 0)
 	{
 		glBindBuffer( GL_ARRAY_BUFFER, m_hudBoxBuffer );
-		int size = m_vecScreenBoxVertexBuffer_Render.size() * sizeof(GK_HELPER_LINEVERTEX);
-		glBufferData(GL_ARRAY_BUFFER, size, 0, GL_STATIC_DRAW);
+		int size = m_vecScreenBoxVertexBuffer_Render.size() * sizeof(GK_HELPER_2DVERTEX);
 
-#ifdef RENDERAPI_GL330
-		GLvoid* Data = glMapBufferRange(GL_ARRAY_BUFFER, 0,	size,	
-			GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_FLUSH_EXPLICIT_BIT);
-#endif
+		GLvoid* Data = NULL;
 
-#ifdef RENDERAPI_GLES2
-		GLvoid* Data = gkGLExtension::glMapBufferOES( GL_ARRAY_BUFFER, GL_WRITE_ONLY_OES );
-#endif
+		gkVirtualAPI::gkVAPI_MapBuffer( &Data, GL_ARRAY_BUFFER, size, gkVirtualAPI::eVAPI_MapWrite );
+
+		
 
 		if (Data)
 		{
 			memcpy(Data, m_vecScreenBoxVertexBuffer_Render.data(),  size);
 		}
 
-#ifdef RENDERAPI_GL330
-		glFlushMappedBufferRange(GL_ARRAY_BUFFER, 0,  size);
-		glUnmapBuffer(GL_ARRAY_BUFFER);
-#endif
+		gkVirtualAPI::gkVAPI_UnMapBuffer( Data, GL_ARRAY_BUFFER, size );
 
-#ifdef RENDERAPI_GLES2
-		gkGLExtension::glUnmapBufferOES( GL_ARRAY_BUFFER );
-#endif
 		glBindBuffer( GL_ARRAY_BUFFER, 0 );
 	}
 
@@ -814,24 +781,25 @@ void gkAuxRendererGLES2::_FlushAllHelper()
 	Matrix44 MVPMat = viewMat * projMat;
 	gkShaderManager::ms_AuxRenderer->FX_SetMatrix( "modelViewProjectionMatrix", MVPMat );
 
-	glBindVertexArray(m_lineVAO);
-	
+	gkVirtualAPI::gen_or_bind_vao( m_lineVAO, m_lineBuffer );
+	apply_2dvert_layout(true);
 	glDrawArraysInstanced( GL_LINES, 0, m_vecLineVertexBuffer_Render.size(),1 );
-
-	glBindVertexArray(0);
+	gkVirtualAPI::unbind_vao( );
 
 	MVPMat.SetIdentity();
 	gkShaderManager::ms_AuxRenderer->FX_SetMatrix( "modelViewProjectionMatrix", MVPMat );
 
 	// draw polys
-	glBindVertexArray(m_vertexVAO);
+	gkVirtualAPI::gen_or_bind_vao( m_vertexVAO, m_vertexBuffer );
+	apply_2dvert_layout(true);
 	glDrawArraysInstanced( GL_TRIANGLES, 0, m_vecSolidVertexBuffer_Render.size(),1 );
-	glBindVertexArray(0);
+	gkVirtualAPI::unbind_vao();
 
 	
-	glBindVertexArray(m_hudBoxVAO);
+	gkVirtualAPI::gen_or_bind_vao( m_hudBoxVAO, m_hudBoxBuffer );
+	apply_2dvert_layout(true);
 	glDrawArraysInstanced( GL_TRIANGLES, 0, m_vecScreenBoxVertexBuffer_Render.size(),1 );
-	glBindVertexArray(0);
+	gkVirtualAPI::unbind_vao();
 
 
 
@@ -854,50 +822,35 @@ void gkAuxRendererGLES2::_FlushAllHelper()
             //////////////////////////////////////////////////////////////////////////
 			{
                 glBindBuffer( GL_ARRAY_BUFFER, m_hudBoxTexBuffer );
-                //int size = m_vecScreenBoxTexturedVertexBuffer_Render.size() * sizeof(GK_HELPER_2DVERTEX_TEXTURED);
-                
-                int size = 6 * sizeof(GK_HELPER_2DVERTEX_TEXTURED);
-                glBufferData(GL_ARRAY_BUFFER, size, 0, GL_STATIC_DRAW);
-                
-#ifdef RENDERAPI_GL330
-				GLvoid* Data = glMapBufferRange(GL_ARRAY_BUFFER, 0,	size,	
-					GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_FLUSH_EXPLICIT_BIT);
-#endif
 
-#ifdef RENDERAPI_GLES2
-				GLvoid* Data = gkGLExtension::glMapBufferOES( GL_ARRAY_BUFFER, GL_WRITE_ONLY_OES );
-#endif
+                int size = 6 * sizeof(GK_HELPER_2DVERTEX_TEXTURED);
+
+				GLvoid* Data = NULL;
+
+				gkVirtualAPI::gkVAPI_MapBuffer( &Data, GL_ARRAY_BUFFER, size, gkVirtualAPI::eVAPI_MapWrite );
+
+				
                 
                 if (Data)
                 {
                     memcpy(Data, &(m_vecScreenBoxTexturedVertexBuffer_Render[i * 6]),  size);
                 }
                 
-#ifdef RENDERAPI_GL330
-				glFlushMappedBufferRange(GL_ARRAY_BUFFER, 0,  size);
-				glUnmapBuffer(GL_ARRAY_BUFFER);
-#endif
+				gkVirtualAPI::gkVAPI_UnMapBuffer( Data, GL_ARRAY_BUFFER, size );
 
-#ifdef RENDERAPI_GLES2
-				gkGLExtension::glUnmapBufferOES( GL_ARRAY_BUFFER );
-#endif
                 glBindBuffer( GL_ARRAY_BUFFER, 0 );
                 
             }
             
-            glBindVertexArray(m_hudBoxTexVAO);
+			gkVirtualAPI::gen_or_bind_vao( m_hudBoxTexVAO, m_hudBoxTexBuffer );
+			apply_2dvert_texed_layout(true);
             glDrawArraysInstanced( GL_TRIANGLES, 0, 6,1 );
-            glBindVertexArray(0);
+            gkVirtualAPI::unbind_vao();
         }
     }
     
     gkShaderManager::ms_AuxRenderer_Tex->FX_End();
     
-
-
-// 	glDisable(GL_BLEND);
-// 	glEnable(GL_DEPTH_TEST);
-//     glEnable(GL_CULL_FACE);
 }
 
 void gkAuxRendererGLES2::_FlushAllText()
@@ -910,58 +863,36 @@ void gkAuxRendererGLES2::_FlushAllText()
 
 void gkAuxRendererGLES2::init()
 {
+	m_lineVAO = 0;
+	m_vertexVAO = 0;
+	m_hudBoxVAO = 0;
+	m_hudBoxTexVAO = 0;
+
+
 	glGenBuffers(1, &m_lineBuffer);
 	glGenBuffers(1, &m_vertexBuffer);
 	glGenBuffers(1, &m_hudBoxBuffer);
     glGenBuffers(1, &m_hudBoxTexBuffer);
 
-	glGenVertexArrays(1, &m_lineVAO);
-	glBindVertexArray(m_lineVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, m_lineBuffer);
-	glVertexAttribPointer(AUX_VERTEX_ARRAY, 3, GL_FLOAT, GL_FALSE, sizeof(GK_HELPER_LINEVERTEX), GLF_BUFFER_OFFSET(0));
-	glVertexAttribPointer(AUX_COLOR_ARRAY, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(GK_HELPER_LINEVERTEX), GLF_BUFFER_OFFSET(sizeof(Vec3)) );
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//////////////////////////////////////////////////////////////////////////
+	gkVirtualAPI::gen_or_bind_vao(m_lineVAO, m_lineBuffer);
+	apply_2dvert_layout();
+	gkVirtualAPI::unbind_vao();
 
-	glEnableVertexAttribArray(AUX_VERTEX_ARRAY);
-	glEnableVertexAttribArray(AUX_COLOR_ARRAY);
+	//////////////////////////////////////////////////////////////////////////
+	gkVirtualAPI::gen_or_bind_vao(m_vertexVAO, m_vertexBuffer);
+	apply_2dvert_layout();
+	gkVirtualAPI::unbind_vao();
 
-	glBindVertexArray(0);
+	//////////////////////////////////////////////////////////////////////////
+	gkVirtualAPI::gen_or_bind_vao(m_hudBoxVAO, m_hudBoxBuffer);
+	apply_2dvert_layout();
+	gkVirtualAPI::unbind_vao();
 
-	glGenVertexArrays(1, &m_vertexVAO);
-	glBindVertexArray(m_vertexVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-	glVertexAttribPointer(AUX_VERTEX_ARRAY, 3, GL_FLOAT, GL_FALSE, sizeof(GK_HELPER_2DVERTEX), GLF_BUFFER_OFFSET(0));
-	glVertexAttribPointer(AUX_COLOR_ARRAY, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(GK_HELPER_2DVERTEX), GLF_BUFFER_OFFSET(sizeof(Vec3)) );
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glEnableVertexAttribArray(AUX_VERTEX_ARRAY);
-	glEnableVertexAttribArray(AUX_COLOR_ARRAY);
-
-	glBindVertexArray(0);
-
-	glGenVertexArrays(1, &m_hudBoxVAO);
-	glBindVertexArray(m_hudBoxVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, m_hudBoxBuffer);
-	glVertexAttribPointer(AUX_VERTEX_ARRAY, 3, GL_FLOAT, GL_FALSE, sizeof(GK_HELPER_2DVERTEX), GLF_BUFFER_OFFSET(0));
-	glVertexAttribPointer(AUX_COLOR_ARRAY, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(GK_HELPER_2DVERTEX), GLF_BUFFER_OFFSET(sizeof(Vec3)) );
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glEnableVertexAttribArray(AUX_VERTEX_ARRAY);
-	glEnableVertexAttribArray(AUX_COLOR_ARRAY);
-
-	glBindVertexArray(0);
-    
-    glGenVertexArrays(1, &m_hudBoxTexVAO);
-    glBindVertexArray(m_hudBoxTexVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, m_hudBoxTexBuffer);
-    glVertexAttribPointer(AUX_VERTEX_ARRAY, 3, GL_FLOAT, GL_FALSE, sizeof(GK_HELPER_2DVERTEX_TEXTURED), GLF_BUFFER_OFFSET(0));
-    glVertexAttribPointer(AUX_TEXCOORD_ARRAY, 2, GL_FLOAT, GL_FALSE, sizeof(GK_HELPER_2DVERTEX_TEXTURED), GLF_BUFFER_OFFSET(sizeof(Vec3)) );
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
-    glEnableVertexAttribArray(AUX_VERTEX_ARRAY);
-    glEnableVertexAttribArray(AUX_COLOR_ARRAY);
-    
-    glBindVertexArray(0);
+	//////////////////////////////////////////////////////////////////////////
+	gkVirtualAPI::gen_or_bind_vao(m_hudBoxTexVAO, m_hudBoxTexBuffer);
+	apply_2dvert_texed_layout();
+	gkVirtualAPI::unbind_vao();
 }
 
 void gkAuxRendererGLES2::destroy()
@@ -1034,6 +965,39 @@ void gkAuxRendererGLES2::AuxRenderScreenBox( const Vec2& pos, const Vec2& wh, co
     m_vecScreenBoxTexture.push_back( texture );
 
 }
-
-
-
+void gkAuxRendererGLES2::apply_2dvert_layout(bool rendering)
+{
+	if(rendering)
+	{
+#ifdef RENDERAPI_GL330
+		return;
+#else
+		if (gkGLExtension::EXT_VAO)
+		{
+			return;
+		}
+#endif
+	}
+	glEnableVertexAttribArray(AUX_VERTEX_ARRAY);
+	glEnableVertexAttribArray(AUX_COLOR_ARRAY);
+	glVertexAttribPointer(AUX_VERTEX_ARRAY, 3, GL_FLOAT, GL_FALSE, sizeof(GK_HELPER_2DVERTEX), GLF_BUFFER_OFFSET(0));
+	glVertexAttribPointer(AUX_COLOR_ARRAY, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(GK_HELPER_2DVERTEX), GLF_BUFFER_OFFSET(sizeof(Vec3)) );
+}
+void gkAuxRendererGLES2::apply_2dvert_texed_layout(bool rendering)
+{
+	if(rendering)
+	{
+#ifdef RENDERAPI_GL330
+		return;
+#else
+		if (gkGLExtension::EXT_VAO)
+		{
+			return;
+		}
+#endif
+	}
+	glEnableVertexAttribArray(AUX_VERTEX_ARRAY);
+	glEnableVertexAttribArray(AUX_COLOR_ARRAY);
+	glVertexAttribPointer(AUX_VERTEX_ARRAY, 3, GL_FLOAT, GL_FALSE, sizeof(GK_HELPER_2DVERTEX_TEXTURED), GLF_BUFFER_OFFSET(0));
+	glVertexAttribPointer(AUX_TEXCOORD_ARRAY, 2, GL_FLOAT, GL_FALSE, sizeof(GK_HELPER_2DVERTEX_TEXTURED), GLF_BUFFER_OFFSET(sizeof(Vec3)) );
+}

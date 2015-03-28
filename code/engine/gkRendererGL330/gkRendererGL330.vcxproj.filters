@@ -84,6 +84,9 @@
     <ClCompile Include="..\gkRendererGL\Platform\Win32\gkRenderContextWin32.cpp">
       <Filter>Platform\Win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\gkRendererGL\gkVirtualAPI.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DeviceRenderContext.h">
@@ -157,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="..\gkRendererGL\Platform\Win32\gkRenderContextWin32.h">
       <Filter>Platform\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\gkVirtualAPI.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

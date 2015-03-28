@@ -753,8 +753,9 @@ inline void enum_all_files_in_folder( const TCHAR* root_path,std::vector<gkStdSt
 				result.push_back( normedpath.c_str() );
 			}
 		}  
+		closedir(dp);     
 	}  
-	closedir(dp);     
+	
 }
 #else
 void enum_all_files_in_folder( const TCHAR* root_path,std::vector<gkStdString>& result,bool inc_sub_folders/*=false*/ );

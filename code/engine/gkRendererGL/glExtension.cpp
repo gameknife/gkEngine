@@ -21,6 +21,7 @@ PFNGLMAPBUFFEROESPROC                   gkGLExtension::glMapBufferOES = 0;
  bool gkGLExtension::EXT_VAO = false;
  bool gkGLExtension::COMPRESS_VERTEX = false;
  bool gkGLExtension::INDEX_32BIT = false;
+ bool gkGLExtension::MAP_BUFFER = false;
 
  PFNGLBINDVERTEXARRAYOESPROC  gkGLExtension::glBindVertexArrayOES = 0;
  PFNGLDELETEVERTEXARRAYSOESPROC  gkGLExtension::glDeleteVertexArraysOES = 0;
@@ -56,6 +57,7 @@ void gkGLExtension::Init()
 	if (glBindVertexArrayOES || glDeleteVertexArraysOES || glGenVertexArraysOES || glIsVertexArrayOES )
 	{
 		gkLogMessage( _T("RendererGLES2: Device support ext [VAO].") );
+		//EXT_VAO = true;
 #ifdef OS_IOS
 		EXT_VAO = true;
 #endif
@@ -69,9 +71,14 @@ void gkGLExtension::Init()
 	if (glMapBufferOES || glUnmapBufferOES || glGetBufferPointervOES )
 	{
 		gkLogMessage( _T("RendererGLES2: Device support ext [map_buffer_oes].") );
+		MAP_BUFFER = true;
 #ifdef OS_IOS
-		//EXT_VAO = true;
+		MAP_BUFFER = true;
 #endif
+	}
+	else
+	{
+		MAP_BUFFER = false;
 	}
 
     

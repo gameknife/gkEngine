@@ -14,6 +14,7 @@
 #include "RenderRes/gkShader.h"
 #include "RenderRes/gkTextureGLES2.h"
 #include "RendererCVars.h"
+#include "gkVirtualAPI.h"
 
 #if defined( OS_WIN32 ) 
 #ifdef RENDERAPI_GL330
@@ -32,6 +33,7 @@
 #ifdef RENDERAPI_GLES2
 #include "glExtension.h"
 #endif
+
 
 // Index to bind the attributes to vertex shaders
 const int VERTEX_ARRAY = 0;
@@ -819,8 +821,10 @@ void gkRendererGL::_render(const gkRenderOperation& op, bool isShadowPass /*= fa
 		if (op.useIndexes && !op.indexData)
 			return;
 
-		//if (gkGLExtension::EXT_VAO)
+#ifdef RENDERAPI_GLES2
+		if (gkGLExtension::EXT_VAO)
 		{
+#endif
 			// find a vao existed
 			GLuint vaoName = 0;
 			gkVAOmapping::iterator it = m_vaoMap.find(op.vertexData);
@@ -839,13 +843,14 @@ void gkRendererGL::_render(const gkRenderOperation& op, bool isShadowPass /*= fa
 			}
 			// bind vao
 			glBindVertexArray(vaoName);
+#ifdef RENDERAPI_GLES2
 		}
-// 		else
-// 		{
-// 			// simple rebuild layout
-// 			apply_vertex_layout(op);
-// 
-// 		}
+		else
+		{
+			// simple rebuild layout
+			apply_vertex_layout(op);
+		}
+#endif
 
 		if (op.useIndexes)
 		{
@@ -864,16 +869,21 @@ void gkRendererGL::_render(const gkRenderOperation& op, bool isShadowPass /*= fa
 			gEnv->pProfiler->increaseElementCount(ePe_Triangle_Total, op.indexCount / 3);
 		}
 
-// 		if (gkGLExtension::EXT_VAO)
-// 		{
+#ifdef RENDERAPI_GLES2
+		if (gkGLExtension::EXT_VAO)
+		{
+#endif
 			glBindVertexArray(0);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-// 		}
-// 		else
-// 		{
-// 			glBindBuffer(GL_ARRAY_BUFFER, 0);
-// 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-// 		}
+
+#ifdef RENDERAPI_GLES2
+		}
+		else
+		{
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		}
+#endif
 
 	}
 	break;
@@ -1288,16 +1298,8 @@ void gkRendererGL::FX_DrawScreenQuad(Vec4 region)
 	if (tmpVBO == 0) {
 
 		glGenBuffers(1, &tmpVBO);
-		glBindBuffer(GL_ARRAY_BUFFER, tmpVBO);
+		gkVirtualAPI::gen_or_bind_vao( tmpVAO, tmpVBO );
 
-		glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(STmpVert), NULL, GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		glGenVertexArrays(1, &tmpVAO);
-		glBindVertexArray(tmpVAO);
-
-		glBindBuffer(GL_ARRAY_BUFFER, tmpVBO);
 		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(STmpVert), 0);
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(STmpVert), (void*)(2 * sizeof(float)));
@@ -1305,20 +1307,17 @@ void gkRendererGL::FX_DrawScreenQuad(Vec4 region)
 		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(STmpVert), (void*)(4 * sizeof(float)));
 		glEnableVertexAttribArray(2);
 
-		glBindVertexArray(0);
+		gkVirtualAPI::unbind_vao();
 	}
 
 	// update quad
 	glBindBuffer(GL_ARRAY_BUFFER, tmpVBO);
 
-#ifdef RENDERAPI_GL330
-	GLvoid* Data = glMapBufferRange(GL_ARRAY_BUFFER, 0,	4 * sizeof(STmpVert),	
-		GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT | GL_MAP_UNSYNCHRONIZED_BIT );
-#endif
+	uint32 size = 4 * sizeof(STmpVert);
 
-#ifdef RENDERAPI_GLES2
-	GLvoid* Data = gkGLExtension::glMapBufferOES( GL_ARRAY_BUFFER, GL_WRITE_ONLY_OES );
-#endif
+	GLvoid* Data = NULL;
+
+	gkVirtualAPI::gkVAPI_MapBuffer( &Data, GL_ARRAY_BUFFER, size, gkVirtualAPI::eVAPI_MapWrite );
 
 	STmpVert verts[4];
 	verts[0].pos = Vec2(region.x, region.y);
@@ -1336,27 +1335,30 @@ void gkRendererGL::FX_DrawScreenQuad(Vec4 region)
 	verts[2].farclip = getShaderContent().getCamFarVerts(2);
 	verts[3].farclip = getShaderContent().getCamFarVerts(3);
 
-	memcpy(Data, verts, 4 * sizeof(STmpVert));
+	memcpy(Data, verts, size);
 
-#ifdef RENDERAPI_GL330
-	//glFlushMappedBufferRange(GL_ARRAY_BUFFER, 0,  size);
-	glUnmapBuffer(GL_ARRAY_BUFFER);
-#endif
-
-#ifdef RENDERAPI_GLES2
-	gkGLExtension::glUnmapBufferOES( GL_ARRAY_BUFFER );
-#endif
-
+	gkVirtualAPI::gkVAPI_UnMapBuffer( Data, GL_ARRAY_BUFFER, size);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glBindVertexArray(tmpVAO);
+	gkVirtualAPI::gen_or_bind_vao( tmpVAO, tmpVBO );
 
-	// Draw the quad
+#ifdef RENDERAPI_GLES2
+
+	if (!gkGLExtension::EXT_VAO)
+	{
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(STmpVert), 0);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(STmpVert), (void*)(2 * sizeof(float)));
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(STmpVert), (void*)(4 * sizeof(float)));
+		glEnableVertexAttribArray(2);
+	}
+#endif
+
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-	// Unbind the VBO
-	glBindVertexArray(0);
+	gkVirtualAPI::unbind_vao();
 
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
