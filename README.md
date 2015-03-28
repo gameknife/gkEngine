@@ -1,7 +1,13 @@
 ![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/gkengine_logo.png "logo")
 ========
 
-a cross-platform game engine
+<br>
+
+部署，编译等问题请现在[wiki](https://github.com/gameknife/gkEngine/wiki)和[issue|question?](https://github.com/gameknife/gkEngine/labels/question)中查阅。
+
+欢迎加入gkENGINE贡献者交流QQ群: [289525937](http://jq.qq.com/?_wv=1027&k=fSv16p)
+
+<br>
 
 gkENGINE的技术特性
 ---
