@@ -7,9 +7,6 @@
     <ClInclude Include="..\gkRendererGL\DeviceRenderContext.h">
       <Filter>RenderSys</Filter>
     </ClInclude>
-    <ClInclude Include="..\gkRendererGL\dllmain.h">
-      <Filter>RenderSys</Filter>
-    </ClInclude>
     <ClInclude Include="..\gkRendererGL\gkAuxRenderer.h">
       <Filter>RenderSys</Filter>
     </ClInclude>
@@ -30,12 +27,6 @@
     </ClInclude>
     <ClInclude Include="..\gkRendererGL\RenderCamera.h">
       <Filter>RenderSys</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\RendererCVars.h">
-      <Filter>RenderSys</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\RenderRes\DDS.h">
-      <Filter>RenderRes</Filter>
     </ClInclude>
     <ClInclude Include="..\gkRendererGL\RenderRes\gkMaterial.h">
       <Filter>RenderRes</Filter>
@@ -64,20 +55,29 @@
     <ClInclude Include="StableHeader.h">
       <Filter>DllMain</Filter>
     </ClInclude>
-    <ClInclude Include="..\gkRendererGL\HwTextureLoader.h">
-      <Filter>DllMain</Filter>
-    </ClInclude>
     <ClInclude Include="..\gkRendererGL\Platform\Win32Sim\gkRenderContextWin32.h">
       <Filter>Platform\Win32</Filter>
     </ClInclude>
     <ClInclude Include="..\gkRendererGL\Platform\Android\gkRenderContextAndroid.h">
       <Filter>Platform\Android</Filter>
     </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\DDS.h">
+      <Filter>TexLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\HwTextureLoader.h">
+      <Filter>TexLoader</Filter>
+    </ClInclude>
     <ClInclude Include="..\gkRendererGL\glExtension.h">
+      <Filter>glExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\dllmain.h">
       <Filter>DllMain</Filter>
     </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RendererCVars.h">
+      <Filter>CVars</Filter>
+    </ClInclude>
     <ClInclude Include="..\gkRendererGL\gkVirtualAPI.h">
-      <Filter>RenderSys</Filter>
+      <Filter>VirtualAPI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -108,11 +108,17 @@
     <Filter Include="CVars">
       <UniqueIdentifier>{c2a927f2-5cd3-4d80-b488-8977b2a0a412}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TexLoader">
+      <UniqueIdentifier>{3f841957-07b9-4e68-9782-1134b318fc1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="glExtension">
+      <UniqueIdentifier>{2a9abf25-81e3-4f96-9eb8-1a6957333a60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VirtualAPI">
+      <UniqueIdentifier>{97a22afe-1d81-41ff-8f95-ec3b2680606b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\gkRendererGL\dllmain.cpp">
-      <Filter>RenderSys</Filter>
-    </ClCompile>
     <ClCompile Include="..\gkRendererGL\gkAuxRenderer.cpp">
       <Filter>RenderSys</Filter>
     </ClCompile>
@@ -129,9 +135,6 @@
       <Filter>RenderSys</Filter>
     </ClCompile>
     <ClCompile Include="..\gkRendererGL\RenderCamera.cpp">
-      <Filter>RenderSys</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gkRendererGL\RendererCVars.cpp">
       <Filter>RenderSys</Filter>
     </ClCompile>
     <ClCompile Include="..\gkRendererGL\RenderRes\gkMaterial.cpp">
@@ -161,20 +164,26 @@
     <ClCompile Include="StableHeader.cpp">
       <Filter>DllMain</Filter>
     </ClCompile>
-    <ClCompile Include="..\gkRendererGL\HwTextureLoader.cpp">
-      <Filter>DllMain</Filter>
-    </ClCompile>
     <ClCompile Include="..\gkRendererGL\Platform\Win32Sim\gkRenderContextWin32.cpp">
       <Filter>Platform\Win32</Filter>
     </ClCompile>
     <ClCompile Include="..\gkRendererGL\Platform\Android\gkRenderContextAndroid.cpp">
       <Filter>Platform\Android</Filter>
     </ClCompile>
+    <ClCompile Include="..\gkRendererGL\HwTextureLoader.cpp">
+      <Filter>TexLoader</Filter>
+    </ClCompile>
     <ClCompile Include="..\gkRendererGL\glExtension.cpp">
+      <Filter>glExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\dllmain.cpp">
       <Filter>DllMain</Filter>
     </ClCompile>
+    <ClCompile Include="..\gkRendererGL\RendererCVars.cpp">
+      <Filter>CVars</Filter>
+    </ClCompile>
     <ClCompile Include="..\gkRendererGL\gkVirtualAPI.cpp">
-      <Filter>RenderSys</Filter>
+      <Filter>VirtualAPI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

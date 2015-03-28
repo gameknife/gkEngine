@@ -28,7 +28,6 @@
 		A06034E11799925D00B2F4C6 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		A06034E817999A1900B2F4C6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A06034EA17999A2200B2F4C6 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		A07D4BBE179A63A100C36005 /* logo_retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_retina.png; sourceTree = "<group>"; };
 		A0A7A08617A9FD73003FC387 /* libgkCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkCore.a; path = "../../exec/ios/Debug-OSX/libgkCore.a"; sourceTree = "<group>"; };
 		A0A7A08717A9FD73003FC387 /* libgkFont.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkFont.a; path = "../../exec/ios/Debug-OSX/libgkFont.a"; sourceTree = "<group>"; };
 		A0A7A08817A9FD73003FC387 /* libgkGameFramework.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkGameFramework.a; path = "../../exec/ios/Debug-OSX/libgkGameFramework.a"; sourceTree = "<group>"; };
@@ -84,7 +83,6 @@
 				A0A7A08B17A9FD73003FC387 /* libgkRendererGL330.a */,
 				A0A7A08C17A9FD73003FC387 /* libgkSystem.a */,
 				A0A7A08D17A9FD73003FC387 /* libTestCases.a */,
-				A07D4BBE179A63A100C36005 /* logo_retina.png */,
 				A06034EA17999A2200B2F4C6 /* IOKit.framework */,
 				A06034E817999A1900B2F4C6 /* CoreGraphics.framework */,
 				A06034E11799925D00B2F4C6 /* OpenGL.framework */,

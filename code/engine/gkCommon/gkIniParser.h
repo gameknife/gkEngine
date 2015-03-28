@@ -83,11 +83,11 @@ inline void::gkIniParser::Parse()
 		std::string copyout((char*)file->DataPtr());
 
 		size_t pos = 0;
-		pos = copyout.find_first_of("\r\n", pos);
+		pos = copyout.find_first_of("\r", pos);
 		while (std::string::npos != pos)
 		{
 			copyout.replace(pos, 2, "\n");
-			pos = copyout.find_first_of("\r\n", pos + 1);
+			pos = copyout.find_first_of("\r", pos + 1);
 		}
 		
 

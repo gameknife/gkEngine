@@ -10,7 +10,6 @@
 		A01A53831AC5C2AB00665B07 /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = A09799571AC5BD8900173F60 /* EAGLView.mm */; };
 		A01A53841AC5C2AB00665B07 /* gkRenderContextIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = A09799591AC5BD8900173F60 /* gkRenderContextIOS.mm */; };
 		A01A53851AC5C2AB00665B07 /* TouchView.mm in Sources */ = {isa = PBXBuildFile; fileRef = A097995E1AC5BD8A00173F60 /* TouchView.mm */; };
-		A01A53891AC5E0EF00665B07 /* glExtension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A01A53871AC5E0EF00665B07 /* glExtension.cpp */; };
 		A01A538A1AC5E0EF00665B07 /* glExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = A01A53881AC5E0EF00665B07 /* glExtension.h */; };
 		A01A538B1AC5E12D00665B07 /* glExtension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A01A53871AC5E0EF00665B07 /* glExtension.cpp */; };
 		A02235A418895A84004B1475 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8A8BA315BEC9990039AACB /* Foundation.framework */; };
@@ -127,6 +126,10 @@
 		A097993F1AC5BBE400173F60 /* gkTextureManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A097991A1AC5BB3000173F60 /* gkTextureManager.cpp */; };
 		A09799681AC5BD9600173F60 /* gkRenderContextOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A09799601AC5BD8A00173F60 /* gkRenderContextOSX.cpp */; };
 		A09E2CF91788920500DAE357 /* gkFTFaceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A09E2CF71788920500DAE357 /* gkFTFaceManager.cpp */; };
+		A0A4FDFB1AC6F4D100836C6A /* gkVirtualAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0A4FDF91AC6F4D100836C6A /* gkVirtualAPI.cpp */; };
+		A0A4FDFC1AC6F4D100836C6A /* gkVirtualAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0A4FDF91AC6F4D100836C6A /* gkVirtualAPI.cpp */; };
+		A0A4FDFD1AC6F4D100836C6A /* gkVirtualAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A4FDFA1AC6F4D100836C6A /* gkVirtualAPI.h */; };
+		A0A4FDFE1AC6F4D100836C6A /* gkVirtualAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A4FDFA1AC6F4D100836C6A /* gkVirtualAPI.h */; };
 		A0B9C22A177BDB4F0056EFE7 /* Alloc.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B9C21A177BDB4F0056EFE7 /* Alloc.c */; };
 		A0B9C22B177BDB4F0056EFE7 /* Bcj2.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B9C21B177BDB4F0056EFE7 /* Bcj2.c */; };
 		A0B9C22C177BDB4F0056EFE7 /* Bra.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B9C21C177BDB4F0056EFE7 /* Bra.c */; };
@@ -147,7 +150,6 @@
 		A0D17CBA172E3CA0001EBD1C /* FileChangeMonitor.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D17C91172E3CA0001EBD1C /* FileChangeMonitor.h */; };
 		A0D17CBB172E3CA0001EBD1C /* gkInGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0D17C92172E3CA0001EBD1C /* gkInGUI.cpp */; };
 		A0D17CBC172E3CA0001EBD1C /* gkLockManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D17C93172E3CA0001EBD1C /* gkLockManager.h */; };
-		A0D17CBD172E3CA0001EBD1C /* gkSystem-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = A0D17C94172E3CA0001EBD1C /* gkSystem-Prefix.pch */; };
 		A0D17CBE172E3CA0001EBD1C /* gkSystemInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0D17C98172E3CA0001EBD1C /* gkSystemInfo.cpp */; };
 		A0D17CBF172E3CA0001EBD1C /* gkSystemInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D17C99172E3CA0001EBD1C /* gkSystemInfo.h */; };
 		A0D17CC0172E3CA0001EBD1C /* gkTaskDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0D17C9A172E3CA0001EBD1C /* gkTaskDispatcher.cpp */; };
@@ -404,7 +406,7 @@
 		A09799071AC5BB3000173F60 /* RenderCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RenderCamera.h; sourceTree = "<group>"; };
 		A09799081AC5BB3000173F60 /* RendererCVars.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RendererCVars.cpp; sourceTree = "<group>"; };
 		A09799091AC5BB3000173F60 /* RendererCVars.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RendererCVars.h; sourceTree = "<group>"; };
-		A097990B1AC5BB3000173F60 /* DDS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDS.h; sourceTree = "<group>"; };
+		A097990B1AC5BB3000173F60 /* DDS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DDS.h; path = RenderRes/DDS.h; sourceTree = "<group>"; };
 		A097990C1AC5BB3000173F60 /* gkMaterial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gkMaterial.cpp; sourceTree = "<group>"; };
 		A097990D1AC5BB3000173F60 /* gkMaterial.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gkMaterial.h; sourceTree = "<group>"; };
 		A097990E1AC5BB3000173F60 /* gkMaterialManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gkMaterialManager.cpp; sourceTree = "<group>"; };
@@ -438,6 +440,8 @@
 		A09799671AC5BD8A00173F60 /* gkRenderContextWin32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gkRenderContextWin32.h; sourceTree = "<group>"; };
 		A09E2CF71788920500DAE357 /* gkFTFaceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gkFTFaceManager.cpp; sourceTree = "<group>"; };
 		A09E2CF81788920500DAE357 /* gkFTFaceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gkFTFaceManager.h; sourceTree = "<group>"; };
+		A0A4FDF91AC6F4D100836C6A /* gkVirtualAPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gkVirtualAPI.cpp; sourceTree = "<group>"; };
+		A0A4FDFA1AC6F4D100836C6A /* gkVirtualAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gkVirtualAPI.h; sourceTree = "<group>"; };
 		A0B9C21A177BDB4F0056EFE7 /* Alloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Alloc.c; path = lzma/Alloc.c; sourceTree = "<group>"; };
 		A0B9C21B177BDB4F0056EFE7 /* Bcj2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Bcj2.c; path = lzma/Bcj2.c; sourceTree = "<group>"; };
 		A0B9C21C177BDB4F0056EFE7 /* Bra.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Bra.c; path = lzma/Bra.c; sourceTree = "<group>"; };
@@ -459,7 +463,6 @@
 		A0D17C91172E3CA0001EBD1C /* FileChangeMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileChangeMonitor.h; sourceTree = "<group>"; };
 		A0D17C92172E3CA0001EBD1C /* gkInGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gkInGUI.cpp; sourceTree = "<group>"; };
 		A0D17C93172E3CA0001EBD1C /* gkLockManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gkLockManager.h; sourceTree = "<group>"; };
-		A0D17C94172E3CA0001EBD1C /* gkSystem-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gkSystem-Prefix.pch"; sourceTree = "<group>"; };
 		A0D17C98172E3CA0001EBD1C /* gkSystemInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gkSystemInfo.cpp; sourceTree = "<group>"; };
 		A0D17C99172E3CA0001EBD1C /* gkSystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gkSystemInfo.h; sourceTree = "<group>"; };
 		A0D17C9A172E3CA0001EBD1C /* gkTaskDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gkTaskDispatcher.cpp; sourceTree = "<group>"; };
@@ -486,7 +489,7 @@
 		A0D17CB1172E3CA0001EBD1C /* gkResFileManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gkResFileManager.cpp; sourceTree = "<group>"; };
 		A0D17CB2172E3CA0001EBD1C /* gkSceneBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gkSceneBuilder.cpp; sourceTree = "<group>"; };
 		A0D17CB3172E3CA0001EBD1C /* gkSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gkSystem.cpp; sourceTree = "<group>"; };
-		A0D17CB5172E3CA0001EBD1C /* gkSystemProfiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gkSystemProfiler.cpp; sourceTree = "<group>"; };
+		A0D17CB5172E3CA0001EBD1C /* gkSystemProfiler.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = gkSystemProfiler.cpp; sourceTree = "<group>"; };
 		A0D17CB6172E3CA0001EBD1C /* gkSystemStableHeader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gkSystemStableHeader.cpp; sourceTree = "<group>"; };
 		A0D17CB7172E3CA0001EBD1C /* gkTimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gkTimer.cpp; sourceTree = "<group>"; };
 		A0D17CB8172E3CA0001EBD1C /* SystemCVars.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SystemCVars.cpp; sourceTree = "<group>"; };
@@ -987,30 +990,15 @@
 		A09798F21AC5BB3000173F60 /* gkRendererGL */ = {
 			isa = PBXGroup;
 			children = (
-				A01A53871AC5E0EF00665B07 /* glExtension.cpp */,
-				A01A53881AC5E0EF00665B07 /* glExtension.h */,
+				A0A4FE021AC6F5C700836C6A /* RenderSystem */,
+				A0A4FE011AC6F5B800836C6A /* Extension */,
+				A0A4FE001AC6F58A00836C6A /* TexLoaders */,
+				A0A4FDFF1AC6F57700836C6A /* VirtualAPI */,
 				A09799511AC5BD8900173F60 /* Platform */,
-				A09798F31AC5BB3000173F60 /* DDsTextureLoader.cpp */,
-				A09798F41AC5BB3000173F60 /* DDsTextureLoader.h */,
 				A09798F51AC5BB3000173F60 /* DeviceRenderContext.h */,
 				A09798F61AC5BB3000173F60 /* dllmain.cpp */,
 				A09798F71AC5BB3000173F60 /* dllmain.h */,
-				A09798F81AC5BB3000173F60 /* gkAuxRenderer.cpp */,
-				A09798F91AC5BB3000173F60 /* gkAuxRenderer.h */,
-				A09798FA1AC5BB3000173F60 /* gkRendererGL330.cpp */,
-				A09798FB1AC5BB3000173F60 /* gkRendererGL330.h */,
-				A09798FC1AC5BB3000173F60 /* gkRenderLayer.cpp */,
-				A09798FD1AC5BB3000173F60 /* gkRenderLayer.h */,
-				A09798FE1AC5BB3000173F60 /* gkRenderSequence.cpp */,
-				A09798FF1AC5BB3000173F60 /* gkRenderSequence.h */,
-				A09799001AC5BB3000173F60 /* gkShaderParamDataSource.cpp */,
-				A09799011AC5BB3000173F60 /* gkShaderParamDataSource.h */,
-				A09799021AC5BB3000173F60 /* HwTextureLoader.cpp */,
-				A09799031AC5BB3000173F60 /* HwTextureLoader.h */,
-				A09799041AC5BB3000173F60 /* ITextureLoader.h */,
 				A09799051AC5BB3000173F60 /* Prerequisites.h */,
-				A09799061AC5BB3000173F60 /* RenderCamera.cpp */,
-				A09799071AC5BB3000173F60 /* RenderCamera.h */,
 				A09799081AC5BB3000173F60 /* RendererCVars.cpp */,
 				A09799091AC5BB3000173F60 /* RendererCVars.h */,
 				A097990A1AC5BB3000173F60 /* RenderRes */,
@@ -1021,7 +1009,6 @@
 		A097990A1AC5BB3000173F60 /* RenderRes */ = {
 			isa = PBXGroup;
 			children = (
-				A097990B1AC5BB3000173F60 /* DDS.h */,
 				A097990C1AC5BB3000173F60 /* gkMaterial.cpp */,
 				A097990D1AC5BB3000173F60 /* gkMaterial.h */,
 				A097990E1AC5BB3000173F60 /* gkMaterialManager.cpp */,
@@ -1137,6 +1124,56 @@
 			name = resource;
 			sourceTree = "<group>";
 		};
+		A0A4FDFF1AC6F57700836C6A /* VirtualAPI */ = {
+			isa = PBXGroup;
+			children = (
+				A0A4FDF91AC6F4D100836C6A /* gkVirtualAPI.cpp */,
+				A0A4FDFA1AC6F4D100836C6A /* gkVirtualAPI.h */,
+			);
+			name = VirtualAPI;
+			sourceTree = "<group>";
+		};
+		A0A4FE001AC6F58A00836C6A /* TexLoaders */ = {
+			isa = PBXGroup;
+			children = (
+				A09799041AC5BB3000173F60 /* ITextureLoader.h */,
+				A09798F31AC5BB3000173F60 /* DDsTextureLoader.cpp */,
+				A09798F41AC5BB3000173F60 /* DDsTextureLoader.h */,
+				A09799021AC5BB3000173F60 /* HwTextureLoader.cpp */,
+				A09799031AC5BB3000173F60 /* HwTextureLoader.h */,
+				A097990B1AC5BB3000173F60 /* DDS.h */,
+			);
+			name = TexLoaders;
+			sourceTree = "<group>";
+		};
+		A0A4FE011AC6F5B800836C6A /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A01A53871AC5E0EF00665B07 /* glExtension.cpp */,
+				A01A53881AC5E0EF00665B07 /* glExtension.h */,
+			);
+			name = Extension;
+			sourceTree = "<group>";
+		};
+		A0A4FE021AC6F5C700836C6A /* RenderSystem */ = {
+			isa = PBXGroup;
+			children = (
+				A09798F81AC5BB3000173F60 /* gkAuxRenderer.cpp */,
+				A09798F91AC5BB3000173F60 /* gkAuxRenderer.h */,
+				A09798FA1AC5BB3000173F60 /* gkRendererGL330.cpp */,
+				A09798FB1AC5BB3000173F60 /* gkRendererGL330.h */,
+				A09798FC1AC5BB3000173F60 /* gkRenderLayer.cpp */,
+				A09798FD1AC5BB3000173F60 /* gkRenderLayer.h */,
+				A09798FE1AC5BB3000173F60 /* gkRenderSequence.cpp */,
+				A09798FF1AC5BB3000173F60 /* gkRenderSequence.h */,
+				A09799001AC5BB3000173F60 /* gkShaderParamDataSource.cpp */,
+				A09799011AC5BB3000173F60 /* gkShaderParamDataSource.h */,
+				A09799061AC5BB3000173F60 /* RenderCamera.cpp */,
+				A09799071AC5BB3000173F60 /* RenderCamera.h */,
+			);
+			name = RenderSystem;
+			sourceTree = "<group>";
+		};
 		A0B9C219177BDB320056EFE7 /* lzma */ = {
 			isa = PBXGroup;
 			children = (
@@ -1177,7 +1214,6 @@
 				A0D17C91172E3CA0001EBD1C /* FileChangeMonitor.h */,
 				A0D17C92172E3CA0001EBD1C /* gkInGUI.cpp */,
 				A0D17C93172E3CA0001EBD1C /* gkLockManager.h */,
-				A0D17C94172E3CA0001EBD1C /* gkSystem-Prefix.pch */,
 				A0D17C98172E3CA0001EBD1C /* gkSystemInfo.cpp */,
 				A0D17C99172E3CA0001EBD1C /* gkSystemInfo.h */,
 				A0D17C9A172E3CA0001EBD1C /* gkTaskDispatcher.cpp */,
@@ -1385,6 +1421,7 @@
 				A0F485911AB5A53500DD38D8 /* AnimationManager.h in Headers */,
 				A0F485881AB5A51C00DD38D8 /* gkSkinRenderable.h in Headers */,
 				A0F485861AB5A51C00DD38D8 /* CharacterInstance.h in Headers */,
+				A0A4FDFD1AC6F4D100836C6A /* gkVirtualAPI.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1397,6 +1434,7 @@
 				A0F4859A1AB5A53500DD38D8 /* RigManager.h in Headers */,
 				A0F485921AB5A53500DD38D8 /* AnimationManager.h in Headers */,
 				A0D17C84172E3C3F001EBD1C /* resource.h in Headers */,
+				A0A4FDFE1AC6F4D100836C6A /* gkVirtualAPI.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1406,7 +1444,6 @@
 			files = (
 				A0D17CBA172E3CA0001EBD1C /* FileChangeMonitor.h in Headers */,
 				A0D17CBC172E3CA0001EBD1C /* gkLockManager.h in Headers */,
-				A0D17CBD172E3CA0001EBD1C /* gkSystem-Prefix.pch in Headers */,
 				A0D17CBF172E3CA0001EBD1C /* gkSystemInfo.h in Headers */,
 				A0D17CC1172E3CA0001EBD1C /* gkTaskDispatcher.h in Headers */,
 				A0D17CC2172E3CA0001EBD1C /* dllmain.h in Headers */,
@@ -1732,7 +1769,6 @@
 				A097991C1AC5BBB800173F60 /* DDsTextureLoader.cpp in Sources */,
 				A097991D1AC5BBB800173F60 /* dllmain.cpp in Sources */,
 				A097991E1AC5BBB800173F60 /* gkAuxRenderer.cpp in Sources */,
-				A01A53891AC5E0EF00665B07 /* glExtension.cpp in Sources */,
 				A097991F1AC5BBB800173F60 /* gkRendererGL330.cpp in Sources */,
 				A09799201AC5BBB800173F60 /* gkRenderLayer.cpp in Sources */,
 				A09799211AC5BBB800173F60 /* gkRenderSequence.cpp in Sources */,
@@ -1745,6 +1781,7 @@
 				A09799291AC5BBB800173F60 /* gkMeshManager.cpp in Sources */,
 				A097992A1AC5BBB800173F60 /* gkShader.cpp in Sources */,
 				A097992B1AC5BBB800173F60 /* gkShaderManager.cpp in Sources */,
+				A0A4FDFB1AC6F4D100836C6A /* gkVirtualAPI.cpp in Sources */,
 				A097992C1AC5BBB800173F60 /* gkTextureGLES2.cpp in Sources */,
 				A097992D1AC5BBB800173F60 /* gkTextureManager.cpp in Sources */,
 				A07D4B3D1799AEC800C36005 /* StableHeader.cpp in Sources */,
@@ -1763,6 +1800,7 @@
 				A09799301AC5BBE400173F60 /* gkAuxRenderer.cpp in Sources */,
 				A09799311AC5BBE400173F60 /* gkRendererGL330.cpp in Sources */,
 				A09799321AC5BBE400173F60 /* gkRenderLayer.cpp in Sources */,
+				A0A4FDFC1AC6F4D100836C6A /* gkVirtualAPI.cpp in Sources */,
 				A09799331AC5BBE400173F60 /* gkRenderSequence.cpp in Sources */,
 				A09799341AC5BBE400173F60 /* gkShaderParamDataSource.cpp in Sources */,
 				A09799351AC5BBE400173F60 /* HwTextureLoader.cpp in Sources */,

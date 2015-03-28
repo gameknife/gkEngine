@@ -177,7 +177,6 @@
     <ClInclude Include="..\gkRendererGL\RenderRes\gkShaderManager.h" />
     <ClInclude Include="..\gkRendererGL\RenderRes\gkTextureGLES2.h" />
     <ClInclude Include="..\gkRendererGL\RenderRes\gkTextureManager.h" />
-    <ClInclude Include="DeviceRenderContext.h" />
     <ClInclude Include="StableHeader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

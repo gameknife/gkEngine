@@ -643,6 +643,13 @@ void gkSystemProfiler::qinfo( int boxheight )
 	poxy += texth;
 }
 
+#if defined( OS_IOS ) && !defined( OS_APPLE )
+    #import <UIKit/UIKit.h>
+#endif
+
+#if defined( OS_APPLE )
+    #import <AppKit/AppKit.h>
+#endif
 
 void gkSystemProfiler::about()
 {
@@ -652,7 +659,8 @@ void gkSystemProfiler::about()
 	ColorB textColorHighlight(40,127,200,255);
 	ColorB buttonTextColor(180,180,180,255);
 	ColorB buttonBgColor(0,0,0,150);
-	ColorB buttonBgColor1(255,255,255,255);
+    ColorB textColorHighlight1(0,0,0,255);
+	ColorB buttonBgColor1(255,255,255,180);
 
 	int buttonWidth = 200;
 	int buttonHeight = 120;
@@ -672,17 +680,28 @@ void gkSystemProfiler::about()
 
 
 
-	gEnv->pRenderer->getAuxRenderer()->AuxRenderText( _T("gkENGINE 是一个开源跨平台3D游戏引擎，致力于提供在多个平台快速开发游戏的工具集。\n")
-		_T("\n")
+	gEnv->pRenderer->getAuxRenderer()->AuxRenderText( _T("gkENGINE是一个开源跨平台游戏引擎，致力于提供尖端的实时渲染技术和惊人的效率。\n")
+		_T("gkENGINE is a cross-platform game engine with cutting-edge real-time rendering tech & fantastic speed.\n")
+        _T("\n")
 		_T("联系作者: kaimingyi@163.com\n")
-		_T("更多详情请登陆codeplex项目主页\n"),
+        _T("contact me: kaimingyi@163.com\n")
+        _T("\n")
+		_T("Github项目主页: | Github Website: \n"),
 		
 		buttonLeftStart, 300, m_subtitleFont );
 
-	if ( gEnv->pInGUI->gkGUIButton( _T("https://gkengine.codeplex.com >>"), Vec2(buttonLeftStart, 450), 350, 30, textColorHighlight, buttonBgColor1, m_subtitleFont ) )
+	if ( gEnv->pInGUI->gkGUIButton( _T("https://gkengine.codeplex.com >>"), Vec2(buttonLeftStart, 450), 350, 80, textColorHighlight1, buttonBgColor1, m_subtitleFont ) )
 	{
 #ifdef OS_WIN32
-		system("start https://gkengine.codeplex.com/");
+		system("start https://github.com/gameKnife/gkEngine");
+#endif
+
+#ifdef OS_APPLE
+        [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"https://github.com/gameKnife/gkEngine"]];
+#elif defined( OS_IOS )
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/gameKnife/gkEngine"]];
+#else
+        
 #endif
 	}
 }

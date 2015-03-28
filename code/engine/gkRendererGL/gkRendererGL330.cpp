@@ -484,6 +484,8 @@ bool gkRendererGL::RT_StartRender()
 		}
 		FX_PopRenderTarget(0);
 
+        glDisable(GL_DEPTH_TEST);
+        
 		// GENERAL PASS END
 		//////////////////////////////////////////////////////////////////////////
 		if (g_pRendererCVars->r_HDRRendering)
@@ -1443,7 +1445,7 @@ void gkRendererGL::FX_TexBlurGaussian(gkTexturePtr tgt, int nAmount, float fScal
 		// tgt -> tmp
 		{
 			FX_PushRenderTarget(0, tmp, NULL);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT);
 			pShader->FX_SetValue("PI_psOffsets", pHParams, sizeof(Vec4) * nHalfSamples);
 			pShader->FX_SetValue("psWeights", pWeightsPS, sizeof(Vec4) * nHalfSamples);
 			pShader->FX_Commit();
@@ -1459,7 +1461,7 @@ void gkRendererGL::FX_TexBlurGaussian(gkTexturePtr tgt, int nAmount, float fScal
 		// tmp -> tgt
 		{
 			FX_PushRenderTarget(0, tgt, NULL);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT);
 			pShader->FX_SetValue("PI_psOffsets", pVParams, sizeof(Vec4) * nHalfSamples);
 			pShader->FX_SetValue("psWeights", pWeightsPS, sizeof(Vec4) * nHalfSamples);
 			pShader->FX_Commit();

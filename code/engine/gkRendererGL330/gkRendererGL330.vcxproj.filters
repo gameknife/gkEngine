@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
@@ -25,143 +21,149 @@
     <Filter Include="Platform\Win32">
       <UniqueIdentifier>{178b8075-d571-4714-acde-fba971262024}</UniqueIdentifier>
     </Filter>
+    <Filter Include="VirtualAPI">
+      <UniqueIdentifier>{1ec8f3ad-f481-4bd9-a0de-b0d36e23bb7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TexLoader">
+      <UniqueIdentifier>{e09b5d8f-d0b1-45f3-827f-1f0ca071bdb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CVar">
+      <UniqueIdentifier>{68dac102-e0ac-45e5-87f8-54d6f09bbe7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\gkRendererGL\dllmain.cpp">
-      <Filter>RenderRes</Filter>
-    </ClCompile>
     <ClCompile Include="..\gkRendererGL\gkAuxRenderer.cpp">
       <Filter>RenderRes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gkRendererGL\gkRendererGL330.cpp">
-      <Filter>RenderRes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gkRendererGL\gkRenderLayer.cpp">
-      <Filter>RenderRes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gkRendererGL\gkRenderSequence.cpp">
-      <Filter>RenderRes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gkRendererGL\gkShaderParamDataSource.cpp">
-      <Filter>RenderRes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gkRendererGL\RenderCamera.cpp">
-      <Filter>RenderRes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gkRendererGL\RendererCVars.cpp">
-      <Filter>RenderRes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gkRendererGL\RenderRes\gkMaterial.cpp">
-      <Filter>RenderSys</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gkRendererGL\RenderRes\gkMaterialManager.cpp">
-      <Filter>RenderSys</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gkRendererGL\RenderRes\gkMeshGLES2.cpp">
-      <Filter>RenderSys</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gkRendererGL\RenderRes\gkMeshManager.cpp">
-      <Filter>RenderSys</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gkRendererGL\RenderRes\gkShader.cpp">
-      <Filter>RenderSys</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gkRendererGL\RenderRes\gkShaderManager.cpp">
-      <Filter>RenderSys</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gkRendererGL\RenderRes\gkTextureGLES2.cpp">
-      <Filter>RenderSys</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gkRendererGL\RenderRes\gkTextureManager.cpp">
-      <Filter>RenderSys</Filter>
-    </ClCompile>
-    <ClCompile Include="StableHeader.cpp">
-      <Filter>RenderRes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gkRendererGL\DDsTextureLoader.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\gkRendererGL\Platform\Win32\gkRenderContextWin32.cpp">
       <Filter>Platform\Win32</Filter>
     </ClCompile>
     <ClCompile Include="..\gkRendererGL\gkVirtualAPI.cpp">
+      <Filter>VirtualAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\DDsTextureLoader.cpp">
+      <Filter>TexLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkMaterial.cpp">
+      <Filter>RenderRes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkMaterialManager.cpp">
+      <Filter>RenderRes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkMeshGLES2.cpp">
+      <Filter>RenderRes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkMeshManager.cpp">
+      <Filter>RenderRes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkShader.cpp">
+      <Filter>RenderRes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkShaderManager.cpp">
+      <Filter>RenderRes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkTextureGLES2.cpp">
+      <Filter>RenderRes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\RenderRes\gkTextureManager.cpp">
+      <Filter>RenderRes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\dllmain.cpp">
       <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StableHeader.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\RendererCVars.cpp">
+      <Filter>CVar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\gkRendererGL330.cpp">
+      <Filter>RenderSys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\gkRenderLayer.cpp">
+      <Filter>RenderSys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\gkRenderSequence.cpp">
+      <Filter>RenderSys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\gkShaderParamDataSource.cpp">
+      <Filter>RenderSys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gkRendererGL\RenderCamera.cpp">
+      <Filter>RenderSys</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DeviceRenderContext.h">
-      <Filter>Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\DeviceRenderContext.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\dllmain.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
     <ClInclude Include="..\gkRendererGL\gkAuxRenderer.h">
       <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\gkRendererGL330.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\gkRenderLayer.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\gkRenderSequence.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\gkShaderParamDataSource.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\Prerequisites.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\RenderCamera.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\RendererCVars.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\RenderRes\DDS.h">
-      <Filter>RenderSys</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\RenderRes\gkMaterial.h">
-      <Filter>RenderSys</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\RenderRes\gkMaterialManager.h">
-      <Filter>RenderSys</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\RenderRes\gkMeshGLES2.h">
-      <Filter>RenderSys</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\RenderRes\gkMeshManager.h">
-      <Filter>RenderSys</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\RenderRes\gkShader.h">
-      <Filter>RenderSys</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\RenderRes\gkShaderManager.h">
-      <Filter>RenderSys</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\RenderRes\gkTextureGLES2.h">
-      <Filter>RenderSys</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\RenderRes\gkTextureManager.h">
-      <Filter>RenderSys</Filter>
-    </ClInclude>
-    <ClInclude Include="StableHeader.h">
-      <Filter>RenderRes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\ITextureLoader.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gkRendererGL\DDsTextureLoader.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\gkRendererGL\Platform\Win32\gkRenderContextWin32.h">
       <Filter>Platform\Win32</Filter>
     </ClInclude>
     <ClInclude Include="..\gkRendererGL\gkVirtualAPI.h">
+      <Filter>VirtualAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\DDsTextureLoader.h">
+      <Filter>TexLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\ITextureLoader.h">
+      <Filter>TexLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkMaterial.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkMaterialManager.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkMeshGLES2.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkMeshManager.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkShader.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkShaderManager.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkTextureGLES2.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\gkTextureManager.h">
+      <Filter>RenderRes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\DeviceRenderContext.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\dllmain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StableHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RendererCVars.h">
+      <Filter>CVar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\gkRendererGL330.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\gkRenderLayer.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\gkRenderSequence.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\gkShaderParamDataSource.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderCamera.h">
+      <Filter>RenderSys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\RenderRes\DDS.h">
+      <Filter>TexLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gkRendererGL\Prerequisites.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
