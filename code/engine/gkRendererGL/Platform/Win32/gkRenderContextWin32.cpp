@@ -27,6 +27,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		PostQuitMessage( 0 );
 		break;
+	case WM_SIZE:
+		{
+			RECT rc;
+			GetClientRect( hWnd, &rc );
+			gEnv->pRenderer->SetCurrContent( hWnd, 0, 0, rc.right - rc.left, rc.bottom - rc.top );
+		}
 	default:
 		break;
 	}
@@ -306,4 +312,17 @@ gkDeviceRenderContext::~gkDeviceRenderContext()
 
 	SwapIntervalEXT( 0 );
 	SwapBuffers( m_dc );
+}
+
+void gkDeviceRenderContext::resizeBackBuffer(int width, int height)
+{
+// 	eglDestroySurface( m_eglDisplay, m_eglSurface );
+// 
+// 	m_eglSurface = eglCreateWindowSurface(m_eglDisplay, m_eglConfig, m_NativeWindow, NULL);
+// 	if(m_eglSurface == EGL_NO_SURFACE)
+// 	{
+// 		m_eglSurface = eglCreateWindowSurface(m_eglDisplay, m_eglConfig, NULL, NULL);
+// 	}
+
+	
 }

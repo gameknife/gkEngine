@@ -79,16 +79,16 @@ float GetDepthBlurinessBiased(float fDepth)
 void main()
 {
 	vec4 org = texture2D(texDiffuse, TexCoord0);
-    #ifdef GL330
-	vec4 brightpass = texture2D(texNormal, TexCoord0) * 0.33;
-	brightpass += texture2D(texSpecular, TexCoord0) * 0.33;
-    brightpass += texture2D(texDetail, TexCoord0) * 0.33;
-    brightpass *= 0.1;
+//     #ifdef 0
+// 	vec4 brightpass = texture2D(texNormal, TexCoord0) * 0.33;
+// 	brightpass += texture2D(texSpecular, TexCoord0) * 0.33;
+//     brightpass += texture2D(texDetail, TexCoord0) * 0.33;
+//     brightpass *= 0.1;
     
-    #else
+ //   #else
     vec4 brightpass = texture2D(texNormal, TexCoord0) * 0.2;
 	brightpass += texture2D(texSpecular, TexCoord0) * 0.2;
-    #endif
+//    #endif
     brightpass *= clBloom;
 
 #ifdef DOF

@@ -75,6 +75,8 @@ protected:
 
 	bool m_dynamic;
 
+	bool m_sizable;
+
 public:
 	gkTextureGLES2(IResourceManager* creator, const gkStdString& name, gkResourceHandle handle,
 		const gkStdString& group = _T("none"), gkNameValuePairList* params = NULL);
@@ -112,7 +114,10 @@ protected:
 	virtual void changeAttr( const gkStdString& key, const gkStdString& value );
 
 	virtual const gkStdString& getAttr( const gkStdString& key ) const;
-	
+
+	virtual bool sizable();
+
+
 };
 
 

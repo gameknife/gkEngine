@@ -9,6 +9,8 @@ void gkVirtualAPI::gkVAPI_MapBuffer(GLvoid* *data, GLenum target, uint32 size, M
 {
 #ifdef RENDERAPI_GL330
 
+	glGetError();
+
 	GLenum realFlag = GL_MAP_INVALIDATE_BUFFER_BIT | GL_MAP_UNSYNCHRONIZED_BIT /*| GL_MAP_FLUSH_EXPLICIT_BIT*/;
 	switch( flag )
 	{
@@ -25,6 +27,12 @@ void gkVirtualAPI::gkVAPI_MapBuffer(GLvoid* *data, GLenum target, uint32 size, M
 
 	glBufferData( target, size, 0, GL_STATIC_DRAW );
 	*data = glMapBufferRange(target, 0,	size, realFlag);
+
+	GLenum error = glGetError();
+	if (error)
+	{
+		gkLogWarning(_T("MapBuffer Failed: %x."), error);
+	}
 
 #endif
 

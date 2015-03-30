@@ -131,6 +131,9 @@ HWND gkRendererGL::Init(ISystemInitInfo& sii)
 	glBindRenderbuffer(GL_RENDERBUFFER, m_stencil);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, GetScreenWidth(), GetScreenHeight());
 
+	tmpVAO = 0;
+	tmpVBO = 0;
+
 	return m_hWnd;
 }
 
@@ -724,6 +727,9 @@ void gkRendererGL::Destroy()
 		delete m_fonts[i];
 	}
 
+	if(tmpVAO) {glDeleteBuffers(1, &tmpVAO); tmpVAO = NULL;}
+	if(tmpVBO) {glDeleteBuffers(1, &tmpVBO); tmpVBO = NULL;}
+
 	m_pMaterialManager->unloadAll();
 	m_pMeshManager->unloadAll();
 	m_pShaderManager->unloadAll();
@@ -752,6 +758,12 @@ void gkRendererGL::SetCurrContent(HWND hWnd, uint32 posx, uint32 posy, uint32 wi
 	}
 
 	m_pDeviceContext->resizeBackBuffer(width, height);
+
+	if(m_pTextureManager)
+	{
+		((gkTextureManager*)m_pTextureManager)->resizeall();
+		m_fboMap.m_fbos.clear();
+	}
 
 	return;
 }
@@ -1287,9 +1299,6 @@ void gkRendererGL::FX_DrawScreenQuad(Vec4 region)
 	region.x -= 1.0f;
 	region.y -= 1.0f;
 
-	static GLuint tmpVAO = 0;
-	static GLuint tmpVBO = 0;
-
 	struct STmpVert
 	{
 		Vec2 pos;
@@ -1313,14 +1322,20 @@ void gkRendererGL::FX_DrawScreenQuad(Vec4 region)
 	}
 
 	// update quad
+	glGetError();
 	glBindBuffer(GL_ARRAY_BUFFER, tmpVBO);
-
+	GLenum error = glGetError();
+	if(error)
+	{
+		gkLogWarning( _T("bindbuffer failed."));
+	}
 	uint32 size = 4 * sizeof(STmpVert);
 
 	GLvoid* Data = NULL;
 
 	gkVirtualAPI::gkVAPI_MapBuffer( &Data, GL_ARRAY_BUFFER, size, gkVirtualAPI::eVAPI_MapWrite );
 
+	
 	STmpVert verts[4];
 	verts[0].pos = Vec2(region.x, region.y);
 	verts[1].pos = Vec2(region.x + region.z, region.y);
@@ -1337,7 +1352,11 @@ void gkRendererGL::FX_DrawScreenQuad(Vec4 region)
 	verts[2].farclip = getShaderContent().getCamFarVerts(2);
 	verts[3].farclip = getShaderContent().getCamFarVerts(3);
 
-	memcpy(Data, verts, size);
+	//if(Data)
+	{
+		memcpy(Data, verts, size);
+	}
+	
 
 	gkVirtualAPI::gkVAPI_UnMapBuffer( Data, GL_ARRAY_BUFFER, size);
 

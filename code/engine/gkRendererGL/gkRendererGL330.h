@@ -233,6 +233,9 @@ private:
 	HWND m_hWnd;
 
 	int m_bSkipThisFrame;
+
+	GLuint tmpVAO;
+	GLuint tmpVBO;
 };
 
 gkRendererGL* getRenderer();

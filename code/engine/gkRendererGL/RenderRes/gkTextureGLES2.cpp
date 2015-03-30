@@ -129,6 +129,7 @@ bool gkTextureGLES2::loadImpl( void )
 {
 	HRESULT hr = S_OK;
 
+	m_sizable = false;
 	m_rawData = NULL;
 	m_dynamic = false;
 	// if defaultpool, just create
@@ -148,6 +149,8 @@ bool gkTextureGLES2::loadImpl( void )
 
 			if ( itusage->second == _T("RENDERTARGET") )
 			{
+				m_bIsDefaultPool = true;
+
 				m_dynamic = true;
 				gkNameValuePairList::iterator itsize = loadingParams.find(_T("size"));
 				if (itsize == loadingParams.end())
@@ -159,6 +162,8 @@ bool gkTextureGLES2::loadImpl( void )
 				{
 					rtResize = var->getFloat();
 				}
+
+				m_sizable = true;
 
 				if ( itsize->second == _T("full") )
 				{
@@ -187,6 +192,7 @@ bool gkTextureGLES2::loadImpl( void )
 				}
 				else
 				{
+					m_sizable = false;
 					gkStdStringstream ss(itsize->second);
 					ss >> m_uWidth;
 					m_uHeight = m_uWidth;
@@ -409,7 +415,12 @@ bool gkTextureGLES2::loadImpl( void )
 
 bool gkTextureGLES2::unloadImpl(void)
 {
-	glDeleteBuffers(1, &m_uHwTexture2D );
+	glBindTexture(GL_TEXTURE_2D, 0);
+	if(m_uHwTexture2D)
+	{
+		glDeleteTextures(1, &m_uHwTexture2D );
+		m_uHwTexture2D = 0;
+	}
 
 	return true;
 }
@@ -623,4 +634,8 @@ void gkTextureGLES2::RawDataFlush()
 
 		m_rawDirty = false;
 	}
+}
+bool gkTextureGLES2::sizable()
+{
+	return m_sizable;
 }

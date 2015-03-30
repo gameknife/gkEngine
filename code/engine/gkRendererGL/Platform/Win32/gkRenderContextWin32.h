@@ -87,6 +87,7 @@ public:
 
 	virtual void makeThreadContext(bool close) {}
 
+	virtual void resizeBackBuffer(int width, int height);
 	
 private:
 	bool SetWindow(int width, int height, bool fullscreen, HWND hWnd);

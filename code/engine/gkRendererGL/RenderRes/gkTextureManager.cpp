@@ -304,3 +304,19 @@ void gkTextureManager::lostAll()
 	}
 }
 
+void gkTextureManager::resizeall()
+{
+	gkResourceMap::iterator i, iend;
+	i = m_mapResources.begin();
+	iend = m_mapResources.end();
+	for (; i != iend; ++i)
+	{		
+		gkTexturePtr tex = static_cast<gkTexturePtr>(i->second);
+
+		if(tex->sizable())
+		{
+			tex->onLost();
+			tex->onReset();
+		}
+	}
+}
