@@ -28,7 +28,7 @@
 		A00A4A9D188B73D3005376F7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A00A4A9F188B758A005376F7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		A00A4AA1188B7594005376F7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		A04B42EF1734038500EF0763 /* gkLauncherIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gkLauncherIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A04B42EF1734038500EF0763 /* gkENGINE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gkENGINE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A04B42F31734038500EF0763 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A04B42F51734038500EF0763 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A04B42F71734038500EF0763 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -74,7 +74,7 @@
 		A04B42F01734038500EF0763 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A04B42EF1734038500EF0763 /* gkLauncherIOS.app */,
+				A04B42EF1734038500EF0763 /* gkENGINE.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -134,7 +134,7 @@
 			);
 			name = gkLauncherIOS;
 			productName = gkLauncherIOS;
-			productReference = A04B42EF1734038500EF0763 /* gkLauncherIOS.app */;
+			productReference = A04B42EF1734038500EF0763 /* gkENGINE.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
