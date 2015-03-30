@@ -54,6 +54,7 @@ public:
 
 	virtual void resetAll();
 	virtual void lostAll();
+	virtual void resizeall();
 
 	//////////////////////////////////////////////////////////////////////////
 	// scene staff

@@ -11,6 +11,11 @@ int lasty = 0;
 SInputSymbol* g_mouseSymbol[3];
 SInputSymbol* g_keyboardSymbol[512];
 
+void resize_window_callback(int width,int height)
+{
+    gEnv->pRenderer->SetCurrContent( (HWND)1, 0, 0, width, height );
+}
+
 static void cursor_position_callback(int x, int y)
 {
     static bool first = true;
@@ -291,6 +296,8 @@ HWND gkDeviceRenderContext::initDevice(ISystemInitInfo& sii)
     glfwSetMousePosCallback(cursor_position_callback);
     glfwSetWindowCloseCallback(close_callback);
     glfwSetKeyCallback(key_callback);
+    
+    glfwSetWindowSizeCallback(resize_window_callback);
 
     glfwSwapInterval(0);
     
