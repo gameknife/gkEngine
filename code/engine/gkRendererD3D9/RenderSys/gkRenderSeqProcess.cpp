@@ -218,6 +218,8 @@ void gkRendererD3D9::RP_ProcessShaderGroup( const gkShaderGroup* pShaderGroup, E
 				IMaterial* pMtl = it->first;
 				pMtl->ApplyParameterBlock( true, pShader );
 
+				gkTextureManager::ms_TestCubeRT->Apply( 7, 0 );
+
 				// apply stencil write
 				if (pMtl->getSSRL())
 				{

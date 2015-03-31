@@ -16,6 +16,8 @@
 #include "IMesh.h"
 #include "IParticle.h"
 #include "RendPipelineBase.h"
+#include "gk_Camera.h"
+#include "ICamera.h"
 
 enum EShadingMode
 {
@@ -69,12 +71,139 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
  	{
  		m_pColorGradingController->_RT_RenderingMergedColorChart();
  	}
-	
+
+
+	//////////////////////////////////////////////////////////////////////////
+	// test cubemap gen
+	for (int i=0; i < 6; ++i)
+	{
+		FX_PushCubeRenderTarget( 0, i, gkTextureManager::ms_TestCubeRT );
+
+		gkRendererD3D9::_clearBuffer( true, 0x00000000 );
+
+		gkRendererD3D9::RS_SetRenderState( D3DRS_ZENABLE, TRUE );
+		gkRendererD3D9::RS_SetRenderState( D3DRS_ZWRITEENABLE, TRUE );
+		gkRendererD3D9::RS_SetRenderState( D3DRS_ALPHABLENDENABLE, FALSE);
+		gkRendererD3D9::RS_SetRenderState( D3DRS_CULLMODE, D3DCULL_CW);
+		gkRendererD3D9::RS_SetRenderState( D3DRS_ALPHATESTENABLE, FALSE);
+
+
+		CCamera cam;
+		cam.SetFrustum(512,512,DEG2RAD(90.0f), 0.1f, 1000.0f, 1.0f);
+		
+
+
+// 
+		switch( i )
+		{
+		case 0:
+			cam.SetAngles( Ang3(0,0,DEG2RAD(90) * 3) );
+			break;
+		case 1:
+			cam.SetAngles( Ang3(0,0,DEG2RAD(90) * 1) );
+			break;
+		case 2:
+			cam.SetAngles( Ang3(DEG2RAD(90),0, DEG2RAD(0)) );
+			break;
+		case 3:
+			cam.SetAngles( Ang3(-DEG2RAD(90), 0, DEG2RAD(0)) );
+			break;
+		case 4:
+			cam.SetAngles( Ang3(0,0,DEG2RAD(90) * 0) );
+			break;
+		case 5:
+			cam.SetAngles( Ang3(0,0,DEG2RAD(90) * 2) );
+			break;
+		}
+
+// 		switch( i )
+// 		{
+// 		case 0:
+// 			cam.SetAngles( Ang3(0,DEG2RAD(90),DEG2RAD(90) * 0) );
+// 			break;
+// 		case 1:
+// 			cam.SetAngles( Ang3(0,DEG2RAD(-90),DEG2RAD(90) * 2) );
+// 			break;
+// 		case 2:
+// 			cam.SetAngles( Ang3(0,DEG2RAD(180),DEG2RAD(90) * 3) );
+// 			break;
+// 		case 3:
+// 			cam.SetAngles( Ang3(0,DEG2RAD(0),DEG2RAD(90) * 1) );
+// 			break;
+// 		case 4:
+// 			cam.SetAngles( Ang3(DEG2RAD(90), 0, DEG2RAD(90)) );
+// 			break;
+// 		case 5:
+// 			cam.SetAngles( Ang3(-DEG2RAD(90), 0, DEG2RAD(-90)) );
+// 			break;
+// 		}
+
+// 		switch( i )
+// 		{
+// 		case 0:
+// 			cam.SetAngles( Ang3(0,DEG2RAD(90),DEG2RAD(90) * 3) );
+// 			break;
+// 		case 1:
+// 			cam.SetAngles( Ang3(0,DEG2RAD(-90),DEG2RAD(90) * 1) );
+// 			break;
+// 		case 2:
+// 			cam.SetAngles( Ang3(0,DEG2RAD(180),DEG2RAD(90) * 0) );
+// 			break;
+// 		case 3:
+// 			cam.SetAngles( Ang3(0,DEG2RAD(0),DEG2RAD(90) * 2) );
+// 			break;
+// 		case 4:
+// 			cam.SetAngles( Ang3(DEG2RAD(90), 0, DEG2RAD(180)) );
+// 			break;
+// 		case 5:
+// 			cam.SetAngles( Ang3(-DEG2RAD(90), 0, DEG2RAD(180)) );
+// 			break;
+// 		}
 
 
 
+		cam.SetPosition( Vec3(0,0,1.2) );
+
+		m_pShaderParamDataSource.setMainCamera(&cam);
+
+		gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_TERRIAN, eSIT_FastCubeGen, false);
+		gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_OPAQUE, eSIT_FastCubeGen, false);
+		gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_OPAQUE, eSIT_FastCubeGen, true);
+		//gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_SKIES_EARLY, eSIT_General, false);
+
+// 
+// 		switch( i )
+// 		{
+// 		case 0:
+// 			//gkRendererD3D9::_clearBuffer( true, 0x00000000 );
+// 			break;
+// 		case 1:
+// 			//gkRendererD3D9::_clearBuffer( true, 0x00000000 );
+// 			break;
+// 		case 2:
+// 			//gkRendererD3D9::_clearBuffer( true, 0x00000000 );
+// 			break;
+// 		case 3:
+// 			//gkRendererD3D9::_clearBuffer( true, 0x00000000 );
+// 			break;
+// 		case 4:
+// 			//gkRendererD3D9::_clearBuffer( true, 0xFF0000FF );
+// 			break;
+// 		case 5:
+// 			gkRendererD3D9::_clearBuffer( true, 0xFFFF0000 );
+// 			break;
+// 		}
 
 
+
+		FX_PopCubeRenderTarget( 0 );
+	}
+
+
+
+	//gkTextureManager::ms_TestCubeRT->AutoGenMipmap();
+
+	m_pShaderParamDataSource.setMainCamera(gEnv->p3DEngine->getMainCamera()->getCCam());
 	
 	//////////////////////////////////////////////////////////////////////////
 	// 1. ShadowMap Gen

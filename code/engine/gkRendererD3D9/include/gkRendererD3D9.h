@@ -345,6 +345,11 @@ public:
 	static void FX_PushHwDepthTarget(gkTexturePtr src, bool bClearTarget = false);
 	static void FX_PopHwDepthTarget();
 
+
+	static void FX_PushCubeRenderTarget(uint8 channel, uint8 index, gkTexturePtr src, bool bNeedDS = false, bool bClearTarget = false);
+	static void FX_PopCubeRenderTarget(uint8 channel);
+
+
 	static void FX_PushRenderTarget(uint8 channel, gkTexturePtr src, bool bNeedDS = false, bool bClearTarget = false);
 	static void FX_PopRenderTarget(uint8 channel);
 	static void FX_SetRenderTarget(uint8 channel, gkTexturePtr src, bool bNeedDS, bool bClearTarget);
@@ -414,6 +419,9 @@ public:
 
 	class gkColorGradingController* m_pColorGradingController;	
 	static D3DSURFACE_DESC m_bb_desc;
+
+	static IDirect3DSurface9* m_cache_surf_cubemap;
+	static IDirect3DSurface9* m_cache_ds_cubemap;
 };
 
 gkRendererD3D9* getRenderer();

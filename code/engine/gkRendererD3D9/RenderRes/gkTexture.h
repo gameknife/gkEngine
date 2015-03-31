@@ -88,6 +88,7 @@ protected:
 	D3DPOOL m_dwD3DPool;					// D3DPOOL
 	IDirect3DTexture9*	m_p2DTexture;
 	IDirect3DCubeTexture9*  m_pCubeTexture;
+
 	bool	m_bIsManaged;					// 是否由别人托管
 
 	bool	m_bIsDefaultPool;
@@ -105,6 +106,8 @@ protected:
 	ETexutureFormat m_format;
 
 public:
+		IDirect3DSurface9*  m_pCubeTexture_DS;
+
 	//gkTexture(void);
 	gkTexture(IResourceManager* creator, const gkStdString& name, gkResourceHandle handle,
 		const gkStdString& group = _T("none"), gkNameValuePairList* params = NULL);
@@ -112,6 +115,7 @@ public:
 
 	IDirect3DBaseTexture9* getTexture();
 	IDirect3DTexture9* get2DTexture();
+	IDirect3DCubeTexture9* getCubeTexture();
 
 	virtual void Apply(uint32 channel, uint8 filter);
 

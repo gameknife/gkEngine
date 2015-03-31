@@ -54,15 +54,18 @@ float4 g_SkyTop;
 void VertexScene( float4 inPos 		: POSITION,
 				float4 inTex 		: TEXCOORD0,
 				out float4 oPos		: POSITION,
-                out float2 oTex0 	: TEXCOORD0
+                out float2 oTex0 	: TEXCOORD0,
+				out float3 oNormal	: TEXCOORD1
 				)
 {	
     oPos = mul( float4(inPos.xyz, 1), g_mWorldViewProj );
 	oTex0 = float2(inTex.x, inTex.y);
+	oNormal = inPos.xyz;
 }
 
 pixout PixelScene(   
-                float2 inTex0 	: TEXCOORD0        
+                float2 inTex0 	: TEXCOORD0    ,
+				float3 inNormal 	: TEXCOORD1  
 				)
 {	
 	pixout OUT = (pixout)0;
@@ -81,6 +84,14 @@ pixout PixelScene(
  	float4 mulColor = (zenith * bottom + (1 - zenith) * top) * 0.5 * (LumTop + LumBottom);
 	//mulColor = g_SkyBottom;
 	HDROutput(OUT, mulColor, 0);
+
+
+	// cubemap
+//	float4 color = texCUBElod(IBLcubemapSampler, float4(normalize(inNormal.xzy), 0) );
+	//color.a = 1;
+//	OUT.Color = ( DecodeRGBK( color, 16.0f ) );
+
+	//HDROutput( OUT, OUT.Color, 1.0);
 
 	return OUT;	
 }

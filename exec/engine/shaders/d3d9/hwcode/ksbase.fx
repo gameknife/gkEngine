@@ -179,3 +179,4 @@ technique RenderScene
 #include "$kszpass.fx"
 #include "$ksshadowpass.fx"
 #include "$ksreflpass.fx"
+#include "$ksfastcubegen.fx"

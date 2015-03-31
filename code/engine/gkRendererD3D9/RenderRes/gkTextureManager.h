@@ -162,6 +162,9 @@ public:
 
 	static gkTexturePtr ms_Blend25[2];
 	static gkTexturePtr ms_Blend50[2];
+
+	static gkTexturePtr ms_TestCubeRT;
+
 protected:
 	virtual IResource* createImpl(const gkStdString& name, gkResourceHandle handle, const gkStdString& group, gkNameValuePairList* params = NULL);
 

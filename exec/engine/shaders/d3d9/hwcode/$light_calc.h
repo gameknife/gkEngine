@@ -137,6 +137,18 @@ float4 DecodeRGBK(in float4 Color, const float fMultiplier, bool bUsePPP= false)
 	return Color;
 }
 
+float4 EncodeRGBE( float3 color, float fMultiplier )
+{
+	float fLen = max( color.x, max( color.y, color.z ) ) ;  
+	float fExp = ceil( log(fLen) / log(1.06) );
+
+	float4 ret;
+	ret.w = (fExp + 128.0) / 256.0 / fMultiplier;
+	ret.xyz = color.xyz / pow( 1.06, fExp);
+
+	return ret;   
+}
+
 float4 GetEnvironmentCMap(samplerCUBE envMap, in float3 envTC, in float fNdotE, in float fSpecPower)
 {
 	float fEdgeMipFix = saturate(1-fNdotE);
@@ -146,7 +158,7 @@ float4 GetEnvironmentCMap(samplerCUBE envMap, in float3 envTC, in float fNdotE, 
 	float fGlossinessLod = 6.16231h - 0.497418h * sqrt(fSpecPower);
 	fGlossinessLod = max(6.16231h*fEdgeMipFix,fGlossinessLod);
 
-	float4 envColor = DecodeRGBK(texCUBElod( envMap, float4(envTC.xzy, fGlossinessLod) ), HDR_FAKE_MAXOVERBRIGHT);
+	float4 envColor = DecodeRGBK(texCUBElod( envMap, float4(envTC.xyz, fGlossinessLod) ), HDR_FAKE_MAXOVERBRIGHT);
 
 	return envColor;
 }
@@ -154,7 +166,7 @@ float4 GetEnvironmentCMap(samplerCUBE envMap, in float3 envTC, in float fNdotE, 
 float4 GetEnvironmentCMap(samplerCUBE envMap, in float3 envTC, in float fSpecPower)
 {
 	float fGlossinessLod = 6.16231h - 0.497418h * sqrt(fSpecPower);
-	float4 envColor = DecodeRGBK(texCUBElod( envMap, float4(envTC.xzy, fGlossinessLod) ), HDR_FAKE_MAXOVERBRIGHT);
+	float4 envColor = DecodeRGBK(texCUBElod( envMap, float4(envTC.xyz, fGlossinessLod) ), HDR_FAKE_MAXOVERBRIGHT);
 
 	return envColor;
 }

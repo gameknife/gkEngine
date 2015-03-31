@@ -268,13 +268,17 @@ bool gkTexture::loadImpl( IDirect3DDevice9* d3d9Device )
 					forceorigin = true;
 				}
 
-
-
-
 				gkNameValuePairList::iterator itsize = loadingParams.find(_T("size"));
 				if (itsize == loadingParams.end())
 				{ gkLogError(_T("gkTexture[ %s ] LoadingFailed."), m_wstrFileName); return false; }
 				
+				bool cubemap = false;
+
+				gkNameValuePairList::iterator itcube = loadingParams.find(_T("cube"));
+				if (itcube != loadingParams.end())
+				{
+					cubemap = true;
+				}
 
 				double rtResize = 1.0;
 				rtResize = g_pRendererCVars->r_pixelscale;
@@ -366,37 +370,60 @@ bool gkTexture::loadImpl( IDirect3DDevice9* d3d9Device )
 					usage |= D3DUSAGE_AUTOGENMIPMAP;
 				}
 
-				// finally, created it
-				if( !SUCCEEDED( d3d9Device->CreateTexture( m_uWidth,
-					m_uHeight,
-					1,
-					usage,
-					format,
-					D3DPOOL_DEFAULT,
-					&m_p2DTexture,
-					NULL ) ) )
+				if (cubemap)
 				{
-					gkLogError( _T("Dynamic Tex Created Failed!!!") );
+					if( !SUCCEEDED( 
+						d3d9Device->CreateCubeTexture( m_uWidth, 0, usage, format, D3DPOOL_DEFAULT, &m_pCubeTexture, NULL )
+						)
+						)
+					{
+						gkLogError( _T("Cube Dynamic Tex Created Failed!!!") );
+					}
+
+
+					d3d9Device->CreateDepthStencilSurface(  m_uWidth, m_uWidth, D3DFMT_D24S8,
+						D3DMULTISAMPLE_NONE,
+						0,
+						TRUE,
+						&(m_pCubeTexture_DS),
+						NULL );
+				}
+				else
+				{
+					// finally, created it
+					if( !SUCCEEDED( d3d9Device->CreateTexture( m_uWidth,
+						m_uHeight,
+						1,
+						usage,
+						format,
+						D3DPOOL_DEFAULT,
+						&m_p2DTexture,
+						NULL ) ) )
+					{
+						gkLogError( _T("Dynamic Tex Created Failed!!!") );
+					}
+
+					gkNameValuePairList::iterator itInitColor = loadingParams.find(_T("initcolor"));
+					if (itInitColor != loadingParams.end())
+					{
+						if( itInitColor->second == _T("WHITE") )
+						{
+							IDirect3DSurface9* surf;
+							m_p2DTexture->GetSurfaceLevel(0, &surf);
+							d3d9Device->ColorFill( surf, NULL, 0x7f7f7f7f );
+							surf->Release();
+						}
+						else if( itInitColor->second == _T("BLACK") )
+						{
+							IDirect3DSurface9* surf;
+							m_p2DTexture->GetSurfaceLevel(0, &surf);
+							d3d9Device->ColorFill( surf, NULL, 0x00000000 );
+							surf->Release();
+						}
+					}
 				}
 
-				gkNameValuePairList::iterator itInitColor = loadingParams.find(_T("initcolor"));
-				if (itInitColor != loadingParams.end())
-				{
-					if( itInitColor->second == _T("WHITE") )
-					{
-						IDirect3DSurface9* surf;
-						m_p2DTexture->GetSurfaceLevel(0, &surf);
-						d3d9Device->ColorFill( surf, NULL, 0x7f7f7f7f );
-						surf->Release();
-					}
-					else if( itInitColor->second == _T("BLACK") )
-					{
-						IDirect3DSurface9* surf;
-						m_p2DTexture->GetSurfaceLevel(0, &surf);
-						d3d9Device->ColorFill( surf, NULL, 0x00000000 );
-						surf->Release();
-					}
-				}
+
 				
 			}
 			else if ( itusage->second == _T("RAW") )
@@ -850,10 +877,24 @@ IDirect3DTexture9* gkTexture::get2DTexture()
 {
 	touch();
 
-	assert(m_p2DTexture);
+	//assert(m_p2DTexture);
 	if (m_p2DTexture)
 	{
 		return m_p2DTexture;
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+IDirect3DCubeTexture9* gkTexture::getCubeTexture()
+{
+	touch();
+
+	if (m_pCubeTexture)
+	{
+		return m_pCubeTexture;
 	}
 	else
 	{
@@ -1023,6 +1064,11 @@ void gkTexture::AutoGenMipmap()
 	if (m_p2DTexture)
 	{
 		m_p2DTexture->GenerateMipSubLevels();
+	}
+
+	if(m_pCubeTexture)
+	{
+		m_pCubeTexture->GenerateMipSubLevels();
 	}
 }
 

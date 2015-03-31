@@ -271,6 +271,7 @@ bool gkShader::loadImpl( IDirect3DDevice9* d3d9Device, ID3DXEffectPool** ppPool 
 	m_staticTechnique[eSIT_Zpass_DS] = FX_GetTechniqueByName("ZPass_DS");
 	m_staticTechnique[eSIT_ShadowPass] = FX_GetTechniqueByName("ShadowPass");
 	m_staticTechnique[eSIT_ReflGenPass] = FX_GetTechniqueByName("ReflGenPass");
+	m_staticTechnique[eSIT_FastCubeGen] = FX_GetTechniqueByName("FastCubeGenPass");
 
 	if ( getRenderer()->GetStateManager() )
 	{

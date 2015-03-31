@@ -431,18 +431,6 @@ void gkRendererD3D9::FX_PushHwDepthTarget(gkTexturePtr src, bool bClearTarget)
 	gkRenderTargetSize size;
 	size.width = src->getWidth();
 	size.height = src->getHeight();
-
-// 	gkDSCaches::iterator it = m_nullRTs.find( size );
-// 	if (it != m_nullRTs.end())
-// 	{
-// 
-// 	}
-// 	else
-// 	{
-// 
-// 	}
-
-	// tmp
 	
 	m_pd3d9Device->GetDepthStencilSurface( &g_prevSurf );
 
@@ -462,8 +450,10 @@ void gkRendererD3D9::FX_PopHwDepthTarget()
 {
 
 	m_pd3d9Device->SetDepthStencilSurface( g_prevSurf );
-	g_prevSurf->Release();
-
+	if (g_prevSurf)
+	{
+		g_prevSurf->Release();
+	}
 }
 
 void gkRendererD3D9::FX_PushRenderTarget( uint8 channel, gkTexturePtr src, bool bNeedDS, bool bClearTarget )

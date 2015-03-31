@@ -81,21 +81,6 @@ struct gkTexture2DGLES2StreamingTask : public ITask
 
 		}
 		delete loader;
-
-
-//         if(pTexturePtr)
-//         {
-//             pTexturePtr->m_uWidth = iWidth;
-//             pTexturePtr->m_uHeight = iHeight;
-// 
-// 			if (iArraySize > 1)
-// 			{
-// 				pTexturePtr->setCube(true);
-// 				//return;
-// 			}
-//         }
-// 
-// 		gEnv->pFileSystem->closeResFile( pFile );
 	}
 };
 
