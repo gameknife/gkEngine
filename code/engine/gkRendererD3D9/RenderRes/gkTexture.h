@@ -96,7 +96,7 @@ protected:
 
 	uint32 m_uWidth;
 	uint32 m_uHeight;
-
+	uint32 m_uMipLevel;
 	gkStdString m_wstrFormat;
 
 	uint8* m_rawData;
@@ -106,8 +106,6 @@ protected:
 	ETexutureFormat m_format;
 
 public:
-		IDirect3DSurface9*  m_pCubeTexture_DS;
-
 	//gkTexture(void);
 	gkTexture(IResourceManager* creator, const gkStdString& name, gkResourceHandle handle,
 		const gkStdString& group = _T("none"), gkNameValuePairList* params = NULL);
@@ -121,6 +119,7 @@ public:
 
 	virtual uint32 getHeight() {return m_uHeight;} 
 	virtual uint32 getWidth() {return m_uWidth;}  
+	virtual uint32 getMipLevel() { return m_uMipLevel; }
 
 	virtual void onReset();
 	virtual void onLost();

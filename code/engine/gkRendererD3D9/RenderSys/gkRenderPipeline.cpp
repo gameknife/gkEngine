@@ -64,7 +64,6 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 		m_particleProxy[i]->Update();
 	}
 
-
 	//////////////////////////////////////////////////////////////////////////
 	// color grading compute
  	if (m_pColorGradingController)
@@ -72,12 +71,11 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
  		m_pColorGradingController->_RT_RenderingMergedColorChart();
  	}
 
-
 	//////////////////////////////////////////////////////////////////////////
 	// test cubemap gen
 	for (int i=0; i < 6; ++i)
 	{
-		FX_PushCubeRenderTarget( 0, i, gkTextureManager::ms_TestCubeRT );
+		FX_PushRenderTarget(0, gkTextureManager::ms_TestCubeRT, 0, i, true);
 
 		gkRendererD3D9::_clearBuffer( true, 0x00000000 );
 
@@ -87,13 +85,9 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 		gkRendererD3D9::RS_SetRenderState( D3DRS_CULLMODE, D3DCULL_CW);
 		gkRendererD3D9::RS_SetRenderState( D3DRS_ALPHATESTENABLE, FALSE);
 
-
 		CCamera cam;
 		cam.SetFrustum(512,512,DEG2RAD(90.0f), 0.1f, 1000.0f, 1.0f);
 		
-
-
-// 
 		switch( i )
 		{
 		case 0:
@@ -115,53 +109,6 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 			cam.SetAngles( Ang3(0,0,DEG2RAD(90) * 2) );
 			break;
 		}
-
-// 		switch( i )
-// 		{
-// 		case 0:
-// 			cam.SetAngles( Ang3(0,DEG2RAD(90),DEG2RAD(90) * 0) );
-// 			break;
-// 		case 1:
-// 			cam.SetAngles( Ang3(0,DEG2RAD(-90),DEG2RAD(90) * 2) );
-// 			break;
-// 		case 2:
-// 			cam.SetAngles( Ang3(0,DEG2RAD(180),DEG2RAD(90) * 3) );
-// 			break;
-// 		case 3:
-// 			cam.SetAngles( Ang3(0,DEG2RAD(0),DEG2RAD(90) * 1) );
-// 			break;
-// 		case 4:
-// 			cam.SetAngles( Ang3(DEG2RAD(90), 0, DEG2RAD(90)) );
-// 			break;
-// 		case 5:
-// 			cam.SetAngles( Ang3(-DEG2RAD(90), 0, DEG2RAD(-90)) );
-// 			break;
-// 		}
-
-// 		switch( i )
-// 		{
-// 		case 0:
-// 			cam.SetAngles( Ang3(0,DEG2RAD(90),DEG2RAD(90) * 3) );
-// 			break;
-// 		case 1:
-// 			cam.SetAngles( Ang3(0,DEG2RAD(-90),DEG2RAD(90) * 1) );
-// 			break;
-// 		case 2:
-// 			cam.SetAngles( Ang3(0,DEG2RAD(180),DEG2RAD(90) * 0) );
-// 			break;
-// 		case 3:
-// 			cam.SetAngles( Ang3(0,DEG2RAD(0),DEG2RAD(90) * 2) );
-// 			break;
-// 		case 4:
-// 			cam.SetAngles( Ang3(DEG2RAD(90), 0, DEG2RAD(180)) );
-// 			break;
-// 		case 5:
-// 			cam.SetAngles( Ang3(-DEG2RAD(90), 0, DEG2RAD(180)) );
-// 			break;
-// 		}
-
-
-
 		cam.SetPosition( Vec3(0,0,1.2) );
 
 		m_pShaderParamDataSource.setMainCamera(&cam);
@@ -169,39 +116,9 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 		gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_TERRIAN, eSIT_FastCubeGen, false);
 		gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_OPAQUE, eSIT_FastCubeGen, false);
 		gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_OPAQUE, eSIT_FastCubeGen, true);
-		//gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_SKIES_EARLY, eSIT_General, false);
 
-// 
-// 		switch( i )
-// 		{
-// 		case 0:
-// 			//gkRendererD3D9::_clearBuffer( true, 0x00000000 );
-// 			break;
-// 		case 1:
-// 			//gkRendererD3D9::_clearBuffer( true, 0x00000000 );
-// 			break;
-// 		case 2:
-// 			//gkRendererD3D9::_clearBuffer( true, 0x00000000 );
-// 			break;
-// 		case 3:
-// 			//gkRendererD3D9::_clearBuffer( true, 0x00000000 );
-// 			break;
-// 		case 4:
-// 			//gkRendererD3D9::_clearBuffer( true, 0xFF0000FF );
-// 			break;
-// 		case 5:
-// 			gkRendererD3D9::_clearBuffer( true, 0xFFFF0000 );
-// 			break;
-// 		}
-
-
-
-		FX_PopCubeRenderTarget( 0 );
+		FX_PopRenderTarget(0);
 	}
-
-
-
-	//gkTextureManager::ms_TestCubeRT->AutoGenMipmap();
 
 	m_pShaderParamDataSource.setMainCamera(gEnv->p3DEngine->getMainCamera()->getCCam());
 	
@@ -313,14 +230,6 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 	// wether do it or not, here we close stencil
 	RS_SetRenderState(D3DRS_STENCILENABLE, FALSE);
 
-// 	RS_SetRenderState( D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP );
-// 	RS_SetRenderState( D3DRS_STENCILFAIL, D3DSTENCILOP_KEEP );
-// 	RS_SetRenderState( D3DRS_STENCILPASS, D3DSTENCILOP_KEEP );
-// 	RS_SetRenderState( D3DRS_STENCILFUNC, D3DCMP_EQUAL );
-// 
-// 
-// 	RS_SetRenderState( D3DRS_STENCILMASK, 0xFFFFFFFF );
-
 	//////////////////////////////////////////////////////////////////////////
 	// 7. ForwardShading: Opaque
 
@@ -350,6 +259,7 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 
 	FX_ClearAllSampler();
 
+	//////////////////////////////////////////////////////////////////////////
 	// test SSRL here [5/11/2013 Kaiming]
 	if (g_pRendererCVars->r_ssrl)
 	{
@@ -360,7 +270,6 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 	RS_SetRenderState(D3DRS_STENCILENABLE, FALSE);
 
  	ms_GPUTimers[_T("Opaque")].stop();
-// 	PROFILE_LABEL_POP( "OPAQUE" );
 
 	//////////////////////////////////////////////////////////////////////////
 	// 8. StretchRect: Opaque 2 Refraction
@@ -374,7 +283,6 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 // 	PROFILE_LABEL_PUSH( "TRANSPARENT" );
 // 	RP_ProcessRenderLayer(RENDER_LAYER_WATER, eSIT_General);
 // 
-// 
 // 	//////////////////////////////////////////////////////////////////////////
 // 	// 10. StretchRect: Combine Water result to Refraction
 // 	RP_StretchRefraction();
@@ -383,11 +291,6 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 	//////////////////////////////////////////////////////////////////////////
 	// 11. ForwardShading: Transparent
 	ms_GPUTimers[_T("Transparent")].start();
-
-	//ms_GPUTimers[_T("Transparent")].stop();
-
-	//PROFILE_LABEL_POP( "TRANSPARENT" );
-
 
 	//RP_GeneralEnd();
 	//PROFILE_LABEL_POP( "FORWARDSHADING" );
@@ -411,8 +314,6 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 	//////////////////////////////////////////////////////////////////////////
 	// 13. Fog
 
-
-
 	PROFILE_LABEL_PUSH( "FOG_PROCESS" );
 	RP_FogProcess();
 	ms_GPUTimers[_T("Transparent")].stop();
@@ -420,8 +321,6 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 
 	//////////////////////////////////////////////////////////////////////////
 	// 14. HDR Process
-
-
 
 	PROFILE_LABEL_PUSH( "HDRPROCESS" );
 	ms_GPUTimers[_T("HDR")].start();
@@ -509,7 +408,7 @@ void gkRendererD3D9::RP_DeferredLightExcute(const gkRenderLightList& LightList)
 	}
 
 
-	FX_PushRenderTarget(0, gkTextureManager::ms_SceneDifAcc, true);
+	FX_PushRenderTarget(0, gkTextureManager::ms_SceneDifAcc, 0, 0, true);
 	//_clearBuffer( true, 0x7f7f7f7f );
 	//_clearBuffer(false, 0x0);
 	FX_PushRenderTarget(1, gkTextureManager::ms_SceneSpecAcc);
@@ -788,7 +687,7 @@ void gkRendererD3D9::RP_GenReflectExcute( const gkRenderableList* objs, IShader*
 
 
 	// set the RT
-	FX_PushRenderTarget(0, gkTextureManager::ms_ReflMap0Tmp, true);
+	FX_PushRenderTarget(0, gkTextureManager::ms_ReflMap0Tmp, 0, 0, true);
 	_clearBuffer(true, 0xff469fe9);
 
 
@@ -1025,7 +924,7 @@ void gkRendererD3D9::RP_ShadowMaskGen()
 			gkTextureManager::ms_ShadowMask->changeAttr(_T("size"), _T("quad"));
 		}
 
-		FX_PushRenderTarget(0, gkTextureManager::ms_ShadowMask, true);
+		FX_PushRenderTarget(0, gkTextureManager::ms_ShadowMask, 0, 0, true);
 
 		_clearBuffer(false, 0xFFFFFFFF);
 		getDevice()->Clear(0, NULL, D3DCLEAR_STENCIL, 0, 0, 0L);
@@ -1408,9 +1307,15 @@ void gkRendererD3D9::RP_SSRL()
 
 	FX_PopRenderTarget( 0 );
 
-	gkTextureManager::ms_ReflMap0->AutoGenMipmap();
+	//////////////////////////////////////////////////////////////////////////
+	// change the autogenmipmap method [4/1/2015 gameKnife]
+	//gkTextureManager::ms_ReflMap0->AutoGenMipmap();
 
-	//FX_TexBlurGaussian( gkTextureManager::ms_ReflMap0, 1.0, 1.0, 1.0, gkTextureManager::ms_ReflMap0Tmp);
+	// to gaussin blur, but blur the mipmap chain
+
+	gkRendererD3D9::SetRenderState(D3DRS_STENCILENABLE, FALSE);
+
+	FX_TexBlurGaussian( gkTextureManager::ms_ReflMap0, 1.0, 1.0, 5.0, gkTextureManager::ms_ReflMap0Tmp, 2, true);
 }
 
 void gkRendererD3D9::RP_FinalOutput()
@@ -1490,7 +1395,7 @@ void gkRendererD3D9::RP_FinalOutput()
 			gkShaderPtr pShader = gkShaderManager::ms_post_msaa;
 
 			{
-				FX_PushRenderTarget(0, gkTextureManager::ms_SMAA_Edge, true);
+				FX_PushRenderTarget(0, gkTextureManager::ms_SMAA_Edge, 0, 0, true);
 				getDevice()->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_STENCIL, 0, 0, 0L);
 
 				GKHANDLE hTech = pShader->FX_GetTechniqueByName("ColorEdgeDetection");
@@ -1522,7 +1427,7 @@ void gkRendererD3D9::RP_FinalOutput()
 
 			{
 
-				FX_PushRenderTarget(0, gkTextureManager::ms_SMAA_Blend, true);
+				FX_PushRenderTarget(0, gkTextureManager::ms_SMAA_Blend, 0, 0, true);
 				getDevice()->Clear(0, NULL, D3DCLEAR_TARGET, 0, 0, 0L);
 
 				GKHANDLE hTech = pShader->FX_GetTechniqueByName("BlendWeightCalculation");

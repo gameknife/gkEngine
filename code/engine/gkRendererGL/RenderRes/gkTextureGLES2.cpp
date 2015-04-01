@@ -117,6 +117,8 @@ bool gkTextureGLES2::loadImpl( void )
 	m_sizable = false;
 	m_rawData = NULL;
 	m_dynamic = false;
+	m_uMipLevel = 1;
+
 	// if defaultpool, just create
 	gkNameValuePairList::iterator it = loadingParams.find(_T("d3dpool"));
 	if (it != loadingParams.end())

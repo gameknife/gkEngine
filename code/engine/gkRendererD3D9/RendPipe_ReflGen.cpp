@@ -6,7 +6,7 @@
 
 void gkRendPipe_ReflGen::Prepare( gkRenderSequence* renderSeq )
 {
-	gkRendererD3D9::FX_PushRenderTarget(0, gkTextureManager::ms_ReflMap0Tmp, true);
+	gkRendererD3D9::FX_PushRenderTarget(0, gkTextureManager::ms_ReflMap0Tmp, 0, 0, true);
 	gkRendererD3D9::_clearBuffer(true, 0xff469fe9);
 }
 

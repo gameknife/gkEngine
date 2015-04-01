@@ -64,7 +64,7 @@ void VertexScene( float4 inPos 		: POSITION,
 }
 
 pixout PixelScene(   
-                float2 inTex0 	: TEXCOORD0    ,
+                float2 inTex0 	: TEXCOORD0,
 				float3 inNormal 	: TEXCOORD1  
 				)
 {	

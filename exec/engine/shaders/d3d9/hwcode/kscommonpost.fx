@@ -20,6 +20,16 @@ sampler_state
     MipFilter = Linear;
 };
 
+sampler2D _tex0LOD : register(s0) =
+sampler_state
+{
+	AddressU = Clamp;
+	AddressV = Clamp;
+	MinFilter = Linear;
+	MagFilter = Linear;
+	MipFilter = Point;
+};
+
 sampler2D _tex1L : register(s1)=
 sampler_state
 {
@@ -59,6 +69,48 @@ float4 texToTexParams0;
 float4 texToTexParams1;
 float4 texToTexParams2;
 float4 texToTexParams3;
+
+float source_lod;
+
+pixout_fp GaussBlurBilinearLODPS(vert2frag IN)
+{
+	pixout_fp OUT;
+
+	float4 sum = 0;
+
+		// simply keep alpha [11/26/2011 Kaiming]
+
+
+		float4 col = tex2Dlod(_tex0LOD, float4(IN.baseTC.xy + PI_psOffsets[0].xy, 0, source_lod));
+	float keepalpha = col.a;
+
+	sum += col * psWeights[0].x;
+
+	col = tex2Dlod(_tex0LOD, float4(IN.baseTC.xy + PI_psOffsets[1].xy, 0, source_lod));
+	sum += col * psWeights[1].x;
+
+	col = tex2Dlod(_tex0LOD, float4(IN.baseTC.xy + PI_psOffsets[2].xy, 0, source_lod));
+	sum += col * psWeights[2].x;
+
+	col = tex2Dlod(_tex0LOD, float4(IN.baseTC.xy + PI_psOffsets[3].xy, 0, source_lod));
+	sum += col * psWeights[3].x;
+
+	col = tex2Dlod(_tex0LOD, float4(IN.baseTC.xy + PI_psOffsets[4].xy, 0, source_lod));
+	sum += col * psWeights[4].x;
+
+	col = tex2Dlod(_tex0LOD, float4(IN.baseTC.xy + PI_psOffsets[5].xy, 0, source_lod));
+	sum += col * psWeights[5].x;
+
+	col = tex2Dlod(_tex0LOD, float4(IN.baseTC.xy + PI_psOffsets[6].xy, 0, source_lod));
+	sum += col * psWeights[6].x;
+
+	col = tex2Dlod(_tex0LOD, float4(IN.baseTC.xy + PI_psOffsets[7].xy, 0, source_lod));
+	sum += col * psWeights[7].x;
+
+	OUT.Color = sum;
+	OUT.Color.a = keepalpha;
+	return OUT;
+}
 
 pixout_fp GaussBlurBilinearPS(vert2frag IN)
 {
@@ -181,6 +233,23 @@ technique GaussBlurBilinear
     PixelShader = compile ps_3_0 GaussBlurBilinearPS();
   }
 }
+
+technique GaussBlurBilinearLOD
+{
+	pass p0
+	{
+		VertexShader = null;
+
+		ZEnable = false;
+		ZWriteEnable = false;
+		CullMode = None;
+
+		PixelShader = compile ps_3_0 GaussBlurBilinearLODPS();
+	}
+}
+
+
+
 
 float4 HPosToScreenTC_PS(float4 HPos)
 {

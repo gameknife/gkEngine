@@ -28,7 +28,7 @@ float4 PS_ddy;
 
 float4 GetWorldPos( in sampler2D depthSampler, in float2 tc, in float3 farclippos )
 {
-	float depth = tex2D(depthSampler, tc).x;
+	float depth = tex2Dgrad(depthSampler, tc, float2(0,0), float2(0,0)).x;
 	return float4( depth * farclippos.xyz + g_camPos.xyz, depth );
 }
 

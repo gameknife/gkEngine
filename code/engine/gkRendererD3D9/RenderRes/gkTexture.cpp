@@ -242,7 +242,7 @@ bool gkTexture::loadImpl( IDirect3DDevice9* d3d9Device )
 	HRESULT hr = S_OK;
 
 	m_bSizeable = false;
-
+	m_uMipLevel = 1;
 	// if defaultpool, just create
 	gkNameValuePairList::iterator it = loadingParams.find(_T("d3dpool"));
 	if (it != loadingParams.end())
@@ -367,7 +367,8 @@ bool gkTexture::loadImpl( IDirect3DDevice9* d3d9Device )
 				gkNameValuePairList::iterator itmipmap = loadingParams.find(_T("mipmaprt"));
 				if (itmipmap != loadingParams.end() && itmipmap->second == _T("true"))
 				{
-					usage |= D3DUSAGE_AUTOGENMIPMAP;
+					//usage |= D3DUSAGE_AUTOGENMIPMAP;
+					m_uMipLevel = 0;
 				}
 
 				if (cubemap)
@@ -379,21 +380,13 @@ bool gkTexture::loadImpl( IDirect3DDevice9* d3d9Device )
 					{
 						gkLogError( _T("Cube Dynamic Tex Created Failed!!!") );
 					}
-
-
-					d3d9Device->CreateDepthStencilSurface(  m_uWidth, m_uWidth, D3DFMT_D24S8,
-						D3DMULTISAMPLE_NONE,
-						0,
-						TRUE,
-						&(m_pCubeTexture_DS),
-						NULL );
 				}
 				else
 				{
 					// finally, created it
 					if( !SUCCEEDED( d3d9Device->CreateTexture( m_uWidth,
 						m_uHeight,
-						1,
+						m_uMipLevel,
 						usage,
 						format,
 						D3DPOOL_DEFAULT,
@@ -401,6 +394,10 @@ bool gkTexture::loadImpl( IDirect3DDevice9* d3d9Device )
 						NULL ) ) )
 					{
 						gkLogError( _T("Dynamic Tex Created Failed!!!") );
+					}
+					else
+					{
+						m_uMipLevel = m_p2DTexture->GetLevelCount();
 					}
 
 					gkNameValuePairList::iterator itInitColor = loadingParams.find(_T("initcolor"));

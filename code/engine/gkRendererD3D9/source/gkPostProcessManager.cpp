@@ -42,10 +42,10 @@ void gkPostProcessManager::OnDestroyDevice()
 	SAFE_RELEASE( m_pVertDeclPP );
 }
 
-void gkPostProcessManager::DrawFullScreenQuad(int nTexWidth, int nTexHeight, Vec4& region, Vec2& repeat )
+void gkPostProcessManager::DrawFullScreenQuad(int nTexWidth, int nTexHeight, Vec4& region, Vec2& repeat, uint8 level )
 {
-	float texWidth = (float)nTexWidth;
-	float texHeight = (float)nTexHeight;
+	float texWidth = (float)(nTexWidth >> level);
+	float texHeight = (float)(nTexHeight >> level);
 
 	// Render a screen-sized quad
 	PPVERT quad[4];
@@ -73,9 +73,9 @@ void gkPostProcessManager::DrawFullScreenQuad(int nTexWidth, int nTexHeight, Vec
 
 }
 
-void gkPostProcessManager::DrawFullScreenQuad( gkTexturePtr targetTex, Vec4& region, Vec2& repeat )
+void gkPostProcessManager::DrawFullScreenQuad(gkTexturePtr targetTex, Vec4& region, Vec2& repeat, uint8 level)
 {
-	DrawFullScreenQuad(targetTex->getWidth(), targetTex->getHeight(), region, repeat);
+	DrawFullScreenQuad(targetTex->getWidth(), targetTex->getHeight(), region, repeat, level);
 }
 
 void gkPostProcessManager::DrawScreenQuad( Vec4& region )

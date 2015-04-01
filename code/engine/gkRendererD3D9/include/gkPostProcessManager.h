@@ -65,7 +65,7 @@ public:
 	static HRESULT OnCreateDevice(IDirect3DDevice9* pd3dDevice);
 	static void OnDestroyDevice();
 
-	static void DrawFullScreenQuad(int nTexWidth, int nTexHeight, Vec4& region = Vec4(0,0,1,1), Vec2& repeat = Vec2(1,1) );
-	static void DrawFullScreenQuad(gkTexturePtr targetTex, Vec4& region = Vec4(0,0,1,1), Vec2& repeat = Vec2(1,1) );
+	static void DrawFullScreenQuad(int nTexWidth, int nTexHeight, Vec4& region = Vec4(0,0,1,1), Vec2& repeat = Vec2(1,1), uint8 level = 0 );
+	static void DrawFullScreenQuad(gkTexturePtr targetTex, Vec4& region = Vec4(0, 0, 1, 1), Vec2& repeat = Vec2(1, 1), uint8 level = 0);
 	static void DrawScreenQuad( Vec4& region );
 };

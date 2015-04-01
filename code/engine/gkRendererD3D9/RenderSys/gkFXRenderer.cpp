@@ -111,117 +111,39 @@ void gkRendererD3D9::FX_TexBlurDirectional(gkTexturePtr pTex, const Vec2 &vDir, 
 	}
 }
 
-void gkRendererD3D9::FX_TexBlurGaussian( gkTexturePtr tgt, int nAmount, float fScale, float fDistribution, gkTexturePtr tmp, int iterate )
+void gkRendererD3D9::FX_TexBlurGaussian(gkTexturePtr tgt, int nAmount, float fScale, float fDistribution, gkTexturePtr tmp, int iterate, bool blur_mipmapchain)
 {
-	// blur first
-	float s1 = 1.f / (float)tmp->getWidth();
-	float t1 = 1.f / (float)tmp->getHeight();
-	Vec4 vWhite( 1.0f, 1.0f, 1.0f, 1.0f );
-
-	// Horizontal/Vertical pass params
-	const int nSamples = 16;
-	int nHalfSamples = (nSamples>>1);
-
-	Vec4 pHParams[32], pVParams[32], pWeightsPS[32];
-	float pWeights[32], fWeightSum = 0;
-
-	memset( pWeights,0,sizeof(pWeights) );
-
-	int s;
-	for(s = 0; s<nSamples; ++s)
-	{
-		if(fDistribution != 0.0f)
-			pWeights[s] = GaussianDistribution1D(s - nHalfSamples, fDistribution);      
-		else
-			pWeights[s] = 0.0f;
-		fWeightSum += pWeights[s];
-	}
-
-	// normalize weights
-	for(s = 0; s < nSamples; ++s)
-	{
-		pWeights[s] /= fWeightSum;  
-	}
-
-	// set bilinear offsets
-	for(s = 0; s < nHalfSamples; ++s)
-	{
-		float off_a = pWeights[s*2];
-		float off_b = ( (s*2+1) <= nSamples-1 )? pWeights[s*2+1] : 0;   
-		float a_plus_b = (off_a + off_b);
-		if (a_plus_b == 0)
-			a_plus_b = 1.0f;
-		float offset = off_b / a_plus_b;
-
-		pWeights[s] = off_a + off_b;
-		pWeights[s] *= fScale ;
-		pWeightsPS[s] = vWhite * pWeights[s];
-
-		float fCurrOffset = (float) s*2 + offset - nHalfSamples;
-		pHParams[s] = Vec4(s1 * fCurrOffset , 0, 0, 0);  
-		pVParams[s] = Vec4(0, t1 * fCurrOffset , 0, 0);       
-	}
-
-
 	gkShaderPtr pShader = gkShaderManager::ms_PostCommon;
-	GKHANDLE hTech = pShader->FX_GetTechniqueByName("GaussBlurBilinear");
+	GKHANDLE hTech = 0;
+
+	if (!blur_mipmapchain)
+	{
+		hTech = pShader->FX_GetTechniqueByName("GaussBlurBilinear");
+	}
+	else
+	{
+		hTech = pShader->FX_GetTechniqueByName("GaussBlurBilinearLOD");
+	}
+
 	pShader->FX_SetTechnique( hTech );
 
+	uint8 source_blur_mipmapchain = 0;
+	uint8 target_blur_mipmapchain = 0;
 
-	for (uint8 i=0; i < iterate; ++i)
+	if (blur_mipmapchain)
 	{
-		//////////////////////////////////////////////////////////////////////////
-		// Horizon first
-		// tgt -> tmp
+		for (int i = 0; i < tgt->getMipLevel(); ++i)
 		{
-			FX_PushRenderTarget(0, tmp);
-
-			pShader->FX_SetValue("PI_psOffsets", pHParams, sizeof(Vec4) * nHalfSamples);
-			pShader->FX_SetValue("psWeights", pWeightsPS, sizeof(Vec4) * nHalfSamples);
-			pShader->FX_Commit();
-			tgt->Apply(0, 0);
-
-			UINT cPasses;
-			pShader->FX_Begin( &cPasses, 0 );
-			for( UINT p = 0; p < cPasses; ++p )
-			{
-				pShader->FX_BeginPass( p );
-				gkPostProcessManager::DrawFullScreenQuad(tmp);
-				pShader->FX_EndPass();
-			}
-			pShader->FX_End();
-
-			FX_PopRenderTarget(0);
+			GaussionBlurWithMipLevel(tmp, fDistribution, fScale, iterate, source_blur_mipmapchain++, pShader, tgt, ++target_blur_mipmapchain);
 		}
-
-		//////////////////////////////////////////////////////////////////////////
-		// Vertical second
-		// tmp -> tgt
-		{
-			FX_PushRenderTarget(0, tgt);
-
-			pShader->FX_SetValue("PI_psOffsets", pVParams, sizeof(Vec4) * nHalfSamples);
-			pShader->FX_SetValue("psWeights", pWeightsPS, sizeof(Vec4) * nHalfSamples);
-			pShader->FX_Commit();
-			tmp->Apply(0, 0);
-
-			UINT cPasses;
-			pShader->FX_Begin( &cPasses, 0 );
-			for( UINT p = 0; p < cPasses; ++p )
-			{
-				pShader->FX_BeginPass( p );
-				gkPostProcessManager::DrawFullScreenQuad(tgt);
-				pShader->FX_EndPass();
-			}
-			pShader->FX_End();
-
-			FX_PopRenderTarget(0);
-		}
+		
+	}
+	else
+	{
+		GaussionBlurWithMipLevel(tmp, fDistribution, fScale, iterate, source_blur_mipmapchain, pShader, tgt, target_blur_mipmapchain);
 	}
 
-
-
-
+	
 }
 
 void gkRendererD3D9::FX_ClearAllSampler()
@@ -338,15 +260,24 @@ void gkRendererD3D9::FX_DrawFloatTextures(gkTexturePtr tex, Vec4& region, float 
 	getAuxRenderer()->AuxRenderText( buffer, region.x * (float)GetScreenWidth(), region.y * (float)GetScreenHeight() + 20, m_pDefaultFont, ColorB(180,180,180,200));
 }
 
-void gkRendererD3D9::FX_SetRenderTarget( uint8 channel, gkTexturePtr src, bool bNeedDS, bool bClearTarget )
+void gkRendererD3D9::FX_SetRenderTarget( uint8 channel, gkTexturePtr src, uint8 level, uint8 index, bool bNeedDS, bool bClearTarget )
 {
 	gkTexture* hwSrc = reinterpret_cast<gkTexture*>( src.getPointer() );
 
 
 	GK_ASSERT(channel < 4);
-	GK_ASSERT( hwSrc->get2DTexture() );
+	//GK_ASSERT( hwSrc->get2DTexture() );
 	LPDIRECT3DSURFACE9 pSurf;
-	hwSrc->get2DTexture()->GetSurfaceLevel(0, &pSurf);
+
+	if (hwSrc->get2DTexture())
+	{
+		hwSrc->get2DTexture()->GetSurfaceLevel(level, &pSurf);
+	}
+	else if (hwSrc->getCubeTexture())
+	{
+		hwSrc->getCubeTexture()->GetCubeMapSurface((D3DCUBEMAP_FACES)index, level, &pSurf);
+	}
+	
 
 	m_pd3d9Device->SetRenderTarget(channel, pSurf);
 	if (bClearTarget)
@@ -400,7 +331,7 @@ void gkRendererD3D9::FX_SetRenderTarget( uint8 channel, gkTexturePtr src, bool b
 	SAFE_RELEASE( pSurf );
 }
 
-void gkRendererD3D9::FX_RestoreRenderTarget( uint8 channel, bool bNeedDS )
+void gkRendererD3D9::FX_RestoreRenderTarget( uint8 channel )
 {
 	GK_ASSERT(channel < 4);
 
@@ -408,7 +339,7 @@ void gkRendererD3D9::FX_RestoreRenderTarget( uint8 channel, bool bNeedDS )
 	if(sizeofstack > 0)
 	{
 		// restore the saved RT
-		FX_SetRenderTarget( channel, m_RTStack[channel][sizeofstack - 1].m_pTex, bNeedDS, false);
+		FX_SetRenderTarget(channel, m_RTStack[channel][sizeofstack - 1].m_pTex, m_RTStack[channel][sizeofstack - 1].m_level, m_RTStack[channel][sizeofstack - 1].m_index, m_RTStack[channel][sizeofstack - 1].m_needDS, false);
 	}
 	else
 	{
@@ -448,7 +379,6 @@ void gkRendererD3D9::FX_PushHwDepthTarget(gkTexturePtr src, bool bClearTarget)
 
 void gkRendererD3D9::FX_PopHwDepthTarget()
 {
-
 	m_pd3d9Device->SetDepthStencilSurface( g_prevSurf );
 	if (g_prevSurf)
 	{
@@ -456,12 +386,12 @@ void gkRendererD3D9::FX_PopHwDepthTarget()
 	}
 }
 
-void gkRendererD3D9::FX_PushRenderTarget( uint8 channel, gkTexturePtr src, bool bNeedDS, bool bClearTarget )
+void gkRendererD3D9::FX_PushRenderTarget( uint8 channel, gkTexturePtr src, uint8 level, uint8 index, bool bNeedDS, bool bClearTarget )
 {
 	GK_ASSERT(channel < 4);
-	m_RTStack[channel].push_back(gkDynTex(src, bNeedDS));
+	m_RTStack[channel].push_back(gkDynTex(src, level, index, bNeedDS));
 
-	FX_SetRenderTarget(channel, src, bNeedDS, bClearTarget);
+	FX_SetRenderTarget(channel, src, level, index, bNeedDS, bClearTarget);
 }
 
 void gkRendererD3D9::FX_PopRenderTarget( uint8 channel )
@@ -473,7 +403,7 @@ void gkRendererD3D9::FX_PopRenderTarget( uint8 channel )
 
 	m_RTStack[channel].pop_back();
 
-	FX_RestoreRenderTarget(channel, tex.m_needDS);
+	FX_RestoreRenderTarget(channel);
 }
 
 void gkRendererD3D9::FX_RestoreBackBuffer()
@@ -580,9 +510,175 @@ void gkRendererD3D9::FX_DrawFullScreenQuad(gkTexturePtr& tex)
 }
 
 
+void gkRendererD3D9::GaussionBlurWithMipLevel(gkTexturePtr tmp, float fDistribution, float fScale, int iterate, uint8 source_blur_mipmapchain, gkShaderPtr pShader, gkTexturePtr tgt, uint8 target_blur_mipmapchain)
+{
+	// blur first
 
 
+	for (uint8 i = 0; i < iterate; ++i)
+	{
+		//////////////////////////////////////////////////////////////////////////
+		// Horizon first
+		// tgt -> tmp
+		{
+			float s1 = 1.f / (float)(tmp->getWidth() >> source_blur_mipmapchain);
+			float t1 = 1.f / (float)(tmp->getHeight() >> source_blur_mipmapchain);
+			GaussionBlurH(fDistribution, fScale, s1, t1, tmp, source_blur_mipmapchain, pShader, tgt);
+
+		}
+
+		//////////////////////////////////////////////////////////////////////////
+		// Vertical second
+		// tmp -> tgt
+		{
+			float s1 = 1.f / (float)(tgt->getWidth() >> source_blur_mipmapchain);
+			float t1 = 1.f / (float)(tgt->getHeight() >> source_blur_mipmapchain);
+			GaussionBlurV(fDistribution, fScale, s1, t1, tgt, target_blur_mipmapchain, pShader, source_blur_mipmapchain, tmp);
+		}
+	}
+}
 
 
+void gkRendererD3D9::GaussionBlurH(float fDistribution, float fScale, float s1, float t1, gkTexturePtr tmp, uint8 source_blur_mipmapchain, gkShaderPtr pShader, gkTexturePtr tgt)
+{
+	Vec4 vWhite(1.0f, 1.0f, 1.0f, 1.0f);
+
+	// Horizontal/Vertical pass params
+	const int nSamples = 16;
+	int nHalfSamples = (nSamples >> 1);
+
+	Vec4 pHParams[32], pVParams[32], pWeightsPS[32];
+	float pWeights[32], fWeightSum = 0;
+
+	memset(pWeights, 0, sizeof(pWeights));
+
+	int s;
+	for (s = 0; s < nSamples; ++s)
+	{
+		if (fDistribution != 0.0f)
+			pWeights[s] = GaussianDistribution1D(s - nHalfSamples, fDistribution);
+		else
+			pWeights[s] = 0.0f;
+		fWeightSum += pWeights[s];
+	}
+
+	// normalize weights
+	for (s = 0; s < nSamples; ++s)
+	{
+		pWeights[s] /= fWeightSum;
+	}
+
+	// set bilinear offsets
+	for (s = 0; s < nHalfSamples; ++s)
+	{
+		float off_a = pWeights[s * 2];
+		float off_b = ((s * 2 + 1) <= nSamples - 1) ? pWeights[s * 2 + 1] : 0;
+		float a_plus_b = (off_a + off_b);
+		if (a_plus_b == 0)
+			a_plus_b = 1.0f;
+		float offset = off_b / a_plus_b;
+
+		pWeights[s] = off_a + off_b;
+		pWeights[s] *= fScale;
+		pWeightsPS[s] = vWhite * pWeights[s];
+
+		float fCurrOffset = (float)s * 2 + offset - nHalfSamples;
+		pHParams[s] = Vec4(s1 * fCurrOffset, 0, 0, 0);
+		pVParams[s] = Vec4(0, t1 * fCurrOffset, 0, 0);
+	}
 
 
+	FX_PushRenderTarget(0, tmp, source_blur_mipmapchain);
+
+	pShader->FX_SetValue("PI_psOffsets", pHParams, sizeof(Vec4) * nHalfSamples);
+	pShader->FX_SetValue("psWeights", pWeightsPS, sizeof(Vec4) * nHalfSamples);
+
+	pShader->FX_SetFloat("source_lod", (float)source_blur_mipmapchain);
+
+	pShader->FX_Commit();
+	tgt->Apply(0, 0);
+
+	UINT cPasses;
+	pShader->FX_Begin(&cPasses, 0);
+	for (UINT p = 0; p < cPasses; ++p)
+	{
+		pShader->FX_BeginPass(p);
+		gkPostProcessManager::DrawFullScreenQuad(tmp, Vec4(0, 0, 1, 1), Vec2(1, 1), source_blur_mipmapchain);
+		pShader->FX_EndPass();
+	}
+	pShader->FX_End();
+
+	FX_PopRenderTarget(0);
+}
+
+
+void gkRendererD3D9::GaussionBlurV(float fDistribution, float fScale, float s1, float t1, gkTexturePtr tgt, uint8 target_blur_mipmapchain, gkShaderPtr pShader, uint8 source_blur_mipmapchain, gkTexturePtr tmp)
+{
+	Vec4 vWhite(1.0f, 1.0f, 1.0f, 1.0f);
+
+	// Horizontal/Vertical pass params
+	const int nSamples = 16;
+	int nHalfSamples = (nSamples >> 1);
+
+	Vec4 pHParams[32], pVParams[32], pWeightsPS[32];
+	float pWeights[32], fWeightSum = 0;
+
+	memset(pWeights, 0, sizeof(pWeights));
+
+	int s;
+	for (s = 0; s < nSamples; ++s)
+	{
+		if (fDistribution != 0.0f)
+			pWeights[s] = GaussianDistribution1D(s - nHalfSamples, fDistribution);
+		else
+			pWeights[s] = 0.0f;
+		fWeightSum += pWeights[s];
+	}
+
+	// normalize weights
+	for (s = 0; s < nSamples; ++s)
+	{
+		pWeights[s] /= fWeightSum;
+	}
+
+	// set bilinear offsets
+	for (s = 0; s < nHalfSamples; ++s)
+	{
+		float off_a = pWeights[s * 2];
+		float off_b = ((s * 2 + 1) <= nSamples - 1) ? pWeights[s * 2 + 1] : 0;
+		float a_plus_b = (off_a + off_b);
+		if (a_plus_b == 0)
+			a_plus_b = 1.0f;
+		float offset = off_b / a_plus_b;
+
+		pWeights[s] = off_a + off_b;
+		pWeights[s] *= fScale;
+		pWeightsPS[s] = vWhite * pWeights[s];
+
+		float fCurrOffset = (float)s * 2 + offset - nHalfSamples;
+		pHParams[s] = Vec4(s1 * fCurrOffset, 0, 0, 0);
+		pVParams[s] = Vec4(0, t1 * fCurrOffset, 0, 0);
+	}
+
+	FX_PushRenderTarget(0, tgt, target_blur_mipmapchain);
+
+	pShader->FX_SetValue("PI_psOffsets", pVParams, sizeof(Vec4) * nHalfSamples);
+	pShader->FX_SetValue("psWeights", pWeightsPS, sizeof(Vec4) * nHalfSamples);
+
+	pShader->FX_SetFloat("source_lod", (float)source_blur_mipmapchain);
+
+	pShader->FX_Commit();
+	tmp->Apply(0, 0);
+
+	UINT cPasses;
+	pShader->FX_Begin(&cPasses, 0);
+	for (UINT p = 0; p < cPasses; ++p)
+	{
+		pShader->FX_BeginPass(p);
+		gkPostProcessManager::DrawFullScreenQuad(tgt, Vec4(0, 0, 1, 1), Vec2(1, 1), target_blur_mipmapchain);
+		pShader->FX_EndPass();
+	}
+	pShader->FX_End();
+
+	FX_PopRenderTarget(0);
+}

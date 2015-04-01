@@ -509,7 +509,7 @@ void gkRendererD3D9::_beginScene()
 		gkTextureManager::ms_BackBuffer = gkTextureManager::ms_BackBufferA_LeftEye;
 	}
 
-	FX_PushRenderTarget( 0, gkTextureManager::ms_BackBuffer, true );
+	FX_PushRenderTarget( 0, gkTextureManager::ms_BackBuffer, 0, 0, true );
 }
 //-----------------------------------------------------------------------
 void gkRendererD3D9::_endScene()
@@ -2317,43 +2317,4 @@ float gkRendererD3D9::GetPixelReSize()
 {
 	return g_pRendererCVars->r_pixelscale;
 	return 1.0f;
-}
-
-void gkRendererD3D9::FX_PushCubeRenderTarget(uint8 channel, uint8 index, gkTexturePtr src, bool bNeedDS /*= false*/, bool bClearTarget /*= false*/)
-{
-	gkTexture* pointer = (gkTexture*)(src.getPointer());
-
-	if (pointer->getCubeTexture())
-	{
-		IDirect3DSurface9* surf = NULL;
-		HRESULT HR = pointer->getCubeTexture()->GetCubeMapSurface( (D3DCUBEMAP_FACES)(D3DCUBEMAP_FACE_POSITIVE_X + index), 0, &surf );
-		if (HR != S_OK)
-		{
-			gkLogWarning( _T("cube map get surf failed.") );
-		}
-
-		m_pd3d9Device->GetRenderTarget( channel, &m_cache_surf_cubemap);
-		m_pd3d9Device->SetRenderTarget( channel, surf );
-
-
-		m_pd3d9Device->GetDepthStencilSurface( &m_cache_ds_cubemap );
-		m_pd3d9Device->SetDepthStencilSurface( pointer->m_pCubeTexture_DS );
-
-		//FX_PushHwDepthTarget( NULL );
-
-		surf->Release();
-	}
-
-}
-
-void gkRendererD3D9::FX_PopCubeRenderTarget(uint8 channel)
-{
-	if(m_cache_surf_cubemap)
-	{
-		m_pd3d9Device->SetRenderTarget( channel, m_cache_surf_cubemap );
-		m_pd3d9Device->SetDepthStencilSurface( m_cache_ds_cubemap );
-		//FX_PopHwDepthTarget();
-	}
-	m_cache_surf_cubemap = NULL;
-	m_cache_ds_cubemap = NULL;
 }

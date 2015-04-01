@@ -4,7 +4,7 @@
 void RendPipe_ZpassDeferredShading::Prepare( gkRenderSequence* renderSeq )
 {
 	// prepare z prepass MRT
-	gkRendererD3D9::FX_PushRenderTarget(0, gkTextureManager::ms_SceneDepth, true);
+	gkRendererD3D9::FX_PushRenderTarget(0, gkTextureManager::ms_SceneDepth,0,0, true);
 	// Clear Normal Backbuffer & HW Depth Buffer
 	gkRendererD3D9::_clearBuffer(true, 0x00FFFFFF);
 
