@@ -132,7 +132,7 @@ void gkRendererD3D9::FX_TexBlurGaussian(gkTexturePtr tgt, int nAmount, float fSc
 
 	if (blur_mipmapchain)
 	{
-		for (int i = 0; i < tgt->getMipLevel(); ++i)
+		for (int i = 0; i < tgt->getMipLevel() - 1; ++i)
 		{
 			GaussionBlurWithMipLevel(tmp, fDistribution, fScale, iterate, source_blur_mipmapchain++, pShader, tgt, ++target_blur_mipmapchain);
 		}
@@ -178,19 +178,50 @@ void gkRendererD3D9::FX_StrechRect( gkTexturePtr src, gkTexturePtr dest, bool Fi
 	gkTexture* hwSrc = reinterpret_cast<gkTexture*>( src.getPointer() );
 	gkTexture* hwDest = reinterpret_cast<gkTexture*>( dest.getPointer() );
 
-	IDirect3DSurface9* pSourceSurf;
-	IDirect3DSurface9* pTargetSurf;
 
-	hwSrc->get2DTexture()->GetSurfaceLevel(0, &pSourceSurf);
-	hwDest->get2DTexture()->GetSurfaceLevel(0, &pTargetSurf);
+	// copy 2d
+	if (hwSrc->get2DTexture() && hwDest->get2DTexture())
+	{
+		IDirect3DSurface9* pSourceSurf;
+		IDirect3DSurface9* pTargetSurf;
 
-	if (FilterIfNeed || (hwSrc->getWidth() == hwDest->getWidth()) && (hwSrc->getHeight() == hwDest->getHeight()))
-		m_pd3d9Device->StretchRect(pSourceSurf, NULL, pTargetSurf, NULL, D3DTEXF_POINT );
-	else
-		m_pd3d9Device->StretchRect(pSourceSurf, NULL, pTargetSurf, NULL, D3DTEXF_LINEAR );
+		hwSrc->get2DTexture()->GetSurfaceLevel(0, &pSourceSurf);
+		hwDest->get2DTexture()->GetSurfaceLevel(0, &pTargetSurf);
 
-	SAFE_RELEASE(pSourceSurf);
-	SAFE_RELEASE(pTargetSurf);
+		if (FilterIfNeed || (hwSrc->getWidth() == hwDest->getWidth()) && (hwSrc->getHeight() == hwDest->getHeight()))
+			m_pd3d9Device->StretchRect(pSourceSurf, NULL, pTargetSurf, NULL, D3DTEXF_POINT);
+		else
+			m_pd3d9Device->StretchRect(pSourceSurf, NULL, pTargetSurf, NULL, D3DTEXF_LINEAR);
+
+		SAFE_RELEASE(pSourceSurf);
+		SAFE_RELEASE(pTargetSurf);
+	}
+
+	// copy cube
+	if (hwSrc->getCubeTexture() && hwDest->getCubeTexture())
+	{
+		for (int i = 0; i < 6; ++i)
+		{
+			for (int level = 0; level < hwSrc->getMipLevel(); ++level)
+			{
+				IDirect3DSurface9* pSourceSurf;
+				IDirect3DSurface9* pTargetSurf;
+
+				hwSrc->getCubeTexture()->GetCubeMapSurface((D3DCUBEMAP_FACES)i, level, &pSourceSurf);
+				hwDest->getCubeTexture()->GetCubeMapSurface((D3DCUBEMAP_FACES)i, level, &pTargetSurf);
+
+				//if (FilterIfNeed || (hwSrc->getWidth() == hwDest->getWidth()) && (hwSrc->getHeight() == hwDest->getHeight()))
+					m_pd3d9Device->StretchRect(pSourceSurf, NULL, pTargetSurf, NULL, D3DTEXF_POINT);
+				//else
+				//	m_pd3d9Device->StretchRect(pSourceSurf, NULL, pTargetSurf, NULL, D3DTEXF_LINEAR);
+
+				SAFE_RELEASE(pSourceSurf);
+				SAFE_RELEASE(pTargetSurf);
+			}
+
+		}
+
+	}
 }
 
 void gkRendererD3D9::FX_DrawDynTextures(gkTexturePtr tex, Vec4& region)
@@ -681,4 +712,158 @@ void gkRendererD3D9::GaussionBlurV(float fDistribution, float fScale, float s1, 
 	pShader->FX_End();
 
 	FX_PopRenderTarget(0);
+}
+
+void gkRendererD3D9::FX_BlurCubeMap(gkTexturePtr cubetgt, int nAmount, float fScale, float fDistribution, gkTexturePtr tmp, int iterate)
+{
+	for (int cube = 0; cube < 6; ++cube)
+	{
+		for (int level = 1; level < cubetgt->getMipLevel(); ++level)
+		{
+			//for (int i = 0; i < 2; ++i)
+			{
+				Vec4 vWhite(1.0f, 1.0f, 1.0f, 1.0f);
+
+				gkShaderPtr pShader = gkShaderManager::ms_PostCommon;
+				GKHANDLE hTech = 0;
+				hTech = pShader->FX_GetTechniqueByName("GaussBlurBilinearCubeLOD");
+				pShader->FX_SetTechnique(hTech);
+
+				float s1 = 1.f / (float)(cubetgt->getWidth() >> level);
+				float t1 = 1.f / (float)(cubetgt->getHeight() >> level);
+
+				//////////////////////////////////////////////////////////////////////////
+				// Horizontal/Vertical pass params
+				const int nSamples = 16;
+				int nHalfSamples = (nSamples >> 1);
+
+				Vec4 pHParams[32], pVParams[32], pWeightsPS[32];
+				float pWeights[32], fWeightSum = 0;
+
+				memset(pWeights, 0, sizeof(pWeights));
+
+				int s;
+				for (s = 0; s < nSamples; ++s)
+				{
+					if (fDistribution != 0.0f)
+						pWeights[s] = GaussianDistribution1D(s - nHalfSamples, fDistribution);
+					else
+						pWeights[s] = 0.0f;
+					fWeightSum += pWeights[s];
+				}
+
+				// normalize weights
+				for (s = 0; s < nSamples; ++s)
+				{
+					pWeights[s] /= fWeightSum;
+				}
+
+				// set bilinear offsets
+				for (s = 0; s < nHalfSamples; ++s)
+				{
+					float off_a = pWeights[s * 2];
+					float off_b = ((s * 2 + 1) <= nSamples - 1) ? pWeights[s * 2 + 1] : 0;
+					float a_plus_b = (off_a + off_b);
+					if (a_plus_b == 0)
+						a_plus_b = 1.0f;
+					float offset = off_b / a_plus_b;
+
+					pWeights[s] = off_a + off_b;
+					pWeights[s] *= fScale;
+					pWeightsPS[s] = vWhite * pWeights[s];
+
+					float fCurrOffset = (float)s * 2 + offset - nHalfSamples;
+					pHParams[s] = Vec4( fCurrOffset, 0, 0, 0);
+					pVParams[s] = Vec4(0, fCurrOffset, 0, 0);
+				}
+
+				//////////////////////////////////////////////////////////////////////////
+				// change VParam to cube normal
+
+
+				// cubemap space
+// 				y  x
+// 				| /
+// 			 z__|/
+
+				Vec3 rotateNormalH;
+				Vec3 rotateNormalV;
+				switch (cube)
+				{
+					case 0: // POS X
+					case 1: // NEG X
+						rotateNormalH = Vec3(0, 0, 1);
+						rotateNormalV = Vec3(0, 1, 0);
+						break;
+					case 2: // POS Y
+					case 3: // NEG Y
+						rotateNormalH = Vec3(0, 0, 1);
+						rotateNormalV = Vec3(1, 0, 0);
+						break;
+					case 4: // POS Z
+					case 5: // NEG Z
+						rotateNormalH = Vec3(1, 0, 0);
+						rotateNormalV = Vec3(0, 1, 0);
+						break;
+				}
+				
+				// 90 degree == tex width
+				// 0.5PI == tex width
+				// 1 pixel == 0.5PI / tex width
+
+				for (s = 0; s < nHalfSamples; ++s)
+				{
+					pHParams[s] = Vec4(rotateNormalH, pHParams[s].x * 0.5 * g_PI * s1 );
+					pVParams[s] = Vec4(rotateNormalV, pVParams[s].y * 0.5 * g_PI * t1 );
+				}
+
+				gkRendererD3D9::FX_PushRenderTarget(0, tmp, level, cube);
+				{
+					pShader->FX_SetValue("PI_psOffsets", pHParams, sizeof(Vec4) * nHalfSamples);
+					pShader->FX_SetValue("psWeights", pWeightsPS, sizeof(Vec4) * nHalfSamples);
+					pShader->FX_SetFloat("source_lod", (float)(level - 1));
+
+					pShader->FX_Commit();
+					cubetgt->Apply(0, 0);
+
+					UINT cPasses;
+					pShader->FX_Begin(&cPasses, 0);
+					for (UINT p = 0; p < cPasses; ++p)
+					{
+						pShader->FX_BeginPass(p);
+						gkPostProcessManager::DrawFullScreenQuadCubeSpec(tmp->getWidth(), tmp->getHeight(), level, cube);
+						pShader->FX_EndPass();
+					}
+					pShader->FX_End();
+				}
+
+
+				gkRendererD3D9::FX_PopRenderTarget(0);
+
+				gkRendererD3D9::FX_PushRenderTarget(0, cubetgt, level, cube);
+				{
+					pShader->FX_SetValue("PI_psOffsets", pVParams, sizeof(Vec4) * nHalfSamples);
+					pShader->FX_SetValue("psWeights", pWeightsPS, sizeof(Vec4) * nHalfSamples);
+					pShader->FX_SetFloat("source_lod", (float)(level - 1));
+
+					pShader->FX_Commit();
+					tmp->Apply(0, 0);
+
+
+					UINT cPasses;
+					pShader->FX_Begin(&cPasses, 0);
+					for (UINT p = 0; p < cPasses; ++p)
+					{
+						pShader->FX_BeginPass(p);
+						gkPostProcessManager::DrawFullScreenQuadCubeSpec(tmp->getWidth(), tmp->getHeight(), level, cube);
+						pShader->FX_EndPass();
+					}
+					pShader->FX_End();
+				}
+
+
+				gkRendererD3D9::FX_PopRenderTarget(0);
+			}
+		}
+	}
 }

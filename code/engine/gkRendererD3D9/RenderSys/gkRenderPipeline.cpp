@@ -120,6 +120,9 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 		FX_PopRenderTarget(0);
 	}
 
+	FX_StrechRect(gkTextureManager::ms_TestCubeRT, gkTextureManager::ms_TestCubeRTTmp);
+	FX_BlurCubeMap(gkTextureManager::ms_TestCubeRT, 1.0, 1.0, 5.0, gkTextureManager::ms_TestCubeRTTmp, 1);
+
 	m_pShaderParamDataSource.setMainCamera(gEnv->p3DEngine->getMainCamera()->getCCam());
 	
 	//////////////////////////////////////////////////////////////////////////

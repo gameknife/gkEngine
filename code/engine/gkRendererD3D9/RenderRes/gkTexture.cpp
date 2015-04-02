@@ -380,6 +380,9 @@ bool gkTexture::loadImpl( IDirect3DDevice9* d3d9Device )
 					{
 						gkLogError( _T("Cube Dynamic Tex Created Failed!!!") );
 					}
+
+					m_uMipLevel = m_pCubeTexture->GetLevelCount();
+					m_uHeight = m_uWidth;
 				}
 				else
 				{

@@ -30,6 +30,16 @@ sampler_state
 	MipFilter = Point;
 };
 
+samplerCUBE _tex0CubeLOD : register(s0) =
+sampler_state
+{
+	AddressU = Clamp;
+	AddressV = Clamp;
+	MinFilter = Linear;
+	MagFilter = Linear;
+	MipFilter = Point;
+};
+
 sampler2D _tex1L : register(s1)=
 sampler_state
 {
@@ -71,6 +81,50 @@ float4 texToTexParams2;
 float4 texToTexParams3;
 
 float source_lod;
+
+float3 GetRotate(float3 org, float3 axis, float ang)
+{
+	float3 zax = axis * dot(org, axis);
+	float3 xax = org - zax;
+	float3 yax = cross(axis, xax);
+	return normalize(xax*cos(ang) + yax*sin(ang) + zax);
+}
+
+pixout_fp GaussBlurBilinearCUBEPS(vert2frag IN)
+{
+	pixout_fp OUT;
+
+	float4 sum = 0;
+
+	float4 col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[0].xyz, PI_psOffsets[0].w), source_lod));
+	float keepalpha = col.a;
+	sum += col * psWeights[0].x;
+
+	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[1].xyz, PI_psOffsets[1].w), source_lod));
+	sum += col * psWeights[1].x;
+
+	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[2].xyz, PI_psOffsets[2].w), source_lod));
+	sum += col * psWeights[2].x;
+
+	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[3].xyz, PI_psOffsets[3].w), source_lod));
+	sum += col * psWeights[3].x;
+
+	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[4].xyz, PI_psOffsets[4].w), source_lod));
+	sum += col * psWeights[4].x;
+
+	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[5].xyz, PI_psOffsets[5].w), source_lod));
+	sum += col * psWeights[5].x;
+
+	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[6].xyz, PI_psOffsets[6].w), source_lod));
+	sum += col * psWeights[6].x;
+
+	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[7].xyz, PI_psOffsets[7].w), source_lod));
+	sum += col * psWeights[7].x;
+
+	OUT.Color = sum;
+	OUT.Color.a = keepalpha;
+	return OUT;
+}
 
 pixout_fp GaussBlurBilinearLODPS(vert2frag IN)
 {
@@ -247,6 +301,22 @@ technique GaussBlurBilinearLOD
 		PixelShader = compile ps_3_0 GaussBlurBilinearLODPS();
 	}
 }
+
+technique GaussBlurBilinearCubeLOD
+{
+	pass p0
+	{
+		VertexShader = null;
+
+		ZEnable = false;
+		ZWriteEnable = false;
+		CullMode = None;
+
+		PixelShader = compile ps_3_0 GaussBlurBilinearCUBEPS();
+	}
+}
+
+
 
 
 

@@ -104,6 +104,7 @@ gkTexturePtr gkTextureManager::ms_Blend25[2];
 gkTexturePtr gkTextureManager::ms_Blend50[2];
 
 gkTexturePtr gkTextureManager::ms_TestCubeRT;
+gkTexturePtr gkTextureManager::ms_TestCubeRTTmp;
 
 gkTextureManager::gkTextureManager( void )
 {
@@ -312,7 +313,7 @@ gkTextureManager::gkTextureManager( void )
 	createlist[_T("format")] =		_T("A8R8G8B8");
 
 	ms_TestCubeRT = create(_T("RT_TEST_CUBEMAP"), _T("internal"), &createlist);
-
+	ms_TestCubeRTTmp = create(_T("RT_TEST_CUBEMAP_TMP"), _T("internal"), &createlist);
 }
 
 gkTextureManager::~gkTextureManager( void )

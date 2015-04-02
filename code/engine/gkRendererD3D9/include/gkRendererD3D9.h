@@ -357,12 +357,15 @@ public:
 
 	// Utils
 	static void FX_TexBlurGaussian(gkTexturePtr tgt, int nAmount, float fScale, float fDistribution, gkTexturePtr tmp, int iterate = 1, bool blur_mipmapchain = false);
-
+	
+	static void FX_BlurCubeMap(gkTexturePtr tgt, int nAmount, float fScale, float fDistribution, gkTexturePtr tmp, int iterate = 1);
+	
 	static void GaussionBlurWithMipLevel(gkTexturePtr tmp, float fDistribution, float fScale, int iterate, uint8 source_blur_mipmapchain, gkShaderPtr pShader, gkTexturePtr tgt, uint8 target_blur_mipmapchain);
 
 	static void GaussionBlurV(float fDistribution, float fScale, float s1, float t1, gkTexturePtr tgt, uint8 target_blur_mipmapchain, gkShaderPtr pShader, uint8 source_blur_mipmapchain, gkTexturePtr tmp);
 
 	static void GaussionBlurH(float fDistribution, float fScale, float s1, float t1, gkTexturePtr tmp, uint8 source_blur_mipmapchain, gkShaderPtr pShader, gkTexturePtr tgt);
+
 
 	static void FX_TexBlurDirectional(gkTexturePtr pTex, const Vec2 &vDir, int nIterationsMul, gkTexturePtr pTmp);
 	static void FX_ClearAllSampler();
