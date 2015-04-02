@@ -167,7 +167,7 @@ void gkRendererD3D9::FX_ClearAllSampler()
 }
 
 
-void gkRendererD3D9::FX_StrechRect( gkTexturePtr src, gkTexturePtr dest, bool FilterIfNeed )
+void gkRendererD3D9::FX_StrechRect(gkTexturePtr src, gkTexturePtr dest, uint8 src_level, uint8 dest_level, bool FilterIfNeed, uint8 cubeindex)
 {
 	// check if they are null [10/21/2011 Kaiming]
 	if (src.isNull() || dest.isNull())
@@ -185,8 +185,8 @@ void gkRendererD3D9::FX_StrechRect( gkTexturePtr src, gkTexturePtr dest, bool Fi
 		IDirect3DSurface9* pSourceSurf;
 		IDirect3DSurface9* pTargetSurf;
 
-		hwSrc->get2DTexture()->GetSurfaceLevel(0, &pSourceSurf);
-		hwDest->get2DTexture()->GetSurfaceLevel(0, &pTargetSurf);
+		hwSrc->get2DTexture()->GetSurfaceLevel(src_level, &pSourceSurf);
+		hwDest->get2DTexture()->GetSurfaceLevel(dest_level, &pTargetSurf);
 
 		if (FilterIfNeed || (hwSrc->getWidth() == hwDest->getWidth()) && (hwSrc->getHeight() == hwDest->getHeight()))
 			m_pd3d9Device->StretchRect(pSourceSurf, NULL, pTargetSurf, NULL, D3DTEXF_POINT);
@@ -200,20 +200,26 @@ void gkRendererD3D9::FX_StrechRect( gkTexturePtr src, gkTexturePtr dest, bool Fi
 	// copy cube
 	if (hwSrc->getCubeTexture() && hwDest->getCubeTexture())
 	{
-		for (int i = 0; i < 6; ++i)
+		//for (int i = 0; i < 6; ++i)
 		{
-			for (int level = 0; level < hwSrc->getMipLevel(); ++level)
+			//for (int level = 0; level < hwSrc->getMipLevel(); ++level)
 			{
 				IDirect3DSurface9* pSourceSurf;
 				IDirect3DSurface9* pTargetSurf;
 
-				hwSrc->getCubeTexture()->GetCubeMapSurface((D3DCUBEMAP_FACES)i, level, &pSourceSurf);
-				hwDest->getCubeTexture()->GetCubeMapSurface((D3DCUBEMAP_FACES)i, level, &pTargetSurf);
+				hwSrc->getCubeTexture()->GetCubeMapSurface((D3DCUBEMAP_FACES)cubeindex, src_level, &pSourceSurf);
+				hwDest->getCubeTexture()->GetCubeMapSurface((D3DCUBEMAP_FACES)cubeindex, dest_level, &pTargetSurf);
 
-				//if (FilterIfNeed || (hwSrc->getWidth() == hwDest->getWidth()) && (hwSrc->getHeight() == hwDest->getHeight()))
+				D3DSURFACE_DESC descSrc;
+				D3DSURFACE_DESC descTgt;
+				pSourceSurf->GetDesc(&descSrc);
+				pTargetSurf->GetDesc(&descTgt);
+
+
+				if (FilterIfNeed || (descSrc.Width == descTgt.Width) && (descSrc.Height == descTgt.Height))
 					m_pd3d9Device->StretchRect(pSourceSurf, NULL, pTargetSurf, NULL, D3DTEXF_POINT);
-				//else
-				//	m_pd3d9Device->StretchRect(pSourceSurf, NULL, pTargetSurf, NULL, D3DTEXF_LINEAR);
+				else
+					m_pd3d9Device->StretchRect(pSourceSurf, NULL, pTargetSurf, NULL, D3DTEXF_LINEAR);
 
 				SAFE_RELEASE(pSourceSurf);
 				SAFE_RELEASE(pTargetSurf);
@@ -817,11 +823,17 @@ void gkRendererD3D9::FX_BlurCubeMap(gkTexturePtr cubetgt, int nAmount, float fSc
 					pVParams[s] = Vec4(rotateNormalV, pVParams[s].y * 0.5 * g_PI * t1 );
 				}
 
+
+				//////////////////////////////////////////////////////////////////////////
+				// down sample now
+				gkRendererD3D9::FX_StrechRect(cubetgt, cubetgt, level - 1, level, false, cube);
+
+
 				gkRendererD3D9::FX_PushRenderTarget(0, tmp, level, cube);
 				{
 					pShader->FX_SetValue("PI_psOffsets", pHParams, sizeof(Vec4) * nHalfSamples);
 					pShader->FX_SetValue("psWeights", pWeightsPS, sizeof(Vec4) * nHalfSamples);
-					pShader->FX_SetFloat("source_lod", (float)(level - 1));
+					pShader->FX_SetFloat("source_lod", (float)(level));
 
 					pShader->FX_Commit();
 					cubetgt->Apply(0, 0);
@@ -844,7 +856,7 @@ void gkRendererD3D9::FX_BlurCubeMap(gkTexturePtr cubetgt, int nAmount, float fSc
 				{
 					pShader->FX_SetValue("PI_psOffsets", pVParams, sizeof(Vec4) * nHalfSamples);
 					pShader->FX_SetValue("psWeights", pWeightsPS, sizeof(Vec4) * nHalfSamples);
-					pShader->FX_SetFloat("source_lod", (float)(level - 1));
+					pShader->FX_SetFloat("source_lod", (float)(level));
 
 					pShader->FX_Commit();
 					tmp->Apply(0, 0);

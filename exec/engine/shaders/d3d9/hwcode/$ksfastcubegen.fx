@@ -39,7 +39,7 @@ pixout FastCubeGenPassPS(vert2FragRefl IN)
 {
 	pixout OUT = (pixout)0;
 
-	float4 color = tex2D(samDiffuse, IN.baseTC.xy) * g_MatDiffuse;
+	float4 color = tex2D(samDiffuse, IN.baseTC.xy) * g_MatDiffuse * 0.5f;
 // #if DIFSPEC
 // 	
 // #else
@@ -49,7 +49,7 @@ pixout FastCubeGenPassPS(vert2FragRefl IN)
 	//
 	// Depth is z / w
 	//
-	OUT.Color = EncodeRGBE(color, 16.0);
+	OUT.Color = EncodeRGBE(color, HDR_FAKE_MAXOVERBRIGHT);
 
 	return OUT;	
 }

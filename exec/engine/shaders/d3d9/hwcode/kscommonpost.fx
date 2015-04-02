@@ -97,32 +97,32 @@ pixout_fp GaussBlurBilinearCUBEPS(vert2frag IN)
 	float4 sum = 0;
 
 	float4 col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[0].xyz, PI_psOffsets[0].w), source_lod));
-	float keepalpha = col.a;
-	sum += col * psWeights[0].x;
+		
+	sum += DecodeRGBK(col, HDR_FAKE_MAXOVERBRIGHT) *psWeights[0].x;
 
 	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[1].xyz, PI_psOffsets[1].w), source_lod));
-	sum += col * psWeights[1].x;
+	sum += DecodeRGBK(col, HDR_FAKE_MAXOVERBRIGHT) *psWeights[1].x;
 
 	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[2].xyz, PI_psOffsets[2].w), source_lod));
-	sum += col * psWeights[2].x;
+	sum += DecodeRGBK(col, HDR_FAKE_MAXOVERBRIGHT) *psWeights[2].x;
 
 	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[3].xyz, PI_psOffsets[3].w), source_lod));
-	sum += col * psWeights[3].x;
+	sum += DecodeRGBK(col, HDR_FAKE_MAXOVERBRIGHT) *psWeights[3].x;
 
 	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[4].xyz, PI_psOffsets[4].w), source_lod));
-	sum += col * psWeights[4].x;
+	sum += DecodeRGBK(col, HDR_FAKE_MAXOVERBRIGHT) *psWeights[4].x;
 
 	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[5].xyz, PI_psOffsets[5].w), source_lod));
-	sum += col * psWeights[5].x;
+	sum += DecodeRGBK(col, HDR_FAKE_MAXOVERBRIGHT) *psWeights[5].x;
 
 	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[6].xyz, PI_psOffsets[6].w), source_lod));
-	sum += col * psWeights[6].x;
+	sum += DecodeRGBK(col, HDR_FAKE_MAXOVERBRIGHT) *psWeights[6].x;
 
 	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[7].xyz, PI_psOffsets[7].w), source_lod));
-	sum += col * psWeights[7].x;
+	sum += DecodeRGBK(col, HDR_FAKE_MAXOVERBRIGHT) *psWeights[7].x;
 
-	OUT.Color = sum;
-	OUT.Color.a = keepalpha;
+	OUT.Color = EncodeRGBE(sum, HDR_FAKE_MAXOVERBRIGHT);
+
 	return OUT;
 }
 

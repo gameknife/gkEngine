@@ -67,40 +67,40 @@ void gkPostProcessManager::DrawFullScreenQuadCubeSpec(int nTexWidth, int nTexHei
 	switch (index)
 	{
 	case 0:
-		quad[0].texcoord0 = Vec4(Vec3(1, 1, 1).GetNormalized(), 0.0f);
-		quad[1].texcoord0 = Vec4(Vec3(1, -1, 1).GetNormalized(), 0.0f);
-		quad[2].texcoord0 = Vec4(Vec3(1, 1, -1).GetNormalized(), 0.0f);
-		quad[3].texcoord0 = Vec4(Vec3(1, -1, -1).GetNormalized(), 0.0f);
+		quad[0].texcoord0 = Vec4(Vec3(1, 1, 1).GetNormalized(),		1.0f);
+		quad[1].texcoord0 = Vec4(Vec3(1, -1, 1).GetNormalized(),	1.0f);
+		quad[2].texcoord0 = Vec4(Vec3(1, 1, -1).GetNormalized(),	1.0f);
+		quad[3].texcoord0 = Vec4(Vec3(1, -1, -1).GetNormalized(),	1.0f);
 		break;
 	case 1:
-		quad[0].texcoord0 = Vec4(Vec3(-1, 1, -1).GetNormalized(), 0.0f);
-		quad[1].texcoord0 = Vec4(Vec3(-1, -1, -1).GetNormalized(), 0.0f);
-		quad[2].texcoord0 = Vec4(Vec3(-1, 1, 1).GetNormalized(), 0.0f);
-		quad[3].texcoord0 = Vec4(Vec3(-1, -1, 1).GetNormalized(), 0.0f);
+		quad[0].texcoord0 = Vec4(Vec3(-1, 1, -1).GetNormalized(),	1.0f);
+		quad[1].texcoord0 = Vec4(Vec3(-1, -1, -1).GetNormalized(),	1.0f);
+		quad[2].texcoord0 = Vec4(Vec3(-1, 1, 1).GetNormalized(),	1.0f);
+		quad[3].texcoord0 = Vec4(Vec3(-1, -1, 1).GetNormalized(),	1.0f);
 		break;
 	case 2:
-		quad[0].texcoord0 = Vec4(Vec3(1, 1, -1).GetNormalized(), 0.0f);
-		quad[1].texcoord0 = Vec4(Vec3(1, 1, 1).GetNormalized(), 0.0f);
-		quad[2].texcoord0 = Vec4(Vec3(-1, 1, -1).GetNormalized(), 0.0f);
-		quad[3].texcoord0 = Vec4(Vec3(-1, 1, 1).GetNormalized(), 0.0f);
+		quad[0].texcoord0 = Vec4(Vec3(1, 1, -1).GetNormalized(),	1.0f);
+		quad[1].texcoord0 = Vec4(Vec3(1, 1, 1).GetNormalized(),		1.0f);
+		quad[2].texcoord0 = Vec4(Vec3(-1, 1, -1).GetNormalized(),	1.0f);
+		quad[3].texcoord0 = Vec4(Vec3(-1, 1, 1).GetNormalized(),	1.0f);
 		break;
 	case 3:
-		quad[0].texcoord0 = Vec4(Vec3(-1, -1, 1).GetNormalized(), 0.0f);
-		quad[1].texcoord0 = Vec4(Vec3(-1, -1, -1).GetNormalized(), 0.0f);
-		quad[2].texcoord0 = Vec4(Vec3(1, -1, 1).GetNormalized(), 0.0f);
-		quad[3].texcoord0 = Vec4(Vec3(1, -1, -1).GetNormalized(), 0.0f);
+		quad[0].texcoord0 = Vec4(Vec3(-1, -1, 1).GetNormalized(),	1.0f);
+		quad[1].texcoord0 = Vec4(Vec3(-1, -1, -1).GetNormalized(),	1.0f);
+		quad[2].texcoord0 = Vec4(Vec3(1, -1, 1).GetNormalized(),	1.0f);
+		quad[3].texcoord0 = Vec4(Vec3(1, -1, -1).GetNormalized(),	1.0f);
 		break;
 	case 4:
-		quad[0].texcoord0 = Vec4(Vec3(-1, 1, 1).GetNormalized(), 0.0f);
-		quad[1].texcoord0 = Vec4(Vec3(-1, -1, 1).GetNormalized(), 0.0f);
-		quad[2].texcoord0 = Vec4(Vec3(1, 1, 1).GetNormalized(), 0.0f);
-		quad[3].texcoord0 = Vec4(Vec3(1, -1, 1).GetNormalized(), 0.0f);
+		quad[0].texcoord0 = Vec4(Vec3(-1, 1, 1).GetNormalized(),	1.0f);
+		quad[1].texcoord0 = Vec4(Vec3(-1, -1, 1).GetNormalized(),	1.0f);
+		quad[2].texcoord0 = Vec4(Vec3(1, 1, 1).GetNormalized(),		1.0f);
+		quad[3].texcoord0 = Vec4(Vec3(1, -1, 1).GetNormalized(),	1.0f);
 		break;
 	case 5:
-		quad[0].texcoord0 = Vec4(Vec3(1, 1, -1).GetNormalized(), 0.0f);
-		quad[1].texcoord0 = Vec4(Vec3(1, -1, -1).GetNormalized(), 0.0f);
-		quad[2].texcoord0 = Vec4(Vec3(-1, 1, -1).GetNormalized(), 0.0f);
-		quad[3].texcoord0 = Vec4(Vec3(-1, -1, -1).GetNormalized(), 0.0f);
+		quad[0].texcoord0 = Vec4(Vec3(1, 1, -1).GetNormalized(),	1.0f);
+		quad[1].texcoord0 = Vec4(Vec3(1, -1, -1).GetNormalized(),	1.0f);
+		quad[2].texcoord0 = Vec4(Vec3(-1, 1, -1).GetNormalized(),	1.0f);
+		quad[3].texcoord0 = Vec4(Vec3(-1, -1, -1).GetNormalized(),	1.0f);
 		break;
 	}
 

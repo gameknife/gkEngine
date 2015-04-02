@@ -342,7 +342,7 @@ public:
 	void RP_SSRL();
 
 	// wrapped RT process
-	static void FX_StrechRect(gkTexturePtr src, gkTexturePtr dest, bool FilterIfNeed = false);
+	static void FX_StrechRect(gkTexturePtr src, gkTexturePtr dest, uint8 src_level = 0, uint8 dest_level = 0, bool FilterIfNeed = false, uint8 cubeindex = 0);
 
 	static void FX_PushHwDepthTarget(gkTexturePtr src, bool bClearTarget = false);
 	static void FX_PopHwDepthTarget();

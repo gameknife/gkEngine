@@ -338,7 +338,7 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 	}
 	else
 	{
-		FX_StrechRect( gkTextureManager::ms_HDRTarget0, gkTextureManager::ms_BackBuffer, false );
+		FX_StrechRect( gkTextureManager::ms_HDRTarget0, gkTextureManager::ms_BackBuffer, 0, 0, false );
 	}
 
 	if (g_pRendererCVars->r_dof)
