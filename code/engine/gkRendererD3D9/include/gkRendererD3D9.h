@@ -326,9 +326,6 @@ public:
 	static void RP_ProcessZpassObjects( const gkRenderableList* objs, IShader* pShader, EShaderInternalTechnique tech);
 	static void RP_ZprepassEnd();
 
-	
-	void RP_SSAO();
-	void RP_ShadowMaskGen();
 	void RP_DeferredLightExcute(const gkRenderLightList& LightList);
 
 	void RP_DeferredSnow();

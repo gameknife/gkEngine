@@ -40,6 +40,9 @@
     <Filter Include="Pipe\Pipe_Zpass">
       <UniqueIdentifier>{f118ae77-7326-4e1e-a93a-95fe529a2ab4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pipe\Pipe_Shadow">
+      <UniqueIdentifier>{f5eee0bb-08ce-4c46-9d39-46e47f787eba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\dllmain.cpp">
@@ -129,9 +132,6 @@
     <ClCompile Include="gkGpuParticleProxy.cpp">
       <Filter>ResoureManagement</Filter>
     </ClCompile>
-    <ClCompile Include="RendPipe_ShadowMapGen.cpp">
-      <Filter>Pipe</Filter>
-    </ClCompile>
     <ClCompile Include="RendPipe_ZpassDeferredLighting.cpp">
       <Filter>Pipe\Pipe_Zpass</Filter>
     </ClCompile>
@@ -149,6 +149,12 @@
     </ClCompile>
     <ClCompile Include="RendPipe_ReflGen.cpp">
       <Filter>Pipe</Filter>
+    </ClCompile>
+    <ClCompile Include="RendPipe_ShadowMapGen.cpp">
+      <Filter>Pipe\Pipe_Shadow</Filter>
+    </ClCompile>
+    <ClCompile Include="RendPipe_OcculusionGen.cpp">
+      <Filter>Pipe\Pipe_Shadow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +248,6 @@
     <ClInclude Include="RendPipelineBase.h">
       <Filter>Pipe</Filter>
     </ClInclude>
-    <ClInclude Include="RendPipe_ShadowMapGen.h">
-      <Filter>Pipe</Filter>
-    </ClInclude>
     <ClInclude Include="RendPipe_ZpassDeferredShading.h">
       <Filter>Pipe\Pipe_Zpass</Filter>
     </ClInclude>
@@ -262,6 +265,12 @@
     </ClInclude>
     <ClInclude Include="RendPipe_ReflGen.h">
       <Filter>Pipe</Filter>
+    </ClInclude>
+    <ClInclude Include="RendPipe_ShadowMapGen.h">
+      <Filter>Pipe\Pipe_Shadow</Filter>
+    </ClInclude>
+    <ClInclude Include="RendPipe_OcculusionGen.h">
+      <Filter>Pipe\Pipe_Shadow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

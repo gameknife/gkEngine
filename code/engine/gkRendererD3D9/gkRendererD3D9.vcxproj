@@ -468,6 +468,7 @@
     <ClCompile Include="RenderSys\gkFXRenderer.cpp" />
     <ClCompile Include="RenderSys\gkRenderPipeline.cpp" />
     <ClCompile Include="RenderSys\gkRenderSeqProcess.cpp" />
+    <ClCompile Include="RendPipe_OcculusionGen.cpp" />
     <ClCompile Include="RendPipe_ReflGen.cpp" />
     <ClCompile Include="RendPipe_ShadingPassDeferredLighting.cpp" />
     <ClCompile Include="RendPipe_ShadingPassDeferredShading.cpp" />
@@ -544,6 +545,7 @@
     <ClInclude Include="include\RendererD3D9Prerequisites.h" />
     <ClInclude Include="include\RendererD3D9StableHeader.h" />
     <ClInclude Include="RenderSys\gkColorGradingController.h" />
+    <ClInclude Include="RendPipe_OcculusionGen.h" />
     <ClInclude Include="RendPipe_ReflGen.h" />
     <ClInclude Include="RendPipe_ShadingPassDeferredLighting.h" />
     <ClInclude Include="RendPipe_ShadingPassDeferredShading.h" />
