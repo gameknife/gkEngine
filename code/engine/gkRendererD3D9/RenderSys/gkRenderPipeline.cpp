@@ -113,10 +113,17 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 
 		m_pShaderParamDataSource.setMainCamera(&cam);
 
+		
+
 		gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_TERRIAN, eSIT_FastCubeGen, false);
 		gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_OPAQUE, eSIT_FastCubeGen, false);
 		gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_OPAQUE, eSIT_FastCubeGen, true);
 
+		gkRendererD3D9::RS_SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+		gkRendererD3D9::RS_SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+		gkRendererD3D9::RS_SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+		gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_SKIES_EARLY, eSIT_FastCubeGen, false);
+		
 		FX_PopRenderTarget(0);
 	}
 

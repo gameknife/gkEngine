@@ -179,4 +179,18 @@ technique RenderScene
     }
 }
 
+technique FastCubeGenPass
+<
+int MatDoubleSide = 1;
+>
+{
+	pass P0
+	{
+		//ZWriteEnable = false;
+		VertexShader = compile vs_3_0 VertexScene();
+		PixelShader = compile ps_3_0 PixelScene();
+		cullmode = CCW;
+	}
+}
+
 #include "$kszpass.fx"
