@@ -156,6 +156,15 @@
     <ClCompile Include="RendPipe_OcculusionGen.cpp">
       <Filter>Pipe\Pipe_Shadow</Filter>
     </ClCompile>
+    <ClCompile Include="RendPipe_LightPasses.cpp">
+      <Filter>Pipe\Pipe_Shading</Filter>
+    </ClCompile>
+    <ClCompile Include="RendPipe_SSRL.cpp">
+      <Filter>Pipe\Pipe_Shading</Filter>
+    </ClCompile>
+    <ClCompile Include="RendPipe_DeferredFog.cpp">
+      <Filter>Pipe\Pipe_Shading</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\dllmain.h">
@@ -271,6 +280,15 @@
     </ClInclude>
     <ClInclude Include="RendPipe_OcculusionGen.h">
       <Filter>Pipe\Pipe_Shadow</Filter>
+    </ClInclude>
+    <ClInclude Include="RendPipe_LightPasses.h">
+      <Filter>Pipe\Pipe_Shading</Filter>
+    </ClInclude>
+    <ClInclude Include="RendPipe_SSRL.h">
+      <Filter>Pipe\Pipe_Shading</Filter>
+    </ClInclude>
+    <ClInclude Include="RendPipe_DeferredFog.h">
+      <Filter>Pipe\Pipe_Shading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

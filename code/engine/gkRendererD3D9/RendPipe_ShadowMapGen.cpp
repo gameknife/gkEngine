@@ -19,6 +19,9 @@ void gkRendPipe_ShadowMapGen::Prepare( gkRenderSequence* renderSeq )
 
 void gkRendPipe_ShadowMapGen::Execute( gkRenderSequence* renderSeq )
 {
+	PROFILE_LABEL_PUSH("GEN_SHADOWMAP");
+	gkRendererD3D9::ms_GPUTimers[_T("ShadowMapGen")].start();
+
 	if (renderSeq->getCamera(eRFMode_ShadowCas0))
 	{
 		if( gkTextureManager::ms_ShadowCascade0->getWidth() != g_pRendererCVars->r_shadowmapsize )
@@ -78,7 +81,10 @@ void gkRendPipe_ShadowMapGen::Execute( gkRenderSequence* renderSeq )
 		}
 
 		gkRendererD3D9::FX_PopRenderTarget(0);
-	}
+	}	
+	
+	gkRendererD3D9::ms_GPUTimers[_T("ShadowMapGen")].stop();
+	PROFILE_LABEL_POP("GEN_SHADOWMAP");
 }
 
 void gkRendPipe_ShadowMapGen::End( gkRenderSequence* renderSeq )

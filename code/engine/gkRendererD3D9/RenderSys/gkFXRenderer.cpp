@@ -178,56 +178,41 @@ void gkRendererD3D9::FX_StrechRect(gkTexturePtr src, gkTexturePtr dest, uint8 sr
 	gkTexture* hwSrc = reinterpret_cast<gkTexture*>( src.getPointer() );
 	gkTexture* hwDest = reinterpret_cast<gkTexture*>( dest.getPointer() );
 
+	IDirect3DSurface9* pSourceSurf = 0;
+	IDirect3DSurface9* pTargetSurf = 0;
+
 
 	// copy 2d
-	if (hwSrc->get2DTexture() && hwDest->get2DTexture())
+	if (hwSrc->get2DTexture())
 	{
-		IDirect3DSurface9* pSourceSurf;
-		IDirect3DSurface9* pTargetSurf;
-
 		hwSrc->get2DTexture()->GetSurfaceLevel(src_level, &pSourceSurf);
-		hwDest->get2DTexture()->GetSurfaceLevel(dest_level, &pTargetSurf);
+	}
+	else if (hwSrc->getCubeTexture())
+	{
+		hwSrc->getCubeTexture()->GetCubeMapSurface((D3DCUBEMAP_FACES)cubeindex, src_level, &pSourceSurf);
+	}
 
-		if (FilterIfNeed || (hwSrc->getWidth() == hwDest->getWidth()) && (hwSrc->getHeight() == hwDest->getHeight()))
-			m_pd3d9Device->StretchRect(pSourceSurf, NULL, pTargetSurf, NULL, D3DTEXF_POINT);
-		else
-			m_pd3d9Device->StretchRect(pSourceSurf, NULL, pTargetSurf, NULL, D3DTEXF_LINEAR);
+	if (hwDest->get2DTexture())
+	{
+		hwDest->get2DTexture()->GetSurfaceLevel(dest_level, &pTargetSurf);
+	}
+	else if(hwDest->getCubeTexture())
+	{
+		hwDest->getCubeTexture()->GetCubeMapSurface((D3DCUBEMAP_FACES)cubeindex, dest_level, &pTargetSurf);
+	}
+		
+	D3DSURFACE_DESC descSrc;
+	D3DSURFACE_DESC descTgt;
+	pSourceSurf->GetDesc(&descSrc);
+	pTargetSurf->GetDesc(&descTgt);
+
+	if (FilterIfNeed || (descSrc.Width == descTgt.Width) && (descSrc.Height == descTgt.Height))
+		m_pd3d9Device->StretchRect(pSourceSurf, NULL, pTargetSurf, NULL, D3DTEXF_POINT);
+	else
+		m_pd3d9Device->StretchRect(pSourceSurf, NULL, pTargetSurf, NULL, D3DTEXF_LINEAR);
 
 		SAFE_RELEASE(pSourceSurf);
 		SAFE_RELEASE(pTargetSurf);
-	}
-
-	// copy cube
-	if (hwSrc->getCubeTexture() && hwDest->getCubeTexture())
-	{
-		//for (int i = 0; i < 6; ++i)
-		{
-			//for (int level = 0; level < hwSrc->getMipLevel(); ++level)
-			{
-				IDirect3DSurface9* pSourceSurf;
-				IDirect3DSurface9* pTargetSurf;
-
-				hwSrc->getCubeTexture()->GetCubeMapSurface((D3DCUBEMAP_FACES)cubeindex, src_level, &pSourceSurf);
-				hwDest->getCubeTexture()->GetCubeMapSurface((D3DCUBEMAP_FACES)cubeindex, dest_level, &pTargetSurf);
-
-				D3DSURFACE_DESC descSrc;
-				D3DSURFACE_DESC descTgt;
-				pSourceSurf->GetDesc(&descSrc);
-				pTargetSurf->GetDesc(&descTgt);
-
-
-				if (FilterIfNeed || (descSrc.Width == descTgt.Width) && (descSrc.Height == descTgt.Height))
-					m_pd3d9Device->StretchRect(pSourceSurf, NULL, pTargetSurf, NULL, D3DTEXF_POINT);
-				else
-					m_pd3d9Device->StretchRect(pSourceSurf, NULL, pTargetSurf, NULL, D3DTEXF_LINEAR);
-
-				SAFE_RELEASE(pSourceSurf);
-				SAFE_RELEASE(pTargetSurf);
-			}
-
-		}
-
-	}
 }
 
 void gkRendererD3D9::FX_DrawDynTextures(gkTexturePtr tex, Vec4& region)

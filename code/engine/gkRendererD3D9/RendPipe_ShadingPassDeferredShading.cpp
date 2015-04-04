@@ -1,5 +1,6 @@
 ﻿#include "RendererD3D9StableHeader.h"
 #include "RendPipe_ShadingPassDeferredShading.h"
+#include "Profiler/gkGPUTimer.h"
 
 
 void RendPipe_ShadingPassDeferredShading::Prepare( gkRenderSequence* renderSeq )
@@ -11,6 +12,9 @@ void RendPipe_ShadingPassDeferredShading::Prepare( gkRenderSequence* renderSeq )
 
 void RendPipe_ShadingPassDeferredShading::Execute( gkRenderSequence* renderSeq )
 {
+	PROFILE_LABEL_PUSH("SHADING OPAQUE");
+	gkRendererD3D9::ms_GPUTimers[_T("Opaque")].start();
+
 	gkShaderPtr pShader = gkShaderManager::ms_DeferredShading;
 
 	GKHANDLE hTech = pShader->FX_GetTechniqueByName("GeneralDeferredShading");
@@ -45,6 +49,9 @@ void RendPipe_ShadingPassDeferredShading::Execute( gkRenderSequence* renderSeq )
 	gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_SKIES_EARLY, eSIT_General, false);
 
 	gkRendererD3D9::RS_SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+	gkRendererD3D9::ms_GPUTimers[_T("Opaque")].stop();
+	PROFILE_LABEL_POP("SHADING OPAQUE");
 }
 
 void RendPipe_ShadingPassDeferredShading::End( gkRenderSequence* renderSeq )

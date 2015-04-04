@@ -54,6 +54,10 @@
 #include "IStereoDevice.h"
 #include "IInputManager.h"
 #include "RendPipe_ReflGen.h"
+#include "RendPipe_OcculusionGen.h"
+#include "RendPipe_SSRL.h"
+#include "RendPipe_DeferredFog.h"
+#include "RendPipe_LightPasses.h"
 
 #define USE_DXUT 0
 #define USE_SWAPCHAIN 0;
@@ -207,9 +211,6 @@ LRESULT CALLBACK gkENGINEStaticWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 				DestroyMenu( hMenu );
 			DestroyWindow( hWnd );
 			UnregisterClass( L"Direct3DWindowClass", NULL );
-			// 			GetDXUTState().SetHWNDFocus( NULL );
-			// 			GetDXUTState().SetHWNDDeviceFullScreen( NULL );
-			// 			GetDXUTState().SetHWNDDeviceWindowed( NULL );
 			return 0;
 		}
 	case WM_SYSKEYDOWN:
@@ -788,21 +789,6 @@ void gkRendererD3D9::_endFrame(ERenderStereoType stereoType)
 			}
 		}
 
-		// 	D3DVIEWPORT9 vp;
-		// 	m_pd3d9Device->GetViewport( &vp );
-		// 
-		// 	D3DVIEWPORT9 vp_new = vp;
-		// 
-		// 	float ratio = 0.75;
-		// 
-		// 	vp_new.Width = vp_new.Width * ratio;
-		// 	vp_new.Height = vp_new.Height * ratio;
-		// 
-		// 	vp_new.X = vp.Width * (1 - ratio) * 0.5;
-		// 	vp_new.Y = vp.Height * (1 - ratio) * 0.5;
-		// 
-		// 	m_pd3d9Device->SetViewport( &vp_new);
-
 		RS_SetRenderState( D3DRS_ZENABLE, FALSE );
 		RS_SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 		RS_SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
@@ -1222,6 +1208,11 @@ HWND gkRendererD3D9::Init(ISystemInitInfo& sii)
 	m_pipelines[RP_ZpassDeferredShading] = new RendPipe_ZpassDeferredShading();
 	m_pipelines[RP_ShadingPassDeferredShading] = new RendPipe_ShadingPassDeferredShading();
 	m_pipelines[RP_ReflMapGen] = new gkRendPipe_ReflGen();
+	m_pipelines[RP_OcculusionGen] = new gkRendPipe_OcculusionGen();
+	m_pipelines[RP_DeferredLight] = new RendPipe_LightPasses();
+	m_pipelines[RP_SSRL] = new RendPipe_SSRL();
+	m_pipelines[RP_DeferredFog] = new RendPipe_DeferredFog();
+
 
 	// init Resource Managers
 	m_pTextureManager =			new gkTextureManager();

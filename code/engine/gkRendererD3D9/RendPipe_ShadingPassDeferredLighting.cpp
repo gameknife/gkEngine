@@ -1,6 +1,6 @@
 ﻿#include "RendererD3D9StableHeader.h"
 #include "RendPipe_ShadingPassDeferredLighting.h"
-
+#include "Profiler/gkGPUTimer.h"
 
 RendPipe_ShadingPassDeferredLighting::RendPipe_ShadingPassDeferredLighting(void)
 {
@@ -13,15 +13,13 @@ RendPipe_ShadingPassDeferredLighting::~RendPipe_ShadingPassDeferredLighting(void
 
 void RendPipe_ShadingPassDeferredLighting::Prepare( gkRenderSequence* renderSeq )
 {
+	
+
 	gkRendererD3D9::FX_PushRenderTarget(0, gkTextureManager::ms_HDRTarget0);
 
 	gkRendererD3D9::RS_SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
 	gkRendererD3D9::RS_SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	gkRendererD3D9::RS_SetRenderState(D3DRS_ZENABLE, TRUE);
-
-
-
-
 
 
 	gkRendererD3D9::getDevice()->Clear(0, NULL, D3DCLEAR_STENCIL, 0, 0, 0L);
@@ -41,10 +39,16 @@ void RendPipe_ShadingPassDeferredLighting::Prepare( gkRenderSequence* renderSeq 
 	gkRendererD3D9::_clearBuffer(false, 0xff7f7f7f);
 
 	gkRendererD3D9::FX_ClearAllSampler();
+
+
 }
 
 void RendPipe_ShadingPassDeferredLighting::Execute( gkRenderSequence* renderSeq )
 {
+	PROFILE_LABEL_PUSH("SHADING OPAQUE");
+	gkRendererD3D9::ms_GPUTimers[_T("Opaque")].start();
+
+
 	// use ZFUNC_EQUAL to render opaque using Early-Z
 	gkRendererD3D9::RS_SetRenderState(D3DRS_ZFUNC, D3DCMP_EQUAL);
 	gkRendererD3D9::RS_SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -76,6 +80,9 @@ void RendPipe_ShadingPassDeferredLighting::Execute( gkRenderSequence* renderSeq 
 	// transp
 	gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_TRANSPARENT, eSIT_General, false);
 	gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_TRANSPARENT, eSIT_General, true);
+
+	gkRendererD3D9::ms_GPUTimers[_T("Opaque")].stop();
+	PROFILE_LABEL_POP("SHADING OPAQUE");
 }
 
 void RendPipe_ShadingPassDeferredLighting::End( gkRenderSequence* renderSeq )

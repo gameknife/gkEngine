@@ -1,5 +1,6 @@
 ﻿#include "RendererD3D9StableHeader.h"
 #include "RendPipe_ZpassDeferredShading.h"
+#include "Profiler/gkGPUTimer.h"
 
 void RendPipe_ZpassDeferredShading::Prepare( gkRenderSequence* renderSeq )
 {
@@ -38,6 +39,9 @@ void RendPipe_ZpassDeferredShading::Prepare( gkRenderSequence* renderSeq )
 
 void RendPipe_ZpassDeferredShading::Execute( gkRenderSequence* renderSeq )
 {
+	gkRendererD3D9::ms_GPUTimers[_T("Zpass")].start();
+	PROFILE_LABEL_PUSH("Z_PREPASS");
+
 	gkRendererD3D9::FX_ClearAllSampler();
 	// General Zpass Technique
 	//gkRendererD3D9::RP_ProcessZpassObjects(renderSeq->getZprepassObjects(), gkShaderManager::ms_GeneralZpass.getPointer() , eSIT_Zpass_DS);
@@ -50,6 +54,9 @@ void RendPipe_ZpassDeferredShading::Execute( gkRenderSequence* renderSeq )
 	// Process Opaque Layer
 	gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_OPAQUE, eSIT_Zpass_DS, false);
 	gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_OPAQUE, eSIT_Zpass_DS, true);
+
+	gkRendererD3D9::ms_GPUTimers[_T("Zpass")].stop();
+	PROFILE_LABEL_POP("Z_PREPASS");
 }
 
 void RendPipe_ZpassDeferredShading::End( gkRenderSequence* renderSeq )

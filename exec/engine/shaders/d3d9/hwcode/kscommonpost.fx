@@ -447,6 +447,13 @@ float4 PixCopy( float2 Tex : TEXCOORD0 ) : COLOR
 	return tex2D( _tex0L, Tex ).rgba;
 }
 
+float4 PixCopyRGBK( float2 Tex : TEXCOORD0 ) : COLOR
+{
+	// just simple copy
+	//return float4(0,0,0,1);
+	return EncodeRGBE(tex2D( _tex0L, Tex ).rgb, HDR_FAKE_MAXOVERBRIGHT);
+}
+
 technique SimpleCopyBlended
 {
 	pass p0
@@ -456,6 +463,14 @@ technique SimpleCopyBlended
 	}
 }
 
+technique SimpleCopyBlendedRGBK
+{
+	pass p0
+	{
+		VertexShader = null;
+		PixelShader = compile ps_3_0 PixCopyRGBK();
+	}
+}
 
 
 

@@ -68,7 +68,7 @@ enum ERenderPipeType
 	RP_ReflMapGen,
 	RP_ZpassDeferredLighting,
 	RP_ZpassDeferredShading,
-	RP_ShadowMaskGen,
+	RP_OcculusionGen,
 	RP_AmbientLight,
 	RP_DeferredLight,
 	RP_ShadingPassDeferredLighting,
@@ -78,9 +78,12 @@ enum ERenderPipeType
 	RP_HDR,
 	RP_DOF,
 	RP_MSAA,
+	RP_SSRL,
 
 	RP_Count,
 };
+
+typedef std::vector<ERenderPipeType> gkRenderPipe;
 
 enum ERenderStereoType
 {
@@ -261,6 +264,8 @@ public:
 
 	bool RP_RenderScene(ERenderStereoType type = eRS_Mono);
 
+	void GenCubemap(Vec3 samplePos, bool fastrender = true);
+
 	void debugDynTexs();
 
 	static const D3DSURFACE_DESC* getBackBufferDesc();
@@ -329,14 +334,16 @@ public:
 	void RP_DeferredLightExcute(const gkRenderLightList& LightList);
 
 	void RP_DeferredSnow();
-	void RP_FogProcess();
+
 	void RP_HDRProcess();
 	void RP_DepthOfField();
 	void RP_FinalOutput();
 	void RP_FXSpecil();
 	void RP_SetHDRParams(gkShaderPtr pShader);
 
-	void RP_SSRL();
+	void RP_ProcessPipeline(gkRenderPipe& pipe);
+
+	//void RP_SSRL();
 
 	// wrapped RT process
 	static void FX_StrechRect(gkTexturePtr src, gkTexturePtr dest, uint8 src_level = 0, uint8 dest_level = 0, bool FilterIfNeed = false, uint8 cubeindex = 0);

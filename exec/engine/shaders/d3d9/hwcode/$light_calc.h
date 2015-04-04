@@ -18,7 +18,7 @@
 #include "$samplerdef.h"
 
 #define HDR_OVERBRIGHT 8
-#define HDR_FAKE_MAXOVERBRIGHT 16
+#define HDR_FAKE_MAXOVERBRIGHT 8
 #define HDR_EXP_OFFSET 128
 #define HDR_EXP_BASE   1.06
 
