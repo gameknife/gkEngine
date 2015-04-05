@@ -68,6 +68,8 @@ enum EShaderInternalTechnique
 
 	eSIT_ReflGenPass,
 
+	eSIT_FastCubeGen,
+
 	eSIT_Count,
 };
 	/**

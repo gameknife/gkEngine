@@ -462,16 +462,21 @@
     </ClCompile>
     <ClCompile Include="gkGpuInfo.cpp" />
     <ClCompile Include="gkGpuParticleProxy.cpp" />
+    <ClCompile Include="gkLightProbeSystem.cpp" />
     <ClCompile Include="gkStateManager.cpp" />
     <ClCompile Include="RenderCamera.cpp" />
     <ClCompile Include="RenderSys\gkColorGradingController.cpp" />
     <ClCompile Include="RenderSys\gkFXRenderer.cpp" />
     <ClCompile Include="RenderSys\gkRenderPipeline.cpp" />
     <ClCompile Include="RenderSys\gkRenderSeqProcess.cpp" />
+    <ClCompile Include="RendPipe_DeferredFog.cpp" />
+    <ClCompile Include="RendPipe_LightPasses.cpp" />
+    <ClCompile Include="RendPipe_OcculusionGen.cpp" />
     <ClCompile Include="RendPipe_ReflGen.cpp" />
     <ClCompile Include="RendPipe_ShadingPassDeferredLighting.cpp" />
     <ClCompile Include="RendPipe_ShadingPassDeferredShading.cpp" />
     <ClCompile Include="RendPipe_ShadowMapGen.cpp" />
+    <ClCompile Include="RendPipe_SSRL.cpp" />
     <ClCompile Include="RendPipe_ZpassDeferredLighting.cpp" />
     <ClCompile Include="RendPipe_ZpassDeferredShading.cpp" />
     <ClCompile Include="source\dllmain.cpp">
@@ -533,6 +538,7 @@
     <ClInclude Include="DXUT\DXUTmisc.h" />
     <ClInclude Include="gkGpuInfo.h" />
     <ClInclude Include="gkGpuParticleProxy.h" />
+    <ClInclude Include="gkLightProbeSystem.h" />
     <ClInclude Include="RenderCamera.h" />
     <ClInclude Include="RendPipelineBase.h" />
     <ClInclude Include="gkStateManager.h" />
@@ -544,10 +550,14 @@
     <ClInclude Include="include\RendererD3D9Prerequisites.h" />
     <ClInclude Include="include\RendererD3D9StableHeader.h" />
     <ClInclude Include="RenderSys\gkColorGradingController.h" />
+    <ClInclude Include="RendPipe_DeferredFog.h" />
+    <ClInclude Include="RendPipe_LightPasses.h" />
+    <ClInclude Include="RendPipe_OcculusionGen.h" />
     <ClInclude Include="RendPipe_ReflGen.h" />
     <ClInclude Include="RendPipe_ShadingPassDeferredLighting.h" />
     <ClInclude Include="RendPipe_ShadingPassDeferredShading.h" />
     <ClInclude Include="RendPipe_ShadowMapGen.h" />
+    <ClInclude Include="RendPipe_SSRL.h" />
     <ClInclude Include="RendPipe_ZpassDeferredLighting.h" />
     <ClInclude Include="RendPipe_ZpassDeferredShading.h" />
     <ClInclude Include="resource.h" />

@@ -40,7 +40,7 @@ pixout_zpass ZPassPS(vert2FragZpass IN)
 	
 	float3 view = normalize( g_camPos.xyz - IN.WorldPos );
 	float fNdotE = dot(view, OUT.Normal.xyz);
-	OUT.Normal.w = g_Gloss / 255.0 * (1.0 + pow(1.0f - fNdotE, 2.5) * 5.0);
+	OUT.Normal.w = g_Gloss / 255.0 * (1.0 + pow(1.0f - fNdotE, 2.5) * 2.0);
 	return OUT;	
 }
 

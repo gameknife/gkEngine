@@ -88,6 +88,7 @@ protected:
 	D3DPOOL m_dwD3DPool;					// D3DPOOL
 	IDirect3DTexture9*	m_p2DTexture;
 	IDirect3DCubeTexture9*  m_pCubeTexture;
+
 	bool	m_bIsManaged;					// 是否由别人托管
 
 	bool	m_bIsDefaultPool;
@@ -95,7 +96,7 @@ protected:
 
 	uint32 m_uWidth;
 	uint32 m_uHeight;
-
+	uint32 m_uMipLevel;
 	gkStdString m_wstrFormat;
 
 	uint8* m_rawData;
@@ -112,11 +113,13 @@ public:
 
 	IDirect3DBaseTexture9* getTexture();
 	IDirect3DTexture9* get2DTexture();
+	IDirect3DCubeTexture9* getCubeTexture();
 
 	virtual void Apply(uint32 channel, uint8 filter);
 
 	virtual uint32 getHeight() {return m_uHeight;} 
 	virtual uint32 getWidth() {return m_uWidth;}  
+	virtual uint32 getMipLevel() { return m_uMipLevel; }
 
 	virtual void onReset();
 	virtual void onLost();

@@ -1,6 +1,6 @@
 ﻿#include "RendererD3D9StableHeader.h"
 #include "RendPipe_ZpassDeferredLighting.h"
-
+#include "Profiler/gkGPUTimer.h"
 
 
 RendPipe_ZpassDeferredLighting::RendPipe_ZpassDeferredLighting(void)
@@ -15,7 +15,7 @@ RendPipe_ZpassDeferredLighting::~RendPipe_ZpassDeferredLighting(void)
 void RendPipe_ZpassDeferredLighting::Prepare( gkRenderSequence* renderSeq )
 {
 	// prepare z prepass MRT
-	gkRendererD3D9::FX_PushRenderTarget(0, gkTextureManager::ms_SceneDepth, true);
+	gkRendererD3D9::FX_PushRenderTarget(0, gkTextureManager::ms_SceneDepth, 0, 0, true);
 	// Clear Normal Backbuffer & HW Depth Buffer
 	gkRendererD3D9::_clearBuffer(true, 0x00FFFFFF);
 
@@ -47,6 +47,9 @@ void RendPipe_ZpassDeferredLighting::Prepare( gkRenderSequence* renderSeq )
 
 void RendPipe_ZpassDeferredLighting::Execute( gkRenderSequence* renderSeq )
 {
+	gkRendererD3D9::ms_GPUTimers[_T("Zpass")].start();
+	PROFILE_LABEL_PUSH("Z_PREPASS");
+
 	gkRendererD3D9::FX_ClearAllSampler();
 	// General Zpass Technique
 	//gkRendererD3D9::RP_ProcessZpassObjects(renderSeq->getZprepassObjects(), gkShaderManager::ms_GeneralZpass.getPointer() , eSIT_Zpass_DL);
@@ -59,6 +62,9 @@ void RendPipe_ZpassDeferredLighting::Execute( gkRenderSequence* renderSeq )
 	// Process Opaque Layer
 	gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_OPAQUE, eSIT_Zpass_DL, false);
 	gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_OPAQUE, eSIT_Zpass_DL, true);
+
+	gkRendererD3D9::ms_GPUTimers[_T("Zpass")].stop();
+	PROFILE_LABEL_POP("Z_PREPASS");
 }
 
 void RendPipe_ZpassDeferredLighting::End( gkRenderSequence* renderSeq )

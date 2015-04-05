@@ -260,3 +260,4 @@ technique ZPass_DS
 
 #include "$ksshadowpass.fx"
 #include "$ksreflpass.fx"
+#include "$ksfastcubegen.fx"

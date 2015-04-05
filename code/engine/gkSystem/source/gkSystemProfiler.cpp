@@ -258,23 +258,6 @@ void gkSystemProfiler::profilerGUI()
 	}
 
 	{
-		if ( gEnv->pInGUI->gkGUIButton( _T("DynTex"), Vec2(leftStart, 0), topBarSegment, topBarHeight, 
-			currentTab == tab_dyntex ? buttonTextColorPressed : buttonTextColor , 
-			currentTab == tab_dyntex ? buttonBgColorPressed : buttonBgColor ) )
-		{
-			if (currentTab == tab_dyntex)
-			{
-				currentTab = tab_none;
-			}
-			else
-			{
-				currentTab = tab_dyntex;
-			}
-		}
-		leftStart += topBarSegment;
-	}
-
-	{
 		if ( gEnv->pInGUI->gkGUIButton( _T("Resource"), Vec2(leftStart, 0), topBarSegment, topBarHeight, 
 			currentTab == tab_resourcemng ? buttonTextColorPressed : buttonTextColor , 
 			currentTab == tab_resourcemng ? buttonBgColorPressed : buttonBgColor ) )
@@ -304,6 +287,16 @@ void gkSystemProfiler::profilerGUI()
 			{
 				currentTab = tab_about;
 			}
+		}
+		leftStart += topBarSegment;
+	}
+
+	{
+		if ( gEnv->pInGUI->gkGUIButton( _T("TEST"), Vec2(leftStart, 0), topBarSegment, topBarHeight, 
+			buttonTextColor , 
+			buttonBgColor ) )
+		{
+			gEnv->pRenderer->SavePositionCubeMap( Vec3(0,0,1.2), _T("conf_test") );
 		}
 		leftStart += topBarSegment;
 	}

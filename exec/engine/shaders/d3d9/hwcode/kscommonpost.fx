@@ -20,6 +20,26 @@ sampler_state
     MipFilter = Linear;
 };
 
+sampler2D _tex0LOD : register(s0) =
+sampler_state
+{
+	AddressU = Clamp;
+	AddressV = Clamp;
+	MinFilter = Linear;
+	MagFilter = Linear;
+	MipFilter = Point;
+};
+
+samplerCUBE _tex0CubeLOD : register(s0) =
+sampler_state
+{
+	AddressU = Clamp;
+	AddressV = Clamp;
+	MinFilter = Linear;
+	MagFilter = Linear;
+	MipFilter = Point;
+};
+
 sampler2D _tex1L : register(s1)=
 sampler_state
 {
@@ -59,6 +79,92 @@ float4 texToTexParams0;
 float4 texToTexParams1;
 float4 texToTexParams2;
 float4 texToTexParams3;
+
+float source_lod;
+
+float3 GetRotate(float3 org, float3 axis, float ang)
+{
+	float3 zax = axis * dot(org, axis);
+	float3 xax = org - zax;
+	float3 yax = cross(axis, xax);
+	return normalize(xax*cos(ang) + yax*sin(ang) + zax);
+}
+
+pixout_fp GaussBlurBilinearCUBEPS(vert2frag IN)
+{
+	pixout_fp OUT;
+
+	float4 sum = 0;
+
+	float4 col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[0].xyz, PI_psOffsets[0].w), source_lod));
+		
+	sum += DecodeRGBK(col, HDR_FAKE_MAXOVERBRIGHT) *psWeights[0].x;
+
+	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[1].xyz, PI_psOffsets[1].w), source_lod));
+	sum += DecodeRGBK(col, HDR_FAKE_MAXOVERBRIGHT) *psWeights[1].x;
+
+	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[2].xyz, PI_psOffsets[2].w), source_lod));
+	sum += DecodeRGBK(col, HDR_FAKE_MAXOVERBRIGHT) *psWeights[2].x;
+
+	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[3].xyz, PI_psOffsets[3].w), source_lod));
+	sum += DecodeRGBK(col, HDR_FAKE_MAXOVERBRIGHT) *psWeights[3].x;
+
+	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[4].xyz, PI_psOffsets[4].w), source_lod));
+	sum += DecodeRGBK(col, HDR_FAKE_MAXOVERBRIGHT) *psWeights[4].x;
+
+	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[5].xyz, PI_psOffsets[5].w), source_lod));
+	sum += DecodeRGBK(col, HDR_FAKE_MAXOVERBRIGHT) *psWeights[5].x;
+
+	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[6].xyz, PI_psOffsets[6].w), source_lod));
+	sum += DecodeRGBK(col, HDR_FAKE_MAXOVERBRIGHT) *psWeights[6].x;
+
+	col = texCUBElod(_tex0CubeLOD, float4(GetRotate(normalize(IN.baseTC.xyz), PI_psOffsets[7].xyz, PI_psOffsets[7].w), source_lod));
+	sum += DecodeRGBK(col, HDR_FAKE_MAXOVERBRIGHT) *psWeights[7].x;
+
+	OUT.Color = EncodeRGBE(sum, HDR_FAKE_MAXOVERBRIGHT);
+
+	return OUT;
+}
+
+pixout_fp GaussBlurBilinearLODPS(vert2frag IN)
+{
+	pixout_fp OUT;
+
+	float4 sum = 0;
+
+		// simply keep alpha [11/26/2011 Kaiming]
+
+
+		float4 col = tex2Dlod(_tex0LOD, float4(IN.baseTC.xy + PI_psOffsets[0].xy, 0, source_lod));
+	float keepalpha = col.a;
+
+	sum += col * psWeights[0].x;
+
+	col = tex2Dlod(_tex0LOD, float4(IN.baseTC.xy + PI_psOffsets[1].xy, 0, source_lod));
+	sum += col * psWeights[1].x;
+
+	col = tex2Dlod(_tex0LOD, float4(IN.baseTC.xy + PI_psOffsets[2].xy, 0, source_lod));
+	sum += col * psWeights[2].x;
+
+	col = tex2Dlod(_tex0LOD, float4(IN.baseTC.xy + PI_psOffsets[3].xy, 0, source_lod));
+	sum += col * psWeights[3].x;
+
+	col = tex2Dlod(_tex0LOD, float4(IN.baseTC.xy + PI_psOffsets[4].xy, 0, source_lod));
+	sum += col * psWeights[4].x;
+
+	col = tex2Dlod(_tex0LOD, float4(IN.baseTC.xy + PI_psOffsets[5].xy, 0, source_lod));
+	sum += col * psWeights[5].x;
+
+	col = tex2Dlod(_tex0LOD, float4(IN.baseTC.xy + PI_psOffsets[6].xy, 0, source_lod));
+	sum += col * psWeights[6].x;
+
+	col = tex2Dlod(_tex0LOD, float4(IN.baseTC.xy + PI_psOffsets[7].xy, 0, source_lod));
+	sum += col * psWeights[7].x;
+
+	OUT.Color = sum;
+	OUT.Color.a = keepalpha;
+	return OUT;
+}
 
 pixout_fp GaussBlurBilinearPS(vert2frag IN)
 {
@@ -181,6 +287,39 @@ technique GaussBlurBilinear
     PixelShader = compile ps_3_0 GaussBlurBilinearPS();
   }
 }
+
+technique GaussBlurBilinearLOD
+{
+	pass p0
+	{
+		VertexShader = null;
+
+		ZEnable = false;
+		ZWriteEnable = false;
+		CullMode = None;
+
+		PixelShader = compile ps_3_0 GaussBlurBilinearLODPS();
+	}
+}
+
+technique GaussBlurBilinearCubeLOD
+{
+	pass p0
+	{
+		VertexShader = null;
+
+		ZEnable = false;
+		ZWriteEnable = false;
+		CullMode = None;
+
+		PixelShader = compile ps_3_0 GaussBlurBilinearCUBEPS();
+	}
+}
+
+
+
+
+
 
 float4 HPosToScreenTC_PS(float4 HPos)
 {
@@ -308,6 +447,13 @@ float4 PixCopy( float2 Tex : TEXCOORD0 ) : COLOR
 	return tex2D( _tex0L, Tex ).rgba;
 }
 
+float4 PixCopyRGBK( float2 Tex : TEXCOORD0 ) : COLOR
+{
+	// just simple copy
+	//return float4(0,0,0,1);
+	return EncodeRGBE(tex2D( _tex0L, Tex ).rgb, HDR_FAKE_MAXOVERBRIGHT);
+}
+
 technique SimpleCopyBlended
 {
 	pass p0
@@ -317,6 +463,14 @@ technique SimpleCopyBlended
 	}
 }
 
+technique SimpleCopyBlendedRGBK
+{
+	pass p0
+	{
+		VertexShader = null;
+		PixelShader = compile ps_3_0 PixCopyRGBK();
+	}
+}
 
 
 

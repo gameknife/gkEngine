@@ -57,6 +57,7 @@ protected:
 
 	uint32 m_uWidth;
 	uint32 m_uHeight;
+	uint32 m_uMipLevel;
 
 	gkStdString m_wstrFormat;
 
@@ -86,6 +87,7 @@ public:
 
 	virtual uint32 getHeight() {return m_uHeight;} 
 	virtual uint32 getWidth() {return m_uWidth;}  
+	virtual uint32 getMipLevel() { return m_uMipLevel; }
 
 	virtual void onReset();
 	virtual void onLost();

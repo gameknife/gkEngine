@@ -306,6 +306,8 @@ public:
     virtual Vec3 ScreenPosToViewportPos(Vec3 screenPos) =0;
 
 	virtual bool FullScreenMode() {return true;}
+
+	virtual void SavePositionCubeMap(Vec3 position, const TCHAR* texturename) {}
 };
 
 #endif

@@ -124,7 +124,7 @@ float4 pipe_process(inout fragPass pPass)
 	{
 		if( pPass.nReflectionMapping == REFLECT_CUBE)
 		{
-			pPass.cEnvironment = GetEnvironmentCMap(IBLcubemapSampler, pPass.vReflVec.xzy, pPass.fSpecPow);   
+			pPass.cEnvironment = GetEnvironmentCMap(IBLcubemapSampler, pPass.vReflVec.xzy, pPass.fSpecPow) * g_EnvironmentBia;
 		}
 		else
 			if( pPass.nReflectionMapping == REFLECT_SPHERE)

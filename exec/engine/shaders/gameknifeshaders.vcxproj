@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="d3d9\hwcode\$ksfastcubegen.fx" />
     <None Include="d3d9\hwcode\$ksreflpass.fx" />
     <None Include="d3d9\hwcode\$ksshadowpass.fx" />
     <None Include="d3d9\hwcode\%24BasePara.h" />

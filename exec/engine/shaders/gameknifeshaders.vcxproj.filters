@@ -385,6 +385,10 @@
     <None Include="d3d9\hwcode\ks_skyhdr.fx">
       <Filter>D3D9Shaders\fx\System</Filter>
     </None>
+    <None Include="gles2\post_msaa.ffx" />
+    <None Include="d3d9\hwcode\$ksfastcubegen.fx">
+      <Filter>D3D9Shaders\fx\Shading\general</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gles2\include\sampler_def.h">

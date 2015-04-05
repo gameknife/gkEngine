@@ -17,7 +17,6 @@ struct fragPassCustom
 	float2 vSurfaceRoughness;
 };
 
-
 struct fragLightPassCustom
 {
 
@@ -179,3 +178,4 @@ technique RenderScene
 #include "$kszpass.fx"
 #include "$ksshadowpass.fx"
 #include "$ksreflpass.fx"
+#include "$ksfastcubegen.fx"

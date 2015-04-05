@@ -54,6 +54,11 @@
 #include "IStereoDevice.h"
 #include "IInputManager.h"
 #include "RendPipe_ReflGen.h"
+#include "RendPipe_OcculusionGen.h"
+#include "RendPipe_SSRL.h"
+#include "RendPipe_DeferredFog.h"
+#include "RendPipe_LightPasses.h"
+#include "gkLightProbeSystem.h"
 
 #define USE_DXUT 0
 #define USE_SWAPCHAIN 0;
@@ -207,9 +212,6 @@ LRESULT CALLBACK gkENGINEStaticWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 				DestroyMenu( hMenu );
 			DestroyWindow( hWnd );
 			UnregisterClass( L"Direct3DWindowClass", NULL );
-			// 			GetDXUTState().SetHWNDFocus( NULL );
-			// 			GetDXUTState().SetHWNDDeviceFullScreen( NULL );
-			// 			GetDXUTState().SetHWNDDeviceWindowed( NULL );
 			return 0;
 		}
 	case WM_SYSKEYDOWN:
@@ -401,10 +403,13 @@ IDirect3DVertexDeclaration9* gkRendererD3D9::m_generalDeclP3T2U4 = NULL;
 
 gkStateManager* gkRendererD3D9::m_pStateManager = NULL;
 
+IDirect3DSurface9* gkRendererD3D9::m_cache_surf_cubemap = NULL;
+IDirect3DSurface9* gkRendererD3D9::m_cache_ds_cubemap = NULL;
 
 
 gkRenderSequence*	gkRendererD3D9::m_pUpdatingRenderSequence;
 gkRenderSequence*	gkRendererD3D9::m_pRenderingRenderSequence;
+gkLightProbeSystem* gkRendererD3D9::m_pLightProbeSystem;
 
 // 轴自定义FVF, which describes our custom vertex structure
 #define D3DFVF_AXISVERTEX (D3DFVF_XYZ|D3DFVF_TEX1)
@@ -507,7 +512,7 @@ void gkRendererD3D9::_beginScene()
 		gkTextureManager::ms_BackBuffer = gkTextureManager::ms_BackBufferA_LeftEye;
 	}
 
-	FX_PushRenderTarget( 0, gkTextureManager::ms_BackBuffer, true );
+	FX_PushRenderTarget( 0, gkTextureManager::ms_BackBuffer, 0, 0, true );
 }
 //-----------------------------------------------------------------------
 void gkRendererD3D9::_endScene()
@@ -785,21 +790,6 @@ void gkRendererD3D9::_endFrame(ERenderStereoType stereoType)
 				//gEnv->pCVManager->render();
 			}
 		}
-
-		// 	D3DVIEWPORT9 vp;
-		// 	m_pd3d9Device->GetViewport( &vp );
-		// 
-		// 	D3DVIEWPORT9 vp_new = vp;
-		// 
-		// 	float ratio = 0.75;
-		// 
-		// 	vp_new.Width = vp_new.Width * ratio;
-		// 	vp_new.Height = vp_new.Height * ratio;
-		// 
-		// 	vp_new.X = vp.Width * (1 - ratio) * 0.5;
-		// 	vp_new.Y = vp.Height * (1 - ratio) * 0.5;
-		// 
-		// 	m_pd3d9Device->SetViewport( &vp_new);
 
 		RS_SetRenderState( D3DRS_ZENABLE, FALSE );
 		RS_SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
@@ -1220,6 +1210,11 @@ HWND gkRendererD3D9::Init(ISystemInitInfo& sii)
 	m_pipelines[RP_ZpassDeferredShading] = new RendPipe_ZpassDeferredShading();
 	m_pipelines[RP_ShadingPassDeferredShading] = new RendPipe_ShadingPassDeferredShading();
 	m_pipelines[RP_ReflMapGen] = new gkRendPipe_ReflGen();
+	m_pipelines[RP_OcculusionGen] = new gkRendPipe_OcculusionGen();
+	m_pipelines[RP_DeferredLight] = new RendPipe_LightPasses();
+	m_pipelines[RP_SSRL] = new RendPipe_SSRL();
+	m_pipelines[RP_DeferredFog] = new RendPipe_DeferredFog();
+
 
 	// init Resource Managers
 	m_pTextureManager =			new gkTextureManager();
@@ -1231,14 +1226,12 @@ HWND gkRendererD3D9::Init(ISystemInitInfo& sii)
 
 	buildGpuTimers();
 
-	//m_pDefaultFont = CreateFont( _T("Verdana"), 12, FW_MEDIUM );
-
-	//m_pDefaultFont = gEnv->pFont->CreateFont( _T("fonts/msyh.ttf"), 12, FW_MEDIUM );
 	m_pDefaultFont = NULL;
 
 	SetWindow(m_lNewWidth, m_lNewHeight, 0, 0);
-	// initialize the GPU timers
 
+	m_pLightProbeSystem = new gkLightProbeSystem();
+	m_pLightProbeSystem->Init();
 
 	if(USE_DXUT)
 	{
@@ -1377,7 +1370,8 @@ void gkRendererD3D9::Destroy()
 	// terminal
 	m_tdRenderThread.Terminate();
 
-
+	m_pLightProbeSystem->Destroy();
+	delete m_pLightProbeSystem;
 
 
 	SAFE_DELETE( m_pColorGradingController );
@@ -2315,4 +2309,8 @@ float gkRendererD3D9::GetPixelReSize()
 {
 	return g_pRendererCVars->r_pixelscale;
 	return 1.0f;
+}
+void gkRendererD3D9::SavePositionCubeMap(Vec3 position, const TCHAR* texturename)
+{
+	m_pLightProbeSystem->SavePositionCubeMap(position, texturename);
 }

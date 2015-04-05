@@ -243,6 +243,12 @@ public:
 	*/
 	virtual uint32 getWidth() =0; 
 	/**
+	@brief 获得纹理的深度
+	@return
+	@remark
+	*/
+	virtual uint32 getMipLevel() = 0;
+	/**
 	 @brief DX9设备重设接口
 	 @return 
 	 @remark 

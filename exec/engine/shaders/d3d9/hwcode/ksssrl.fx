@@ -8,7 +8,7 @@
 
 // 目前是fullAO, 1080p下的质量比较担忧..可能倒是会改成大于多少就采用floatAO吧
 
-#include "$postlib.h"
+#include "$postlib.h" 
 
 float4x4 matView;
 
@@ -172,23 +172,21 @@ pixout SSRL2D_PS(vert2frag IN)
 
 	float3 vRefl = normalize(reflect( vView, vNorm ));
 	
-	float2 vRefl2D = mul( vRefl, g_mProjection ).xy;
-	float proj_len = length(vRefl2D);
-	proj_len = max( 1.0, 1.0 / proj_len);
+//	float2 vRefl2D = mul( vRefl, g_mProjection ).xy;
+//	float proj_len = length(vRefl2D);
+//	proj_len = max( 0.01, 1.0 / proj_len);
 
 	float4 sampleColor = 0;//float4(0.5,0.6,0.8,1);
-	float multi = 1;
-	for(int i=0; i < 24; i++)
+	for(int i=0; i < 8; i++)
 	{
 		float4 newPos = 1.0;
-		newPos.xyz = vPos.xyz + vRefl * pow(i, 1.5) * 0.06 * proj_len;
+		newPos.xyz = vPos.xyz + vRefl * pow(i, 3.0) * 0.1;
 		newPos.w = 1.0;
 		reprojectPos(newPos);
 
 		if (newPos.x < 0 || newPos.x > 1 || newPos.y < 0 || newPos.y > 1)
 		{
-			multi = 0;
-			//discard;
+			break;
 		}
 
 		float4 screenPos = GetWorldPosOffseting( _tex1LL, newPos.xy);
@@ -196,34 +194,24 @@ pixout SSRL2D_PS(vert2frag IN)
 		reprojectPos(screenPos);
 
 
+		sampleColor = tex2Dgrad(_tex2LL, newPos.xy, float2(0,0), float2(0,0));
 
-		if(screenPos.z - newPos.z < -0.00001 && screenPos.z - newPos.z > -0.0075)
+		if(screenPos.z - newPos.z < -0.00001 && screenPos.z - newPos.z > -0.01)
 		{
-			float3 tgtNormal = tex2D(_tex0LL,newPos.xy);
+			float3 tgtNormal = tex2Dgrad(_tex0LL,newPos.xy, float2(0,0), float2(0,0));
 			tgtNormal = 2 * (tgtNormal.rgb - 0.5);
 			tgtNormal = normalize(tgtNormal);
 
 			if ( dot(tgtNormal, -vRefl) > 0.01)
 			{
-				sampleColor += tex2D(_tex2LL, newPos.xy) * multi;
-				multi = 0;
-				//discard;
+				break;
 			}
-			
-
 		}
 
 		//sampleColor = 1;
 	}
 
-	if (length(sampleColor) < 0.001 )
-	{
-		//sampleColor = float4(0.5,0.6,0.8,1);
-		discard;
-	}
-
 	OUT.Color = sampleColor;
-
 	return OUT;
 }
 //-----------------------------------------------------------------------------

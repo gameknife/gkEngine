@@ -16,6 +16,9 @@
 #include "IMesh.h"
 #include "IParticle.h"
 #include "RendPipelineBase.h"
+#include "gk_Camera.h"
+#include "ICamera.h"
+#include "gkLightProbeSystem.h"
 
 enum EShadingMode
 {
@@ -24,12 +27,54 @@ enum EShadingMode
 	eSM_ForwardShading,
 };
 
+void gkRendererD3D9::RP_ProcessPipeline(gkRenderPipe& pipe)
+{
+	for (int i=0; i < pipe.size(); ++i)
+	{
+		m_pipelines[pipe[i]]->Prepare(m_pRenderingRenderSequence);
+		m_pipelines[pipe[i]]->Execute(m_pRenderingRenderSequence);
+		m_pipelines[pipe[i]]->End(m_pRenderingRenderSequence);
+	}
+}
+
 bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 {
-	//gEnv->p3DEngine->_RT_ProcessRenderSequence();
-
 	//////////////////////////////////////////////////////////////////////////
 	// Main D3D9 Renderer Pipeline
+
+	gkRenderPipe pipe_general;
+	if( g_pRendererCVars->r_Shadow )
+	{
+		pipe_general.push_back( RP_ShadowMapGen );
+	}
+	pipe_general.push_back( RP_ReflMapGen );
+	switch ( g_pRendererCVars->r_ShadingMode )
+	{
+	case eSM_DeferredLighing:
+		pipe_general.push_back( RP_ZpassDeferredLighting );
+		break;
+	case eSM_DeferredShading:
+		pipe_general.push_back( RP_ZpassDeferredShading );
+		break;
+	}
+	pipe_general.push_back( RP_OcculusionGen );
+	pipe_general.push_back( RP_DeferredLight );
+	switch ( g_pRendererCVars->r_ShadingMode )
+	{
+	case eSM_DeferredLighing:
+		pipe_general.push_back( RP_ShadingPassDeferredLighting );
+		break;
+	case eSM_DeferredShading:
+		pipe_general.push_back( RP_ShadingPassDeferredShading );
+		break;
+	}
+	if (g_pRendererCVars->r_ssrl)
+	{
+		pipe_general.push_back( RP_SSRL );
+	}
+	pipe_general.push_back( RP_DeferredFog );
+
+
 
 	_beginScene();
 	FX_ClearAllSampler();
@@ -62,237 +107,25 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 		m_particleProxy[i]->Update();
 	}
 
-
 	//////////////////////////////////////////////////////////////////////////
 	// color grading compute
  	if (m_pColorGradingController)
  	{
  		m_pColorGradingController->_RT_RenderingMergedColorChart();
  	}
-	
-
-
-
-
-
-	
-	//////////////////////////////////////////////////////////////////////////
-	// 1. ShadowMap Gen
-
-	PROFILE_LABEL_PUSH( "GEN_SHADOWMAP" );
-	gkRendererD3D9::ms_GPUTimers[_T("ShadowMapGen")].start();
-
-	if( g_pRendererCVars->r_Shadow )
-	{
-
-		m_pipelines[RP_ShadowMapGen]->Prepare(m_pRenderingRenderSequence);
-		m_pipelines[RP_ShadowMapGen]->Execute(m_pRenderingRenderSequence);
-		m_pipelines[RP_ShadowMapGen]->End(m_pRenderingRenderSequence);
-
-	}
-
-	gkRendererD3D9::ms_GPUTimers[_T("ShadowMapGen")].stop();
-	PROFILE_LABEL_POP ( "GEN_SHADOWMAP" );
-
-
-
-
-
 
 	//////////////////////////////////////////////////////////////////////////
-	// 2. ReflectMap Gen
+	// hack cubemap
+	m_pLightProbeSystem->Update();
 
-	PROFILE_LABEL_PUSH( "GEN_REFLECTMAP" );
-	ms_GPUTimers[_T("ReflectGen")].start();
+// 	Vec3 samplePos = Vec3(0,0,1.2);
+// 	GenCubemap(samplePos, false);
 
-	//RP_GenReflectExcute(m_pRenderingRenderSequence->getZprepassObjects(), gkShaderManager::ms_ReflGen.getPointer() ,0);
+	RP_ProcessPipeline(pipe_general);
 
-
-	m_pipelines[RP_ReflMapGen]->Prepare(m_pRenderingRenderSequence);
-	m_pipelines[RP_ReflMapGen]->Execute(m_pRenderingRenderSequence);
-	m_pipelines[RP_ReflMapGen]->End(m_pRenderingRenderSequence);
-
-	ms_GPUTimers[_T("ReflectGen")].stop();
-	PROFILE_LABEL_POP( "GEN_REFLECTMAP" );
-
-
-
-
-
-
-	//////////////////////////////////////////////////////////////////////////
-	// 3. Zpass
-
-	PROFILE_LABEL_PUSH( "Z_PREPASS" );
-	ms_GPUTimers[_T("Zpass")].start();
-
-	switch ( g_pRendererCVars->r_ShadingMode )
-	{
-	case eSM_DeferredLighing:
-
-		m_pipelines[RP_ZpassDeferredLighting]->Prepare(m_pRenderingRenderSequence);
-		m_pipelines[RP_ZpassDeferredLighting]->Execute(m_pRenderingRenderSequence);
-		m_pipelines[RP_ZpassDeferredLighting]->End(m_pRenderingRenderSequence);
-		break;
-
-	case eSM_DeferredShading:
-
-		m_pipelines[RP_ZpassDeferredShading]->Prepare(m_pRenderingRenderSequence);
-		m_pipelines[RP_ZpassDeferredShading]->Execute(m_pRenderingRenderSequence);
-		m_pipelines[RP_ZpassDeferredShading]->End(m_pRenderingRenderSequence);
-		break;
-	}
-
-	ms_GPUTimers[_T("Zpass")].stop();
-	PROFILE_LABEL_POP( "Z_PREPASS" );
-
-
-
-
-
-
-
-	//////////////////////////////////////////////////////////////////////////
-	// 4. SSAO
-
-	PROFILE_LABEL_PUSH( "SSAO" );
-	ms_GPUTimers[_T("SSAO")].start();
-
-	RP_SSAO();
-
-	ms_GPUTimers[_T("SSAO")].stop();
-	PROFILE_LABEL_POP( "SSAO" );
-
-
-
-	//////////////////////////////////////////////////////////////////////////
-	// 6. ShadowMaskGen
-
-	PROFILE_LABEL_PUSH( "SHADOWMASK_GEN" );
-	ms_GPUTimers[_T("ShadowMaskGen")].start();
-
-	RP_ShadowMaskGen();
-
-	ms_GPUTimers[_T("ShadowMaskGen")].stop();
-	PROFILE_LABEL_POP( "SHADOWMASK_GEN" );
-
-
-	//////////////////////////////////////////////////////////////////////////
-	// 5. DeferredLighting
-	RP_DeferredLightExcute(m_pRenderingRenderSequence->getRenderLightList());
-
-	// wether do it or not, here we close stencil
-	RS_SetRenderState(D3DRS_STENCILENABLE, FALSE);
-
-// 	RS_SetRenderState( D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP );
-// 	RS_SetRenderState( D3DRS_STENCILFAIL, D3DSTENCILOP_KEEP );
-// 	RS_SetRenderState( D3DRS_STENCILPASS, D3DSTENCILOP_KEEP );
-// 	RS_SetRenderState( D3DRS_STENCILFUNC, D3DCMP_EQUAL );
-// 
-// 
-// 	RS_SetRenderState( D3DRS_STENCILMASK, 0xFFFFFFFF );
-
-	//////////////////////////////////////////////////////////////////////////
-	// 7. ForwardShading: Opaque
-
-	PROFILE_LABEL_PUSH( "FORWARDSHADING" );
- 	ms_GPUTimers[_T("Opaque")].start();
-
-
-	switch ( g_pRendererCVars->r_ShadingMode )
-	{
-	case eSM_DeferredLighing:
-
-		m_pipelines[RP_ShadingPassDeferredLighting]->Prepare(m_pRenderingRenderSequence);
-		m_pipelines[RP_ShadingPassDeferredLighting]->Execute(m_pRenderingRenderSequence);
-		m_pipelines[RP_ShadingPassDeferredLighting]->End(m_pRenderingRenderSequence);
-
-		break;
-
-	case eSM_DeferredShading:
-
-		m_pipelines[RP_ShadingPassDeferredShading]->Prepare(m_pRenderingRenderSequence);
-		m_pipelines[RP_ShadingPassDeferredShading]->Execute(m_pRenderingRenderSequence);
-		m_pipelines[RP_ShadingPassDeferredShading]->End(m_pRenderingRenderSequence);
-
-		break;
-
-	}
-
-	FX_ClearAllSampler();
-
-	// test SSRL here [5/11/2013 Kaiming]
-	if (g_pRendererCVars->r_ssrl)
-	{
-		RP_SSRL();
-	}
-
-
-	RS_SetRenderState(D3DRS_STENCILENABLE, FALSE);
-
- 	ms_GPUTimers[_T("Opaque")].stop();
-// 	PROFILE_LABEL_POP( "OPAQUE" );
-
-	//////////////////////////////////////////////////////////////////////////
-	// 8. StretchRect: Opaque 2 Refraction
-// 	RP_StretchRefraction();
-// 
-// 
-// 	//////////////////////////////////////////////////////////////////////////
-// 	// 9. Water
-// 
-// 
-// 	PROFILE_LABEL_PUSH( "TRANSPARENT" );
-// 	RP_ProcessRenderLayer(RENDER_LAYER_WATER, eSIT_General);
-// 
-// 
-// 	//////////////////////////////////////////////////////////////////////////
-// 	// 10. StretchRect: Combine Water result to Refraction
-// 	RP_StretchRefraction();
-
-
-	//////////////////////////////////////////////////////////////////////////
-	// 11. ForwardShading: Transparent
-	ms_GPUTimers[_T("Transparent")].start();
-
-	//ms_GPUTimers[_T("Transparent")].stop();
-
-	//PROFILE_LABEL_POP( "TRANSPARENT" );
-
-
-	//RP_GeneralEnd();
-	//PROFILE_LABEL_POP( "FORWARDSHADING" );
-
-	//////////////////////////////////////////////////////////////////////////
-	// 12. Deferred Snow
-
-	// PostPass: HDR -> ShadowLayer -> SSAO -> PostFXs
 	PROFILE_LABEL_PUSH( "POSTPROCESS" );
-
-	// defferred snow here [11/22/2011 Kaiming]
-
-	if (gEnv->p3DEngine->getSnowAmount() > 0.01f)
-	{
-		PROFILE_LABEL_PUSH( "DEFERRED_SNOW" );
-		RP_DeferredSnow();
-		PROFILE_LABEL_POP( "DEFERRED_SNOW" );
-	}
-
-
-	//////////////////////////////////////////////////////////////////////////
-	// 13. Fog
-
-
-
-	PROFILE_LABEL_PUSH( "FOG_PROCESS" );
-	RP_FogProcess();
-	ms_GPUTimers[_T("Transparent")].stop();
-	PROFILE_LABEL_POP( "FOG_PROCESS" );
-
 	//////////////////////////////////////////////////////////////////////////
 	// 14. HDR Process
-
-
 
 	PROFILE_LABEL_PUSH( "HDRPROCESS" );
 	ms_GPUTimers[_T("HDR")].start();
@@ -307,19 +140,13 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 	}
 	else
 	{
-		FX_StrechRect( gkTextureManager::ms_HDRTarget0, gkTextureManager::ms_BackBuffer, false );
+		FX_StrechRect( gkTextureManager::ms_HDRTarget0, gkTextureManager::ms_BackBuffer, 0, 0, false );
 	}
 
 	if (g_pRendererCVars->r_dof)
 	{
 		RP_DepthOfField();
 	}
-	
-// 	if (g_pRendererCVars->r_ssrl)
-// 	{
-// 		RP_SSRL();
-// 	}
-
 
 	FX_PushRenderTarget(0, gkTextureManager::ms_BackBuffer);
 
@@ -332,9 +159,6 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 
 	RS_SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	RS_SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-
-	//RP_ProcessRenderLayer(RENDER_LAYER_HUDUI, eSIT_General);
-
 
 	RS_SetRenderState( D3DRS_ZENABLE, FALSE );
 	RS_SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
@@ -367,289 +191,6 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 	return true;
 }
 
-
-
-
-
-void gkRendererD3D9::RP_DeferredLightExcute(const gkRenderLightList& LightList)
-{
-	gkShader* pShader = reinterpret_cast<gkShader*>(gkShaderManager::ms_DeferredLighting.getPointer());
-	if (!pShader)
-	{
-		return;
-	}
-
-
-	FX_PushRenderTarget(0, gkTextureManager::ms_SceneDifAcc, true);
-	//_clearBuffer( true, 0x7f7f7f7f );
-	//_clearBuffer(false, 0x0);
-	FX_PushRenderTarget(1, gkTextureManager::ms_SceneSpecAcc);
-	//_clear2Buffer(false, 0x0);
-	PROFILE_LABEL_PUSH( "DEFERRED_LIGHTING" );
-	gkRendererD3D9::ms_GPUTimers[_T("Deferred Lighting")].start();
-
-	// DO NOT WRITE Z ! SO WE CAN RENDER AUX GEOM AFTER THIS!
-	//  [8/21/2011 Kaiming-Desktop]
-	getRenderer()->SetRenderState(D3DRS_ZWRITEENABLE, FALSE); 
-	getRenderer()->SetRenderState(D3DRS_ZENABLE, FALSE);
-	SetRenderState(D3DRS_STENCILENABLE, FALSE);
-	SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-
-	PROFILE_LABEL_PUSH( "AMBIENT & SUN" );
-	gkRendererD3D9::ms_GPUTimers[_T("Ambient Pass")].start();
-
-	//////////////////////////////////////////////////////////////////////////
-	// 1. first, Ambient & Sun pass
-
-	gkTextureManager::ms_SceneNormal->Apply(0,0);
-	gkTextureManager::ms_SceneDepth->Apply(1,0);
-	gkTextureManager::ms_SSAOTarget->Apply(3,0);
-	gkTextureManager::ms_ShadowMask->Apply(4,0);
-
-	//Vec3 lightdirInWorld = getShaderContent().getLightDirViewSpace();
-
-	pShader->FX_SetValue( "g_mViewI", &(getShaderContent().getInverseViewMatrix()), sizeof(Matrix44) );
-
-	const STimeOfDayKey& tod = gEnv->p3DEngine->getTimeOfDay()->getCurrentTODKey();
-	pShader->FX_SetColor4( "g_Ambient", tod.clSkyLight );
-	pShader->FX_SetColor4( "g_cAmbGround", tod.clGroundAmb );
-
-	Vec4 ambHeightParam;
-	ambHeightParam.x = tod.fGroundAmbMin;
-	ambHeightParam.y = tod.fGroundAmbMax;
-	ambHeightParam.z = 1.0f / tod.fGroundAmbMax;
-	pShader->FX_SetFloat4( "g_vAmbHeightParams", ambHeightParam );
-	
-	if (g_pRendererCVars->r_ShadingMode == 0)
-	{
-		pShader->FX_SetTechnique( "RenderLightPass" );
-	}
-	else
-	{
-		pShader->FX_SetTechnique( "RenderLightPassDS" );
-		gkTextureManager::ms_ShadowMask->Apply(2,0);
-
-		// set light Params from TOD
-		const STimeOfDayKey& tod = getShaderContent().getCurrTodKey();
-		ColorF lightdif = tod.clSunLight;
-		ColorF lightspec = tod.clSunLight;
-		lightdif *= (tod.fSunIntensity / 10.0f);
-		lightspec *= tod.fSunSpecIntensity;
-
-		pShader->FX_SetValue( "g_LightPos",&(m_pShaderParamDataSource.getLightDir()), sizeof(Vec3) );
-		pShader->FX_SetFloat4("g_camPos", getShaderContent().getCamPos());
-		pShader->FX_SetValue( "g_LightDiffuse", &lightdif, sizeof(ColorF) );
-		pShader->FX_SetValue( "g_LightSpecular", &lightspec, sizeof(ColorF) );
-	}
-	
-	
-	UINT cPasses;
-	pShader->FX_Begin( &cPasses, 0 );
-	for( UINT p = 0; p < cPasses; ++p )
-	{
-		pShader->FX_BeginPass( p );
-
-
-
-
-		pShader->FX_Commit();
-		gkPostProcessManager::DrawFullScreenQuad(gkTextureManager::ms_SceneDifAcc);
-
-		pShader->FX_EndPass();
-	}
-	pShader->FX_End();
-
-	gkRendererD3D9::ms_GPUTimers[_T("Ambient Pass")].stop();
-	PROFILE_LABEL_POP( "AMBIENT & SUN" );
-	//////////////////////////////////////////////////////////////////////////
-	// 2. next, PointLight pass
-
-
-#if 1
-
-
-	SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-	SetRenderState(D3DRS_STENCILENABLE, TRUE);
-
-	// MAY WE SHOULD CLEAR STENCIL BUFFER
-	SetRenderState(D3DRS_ZENABLE, TRUE);
-	gkRendererD3D9::ms_GPUTimers[_T("Lights")].start();
-	
-
-	// PASS THE FAR_CLIP_DELTA
-	Vec4 ddx = getShaderContent().getCamFarVerts(0) - getShaderContent().getCamFarVerts(2);
-	Vec4 ddy = getShaderContent().getCamFarVerts(3) - getShaderContent().getCamFarVerts(2);
-
-	pShader->FX_SetFloat4("PS_lefttop", getShaderContent().getCamFarVerts(2));
-	pShader->FX_SetFloat4("PS_ddx", ddx);
-	pShader->FX_SetFloat4("PS_ddy", ddy);
-	pShader->FX_SetFloat4("g_camPos", getShaderContent().getCamPos());
-
-	for(gkRenderLightList::const_iterator it = LightList.begin(); it != LightList.end(); ++it)
-	{
-
-		PROFILE_LABEL_PUSH( "LIGHT" );
-
-		getDevice()->Clear(0, NULL, D3DCLEAR_STENCIL, 0, 0, 0L);
-
-		// STENCIL PASS
-		pShader->FX_SetTechnique( "RenderLightStencilPass" );
-
-		// SET STATE
-		if ((it->m_vPos - getShaderContent().getCamPos().GetXYZ()).GetLength() < it->m_fRadius   )
-		{
-			SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-			SetRenderState(D3DRS_ZFUNC, D3DCMP_GREATER);
-		}
-		else
-		{
-			SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
-			SetRenderState(D3DRS_ZFUNC, D3DCMP_LESS);
-		}
-
-		SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-		SetRenderState(D3DRS_COLORWRITEENABLE, 0);
-
-		SetRenderState(D3DRS_STENCILFUNC, D3DCMP_ALWAYS);
-		SetRenderState(D3DRS_STENCILWRITEMASK, 0xffffffff);
-		SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_INCRSAT);
-		SetRenderState(D3DRS_STENCILFAIL, D3DSTENCILOP_INCRSAT);
-
-		pShader->FX_Begin( &cPasses, 0 );
-		for( UINT p = 0; p < cPasses; ++p )
-		{
-			pShader->FX_BeginPass( p );
-				// build matrix
-				Matrix34 mat;
-				mat.Set(Vec3((*it).m_fRadius, (*it).m_fRadius, (*it).m_fRadius),
-					Quat::CreateIdentity(), (*it).m_vPos);
-				Matrix44 matForRender(mat);
-				matForRender.Transpose();
-				matForRender = matForRender * getShaderContent().getViewMatrix();
-				pShader->FX_SetValue("g_mWorldView", &matForRender, sizeof(Matrix44) );
-				matForRender = matForRender * getShaderContent().getProjectionMatrix();
-				pShader->FX_SetValue("g_mWorldViewProj", &matForRender, sizeof(Matrix44) );
-				pShader->FX_SetValue("g_mProj", &(getShaderContent().getProjectionMatrix()), sizeof(Matrix44) );
-			
-				pShader->FX_Commit();
-
-				// light mesh
-				gkMeshManager::ms_generalSphere->touch();
-				gkRenderOperation rop;
-				gkMeshManager::ms_generalSphere->getRenderOperation( rop );
-
-				_render(rop);
-
-			pShader->FX_EndPass();
-		}
-		pShader->FX_End();
-
-		// GENERAL PASS / FAKE SHADOW PASS
-// 		if (it->m_bFakeShadow)
-// 		{
-// 			pShader->FX_SetTechnique( "RenderLightFakeShadowPass" );
-// 		}
-// 		else
-
-		if (it->m_bGlobalShadow)
-		{
-			pShader->FX_SetTechnique( "RenderLightGeneralGlobalShadowPass" );
-		}
-		else
-		{
-
-			pShader->FX_SetTechnique( "RenderLightGeneralPass" );
-		}
-		
-
-		// SET STATE
-		SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-		SetRenderState(D3DRS_ZFUNC, D3DCMP_GREATER);
-
-		SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
-		SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
-
-		SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-		SetRenderState(D3DRS_COLORWRITEENABLE, D3DCOLORWRITEENABLE_RED|D3DCOLORWRITEENABLE_BLUE|D3DCOLORWRITEENABLE_GREEN|D3DCOLORWRITEENABLE_ALPHA);
-
-		SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
-		SetRenderState(D3DRS_STENCILMASK, 0xf);
-		SetRenderState(D3DRS_STENCILREF, 0x1);
-		SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
-		SetRenderState(D3DRS_STENCILFAIL, D3DSTENCILOP_KEEP);
-		SetRenderState(D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP);
-
-		pShader->FX_Begin( &cPasses, 0 );
-		for( UINT p = 0; p < cPasses; ++p )
-		{
-			pShader->FX_BeginPass( p );
-			// build matrix
-			Matrix34 mat;
-			mat.Set(Vec3((*it).m_fRadius, (*it).m_fRadius, (*it).m_fRadius),
-				Quat::CreateIdentity(), (*it).m_vPos);
-			Matrix44 matForRender(mat);
-			matForRender.Transpose();
-			matForRender = matForRender * getShaderContent().getViewMatrix();
-			pShader->FX_SetValue("g_mWorldView", &matForRender, sizeof(Matrix44) );
-			matForRender = matForRender * getShaderContent().getProjectionMatrix();
-			pShader->FX_SetValue("g_mWorldViewProj", &matForRender, sizeof(Matrix44) );
-
-			matForRender = getShaderContent().getViewMatrix() * getShaderContent().getProjectionMatrix();
-
-			pShader->FX_SetValue("g_mProj", &matForRender, sizeof(Matrix44) );
-
-			ColorF lightParam0 = (*it).m_vDiffuse;
-			lightParam0.a = (*it).m_fRadius;
-			ColorF lightSpec = (*it).m_vSpecular;
-			pShader->FX_SetColor4( "g_LightDiffuse", lightParam0 );
-			pShader->FX_SetColor4( "g_LightSpecular", lightSpec );
-			pShader->FX_SetFloat3( "g_LightPos", (*it).m_vPos );
-
-			static gkTexturePtr texRandomStep;
-			texRandomStep = gEnv->pSystem->getTextureMngPtr()->loadSync(_T("Engine/Assets/Textures/procedure/randomstep.dds"), _T("internal"));
-			texRandomStep->Apply(2, 0);
-
-			gkTextureManager::ms_ShadowMask->Apply(3,0);
-
-			pShader->FX_Commit();
-
-			// light mesh
-			gkMeshManager::ms_generalSphere->touch();
-			gkRenderOperation rop;
-			gkMeshManager::ms_generalSphere->getRenderOperation( rop );
-
-			_render(rop);
-
-			pShader->FX_EndPass();
-		}
-		pShader->FX_End();
-
-
-		PROFILE_LABEL_POP( "LIGHT" );
-	}
-
-
-	getDevice()->Clear(0, NULL, D3DCLEAR_STENCIL, 0, 0, 0);
-
-	gkRendererD3D9::ms_GPUTimers[_T("Lights")].stop();
-
-#endif
-
-	gkRendererD3D9::ms_GPUTimers[_T("Deferred Lighting")].stop();
-	PROFILE_LABEL_POP( "DEFERRED_LIGHTING" );
-
-	//////////////////////////////////////////////////////////////////////////
-	// back to SRT rendering, set RT1 to null
-	FX_PopRenderTarget(0);
-	FX_PopRenderTarget(1);
-
-	SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-
-	SetRenderState(D3DRS_ZENABLE, FALSE);
-
-	FX_ClearAllSampler();
-}
 //////////////////////////////////////////////////////////////////////////
 void gkRendererD3D9::RP_GenReflectExcute( const gkRenderableList* objs, IShader* pShader, BYTE sortType /*= 0*/ )
 {
@@ -659,7 +200,7 @@ void gkRendererD3D9::RP_GenReflectExcute( const gkRenderableList* objs, IShader*
 
 
 	// set the RT
-	FX_PushRenderTarget(0, gkTextureManager::ms_ReflMap0Tmp, true);
+	FX_PushRenderTarget(0, gkTextureManager::ms_ReflMap0Tmp, 0, 0, true);
 	_clearBuffer(true, 0xff469fe9);
 
 
@@ -752,378 +293,6 @@ void gkRendererD3D9::RP_StretchRefraction()
 	SAFE_RELEASE(pSourceSurf);
 	SAFE_RELEASE(pTargetSurf);
 }
-//////////////////////////////////////////////////////////////////////////
-void gkRendererD3D9::RP_SSAO()
-{
-	STimeOfDayKey& tod = getShaderContent().getCurrTodKey();
-	//////////////////////////////////////////////////////////////////////////
-	// SSAO
-
-	
-	if ( g_pRendererCVars->r_ssaodownscale < 0.01f)
-	{
-		gkTextureManager::ms_SSAOTargetTmp->changeAttr(_T("size"), _T("full"));
-		gkTextureManager::ms_SSAOTarget->changeAttr(_T("size"), _T("full"));
-	}
-	else if ( g_pRendererCVars->r_ssaodownscale < 1.01f)
-	{
-		gkTextureManager::ms_SSAOTargetTmp->changeAttr(_T("size"), _T("half"));
-		gkTextureManager::ms_SSAOTarget->changeAttr(_T("size"), _T("half"));
-	}
-	else
-	{
-		gkTextureManager::ms_SSAOTargetTmp->changeAttr(_T("size"), _T("quad"));
-		gkTextureManager::ms_SSAOTarget->changeAttr(_T("size"), _T("quad"));
-	}
-
-	FX_PushRenderTarget(0, gkTextureManager::ms_SSAOTargetTmp);
-	_clearBuffer(false, 0xFFFFFFFF);
-
-	getRenderer()->SetRenderState( D3DRS_ZENABLE, FALSE );
-	getRenderer()->SetRenderState( D3DRS_STENCILENABLE, FALSE );
-
-	if (g_pRendererCVars->r_SSAO)
-	{
-		// selete tech
-		gkShaderPtr pShader = gkShaderManager::ms_SSAO;
-		GKHANDLE hTech = pShader->FX_GetTechniqueByName("SSAO");
-		pShader->FX_SetTechnique( hTech );
-
-		// params set
-		gkTextureManager::ms_SceneNormal->Apply(0,0);
-		gkTextureManager::ms_SceneDepth->Apply(1,0);
-		gkTextureManager::ms_RotSamplerAO->Apply(2,0);
-		
-		// PASS THE FAR_CLIP_DELTA
-		Vec4 ddx = getShaderContent().getCamFarVerts(0) - getShaderContent().getCamFarVerts(2);
-		Vec4 ddy = getShaderContent().getCamFarVerts(3) - getShaderContent().getCamFarVerts(2);
-
-		pShader->FX_SetFloat4("PS_ddx", ddx);
-		pShader->FX_SetFloat4("PS_ddy", ddy);
-		pShader->FX_SetFloat4("PS_ScreenSize", Vec4(gkTextureManager::ms_SSAOTargetTmp->getWidth(), gkTextureManager::ms_SSAOTargetTmp->getHeight(), 0, 0));
-		pShader->FX_SetFloat4("AOSetting", Vec4(g_pRendererCVars->r_SSAOScale, g_pRendererCVars->r_SSAOBias, g_pRendererCVars->r_SSAOAmount * tod.fSSAOIntensity, g_pRendererCVars->r_SSAORadius));
-		pShader->FX_SetMatrix("matView", getShaderContent().getViewMatrix());
-		pShader->FX_SetFloat4("g_camPos", getShaderContent().getCamPos());
-		pShader->FX_Commit();
-
-		UINT cPasses;
-		pShader->FX_Begin( &cPasses, 0 );
-		for( UINT p = 0; p < cPasses; ++p )
-		{
-			pShader->FX_BeginPass( p );
-
-			gkPostProcessManager::DrawFullScreenQuad(gkTextureManager::ms_SSAOTargetTmp, Vec4(0,0,1,1),  Vec2(GetScreenWidth() / 4.f, GetScreenHeight() / 4.f));
-
-			pShader->FX_EndPass();
-		}
-		pShader->FX_End();
-	}
-
-	FX_PopRenderTarget(0);
-
-
-	FX_PushRenderTarget(0, gkTextureManager::ms_SSAOTarget);
-	if (g_pRendererCVars->r_SSAO)
-	{
-		// selete tech
-		gkShaderPtr pShader = gkShaderManager::ms_SSAO;
-		GKHANDLE hTech = pShader->FX_GetTechniqueByName("SSAO_Blur");
-		pShader->FX_SetTechnique( hTech );
-
-		// params set
-		gkTextureManager::ms_SSAOTargetTmp->Apply(0,0);
-		gkTextureManager::ms_SceneDepth->Apply(1,0);
-
-		// PASS THE FAR_CLIP_DELTA
-		Vec4 ddx = getShaderContent().getCamFarVerts(2) - getShaderContent().getCamFarVerts(0);
-		Vec4 ddy = getShaderContent().getCamFarVerts(1) - getShaderContent().getCamFarVerts(0);
-
-		pShader->FX_SetFloat4("blurKernel1", Vec4(-0.5f / (float)gkTextureManager::ms_SSAOTargetTmp->getWidth(), -0.5f / (float)gkTextureManager::ms_SSAOTargetTmp->getHeight(), 1.5f / (float)gkTextureManager::ms_SSAOTargetTmp->getWidth(), -0.5f / (float)gkTextureManager::ms_SSAOTargetTmp->getHeight()));
-		pShader->FX_SetFloat4("blurKernel2", Vec4(-0.5f / (float)gkTextureManager::ms_SSAOTargetTmp->getWidth(), 1.5f / (float)gkTextureManager::ms_SSAOTargetTmp->getHeight(), 1.5f / (float)gkTextureManager::ms_SSAOTargetTmp->getWidth(), 1.5f / (float)gkTextureManager::ms_SSAOTargetTmp->getHeight()));
-		pShader->FX_Commit();
-
-		UINT cPasses;
-		pShader->FX_Begin( &cPasses, 0 );
-		for( UINT p = 0; p < cPasses; ++p )
-		{
-			pShader->FX_BeginPass( p );
-
-			gkPostProcessManager::DrawFullScreenQuad(gkTextureManager::ms_SSAOTarget, Vec4(0,0,1,1),  Vec2(GetScreenWidth() / 4.f, GetScreenHeight() / 4.f));
-
-			pShader->FX_EndPass();
-		}
-		pShader->FX_End();
-	}
-	else
-	{
-		_clearBuffer(false, 0xFFFFFFFF);
-	}
-	FX_PopRenderTarget(0);
-
-
-}
-//////////////////////////////////////////////////////////////////////////
-void gkRendererD3D9::RP_ShadowMaskGen()
-{
-	STimeOfDayKey& tod = getShaderContent().getCurrTodKey();
-
-	float todTime = tod.fKeyTime;
-	if(todTime >= 6.0f && todTime <= 18.0f)
-	{
-		float fDepth = 0.0f;
-
-		if (todTime >= 6.0f && todTime < 8.0f)
-		{
-			fDepth = powf( 1.0f - (todTime - 6.0f) * 0.5f, 2.2f);
-		}
-		else if (todTime > 16.0f && todTime <= 18.0f)
-		{
-			fDepth =  powf(1.0f - (18.0f - todTime) * 0.5f, 2.2f);
-		}
-
-
-		// check the size
-		if ( g_pRendererCVars->r_shadowmaskdownscale < 0.01f)
-		{
-			gkTextureManager::ms_ShadowMask->changeAttr(_T("size"), _T("full"));
-		}
-		else if ( g_pRendererCVars->r_shadowmaskdownscale < 1.01f)
-		{
-			gkTextureManager::ms_ShadowMask->changeAttr(_T("size"), _T("half"));
-		}
-		else
-		{
-			gkTextureManager::ms_ShadowMask->changeAttr(_T("size"), _T("quad"));
-		}
-
-		FX_PushRenderTarget(0, gkTextureManager::ms_ShadowMask, true);
-
-		_clearBuffer(false, 0xFFFFFFFF);
-		getDevice()->Clear(0, NULL, D3DCLEAR_STENCIL, 0, 0, 0L);
-
-		if (g_pRendererCVars->r_Shadow)
-		{
-			Matrix44 mViewToLightProj;
-			Matrix44 mViewCascade[3];
-
-			mViewToLightProj.SetIdentity();
-
-			mViewToLightProj.Multiply(mViewToLightProj,  getShaderContent().getViewMatrix_ShadowCascade(0));
-			mViewToLightProj.Multiply(mViewToLightProj,  getShaderContent().getProjectionMatrix_ShadowCascade(0));
-
-			mViewCascade[0] = mViewToLightProj;
-
-			mViewToLightProj.SetIdentity();
-			mViewToLightProj.Multiply(mViewToLightProj,  getShaderContent().getViewMatrix_ShadowCascade(1));
-			mViewToLightProj.Multiply(mViewToLightProj,  getShaderContent().getProjectionMatrix_ShadowCascade(1));
-
-			mViewCascade[1] = mViewToLightProj;
-
-			mViewToLightProj.SetIdentity();
-			mViewToLightProj.Multiply(mViewToLightProj,  getShaderContent().getViewMatrix_ShadowCascade(2));
-			mViewToLightProj.Multiply(mViewToLightProj,  getShaderContent().getProjectionMatrix_ShadowCascade(2));
-
-			mViewCascade[2] = mViewToLightProj;
-
-			// add a stencil write step, write the shadow cascade into 3 stencil mask [11/21/2011 Kaiming]
-
-			RS_SetRenderState(D3DRS_ZENABLE, FALSE);
-			RS_SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-			// open stencil test for writing
-			RS_SetRenderState(D3DRS_STENCILENABLE, TRUE);
-
-			// 0x0 mask the shadow cascade
-			RS_SetRenderState(D3DRS_STENCILWRITEMASK, 0xFFFFFFFF);
-			RS_SetRenderState(D3DRS_STENCILREF, 0x0);
-
-			// 模板掩码设为0
-			RS_SetRenderState( D3DRS_STENCILMASK,     0x0 );
-
-			// always success
-			RS_SetRenderState( D3DRS_STENCILFUNC,     D3DCMP_ALWAYS );
-			// if success or failed, both increase
-			RS_SetRenderState( D3DRS_STENCILPASS, D3DSTENCILOP_INCRSAT );
-			RS_SetRenderState( D3DRS_STENCILFAIL, D3DSTENCILOP_INCRSAT );
-			RS_SetRenderState( D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP );
-
-			// first render cascade 3
-			gkShaderPtr pShader = gkShaderManager::ms_ShadowStencilGen;
-			GKHANDLE hTech = pShader->FX_GetTechniqueByName("ShadowStencilGen");
-			pShader->FX_SetTechnique( hTech );
-			// params set
-			gkTextureManager::ms_SceneDepth->Apply(0,0);
-			gkTextureManager::ms_SceneNormal->Apply(1,0);
-
-			pShader->FX_SetValue("g_mViewToLightProj0", &(mViewCascade[2]), sizeof(Matrix44));
-			pShader->FX_SetFloat3("g_mLightDir", getShaderContent().getShadowCamDir(0) );
-
-			UINT cPasses;
-			pShader->FX_Begin( &cPasses, 0 );
-			for( UINT p = 0; p < cPasses; ++p )
-			{
-				pShader->FX_BeginPass( p );
-
-				gkPostProcessManager::DrawFullScreenQuad(gkTextureManager::ms_ShadowMask);
-
-				pShader->FX_EndPass();
-			}
-			pShader->FX_End();
-
-			pShader->FX_SetValue("g_mViewToLightProj0", &(mViewCascade[1]), sizeof(Matrix44));
-			pShader->FX_SetFloat3("g_mLightDir", getShaderContent().getShadowCamDir(0) );
-			pShader->FX_Begin( &cPasses, 0 );
-			for( UINT p = 0; p < cPasses; ++p )
-			{
-				pShader->FX_BeginPass( p );
-
-				gkPostProcessManager::DrawFullScreenQuad(gkTextureManager::ms_ShadowMask);
-
-				pShader->FX_EndPass();
-			}
-			pShader->FX_End();
-
-			pShader->FX_SetValue("g_mViewToLightProj0", &(mViewCascade[0]), sizeof(Matrix44));
-			pShader->FX_SetFloat3("g_mLightDir", getShaderContent().getShadowCamDir(0) );
-			pShader->FX_Begin( &cPasses, 0 );
-			for( UINT p = 0; p < cPasses; ++p )
-			{
-				pShader->FX_BeginPass( p );
-
-				gkPostProcessManager::DrawFullScreenQuad(gkTextureManager::ms_ShadowMask);
-
-				pShader->FX_EndPass();
-			}
-			pShader->FX_End();
-
-
-			// shadow mask gen
-			RS_SetRenderState( D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP );
-			RS_SetRenderState( D3DRS_STENCILFAIL, D3DSTENCILOP_KEEP );
-			RS_SetRenderState( D3DRS_STENCILPASS, D3DSTENCILOP_KEEP );
-			RS_SetRenderState( D3DRS_STENCILFUNC, D3DCMP_EQUAL );
-
-
-			RS_SetRenderState( D3DRS_STENCILMASK, 0xFFFFFFFF );
-			// selete tech
-			pShader = gkShaderManager::ms_ShadowMaskGen;
-			hTech = pShader->FX_GetTechniqueByName("SimpleShadowMaskGen");
-			pShader->FX_SetTechnique( hTech );
-
-			// params set
-			gkTextureManager::ms_SceneDepth->Apply(0,0);
-			//gkTexturePtr pShadowMap = gEnv->pSystem->getTextureMngPtr()->getByName(_T("DefaultShadowMap"));
-
-
-			//pShadowMap->Apply(1,0);
-
-			static gkTexturePtr texRot;
-			texRot = gEnv->pSystem->getTextureMngPtr()->loadSync(_T("Engine/Assets/Textures/procedure/rotrandomcm.dds"), _T("internal"));
-			texRot->Apply(2, 0);
-
-
-			pShader->FX_SetValue("g_fShadowDepth", &fDepth, sizeof(float));
-			Vec4 gsmparam0(g_pRendererCVars->r_GSMShadowConstbia * 3.0f, g_pRendererCVars->r_GSMShadowPenumbraStart * 0.5f, g_pRendererCVars->r_GSMShadowPenumbraLengh * 0.5f, 1.0f);
-			pShader->FX_SetFloat4("gsmShadowParam0", gsmparam0);
-
-
-			// DRAW cascade2 first
-			gkTextureManager::ms_ShadowCascade2->Apply(1, 0);
-			RS_SetRenderState( D3DRS_STENCILREF,   1 );
-			pShader->FX_SetValue("g_mViewToLightProj0", &(mViewCascade[2]), sizeof(Matrix44));
-			pShader->FX_Commit();
-
-			pShader->FX_Begin( &cPasses, 0 );
-			for( UINT p = 0; p < cPasses; ++p )
-			{
-				pShader->FX_BeginPass( p );
-
-				gkPostProcessManager::DrawFullScreenQuad(gkTextureManager::ms_ShadowMask);
-
-				pShader->FX_EndPass();
-			}
-			pShader->FX_End();
-
-
-			// change to high perfomance shadow method
-			hTech = pShader->FX_GetTechniqueByName("ShadowMaskGen");
-			pShader->FX_SetTechnique( hTech );
-
-			// DRAW cascade1 
-			gkTextureManager::ms_ShadowCascade1->Apply(1, 0);
-			RS_SetRenderState( D3DRS_STENCILREF,   2 );
-			pShader->FX_SetValue("g_mViewToLightProj0", &(mViewCascade[1]), sizeof(Matrix44));
-			gsmparam0 = Vec4(g_pRendererCVars->r_GSMShadowConstbia * 3.0f, g_pRendererCVars->r_GSMShadowPenumbraStart * 0.5f, g_pRendererCVars->r_GSMShadowPenumbraLengh * 0.5f, 1.0f);
-			pShader->FX_SetFloat4("gsmShadowParam0", gsmparam0);
-			pShader->FX_Commit();
-
-
-			pShader->FX_Begin( &cPasses, 0 );
-			for( UINT p = 0; p < cPasses; ++p )
-			{
-				pShader->FX_BeginPass( p );
-
-				gkPostProcessManager::DrawFullScreenQuad(gkTextureManager::ms_ShadowMask);
-
-				pShader->FX_EndPass();
-			}
-			pShader->FX_End();
-
-
-
-			// DRAW cascade0
-			gkTextureManager::ms_ShadowCascade0->Apply(1, 0);
-			RS_SetRenderState( D3DRS_STENCILREF,   3 );
-			pShader->FX_SetValue("g_mViewToLightProj0", &(mViewCascade[0]), sizeof(Matrix44));
-			gsmparam0 = Vec4(g_pRendererCVars->r_GSMShadowConstbia, g_pRendererCVars->r_GSMShadowPenumbraStart, g_pRendererCVars->r_GSMShadowPenumbraLengh, 1.0f);
-			pShader->FX_SetFloat4("gsmShadowParam0", gsmparam0);
-			pShader->FX_Commit();
-
-
-
-			pShader->FX_Begin( &cPasses, 0 );
-			for( UINT p = 0; p < cPasses; ++p )
-			{
-				pShader->FX_BeginPass( p );
-
-				gkPostProcessManager::DrawFullScreenQuad(gkTextureManager::ms_ShadowMask);
-
-				pShader->FX_EndPass();
-			}
-			pShader->FX_End();
-
-
-
-
-		}
-		FX_PopRenderTarget(0);
-
-
-
-
-	}
-	else
-	{
-		FX_PushRenderTarget(0, gkTextureManager::ms_ShadowMask);
-
-		_clearBuffer(false, 0x00000000);
-
-		FX_PopRenderTarget(0);
-
-	}
-
-
-	// wether do it or not, here we close stencil
-	RS_SetRenderState(D3DRS_STENCILENABLE, FALSE);
-
-
-
-	// BLUR TRY
-	//FX_TexBlurGaussian(gkTextureManager::ms_ShadowMask, 1, 1.0f, 1.0f, gkTextureManager::ms_ShadowMaskBlur, 1);
-
-
-}
-
 
 void gkRendererD3D9::RP_DeferredSnow()
 {
@@ -1165,123 +334,6 @@ void gkRendererD3D9::RP_DeferredSnow()
 	FX_PopRenderTarget(0);
 
 
-}
-
-
-void gkRendererD3D9::RP_FogProcess()
-{
-	FX_PushRenderTarget(0, gkTextureManager::ms_HDRTarget0);
-
-
-	gkShaderPtr pShader = gkShaderManager::ms_HDRProcess;
-	GKHANDLE hTech = pShader->FX_GetTechniqueByName("FogPass");
-	pShader->FX_SetTechnique( hTech );
-
-
-
-	//pShader->FX_SetValue( "g_mViewI", &(getShaderContent().getInverseViewMatrix()), sizeof(Matrix44) );
-	//float amount = gEnv->p3DEngine->getSnowAmount();
-	//pShader->FX_SetValue( "g_fSnowAmount", &(amount), sizeof(float));
-	//pShader->FX_Commit();
-
-	gkTextureManager::ms_SceneDepth->Apply(0, 0);
-
-	UINT cPasses;
-	pShader->FX_Begin( &cPasses, 0 );
-	for( UINT p = 0; p < cPasses; ++p )
-	{
-		pShader->FX_BeginPass( p );
-
-
-		// 			Matrix44 matViewImulCampos =;
-		// 			matViewImulCampos.SetTranslation(Vec3(0,0,0));
-		pShader->FX_SetValue( "g_mViewI", &(getShaderContent().getInverseViewMatrix()), sizeof(Matrix44) );
-
-		// set fog params [12/7/2011 Kaiming]
-		const STimeOfDayKey& tod = getShaderContent().getCurrTodKey();
-
-		ColorF fogColor = tod.clFogColor * tod.clFogColor.a;
-		if ( !g_pRendererCVars->r_HDRRendering )
-		{
-			//fogColor.srgb2rgb();
-		}
-
-		pShader->FX_SetValue( "vfColGradBase", &fogColor, sizeof(ColorF) );
-		Vec4 fogParam(0.005, tod.clFogDensity, tod.clFogDensity, tod.clFogStart);
-		pShader->FX_SetValue( "vfParams", &fogParam, sizeof(Vec4) );
-
-		pShader->FX_Commit();
-
-		gkPostProcessManager::DrawFullScreenQuad(gkTextureManager::ms_HDRTarget0);
-
-		pShader->FX_EndPass();
-	}
-	pShader->FX_End();
-
-	FX_PopRenderTarget(0);
-}
-
-void gkRendererD3D9::RP_SSRL()
-{
- 	gkRendererD3D9::RS_SetRenderState(D3DRS_STENCILENABLE, TRUE);
-	gkRendererD3D9::RS_SetRenderState(D3DRS_STENCILMASK, 1 << 7);
-	gkRendererD3D9::RS_SetRenderState(D3DRS_STENCILREF, 0xffffffff);
-
-	// always success
-	gkRendererD3D9::RS_SetRenderState( D3DRS_STENCILFUNC,     D3DCMP_EQUAL );
-	gkRendererD3D9::RS_SetRenderState( D3DRS_STENCILPASS, D3DSTENCILOP_KEEP );
-	gkRendererD3D9::RS_SetRenderState( D3DRS_STENCILFAIL, D3DSTENCILOP_KEEP );
-	gkRendererD3D9::RS_SetRenderState( D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP );
-
-	FX_PushRenderTarget(0, gkTextureManager::ms_ReflMap0);
-
-	_clearBuffer(false, D3DCOLOR_ARGB( 0, 0, 0, 0 ) );
-
-	static bool first = true;
-
-	gkShaderPtr pShader = gkShaderManager::ms_SSRL;
-	GKHANDLE hTech = pShader->FX_GetTechniqueByName("SSRL");
-	pShader->FX_SetTechnique( hTech );
-
-	gkTextureManager::ms_SceneNormal->Apply(0,0);
-	gkTextureManager::ms_SceneDepth->Apply(1,0);
-	gkTextureManager::ms_HDRTarget0->Apply(2,0);
-
-	// PASS THE FAR_CLIP_DELTA
-	Vec4 ddx = getShaderContent().getCamFarVerts(0) - getShaderContent().getCamFarVerts(2);
-	Vec4 ddy = getShaderContent().getCamFarVerts(3) - getShaderContent().getCamFarVerts(2);
-
-	pShader->FX_SetFloat4("PS_lefttop", getShaderContent().getCamFarVerts(2));
-	pShader->FX_SetFloat4("PS_ddx", ddx);
-	pShader->FX_SetFloat4("PS_ddy", ddy);
-	pShader->FX_SetFloat4("g_camPos", getShaderContent().getCamPos());
-
-// 	pShader->FX_SetValue("g_mWorldView", &matForRender, sizeof(Matrix44) );
-// 	matForRender = matForRender * getShaderContent().getProjectionMatrix();
-// 	pShader->FX_SetValue("g_mWorldViewProj", &matForRender, sizeof(Matrix44) );
-
-	Matrix44 matForRender = getShaderContent().getViewMatrix() * getShaderContent().getProjectionMatrix();
-
-	pShader->FX_SetValue("g_mProjection", &(matForRender), sizeof(Matrix44) );
-	pShader->FX_Commit();
-
-	UINT cPasses;
-	pShader->FX_Begin( &cPasses, 0 );
-	for( UINT p = 0; p < cPasses; ++p )
-	{
-		pShader->FX_BeginPass( p );
-
-		gkPostProcessManager::DrawFullScreenQuad(gkTextureManager::ms_ReflMap0);
-
-		pShader->FX_EndPass();
-	}
-	pShader->FX_End();
-
-	FX_PopRenderTarget( 0 );
-
-	gkTextureManager::ms_ReflMap0->AutoGenMipmap();
-
-	//FX_TexBlurGaussian( gkTextureManager::ms_ReflMap0, 1.0, 1.0, 1.0, gkTextureManager::ms_ReflMap0Tmp);
 }
 
 void gkRendererD3D9::RP_FinalOutput()
@@ -1361,7 +413,7 @@ void gkRendererD3D9::RP_FinalOutput()
 			gkShaderPtr pShader = gkShaderManager::ms_post_msaa;
 
 			{
-				FX_PushRenderTarget(0, gkTextureManager::ms_SMAA_Edge, true);
+				FX_PushRenderTarget(0, gkTextureManager::ms_SMAA_Edge, 0, 0, true);
 				getDevice()->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_STENCIL, 0, 0, 0L);
 
 				GKHANDLE hTech = pShader->FX_GetTechniqueByName("ColorEdgeDetection");
@@ -1393,7 +445,7 @@ void gkRendererD3D9::RP_FinalOutput()
 
 			{
 
-				FX_PushRenderTarget(0, gkTextureManager::ms_SMAA_Blend, true);
+				FX_PushRenderTarget(0, gkTextureManager::ms_SMAA_Blend, 0, 0, true);
 				getDevice()->Clear(0, NULL, D3DCLEAR_TARGET, 0, 0, 0L);
 
 				GKHANDLE hTech = pShader->FX_GetTechniqueByName("BlendWeightCalculation");
@@ -2314,4 +1366,137 @@ void gkRendererD3D9::RP_FXSpecil()
 	RS_SetRenderState(D3DRS_STENCILENABLE, FALSE);
 
 	FX_PopRenderTarget(0);
+}
+
+void gkRendererD3D9::RP_GenCubemap(Vec3 samplePos, gkTexturePtr cubetgt, gkTexturePtr cubetmp, bool fastrender, const TCHAR* cubemap_name)
+{
+	gkRenderPipe pipe_general;
+	pipe_general.push_back( RP_ShadowMapGen );
+	pipe_general.push_back( RP_ZpassDeferredLighting );
+	pipe_general.push_back( RP_OcculusionGen );
+	pipe_general.push_back( RP_DeferredLight );
+	pipe_general.push_back( RP_ShadingPassDeferredLighting );
+	pipe_general.push_back( RP_DeferredFog );
+
+	//////////////////////////////////////////////////////////////////////////
+	// test cubemap gen
+	for (int i=0; i < 6; ++i)
+	{
+
+		CCamera cam;
+		cam.SetFrustum(cubetgt->getWidth(),cubetgt->getWidth(),DEG2RAD(90.0f), 0.1f, 1000.0f, 1.0f);
+
+		switch( i )
+		{
+		case 0:
+			cam.SetAngles( Ang3(0,0,DEG2RAD(90) * 3) );
+			break;
+		case 1:
+			cam.SetAngles( Ang3(0,0,DEG2RAD(90) * 1) );
+			break;
+		case 2:
+			cam.SetAngles( Ang3(DEG2RAD(90),0, DEG2RAD(0)) );
+			break;
+		case 3:
+			cam.SetAngles( Ang3(-DEG2RAD(90), 0, DEG2RAD(0)) );
+			break;
+		case 4:
+			cam.SetAngles( Ang3(0,0,DEG2RAD(90) * 0) );
+			break;
+		case 5:
+			cam.SetAngles( Ang3(0,0,DEG2RAD(90) * 2) );
+			break;
+		}
+		cam.SetPosition( samplePos );
+
+		m_pShaderParamDataSource.setMainCamera(&cam);
+		
+		
+		
+
+		if(fastrender)
+		{
+			FX_PushRenderTarget(0, cubetgt, 0, i, true);
+
+			gkRendererD3D9::_clearBuffer( true, 0x00000000 );
+
+			gkRendererD3D9::RS_SetRenderState( D3DRS_ZENABLE, TRUE );
+			gkRendererD3D9::RS_SetRenderState( D3DRS_ZWRITEENABLE, TRUE );
+			gkRendererD3D9::RS_SetRenderState( D3DRS_ALPHABLENDENABLE, FALSE);
+			gkRendererD3D9::RS_SetRenderState( D3DRS_CULLMODE, D3DCULL_CW);
+			gkRendererD3D9::RS_SetRenderState( D3DRS_ALPHATESTENABLE, FALSE);
+
+			gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_TERRIAN, eSIT_FastCubeGen, false);
+			gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_OPAQUE, eSIT_FastCubeGen, false);
+			gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_OPAQUE, eSIT_FastCubeGen, true);
+
+			gkRendererD3D9::RS_SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+			gkRendererD3D9::RS_SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+			gkRendererD3D9::RS_SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+			gkRendererD3D9::RP_ProcessRenderLayer(RENDER_LAYER_SKIES_EARLY, eSIT_FastCubeGen, false);
+
+			FX_PopRenderTarget(0);
+		}
+		else
+		{
+			RP_ProcessPipeline(pipe_general);
+
+
+			FX_PushRenderTarget(0, cubetgt, 0, i, false);
+
+			gkShaderPtr pShader = gkShaderManager::ms_PostCommon;
+			GKHANDLE hTech = pShader->FX_GetTechniqueByName("SimpleCopyBlendedRGBK");
+			pShader->FX_SetTechnique( hTech );
+			RS_SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+			RS_SetRenderState( D3DRS_ALPHABLENDENABLE, FALSE );
+			gkTextureManager::ms_HDRTarget0->Apply(0, 0);
+
+			UINT cPasses;
+			pShader->FX_Begin( &cPasses, 0 );
+			for( UINT p = 0; p < cPasses; ++p )
+			{
+				pShader->FX_BeginPass( p );
+				gkPostProcessManager::DrawFullScreenQuad( cubetgt->getWidth(), cubetgt->getWidth() );
+				pShader->FX_EndPass();
+			}
+			pShader->FX_End();
+
+			FX_PopRenderTarget(0);
+		}
+		
+
+	}
+
+	FX_StrechRect(cubetgt, cubetmp);
+	FX_BlurCubeMap(cubetgt, 1.0, 1.0, 5.0, cubetmp, 1);
+
+	if( cubemap_name )
+	{
+		// save cube dds
+		IDirect3DCubeTexture9* sysCubemap = NULL;
+		m_pd3d9Device->CreateCubeTexture( cubetgt->getWidth(), cubetgt->getMipLevel(), NULL, D3DFMT_A8R8G8B8, D3DPOOL_SYSTEMMEM, &sysCubemap, NULL );
+		for (int cube = 0; cube < 6; cube++)
+		{
+			for (int level = 0; level < cubetgt->getMipLevel(); ++level)
+			{
+				IDirect3DSurface9* src = NULL;
+				IDirect3DSurface9* dst = NULL;
+
+				gkTexture* rtCubemap = reinterpret_cast<gkTexture*>(cubetgt.getPointer());
+				sysCubemap->GetCubeMapSurface( (D3DCUBEMAP_FACES)cube, level, &dst );
+				rtCubemap->getCubeTexture()->GetCubeMapSurface( (D3DCUBEMAP_FACES)cube, level, &src);
+				if( !SUCCEEDED(m_pd3d9Device->GetRenderTargetData( src, dst ) ) )
+				{
+					gkLogWarning( _T("GetRenderTarget Data Failed") );
+				}
+			}
+		}
+		// save file
+
+		gkStdString finalpath = gkGetGameRootDir() + _T("textures/cubemaps/") + cubemap_name + _T("_cm.dds");
+
+		D3DXSaveTextureToFile( finalpath.c_str(), D3DXIFF_DDS, sysCubemap, NULL );
+	}
+
+	m_pShaderParamDataSource.setMainCamera(gEnv->p3DEngine->getMainCamera()->getCCam());
 }

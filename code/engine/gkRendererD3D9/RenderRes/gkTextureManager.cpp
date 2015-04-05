@@ -103,6 +103,9 @@ gkTexturePtr gkTextureManager::ms_DefaultWhite;
 gkTexturePtr gkTextureManager::ms_Blend25[2];
 gkTexturePtr gkTextureManager::ms_Blend50[2];
 
+// gkTexturePtr gkTextureManager::ms_TestCubeRT;
+// gkTexturePtr gkTextureManager::ms_TestCubeRTTmp;
+
 gkTextureManager::gkTextureManager( void )
 {
 
@@ -302,6 +305,15 @@ gkTextureManager::gkTextureManager( void )
 	ms_Blend50[1] = create(_T("engine/assets/textures/procedure/gkblend_50_1.tga"), _T("internal"));
 // 	ms_Blend50[2] = create(_T("engine/assets/textures/procedure/gkblend_50_1.tga"), _T("internal"));
 // 	ms_Blend50[3] = create(_T("engine/assets/textures/procedure/gkblend_50_0.tga"), _T("internal"));
+
+// 	createlist[_T("cube")] = _T("true");
+// 	createlist[_T("usage")] =		_T("RENDERTARGET");
+// 	createlist[_T("size")] =		_T("512");
+// 	createlist[_T("sizey")] =		_T("512");
+// 	createlist[_T("format")] =		_T("A8R8G8B8");
+// 
+// 	ms_TestCubeRT = create(_T("RT_TEST_CUBEMAP"), _T("internal"), &createlist);
+// 	ms_TestCubeRTTmp = create(_T("RT_TEST_CUBEMAP_TMP"), _T("internal"), &createlist);
 }
 
 gkTextureManager::~gkTextureManager( void )
