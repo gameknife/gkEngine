@@ -18,6 +18,7 @@
 #include "RendPipelineBase.h"
 #include "gk_Camera.h"
 #include "ICamera.h"
+#include "gkLightProbeSystem.h"
 
 enum EShadingMode
 {
@@ -113,9 +114,12 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
  		m_pColorGradingController->_RT_RenderingMergedColorChart();
  	}
 
-	Vec3 samplePos = Vec3(0,0,1.2);
+	//////////////////////////////////////////////////////////////////////////
+	// hack cubemap
+	m_pLightProbeSystem->Update();
 
-	GenCubemap(samplePos, false);
+// 	Vec3 samplePos = Vec3(0,0,1.2);
+// 	GenCubemap(samplePos, false);
 
 	RP_ProcessPipeline(pipe_general);
 
@@ -1364,7 +1368,7 @@ void gkRendererD3D9::RP_FXSpecil()
 	FX_PopRenderTarget(0);
 }
 
-void gkRendererD3D9::GenCubemap(Vec3 samplePos, bool fastrender)
+void gkRendererD3D9::RP_GenCubemap(Vec3 samplePos, gkTexturePtr cubetgt, gkTexturePtr cubetmp, bool fastrender, const TCHAR* cubemap_name)
 {
 	gkRenderPipe pipe_general;
 	pipe_general.push_back( RP_ShadowMapGen );
@@ -1380,7 +1384,7 @@ void gkRendererD3D9::GenCubemap(Vec3 samplePos, bool fastrender)
 	{
 
 		CCamera cam;
-		cam.SetFrustum(512,512,DEG2RAD(90.0f), 0.1f, 1000.0f, 1.0f);
+		cam.SetFrustum(cubetgt->getWidth(),cubetgt->getWidth(),DEG2RAD(90.0f), 0.1f, 1000.0f, 1.0f);
 
 		switch( i )
 		{
@@ -1412,7 +1416,7 @@ void gkRendererD3D9::GenCubemap(Vec3 samplePos, bool fastrender)
 
 		if(fastrender)
 		{
-			FX_PushRenderTarget(0, gkTextureManager::ms_TestCubeRT, 0, i, true);
+			FX_PushRenderTarget(0, cubetgt, 0, i, true);
 
 			gkRendererD3D9::_clearBuffer( true, 0x00000000 );
 
@@ -1438,7 +1442,7 @@ void gkRendererD3D9::GenCubemap(Vec3 samplePos, bool fastrender)
 			RP_ProcessPipeline(pipe_general);
 
 
-			FX_PushRenderTarget(0, gkTextureManager::ms_TestCubeRT, 0, i, false);
+			FX_PushRenderTarget(0, cubetgt, 0, i, false);
 
 			gkShaderPtr pShader = gkShaderManager::ms_PostCommon;
 			GKHANDLE hTech = pShader->FX_GetTechniqueByName("SimpleCopyBlendedRGBK");
@@ -1452,7 +1456,7 @@ void gkRendererD3D9::GenCubemap(Vec3 samplePos, bool fastrender)
 			for( UINT p = 0; p < cPasses; ++p )
 			{
 				pShader->FX_BeginPass( p );
-				gkPostProcessManager::DrawFullScreenQuad( gkTextureManager::ms_TestCubeRT->getWidth(), gkTextureManager::ms_TestCubeRT->getWidth() );
+				gkPostProcessManager::DrawFullScreenQuad( cubetgt->getWidth(), cubetgt->getWidth() );
 				pShader->FX_EndPass();
 			}
 			pShader->FX_End();
@@ -1463,8 +1467,36 @@ void gkRendererD3D9::GenCubemap(Vec3 samplePos, bool fastrender)
 
 	}
 
-	FX_StrechRect(gkTextureManager::ms_TestCubeRT, gkTextureManager::ms_TestCubeRTTmp);
-	FX_BlurCubeMap(gkTextureManager::ms_TestCubeRT, 1.0, 1.0, 5.0, gkTextureManager::ms_TestCubeRTTmp, 1);
+	FX_StrechRect(cubetgt, cubetmp);
+	FX_BlurCubeMap(cubetgt, 1.0, 1.0, 5.0, cubetmp, 1);
+
+	if( cubemap_name )
+	{
+		// save cube dds
+		IDirect3DCubeTexture9* sysCubemap = NULL;
+		m_pd3d9Device->CreateCubeTexture( cubetgt->getWidth(), cubetgt->getMipLevel(), NULL, D3DFMT_A8R8G8B8, D3DPOOL_SYSTEMMEM, &sysCubemap, NULL );
+		for (int cube = 0; cube < 6; cube++)
+		{
+			for (int level = 0; level < cubetgt->getMipLevel(); ++level)
+			{
+				IDirect3DSurface9* src = NULL;
+				IDirect3DSurface9* dst = NULL;
+
+				gkTexture* rtCubemap = reinterpret_cast<gkTexture*>(cubetgt.getPointer());
+				sysCubemap->GetCubeMapSurface( (D3DCUBEMAP_FACES)cube, level, &dst );
+				rtCubemap->getCubeTexture()->GetCubeMapSurface( (D3DCUBEMAP_FACES)cube, level, &src);
+				if( !SUCCEEDED(m_pd3d9Device->GetRenderTargetData( src, dst ) ) )
+				{
+					gkLogWarning( _T("GetRenderTarget Data Failed") );
+				}
+			}
+		}
+		// save file
+
+		gkStdString finalpath = gkGetGameRootDir() + _T("textures/cubemaps/") + cubemap_name + _T("_cm.dds");
+
+		D3DXSaveTextureToFile( finalpath.c_str(), D3DXIFF_DDS, sysCubemap, NULL );
+	}
 
 	m_pShaderParamDataSource.setMainCamera(gEnv->p3DEngine->getMainCamera()->getCCam());
 }

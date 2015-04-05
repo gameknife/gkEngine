@@ -10,8 +10,10 @@
 #include "gkRenderSequence.h"
 #include "gkRenderLayer.h"
 
+#include "gkLightProbeSystem.h"
 #include "RenderRes/gkShader.h"
 #include "ITimer.h"
+
 
 void gkRendererD3D9::RP_ProcessSingleRenderable( gkRenderable* pRenderable, IShader* pShader, int8 ShadowCascade)
 {
@@ -45,6 +47,13 @@ void gkRendererD3D9::RP_ProcessSingleRenderable( gkRenderable* pRenderable, ISha
 	}
 	
 	pRenderable->RP_ShaderSet();
+
+// 	gkTexturePtr cube = m_pLightProbeSystem->GetCubeMap(m_pShaderParamDataSource.getWorldMatrix().GetTranslation());
+// 	if (!cube.isNull())
+// 	{
+// 		cube->Apply(7, 0);
+// 	}
+
 
 	pShader->FX_Commit();
 
@@ -218,7 +227,9 @@ void gkRendererD3D9::RP_ProcessShaderGroup( const gkShaderGroup* pShaderGroup, E
 				IMaterial* pMtl = it->first;
 				pMtl->ApplyParameterBlock( true, pShader );
 
-				gkTextureManager::ms_TestCubeRT->Apply( 7, 0 );
+				
+
+				//gkTextureManager::ms_TestCubeRT->Apply( 7, 0 );
 
 				// apply stencil write
 				if (pMtl->getSSRL())

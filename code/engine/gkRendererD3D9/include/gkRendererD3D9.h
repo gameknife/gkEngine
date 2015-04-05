@@ -264,7 +264,7 @@ public:
 
 	bool RP_RenderScene(ERenderStereoType type = eRS_Mono);
 
-	void GenCubemap(Vec3 samplePos, bool fastrender = true);
+	
 
 	void debugDynTexs();
 
@@ -331,8 +331,6 @@ public:
 	static void RP_ProcessZpassObjects( const gkRenderableList* objs, IShader* pShader, EShaderInternalTechnique tech);
 	static void RP_ZprepassEnd();
 
-	void RP_DeferredLightExcute(const gkRenderLightList& LightList);
-
 	void RP_DeferredSnow();
 
 	void RP_HDRProcess();
@@ -340,10 +338,8 @@ public:
 	void RP_FinalOutput();
 	void RP_FXSpecil();
 	void RP_SetHDRParams(gkShaderPtr pShader);
-
 	void RP_ProcessPipeline(gkRenderPipe& pipe);
-
-	//void RP_SSRL();
+	void RP_GenCubemap(Vec3 samplePos, gkTexturePtr cubetgt, gkTexturePtr cubetmp, bool fastrender = true, const TCHAR* cubemapname = NULL);
 
 	// wrapped RT process
 	static void FX_StrechRect(gkTexturePtr src, gkTexturePtr dest, uint8 src_level = 0, uint8 dest_level = 0, bool FilterIfNeed = false, uint8 cubeindex = 0);
@@ -407,6 +403,8 @@ public:
 	virtual void SetPixelReSize(float scale);
 	virtual float GetPixelReSize();
 
+	virtual void SavePositionCubeMap(Vec3 position, const TCHAR* texturename);
+
 	static gkRenderSequence*	m_pUpdatingRenderSequence;
 	static gkRenderSequence*	m_pRenderingRenderSequence;
 
@@ -433,6 +431,8 @@ public:
 
 	static IDirect3DSurface9* m_cache_surf_cubemap;
 	static IDirect3DSurface9* m_cache_ds_cubemap;
+
+	static class gkLightProbeSystem* m_pLightProbeSystem;
 };
 
 gkRendererD3D9* getRenderer();

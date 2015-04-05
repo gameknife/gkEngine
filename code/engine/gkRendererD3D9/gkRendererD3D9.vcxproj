@@ -462,6 +462,7 @@
     </ClCompile>
     <ClCompile Include="gkGpuInfo.cpp" />
     <ClCompile Include="gkGpuParticleProxy.cpp" />
+    <ClCompile Include="gkLightProbeSystem.cpp" />
     <ClCompile Include="gkStateManager.cpp" />
     <ClCompile Include="RenderCamera.cpp" />
     <ClCompile Include="RenderSys\gkColorGradingController.cpp" />
@@ -537,6 +538,7 @@
     <ClInclude Include="DXUT\DXUTmisc.h" />
     <ClInclude Include="gkGpuInfo.h" />
     <ClInclude Include="gkGpuParticleProxy.h" />
+    <ClInclude Include="gkLightProbeSystem.h" />
     <ClInclude Include="RenderCamera.h" />
     <ClInclude Include="RendPipelineBase.h" />
     <ClInclude Include="gkStateManager.h" />

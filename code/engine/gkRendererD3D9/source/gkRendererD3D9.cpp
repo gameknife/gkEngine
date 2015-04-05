@@ -58,6 +58,7 @@
 #include "RendPipe_SSRL.h"
 #include "RendPipe_DeferredFog.h"
 #include "RendPipe_LightPasses.h"
+#include "gkLightProbeSystem.h"
 
 #define USE_DXUT 0
 #define USE_SWAPCHAIN 0;
@@ -408,6 +409,7 @@ IDirect3DSurface9* gkRendererD3D9::m_cache_ds_cubemap = NULL;
 
 gkRenderSequence*	gkRendererD3D9::m_pUpdatingRenderSequence;
 gkRenderSequence*	gkRendererD3D9::m_pRenderingRenderSequence;
+gkLightProbeSystem* gkRendererD3D9::m_pLightProbeSystem;
 
 // 轴自定义FVF, which describes our custom vertex structure
 #define D3DFVF_AXISVERTEX (D3DFVF_XYZ|D3DFVF_TEX1)
@@ -1224,14 +1226,12 @@ HWND gkRendererD3D9::Init(ISystemInitInfo& sii)
 
 	buildGpuTimers();
 
-	//m_pDefaultFont = CreateFont( _T("Verdana"), 12, FW_MEDIUM );
-
-	//m_pDefaultFont = gEnv->pFont->CreateFont( _T("fonts/msyh.ttf"), 12, FW_MEDIUM );
 	m_pDefaultFont = NULL;
 
 	SetWindow(m_lNewWidth, m_lNewHeight, 0, 0);
-	// initialize the GPU timers
 
+	m_pLightProbeSystem = new gkLightProbeSystem();
+	m_pLightProbeSystem->Init();
 
 	if(USE_DXUT)
 	{
@@ -1370,7 +1370,8 @@ void gkRendererD3D9::Destroy()
 	// terminal
 	m_tdRenderThread.Terminate();
 
-
+	m_pLightProbeSystem->Destroy();
+	delete m_pLightProbeSystem;
 
 
 	SAFE_DELETE( m_pColorGradingController );
@@ -2308,4 +2309,8 @@ float gkRendererD3D9::GetPixelReSize()
 {
 	return g_pRendererCVars->r_pixelscale;
 	return 1.0f;
+}
+void gkRendererD3D9::SavePositionCubeMap(Vec3 position, const TCHAR* texturename)
+{
+	m_pLightProbeSystem->SavePositionCubeMap(position, texturename);
 }

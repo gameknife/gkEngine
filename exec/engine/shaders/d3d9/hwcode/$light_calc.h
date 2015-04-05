@@ -131,24 +131,22 @@ float fresnel(float3 normal, float3 eyevec, float power, float bias, float scale
 
 float4 DecodeRGBK(in float4 Color, const float fMultiplier, bool bUsePPP= false)
 {
-	if( bUsePPP )
-		Color.rgb *= Color.rgb * (Color.a * Color.a) * fMultiplier;
-	else
-		Color.rgb *= Color.a * fMultiplier;
-
+	Color.rgb *= Color.a * fMultiplier;
 	return Color;
 }
 
 float4 EncodeRGBE( float3 color, float fMultiplier )
 {
-	float fLen = max( color.x, max( color.y, color.z ) ) ;  
-	float fExp = ceil( log(fLen) / log(1.06) );
-
 	float4 ret;
-	ret.w = (fExp + 128.0) / 256.0 / fMultiplier;
-	ret.xyz = color.xyz / pow( 1.06, fExp);
 
-	return ret;   
+	const float4 cScale = float4(float3(1, 1, 1) / fMultiplier, 1.0 / 255.0);
+	float fMax = saturate(dot(float4(color.rgb, 1.0), cScale));
+
+	ret.a = ceil(fMax * 255.0) / 255.0;
+
+	ret.xyz = color.xyz / (ret.a * fMultiplier);                        
+
+	return ret;
 }
 
 float4 GetEnvironmentCMap(samplerCUBE envMap, in float3 envTC, in float fNdotE, in float fSpecPower)

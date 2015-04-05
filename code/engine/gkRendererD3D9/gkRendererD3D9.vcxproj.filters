@@ -165,6 +165,9 @@
     <ClCompile Include="RendPipe_DeferredFog.cpp">
       <Filter>Pipe\Pipe_Shading</Filter>
     </ClCompile>
+    <ClCompile Include="gkLightProbeSystem.cpp">
+      <Filter>RenderSys</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\dllmain.h">
@@ -289,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="RendPipe_DeferredFog.h">
       <Filter>Pipe\Pipe_Shading</Filter>
+    </ClInclude>
+    <ClInclude Include="gkLightProbeSystem.h">
+      <Filter>RenderSys</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

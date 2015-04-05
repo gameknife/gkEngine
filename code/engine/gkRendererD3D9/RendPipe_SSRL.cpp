@@ -47,10 +47,6 @@ void RendPipe_SSRL::Execute(gkRenderSequence* renderSeq)
 	pShader->FX_SetFloat4("PS_ddy", ddy);
 	pShader->FX_SetFloat4("g_camPos", gkRendererD3D9::getShaderContent().getCamPos());
 
-	// 	pShader->FX_SetValue("g_mWorldView", &matForRender, sizeof(Matrix44) );
-	// 	matForRender = matForRender * getShaderContent().getProjectionMatrix();
-	// 	pShader->FX_SetValue("g_mWorldViewProj", &matForRender, sizeof(Matrix44) );
-
 	Matrix44 matForRender = gkRendererD3D9::getShaderContent().getViewMatrix() * gkRendererD3D9::getShaderContent().getProjectionMatrix();
 
 	pShader->FX_SetValue("g_mProjection", &(matForRender), sizeof(Matrix44));

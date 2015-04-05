@@ -286,6 +286,7 @@ void gkRendererD3D9::FX_SetRenderTarget( uint8 channel, gkTexturePtr src, uint8 
 {
 	gkTexture* hwSrc = reinterpret_cast<gkTexture*>( src.getPointer() );
 
+	hwSrc->touch();
 
 	GK_ASSERT(channel < 4);
 	//GK_ASSERT( hwSrc->get2DTexture() );
