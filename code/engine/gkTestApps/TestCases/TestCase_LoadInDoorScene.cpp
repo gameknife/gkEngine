@@ -30,6 +30,24 @@ virtual void OnInit()
 
 virtual bool OnUpdate() 
 {
+	if (gEnv->pInGUI->gkGUIButton(_T("Rewind"), Vec2(gEnv->pRenderer->GetScreenWidth() / 2 - 150, 100), 90, 40, ColorB(255, 255, 255, 255), ColorB(0, 0, 0, 127)))
+	{
+		gEnv->p3DEngine->getTimeOfDay()->setTime(gEnv->p3DEngine->getTimeOfDay()->getTime() - 0.1);
+	}
+
+	if (gEnv->pInGUI->gkGUIButton(_T("Forward"), Vec2(gEnv->pRenderer->GetScreenWidth() / 2 + 60, 100), 90, 40, ColorB(255, 255, 255, 255), ColorB(0, 0, 0, 127)))
+	{
+		gEnv->p3DEngine->getTimeOfDay()->setTime(gEnv->p3DEngine->getTimeOfDay()->getTime() + 0.1);
+	}
+
+	TCHAR time[255];
+	_stprintf(time, _T("%.2f"), gEnv->p3DEngine->getTimeOfDay()->getTime());
+
+	if (gEnv->pInGUI->gkGUIButton(time, Vec2(gEnv->pRenderer->GetScreenWidth() / 2 - 40, 100), 80, 40, ColorB(255, 255, 255, 255), ColorB(0, 0, 0, 127)))
+	{
+		//gEnv->p3DEngine->getTimeOfDay()->setTime(gEnv->p3DEngine->getTimeOfDay()->getTime() + 0.1);
+	}
+
 	return true;
 }
 

@@ -58,6 +58,8 @@ int refID = 0;
 float3 g_LightPos = float3(-500,-500,-500);
 #endif
 
+float3 g_SunPos;
+
 float4 g_LightDiffuse;
 
 float4 g_LightSpecular = float4(1.0f, 1.0f, 1.0f, 1.0f);

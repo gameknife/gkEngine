@@ -247,14 +247,14 @@ float3 FilmToneMap(float3 color)
 	return pow(color, 2.2h);
 }
 
-#define C 0.48
+#define PARA_C 0.48
 
 float3 FilmToneMapEX(float3 color)
 {
 	float3 x = color;
 	float3 t1 = 6.2 * x * x;
-	float3 t2 = C * x;
-	float3 y = (t1 + t2) / (t1 + 4.1 * t2 + 0.05) + (0.634 * C - 0.247) * x;
+	float3 t2 = PARA_C * x;
+	float3 y = (t1 + t2) / (t1 + 4.1 * t2 + 0.05) + (0.634 * PARA_C - 0.247) * x;
 
 	return pow(y, 2.2h);
 }
@@ -273,6 +273,37 @@ float4 FilmMapping( in vert2frag IN, in float4 cScene, in float4 cBloom, in floa
 	// Tone mapping
 	cScene.xyz = FilmToneMapEX( fVignetting * (fAdaptedLumDest * cScene.xyz + cBloom)  );
 	//cScene.xyz = FilmToneMapEX(cScene.xyz);
+
+	return cScene;
+}
+
+// Filmic ToneMapping http://filmicgames.com/archives/75",
+const float A = 0.15;
+const float B = 0.50;
+const float C = 0.10;
+const float D = 0.20;
+const float E = 0.02;
+const float F = 0.30;
+const float W = 1000.0;
+
+float3 Uncharted2Tonemap(float3 x)
+{
+	return ((x*(A*x + C*B) + D*E) / (x*(A*x + B) + D*F)) - E / F;
+}
+
+float4 FilmMappingUncharted2(in vert2frag IN, in float4 cScene, in float4 cBloom, in float fAdaptedLum, in float fVignetting)
+{
+	float fLum = GetLuminance(cScene.rgb);
+	fAdaptedLum = EyeAdaption(fAdaptedLum);
+
+	// Exposure
+	float fAdaptedLumDest = HDRParams1.y / (1e-6 + 1.0h + HDRParams1.z * fAdaptedLum);
+
+	float3 whiteScale = 1.0 / Uncharted2Tonemap(float3(W, W, W));
+		float3 texColor = fVignetting * (fAdaptedLumDest * cScene.xyz + cBloom).rgb;
+		float3 curr = Uncharted2Tonemap((log2(2.0 / pow(0.2, 4.0)))*texColor);
+		float3 color = curr*whiteScale;
+		cScene.rgb = color;
 
 	return cScene;
 }
@@ -505,9 +536,9 @@ pixout HDRFinalScenePS(vert2frag IN)
 	float fAdaptedLum = GetLuminanceMap(lumMap1, float2(0.5h, 0.5h));
 
 	// exposure
-	vSample = FilmMapping( IN, vSample, cBloom, fAdaptedLum, fVignetting);
-
-
+	//vSample = FilmMappingUncharted2(IN, vSample, cBloom, fAdaptedLum, fVignetting);
+	//vSample = FilmMapping(IN, vSample, cBloom, fAdaptedLum, fVignetting);
+	vSample = ExpMapping(IN, vSample, cBloom, fAdaptedLum, fVignetting);
 	OUT.Color.rgb = vSample;	
 
 	// and we add sun shaft here

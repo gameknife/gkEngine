@@ -1251,8 +1251,8 @@ void gkRendererD3D9::RP_SetHDRParams( gkShaderPtr pShader )
 {
 	const STimeOfDayKey& tod = getShaderContent().getCurrTodKey();
 
-	// hdr level
-	Vec4 HDRParams1 = Vec4(0.0f, 4.0f, 10.0f, 1.0f);
+	// EyeAdaptedBase, HDRLevel, HDROffset, 
+	Vec4 HDRParams1 = Vec4(0.5f, 4.0f, 10.0f, 1.0f);
 	// SceneLum, SceneScale, HDRConstract, 
 	Vec4 HDRParams2 = Vec4(1.0f, 1.0f, tod.fHDRConstract, 1.0f);
 

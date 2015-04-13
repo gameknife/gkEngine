@@ -133,7 +133,8 @@ void gkRendererD3D9::RP_ProcessShaderGroup( const gkShaderGroup* pShaderGroup, E
 	pShader->FX_SetTechnique( hTech );
 	// set light Direction
 	pShader->FX_SetValue( "g_LightPos",&(m_pShaderParamDataSource.getLightDir()), sizeof(Vec3) );
-
+	Vec3 pSunPos = getShaderContent().getLightDir() * 100000.0f;
+	pShader->FX_SetValue("g_SunPos", &pSunPos, sizeof(Vec3));
 
 	if( tech == eSIT_ReflGenPass )
 	{
