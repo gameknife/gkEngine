@@ -6,7 +6,7 @@
 #include "IResourceManager.h"
 #include "..\Controls\CustomItems.h"
 #include "IMaterial.h"
-#include "gkObjectManager.h"
+#include "Managers\gkObjectManager.h"
 #include "gkFilePath.h"
 #include "EditorUtils.h"
 #include "IGameObjectLayer.h"

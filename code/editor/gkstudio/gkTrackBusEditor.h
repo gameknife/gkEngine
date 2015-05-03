@@ -43,7 +43,7 @@ Copyright (c) 2011-2015 Kaiming Yi
 #define _gkTrackBusEditor_h_
 
 #include "..\Resource.h"
-#include "gkToolBarPaneBase.h"
+#include "Panels/gkToolBarPaneBase.h"
 #include "Panels/gkPaneBase.h"
 #include "Controls\CustomSplitter.h"
 #include "Controls\gkPropertyGirdEx.h"

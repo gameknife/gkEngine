@@ -1,7 +1,7 @@
 ﻿#include "StdAfx.h"
 #include "PaneHierarchy.h"
 #include "EditorUtils.h"
-#include "gkObjectManager.h"
+#include "Managers\gkObjectManager.h"
 
 
 //////////////////////////////////////////////////////////////////////////

@@ -53,12 +53,13 @@ float4 g_SkyTop;
 
 
 float3 sunPosition = float3(1, 1, 1);
+float4 skyv2_params = float4(1.0, 3.0, 0.1, 0.6);
 
-float luminance = 1.0;
-float turbidity = 2.0;
-float reileigh = 1.0;
-float mieCoefficient = 0.03;
-float mieDirectionalG = 0.99;
+
+//float turbidity = 1.0;
+//float reileigh = 3.0;
+//float mieCoefficient = 0.1;
+//float mieDirectionalG = 0.6;
 
 // constants for atmospheric scattering
 const float e = 2.71828182845904523536028747135266249775724709369995957;
@@ -151,7 +152,7 @@ return ((x*(A*x+C*B)+D*E)/(x*(A*x+B)+D*F))-E/F;
 float3 relisky(float3 vWorldPosition)
 {
 	float3 sunDirection = normalize(g_SunPos.xyz);
-		float reileighCoefficient = reileigh;
+		float reileighCoefficient = skyv2_params.y;
 
 	float sunfade = 1.0 - clamp(1.0 - exp((g_SunPos.z / 450000.0)), 0.0, 1.0);
 
@@ -169,7 +170,7 @@ float3 relisky(float3 vWorldPosition)
 		float3 betaR = simplifiedRayleigh() * reileighCoefficient;
 
 		// mie coefficients",
-		float3 betaM = totalMie(lambda, K, turbidity) * mieCoefficient;
+		float3 betaM = totalMie(lambda, K, skyv2_params.x) * skyv2_params.z;
 
 		// optical length",
 		// cutoff angle at 90 to avoid singularity in next formula.",
@@ -188,7 +189,7 @@ float3 relisky(float3 vWorldPosition)
 		float rPhase = rayleighPhase(cosTheta*0.5+0.5);
 		float3 betaRTheta = betaR * rPhase;
 
-		float mPhase = hgPhase(cosTheta, mieDirectionalG);
+			float mPhase = hgPhase(cosTheta, skyv2_params.w);
 		float3 betaMTheta = betaM * mPhase;
 
 
@@ -259,7 +260,7 @@ pixout PixelScene(
 
 	//HDROutput(OUT, mulColor, 0);
 
-	OUT.Color.rgb = mulColor.rgb * 2.0;
+	OUT.Color.rgb = mulColor.rgb *  mulColor.rgb;// *2.0;
 	OUT.Color.a = 1.0;
 
 	OUT.Color = pow(OUT.Color, float4(g_SRGBRevert,g_SRGBRevert,g_SRGBRevert,1));

@@ -36,10 +36,10 @@ Copyright (c) 2011-2015 Kaiming Yi
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "PaneStyles.h"
-#include "gkPaneConsole.h"
-#include "gkPaneTimeOfDay.h"
-#include "gkMaterialEditor.h"
+#include "Panels/PaneStyles.h"
+#include "Panels/gkPaneConsole.h"
+#include "Panels/gkPaneTimeOfDay.h"
+#include "Panels/gkMaterialEditor.h"
 #include "PaneConsoleVar.h"
 #include "Panels\gkPaneManager.h"
 #include "Panels\gkSwissKnifeBar.h"

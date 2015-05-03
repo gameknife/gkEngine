@@ -63,29 +63,8 @@
     <ClCompile Include="StdAfx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\gkMaterialEditor.cpp">
-      <Filter>Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="source\gkPaneConsole.cpp">
-      <Filter>Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="source\gkPaneTimeOfDay.cpp">
-      <Filter>Panels</Filter>
-    </ClCompile>
     <ClCompile Include="PaneConsoleVar.cpp">
       <Filter>Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="source\PaneStyles.cpp">
-      <Filter>Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="source\gkToolBarPaneBase.cpp">
-      <Filter>Panels\BasePanes</Filter>
-    </ClCompile>
-    <ClCompile Include="source\gkEditor.cpp">
-      <Filter>gkStudioMngs</Filter>
-    </ClCompile>
-    <ClCompile Include="source\gkObjectManager.cpp">
-      <Filter>gkStudioMngs</Filter>
     </ClCompile>
     <ClCompile Include="Controls\CustomItems.cpp">
       <Filter>Controls</Filter>
@@ -107,9 +86,6 @@
     </ClCompile>
     <ClCompile Include="Controls\CustomSplitter.cpp">
       <Filter>Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="include\EditorUtils.cpp">
-      <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="Controls\gkPropertyGirdEx.cpp">
       <Filter>Controls</Filter>
@@ -141,6 +117,30 @@
     <ClCompile Include="gkTrackBusEditor.cpp">
       <Filter>Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Panels\gkPaneTimeOfDay.cpp">
+      <Filter>Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Panels\gkMaterialEditor.cpp">
+      <Filter>Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Panels\gkPaneConsole.cpp">
+      <Filter>Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\gkObjectManager.cpp">
+      <Filter>gkStudioMngs</Filter>
+    </ClCompile>
+    <ClCompile Include="gkEditor.cpp">
+      <Filter>gkStudioMngs</Filter>
+    </ClCompile>
+    <ClCompile Include="Panels\PaneStyles.cpp">
+      <Filter>Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Panels\gkToolBarPaneBase.cpp">
+      <Filter>Panels\BasePanes</Filter>
+    </ClCompile>
+    <ClCompile Include="Panels\EditorUtils.cpp">
+      <Filter>gkStudioMngs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RibbonSample.rc">
@@ -169,32 +169,8 @@
     <ClInclude Include="StdAfx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\gkMaterialEditor.h">
-      <Filter>Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gkPaneConsole.h">
-      <Filter>Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gkPaneTimeOfDay.h">
-      <Filter>Panels</Filter>
-    </ClInclude>
     <ClInclude Include="PaneConsoleVar.h">
       <Filter>Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PaneStyles.h">
-      <Filter>Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gkToolBarPaneBase.h">
-      <Filter>Panels\BasePanes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gkEditor.h">
-      <Filter>gkStudioMngs</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gkObjectManager.h">
-      <Filter>gkStudioMngs</Filter>
-    </ClInclude>
-    <ClInclude Include="include\IEditor.h">
-      <Filter>gkStudioMngs</Filter>
     </ClInclude>
     <ClInclude Include="Controls\CustomItems.h">
       <Filter>Controls</Filter>
@@ -219,9 +195,6 @@
     </ClInclude>
     <ClInclude Include="Controls\CustomSplitter.h">
       <Filter>Controls</Filter>
-    </ClInclude>
-    <ClInclude Include="include\EditorUtils.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Controls\gkPropertyGirdEx.h">
       <Filter>Controls</Filter>
@@ -252,6 +225,30 @@
     </ClInclude>
     <ClInclude Include="gkTrackBusEditor.h">
       <Filter>Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Panels\gkPaneTimeOfDay.h">
+      <Filter>Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Panels\gkMaterialEditor.h">
+      <Filter>Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Panels\gkPaneConsole.h">
+      <Filter>Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\gkObjectManager.h">
+      <Filter>gkStudioMngs</Filter>
+    </ClInclude>
+    <ClInclude Include="gkEditor.h">
+      <Filter>gkStudioMngs</Filter>
+    </ClInclude>
+    <ClInclude Include="Panels\PaneStyles.h">
+      <Filter>Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Panels\gkToolBarPaneBase.h">
+      <Filter>Panels\BasePanes</Filter>
+    </ClInclude>
+    <ClInclude Include="Panels\EditorUtils.h">
+      <Filter>gkStudioMngs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

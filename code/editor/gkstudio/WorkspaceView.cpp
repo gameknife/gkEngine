@@ -15,7 +15,7 @@
 #include "ICamera.h"
 #include "IAuxRenderer.h"
 #include "IInputManager.h"
-#include "gkObjectManager.h"
+#include "Managers\gkObjectManager.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

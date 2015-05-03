@@ -211,6 +211,10 @@ void gkRendererD3D9::RP_ProcessShaderGroup( const gkShaderGroup* pShaderGroup, E
 		pShader->FX_SetValue( "g_SkyBottom", &(tod.clZenithBottom * 0.85f), sizeof(ColorF) );
 		pShader->FX_SetValue( "g_SkyTop", &(tod.clZenithTop * 0.85f), sizeof(ColorF) );
 		pShader->FX_SetFloat( "g_ZenithHeight", tod.fZenithShift);
+
+		Vec4 params = Vec4(tod.fTurbidity, tod.fRayleigh, tod.fMieCoefficent, tod.fMieDirectionalG);
+
+		pShader->FX_SetValue("skyv2_params", &params, sizeof(Vec4));
 	}
 
 	pShader->FX_Commit();

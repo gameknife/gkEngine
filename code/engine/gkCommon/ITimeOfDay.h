@@ -87,6 +87,12 @@ enum ETODVARS
 	CLZENITHTOP3,
 	ZENITHSHIFT,
 
+	// SKYBOX VER2
+	TURBIDITY,
+	RAYLEIGH,
+	MIECOEFFICENT,
+	MIEDIRECTIONALG,
+
 	// FOG VARS
 	CLFOGCOLOR,
 	CLFOGCOLOR1,
@@ -160,6 +166,12 @@ struct STimeOfDayKey
 	ColorF clZenithTop;
 	float fZenithShift;
 
+	// skybox ver2
+	float fTurbidity;
+	float fRayleigh;
+	float fMieCoefficent;
+	float fMieDirectionalG;
+
 	// FOG
 	ColorF clFogColor;
 	float clFogDensity;
@@ -212,6 +224,12 @@ struct STimeOfDayKey
 		clZenithBottom = ColorF(23.f/255.0f, 51.f/255.0f, 102.f/255.0f, 1.0f);
 		clZenithTop = ColorF(12.f/255.0f, 29.f/255.0f, 85.f/255.0f, 1.0f);
 		fZenithShift = 0.5f;
+
+		// skybox ver2 init
+		fTurbidity = 1.0f;
+		fRayleigh = 3.0f;
+		fMieCoefficent = 0.1f;
+		fMieDirectionalG = 0.6f;
 
 		// fog
 		clFogColor = ColorF(0.1f, 0.15f, 0.3f, 0.001f);

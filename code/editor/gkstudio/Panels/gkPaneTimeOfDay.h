@@ -35,10 +35,20 @@ Copyright (c) 2011-2015 Kaiming Yi
 #include "Controls/PSCPColorDialog.h"
 
 // gkPaneTimeOfDay dialog
+class gkPaneTimeOfDay;
 
 class gkTODTimeLineSlider : public CSliderCtrl
 {
+public:
+	gkTODTimeLineSlider() { nPrevPos = 0; }
+	virtual ~gkTODTimeLineSlider() {}
 
+	DECLARE_MESSAGE_MAP()
+	afx_msg void OnPaint();
+
+public:
+	gkPaneTimeOfDay* m_pane;
+	int nPrevPos;
 };
 
 class gkPaneTimeOfDay : public gkToolBarPaneBase, public IEditorUpdateListener, public IPSCPColorChangeCallback
@@ -56,7 +66,7 @@ public:
 	CBrush m_brush;
 	CStatic m_wndPlaceHolder;
 
-	CSliderCtrl m_ctrlSlider;
+	gkTODTimeLineSlider m_ctrlSlider;
 	STimeOfDayKey m_curKey;
 	STimeOfDayKey m_copyKey;
 	//TODKeySequence m_backupSequence;
@@ -87,12 +97,13 @@ protected:
 
 	virtual BOOL InitPropertyTable();
 
-	void UpdateTODKeyFromEngine();
-	void UpdateTODKeyToEngine();
+
 
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnNMCustomdrawTodslider(NMHDR *pNMHDR, LRESULT *pResult);
+	void UpdateTODKeyFromEngine();
+	void UpdateTODKeyToEngine();
+
 	afx_msg void OnBnClickedTodPrevkey();
 	afx_msg void OnBnClickedTodNextkey();
 	afx_msg void OnBnClickedTodPlantkey();
@@ -111,4 +122,5 @@ public:
 public:
 	virtual const TCHAR* getPanelName() {return _T("TimeOfDay Editor");}
 	virtual UINT getIID() {return IDD;}
+	afx_msg void OnTRBNThumbPosChangingTodslider(NMHDR *pNMHDR, LRESULT *pResult);
 };

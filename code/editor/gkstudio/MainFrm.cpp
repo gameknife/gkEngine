@@ -12,7 +12,7 @@
 #include "IResourceManager.h"
 #include "Panels\PaneHierarchy.h"
 #include "Managers\gkCameraPosManager.h"
-#include "gkObjectManager.h"
+#include "Managers\gkObjectManager.h"
 #include "I3DEngine.h"
 #include "ITerrianSystem.h"
 #include "gkTrackBusEditor.h"

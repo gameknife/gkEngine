@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "gkEditor.h"
-#include "gkObjectManager.h"
+#include "Managers\gkObjectManager.h"
 #include "WorkspaceView.h"
 #include "MainFrm.h"
 #include "ITimer.h"

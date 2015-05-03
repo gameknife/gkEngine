@@ -910,14 +910,21 @@
     <ClCompile Include="Controls\gkPropertyGirdEx.cpp" />
     <ClCompile Include="Controls\PSCPColorDialog.cpp" />
     <ClCompile Include="GalleryItems.cpp" />
+    <ClCompile Include="gkEditor.cpp" />
     <ClCompile Include="gkTrackBusEditor.cpp" />
-    <ClCompile Include="include\EditorUtils.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="Managers\gkCameraPosManager.cpp" />
+    <ClCompile Include="Managers\gkObjectManager.cpp" />
+    <ClCompile Include="Panels\EditorUtils.cpp" />
+    <ClCompile Include="Panels\gkMaterialEditor.cpp" />
+    <ClCompile Include="Panels\gkPaneConsole.cpp" />
     <ClCompile Include="Panels\gkPaneManager.cpp" />
+    <ClCompile Include="Panels\gkPaneTimeOfDay.cpp" />
     <ClCompile Include="Panels\gkResourceBrowser.cpp" />
     <ClCompile Include="Panels\gkSwissKnifeBar.cpp" />
+    <ClCompile Include="Panels\gkToolBarPaneBase.cpp" />
     <ClCompile Include="Panels\PaneHierarchy.cpp" />
+    <ClCompile Include="Panels\PaneStyles.cpp" />
     <ClCompile Include="Panels\SwissKnifePaneCreation.cpp" />
     <ClCompile Include="Panels\SwissKnifePaneModify.cpp" />
     <ClCompile Include="RibbonSample.cpp" />
@@ -943,14 +950,7 @@
     <ClCompile Include="Utils\FileEnum.cpp" />
     <ClCompile Include="WorkspaceTitle.cpp" />
     <ClCompile Include="WorkspaceView.cpp" />
-    <ClCompile Include="source\gkMaterialEditor.cpp" />
-    <ClCompile Include="source\gkPaneConsole.cpp" />
-    <ClCompile Include="source\gkPaneTimeOfDay.cpp" />
     <ClCompile Include="PaneConsoleVar.cpp" />
-    <ClCompile Include="source\PaneStyles.cpp" />
-    <ClCompile Include="source\gkToolBarPaneBase.cpp" />
-    <ClCompile Include="source\gkEditor.cpp" />
-    <ClCompile Include="source\gkObjectManager.cpp" />
     <ClCompile Include="Controls\CustomItems.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -962,15 +962,22 @@
     <ClInclude Include="Controls\gkPropertyGirdEx.h" />
     <ClInclude Include="Controls\PSCPColorDialog.h" />
     <ClInclude Include="GalleryItems.h" />
+    <ClInclude Include="gkEditor.h" />
     <ClInclude Include="gkTrackBusEditor.h" />
-    <ClInclude Include="include\EditorUtils.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Managers\gkCameraPosManager.h" />
+    <ClInclude Include="Managers\gkObjectManager.h" />
+    <ClInclude Include="Panels\EditorUtils.h" />
+    <ClInclude Include="Panels\gkMaterialEditor.h" />
     <ClInclude Include="Panels\gkPaneBase.h" />
+    <ClInclude Include="Panels\gkPaneConsole.h" />
     <ClInclude Include="Panels\gkPaneManager.h" />
+    <ClInclude Include="Panels\gkPaneTimeOfDay.h" />
     <ClInclude Include="Panels\gkResourceBrowser.h" />
     <ClInclude Include="Panels\gkSwissKnifeBar.h" />
+    <ClInclude Include="Panels\gkToolBarPaneBase.h" />
     <ClInclude Include="Panels\PaneHierarchy.h" />
+    <ClInclude Include="Panels\PaneStyles.h" />
     <ClInclude Include="Panels\SwissKnifePaneCreation.h" />
     <ClInclude Include="Panels\SwissKnifePaneModify.h" />
     <ClInclude Include="Resource.h" />
@@ -982,15 +989,7 @@
     <ClInclude Include="Utils\FileEnum.h" />
     <ClInclude Include="WorkspaceTitle.h" />
     <ClInclude Include="WorkspaceView.h" />
-    <ClInclude Include="include\gkMaterialEditor.h" />
-    <ClInclude Include="include\gkPaneConsole.h" />
-    <ClInclude Include="include\gkPaneTimeOfDay.h" />
     <ClInclude Include="PaneConsoleVar.h" />
-    <ClInclude Include="include\PaneStyles.h" />
-    <ClInclude Include="include\gkToolBarPaneBase.h" />
-    <ClInclude Include="include\gkEditor.h" />
-    <ClInclude Include="include\gkObjectManager.h" />
-    <ClInclude Include="include\IEditor.h" />
     <ClInclude Include="Controls\CustomItems.h" />
   </ItemGroup>
   <ItemGroup>

@@ -976,6 +976,10 @@ void gkRendererGL::RP_ProcessShaderGroup(const gkShaderGroup* pShaderGroup, bool
 		pShader->FX_SetFloat4("g_SkyBottom", (tod.clZenithBottom * 0.85f).toVec4());
 		pShader->FX_SetFloat4("g_SkyTop", (tod.clZenithTop * 0.85f).toVec4());
 		pShader->FX_SetFloat("g_ZenithHeight", tod.fZenithShift);
+
+		Vec4 params = Vec4(tod.fTurbidity, tod.fRayleigh, tod.fMieCoefficent, tod.fMieDirectionalG);
+
+		pShader->FX_SetValue("skyv2_params", &params, sizeof(Vec4));
 	}
 
 

@@ -24,7 +24,7 @@ gkPaneTimeOfDay::gkPaneTimeOfDay(CWnd* pParent /*=NULL*/)
 //-----------------------------------------------------------------------
 gkPaneTimeOfDay::~gkPaneTimeOfDay()
 {
-\
+
 }
 
 void gkPaneTimeOfDay::DoDataExchange(CDataExchange* pDX)
@@ -48,9 +48,7 @@ BEGIN_MESSAGE_MAP(gkPaneTimeOfDay, gkToolBarPaneBase)
 	ON_MESSAGE(XTPWM_PROPERTYGRID_NOTIFY, OnGridNotify)
 
 	//ON_BN_CLICKED( IDC_BUTTON_CVAR , OnCVar )
-
 	//}}AFX_MSG_MAP
-	ON_NOTIFY(NM_CUSTOMDRAW, IDC_TODSLIDER, &gkPaneTimeOfDay::OnNMCustomdrawTodslider)
 
 	ON_COMMAND_RANGE(ID_BUTTON_TODEDT_PLAY, ID_BUTTON_TODEDT_PSTKEY, OnCommandRange)
 
@@ -99,6 +97,7 @@ BOOL gkPaneTimeOfDay::OnInitDialog()
 
 	m_ctrlSlider.SetRange(0,240);
 	m_ctrlSlider.SetPos(90);  
+	m_ctrlSlider.m_pane = this;
 
 
 	// add listener
@@ -196,6 +195,11 @@ if ( m_wndPropertyGrid.Create( rc, this, IDC_TODPROPERTY ) )
 	m_wndPropertyGrid.AddColorVar(pCategorySky, _T("天际线颜色") , CLZENITHBOTTOM,&(m_curKey.clZenithBottom.r),  _T("天际线色"  ));
 	m_wndPropertyGrid.AddColorVar(pCategorySky, _T("天空顶颜色") , CLZENITHTOP,&(m_curKey.clZenithTop.r),  _T("天空穹顶色"  ));
 	m_wndPropertyGrid.AddFloatVar(pCategorySky, _T("天际/天空系数"), ZENITHSHIFT, &(m_curKey.fZenithShift), 0, 1, _T("控制阳光的强度"));
+
+	m_wndPropertyGrid.AddFloatVar(pCategorySky, _T("空气浑浊系数"), TURBIDITY, &(m_curKey.fTurbidity), 0, 10, _T("空气浑浊系数"));
+	m_wndPropertyGrid.AddFloatVar(pCategorySky, _T("瑞利系数"), RAYLEIGH, &(m_curKey.fRayleigh), 0, 10, _T("瑞利系数"));
+	m_wndPropertyGrid.AddFloatVar(pCategorySky, _T("弥散射强度系数"), MIECOEFFICENT, &(m_curKey.fMieCoefficent), 0, 1, _T("弥散射强度系数"));
+	m_wndPropertyGrid.AddFloatVar(pCategorySky, _T("弥散射方向系数"), MIEDIRECTIONALG, &(m_curKey.fMieDirectionalG), 0, 1, _T("弥散射方向系数"));
 
 	//////////////////////////////////////////////////////////////////////////
 	// 雾效
@@ -365,28 +369,6 @@ LRESULT gkPaneTimeOfDay::OnGridNotify(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-
-// gkPaneTimeOfDay message handlers
-
-void gkPaneTimeOfDay::OnNMCustomdrawTodslider(NMHDR *pNMHDR, LRESULT *pResult)
-{
-	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
-	// TODO: Add your control notification handler code here
-	*pResult = 0;
-
-	static int nPrevPos;
-	int nPos = m_ctrlSlider.GetPos();
-
-	if (nPrevPos != nPos)
-	{
-		gEnv->p3DEngine->getTimeOfDay()->setTime( (float)nPos / 10.0f);
-		UpdateTODKeyFromEngine();
-	}
-
-	nPrevPos = nPos;
-
-}
-
 void gkPaneTimeOfDay::UpdateTODKeyFromEngine()
 {
 	m_curKey = gEnv->p3DEngine->getTimeOfDay()->getCurrentTODKeyPure();
@@ -514,4 +496,25 @@ void gkPaneTimeOfDay::OnColorChange( COLORREF clr )
 	UpdateTODKeyToEngine();
 	gEnv->pSystem->Update();
 	gEnv->pSystem->PostUpdate();
+}
+
+BEGIN_MESSAGE_MAP(gkTODTimeLineSlider, CSliderCtrl)
+
+	ON_WM_PAINT()
+
+END_MESSAGE_MAP()
+
+void gkTODTimeLineSlider::OnPaint()
+{
+	CSliderCtrl::OnPaint();
+
+	int nPos = GetPos();
+
+	if (nPrevPos != nPos)
+	{
+		gEnv->p3DEngine->getTimeOfDay()->setTime((float)nPos / 10.0f);
+		m_pane->UpdateTODKeyFromEngine();
+	}
+
+	nPrevPos = nPos;
 }

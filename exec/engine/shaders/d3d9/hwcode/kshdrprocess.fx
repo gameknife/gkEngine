@@ -247,7 +247,7 @@ float3 FilmToneMap(float3 color)
 	return pow(color, 2.2h);
 }
 
-#define PARA_C 0.48
+#define PARA_C 0.42
 
 float3 FilmToneMapEX(float3 color)
 {
@@ -537,8 +537,8 @@ pixout HDRFinalScenePS(vert2frag IN)
 
 	// exposure
 	//vSample = FilmMappingUncharted2(IN, vSample, cBloom, fAdaptedLum, fVignetting);
-	//vSample = FilmMapping(IN, vSample, cBloom, fAdaptedLum, fVignetting);
-	vSample = ExpMapping(IN, vSample, cBloom, fAdaptedLum, fVignetting);
+	vSample = FilmMapping(IN, vSample, cBloom, fAdaptedLum, fVignetting);
+	//vSample = ExpMapping(IN, vSample, cBloom, fAdaptedLum, fVignetting);
 	OUT.Color.rgb = vSample;	
 
 	// and we add sun shaft here

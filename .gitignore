@@ -19,3 +19,11 @@ exec/builds/
 code/engine/solutions/Tegra-Android/
 exec/bin64/
 *.atc
+*.user
+*.pch
+*.suo
+*.lib
+*.log
+code/engine/gkFont/shell32.pdb/
+*.bak
+code/game/solutions/shell32.pdb/
