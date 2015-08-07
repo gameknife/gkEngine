@@ -19,3 +19,6 @@ exec/builds/
 code/engine/solutions/Tegra-Android/
 exec/bin64/
 *.atc
+*.user
+archive.zip
+*.suo
