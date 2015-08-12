@@ -2227,7 +2227,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkCore.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2246,7 +2245,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/gkCore.dst;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2265,7 +2263,6 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkFont.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2298,7 +2295,6 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/gkFont.dst;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2353,7 +2349,6 @@
 		A07D4AD51799ACBC00C36005 /* Debug-OSX */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkRendererGLES2.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2374,7 +2369,6 @@
 		A07D4AD61799ACBC00C36005 /* Debug-OSX */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkSystem.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2396,7 +2390,6 @@
 		A07D4AD71799ACBC00C36005 /* Debug-OSX */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkInput.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2414,7 +2407,6 @@
 		A07D4AD81799ACBC00C36005 /* Debug-OSX */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkGameObjectSystem.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2432,7 +2424,6 @@
 		A07D4AD91799ACBC00C36005 /* Debug-OSX */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkGameFramework.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2451,7 +2442,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkCore.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2474,7 +2464,6 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkFont.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2641,7 +2630,6 @@
 		A0950F04179C3E9E002C8759 /* Release-OSX */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkRendererGLES2.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2662,7 +2650,6 @@
 		A0950F05179C3E9E002C8759 /* Release-OSX */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkSystem.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2684,7 +2671,6 @@
 		A0950F06179C3E9E002C8759 /* Release-OSX */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkInput.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2702,7 +2688,6 @@
 		A0950F07179C3E9E002C8759 /* Release-OSX */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkGameObjectSystem.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2720,7 +2705,6 @@
 		A0950F08179C3E9E002C8759 /* Release-OSX */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkGameFramework.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2739,7 +2723,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkCore.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2762,7 +2745,6 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkFont.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2850,7 +2832,6 @@
 		FF8A8BBC15BEC9ED0039AACB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkRendererGLES2.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2871,7 +2852,6 @@
 		FF8A8BBD15BEC9ED0039AACB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/gkRendererGLES2.dst;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					TARGET_OS_IPHONE,
@@ -2892,7 +2872,6 @@
 		FF8A8BCB15BEC9F50039AACB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkSystem.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2914,7 +2893,6 @@
 		FF8A8BCC15BEC9F50039AACB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/gkSystem.dst;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2932,7 +2910,6 @@
 		FF8A8BDA15BEC9FD0039AACB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkInput.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2950,7 +2927,6 @@
 		FF8A8BDB15BEC9FD0039AACB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/gkInput.dst;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2964,7 +2940,6 @@
 		FF8A8BE915BECA260039AACB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkGameObjectSystem.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2982,7 +2957,6 @@
 		FF8A8BEA15BECA260039AACB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/gkGameObjectSystem.dst;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2996,7 +2970,6 @@
 		FF8A8BF815BECA300039AACB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/gkGameFramework.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -3014,7 +2987,6 @@
 		FF8A8BF915BECA300039AACB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/gkGameFramework.dst;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;

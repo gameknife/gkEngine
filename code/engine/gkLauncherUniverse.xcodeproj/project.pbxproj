@@ -260,6 +260,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)";
+				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -297,6 +298,40 @@
 					"-lhkSceneData",
 					"-lhkSerialize",
 				);
+				"OTHER_LDFLAGS[sdk=iphoneos*]" = (
+					"-lgkFont",
+					"-lgkGameObjectSystem",
+					"-lgkRendererGLES2",
+					"-lgkInput",
+					"-lgkCore",
+					"-lgkGameFramework",
+					"-lgkSystem",
+					"-lTestCases",
+					"-lgkAnimation",
+					"-lhkaAnimation",
+					"-lhkaiInternal",
+					"-lhkaInternal",
+					"-lhkBase",
+					"-lhkbInternal",
+					"-lhkbUtilities",
+					"-lhkcdCollide",
+					"-lhkcdInternal",
+					"-lhkCompat",
+					"-lhkGeometryUtilities",
+					"-lhkInternal",
+					"-lhkSceneData",
+					"-lhkSerialize",
+				);
+				"OTHER_LDFLAGS[sdk=iphonesimulator*]" = (
+					"-lgkFont",
+					"-lgkGameObjectSystem",
+					"-lgkRendererGLES2",
+					"-lgkInput",
+					"-lgkCore",
+					"-lgkGameFramework",
+					"-lgkSystem",
+					"-lTestCases",
+				);
 				PRODUCT_NAME = gkENGINE;
 				PROVISIONING_PROFILE = "";
 				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
@@ -315,6 +350,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)";
+				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 3;
