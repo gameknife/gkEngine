@@ -36,6 +36,9 @@
     <ClCompile Include="gkResourceCompiler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ddsCompiler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gmfCompiler.h">
@@ -50,9 +53,6 @@
     <ClInclude Include="strnormalize.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="atcCompiler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Image.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -60,6 +60,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="compilerlist.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ddsCompiler.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="atcCompiler.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

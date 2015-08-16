@@ -161,6 +161,7 @@ bool pvrCompiler::encode(const char* filename, const char* cfg)
 
 	if( !stricmp( cfg, "atc" ) )
 	{
+		// not pvr
 		result = img->loadTGA( imgtexture, filename );
 		extern_tool = false;
 	}
@@ -201,7 +202,6 @@ bool pvrCompiler::writeFile(const char* filename, const char* cfg)
 	{
 		return true;
 	}
-	//imgtexture->imageData
 
 	// read from img, write atc
 	struct ATC_HEADER 

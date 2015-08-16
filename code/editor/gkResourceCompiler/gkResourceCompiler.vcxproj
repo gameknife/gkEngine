@@ -80,6 +80,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="atcCompiler.cpp" />
+    <ClCompile Include="ddsCompiler.cpp" />
     <ClCompile Include="gkResourceCompiler.cpp" />
     <ClCompile Include="gmfCompiler.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -90,6 +91,7 @@
   <ItemGroup>
     <ClInclude Include="atcCompiler.h" />
     <ClInclude Include="compilerlist.h" />
+    <ClInclude Include="ddsCompiler.h" />
     <ClInclude Include="gmfCompiler.h" />
     <ClInclude Include="icompiler.h" />
     <ClInclude Include="Image.h" />
