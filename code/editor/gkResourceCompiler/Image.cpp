@@ -41,6 +41,24 @@
 //#include "global.h"
 #include "Image.h"
 
+#ifdef OS_APPLE
+
+inline void gkLogWarning( const TCHAR *format,... )
+{
+    // Fran: we need these guards for the testing framework to work
+//    if (gEnv && gEnv->pSystem)
+//    {
+//        va_list args;
+//        va_start(args,format);
+//        gEnv->pLog->LogV(ILog::eWarning, format, args );
+//        va_end(args);
+//    }
+    
+    printf( format );
+}
+
+#endif
+
 Image::Image(void)
 {
 }

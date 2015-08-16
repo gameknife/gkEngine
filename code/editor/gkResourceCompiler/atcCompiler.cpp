@@ -109,13 +109,13 @@ struct PVRTextureHeaderV3{
 #define ATC_RGBA             0x00000002
 #define ATC_TILED            0X00000004
 
-UINT32 getATCMipSize( UINT32 width, UINT32 height, UINT32 flags, UINT32 mip_level )
+uint32 getATCMipSize( uint32 width, uint32 height, uint32 flags, uint32 mip_level )
 {
-	UINT32 nTotalBlocks, nBytesPerBlock, nHasAlpha;
+	uint32 nTotalBlocks, nBytesPerBlock, nHasAlpha;
 	nTotalBlocks = ((width + 3) >> 2) * ((height + 3) >> 2);
 	nHasAlpha = flags & ATC_RGBA;
 	nBytesPerBlock = (nHasAlpha) ? 16 : 8;
-	UINT32 size   = nTotalBlocks * nBytesPerBlock;
+	uint32 size   = nTotalBlocks * nBytesPerBlock;
 	size = size >> (mip_level * 2);
 
 	return size;
@@ -166,6 +166,8 @@ bool pvrCompiler::encode(const char* filename, const char* cfg)
 	}
 	else
 	{
+        
+#ifdef OS_WIN32
 		extern_tool = true;
 		// call pvr coder
 		TCHAR szExePath[MAX_PATH];
@@ -182,7 +184,9 @@ bool pvrCompiler::encode(const char* filename, const char* cfg)
 			system( cmdline );
 
 		}
-
+#else
+        
+#endif
 
 		//%GKENGINE_HOME%\tools\pvrtextool -m -fOGL8888 -yflip0 -silent -i %%~fA
 	}
@@ -202,12 +206,12 @@ bool pvrCompiler::writeFile(const char* filename, const char* cfg)
 	// read from img, write atc
 	struct ATC_HEADER 
 	{
-		UINT32	signature;
-		UINT32	width;
-		UINT32	height;
-		UINT32	flags;
-		UINT32	dataOffset;  // From start of header/file
-		UINT32  mipmaplevel;
+		uint32	signature;
+		uint32	width;
+		uint32	height;
+		uint32	flags;
+		uint32	dataOffset;  // From start of header/file
+		uint32  mipmaplevel;
 	} header;
 
 	memset(&header, 0, sizeof(header));
@@ -250,9 +254,9 @@ bool pvrCompiler::writeFile(const char* filename, const char* cfg)
 
 		fwrite( &headerNew, sizeof(PVRTextureHeaderV3), 1, fp );
 
-		UINT32 u32MIPWidth = header.width;
-		UINT32 u32MIPHeight = header.height;
-		for (UINT32 i = 0; i < header.mipmaplevel; ++i)
+		uint32 u32MIPWidth = header.width;
+		uint32 u32MIPHeight = header.height;
+		for (uint32 i = 0; i < header.mipmaplevel; ++i)
 		{
 			pInputTexture->nWidth       = u32MIPWidth;
 			pInputTexture->nHeight      = u32MIPHeight;
@@ -276,12 +280,12 @@ bool pvrCompiler::writeFile(const char* filename, const char* cfg)
 
 			// convert
 			pOutputTexture->nDataSize = getATCMipSize( u32MIPWidth, u32MIPHeight, ATC_RGBA, 0 );
-			pOutputTexture->pData = (UINT8*)malloc(pOutputTexture->nDataSize);
+			pOutputTexture->pData = (uint8*)malloc(pOutputTexture->nDataSize);
 			startBytes += pInputTexture->nDataSize;
 
 
 
-			UINT32 nRet = Qonvert( pInputTexture, pOutputTexture );
+			uint32 nRet = Qonvert( pInputTexture, pOutputTexture );
 			if (nRet != Q_SUCCESS || pOutputTexture->nDataSize == 0)
 			{
 				gkLogError( _T("encode atc file [%s] failed."), filename );

@@ -45,7 +45,7 @@ Copyright (c) 2011-2015 Kaiming Yi
 
 #include "gkPlatform.h"
 #include "IResource.h"
-#include "gk_Geo.h"
+#include "Mathlib/gk_Geo.h"
 
 struct gkRenderOperation;
 

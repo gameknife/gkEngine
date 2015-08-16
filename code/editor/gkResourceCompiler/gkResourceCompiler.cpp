@@ -63,6 +63,52 @@ void ProcessArgs(const char* args, const char* args1)
 	}
 }
 
+#ifdef OS_APPLE
+//
+//#import <Foundation/Foundation.h>
+//#import <CoreFoundation/CoreFoundation.h>
+//
+//// implement of macPathUtil
+//std::string macBundlePath()
+//{
+//    char path[PATH_MAX];
+//    CFBundleRef mainBundle = CFBundleGetMainBundle();
+//    assert(mainBundle);
+//    
+//    CFURLRef mainBundleURL = CFBundleCopyBundleURL(mainBundle);
+//    assert(mainBundleURL);
+//    
+//    CFStringRef cfStringRef = CFURLCopyFileSystemPath( mainBundleURL, kCFURLPOSIXPathStyle);
+//    assert(cfStringRef);
+//    
+//    CFStringGetCString(cfStringRef, path, PATH_MAX, kCFStringEncodingASCII);
+//    
+//    CFRelease(mainBundleURL);
+//    CFRelease(cfStringRef);
+//    
+//    char* lastpath = strrchr(path, '/');
+//    if (lastpath) {
+//        *lastpath = 0;
+//    }
+//    lastpath = strrchr(path, '/');
+//    if (lastpath) {
+//        *lastpath = 0;
+//    }
+//    lastpath = strrchr(path, '/');
+//    if (lastpath) {
+//        *lastpath = 0;
+//    }
+//    
+//    return std::string(path);
+//}
+//
+//std::string iOSDocumentsDirectory()
+//{
+//    return macBundlePath();
+//}
+//
+#endif
+
 int main(int numArgs, const char *args[])
 {	
 	printf("GameKnife Resource Compiler. \n");

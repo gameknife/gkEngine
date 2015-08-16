@@ -1,5 +1,5 @@
 #include "shaderCompiler.h"
-#include "gk_Color.h"
+#include "MathLib/gk_Color.h"
 #include "IXmlUtil.h"
 #include <iomanip>
 
@@ -122,8 +122,11 @@ bool shaderCompiler::encode(const char* filename, const char* cfg)
 					gkStdString binaryPath = gkGetExecRootDir() + ss.str();
 
 					// 只要决定了编译，就先删除cache
-					DeleteFile( binaryPath.c_str() );
-
+#ifdef OS_WIN32
+                    DeleteFile( binaryPath.c_str() );
+#else
+                    
+#endif
 					TCHAR buffer[1024];
 					_stprintf(buffer, _T("%sbin32\\fxc.exe /Zpc /T fx_2_0 %s /Fo %s %s"), gkGetExecRootDir().c_str(), marcoProfile.c_str(), binaryPath.c_str(), sourcePath.c_str());
 
