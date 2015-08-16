@@ -268,7 +268,6 @@
 				INFOPLIST_FILE = "gkLauncherMac/gkLauncherMac-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../thirdparty/GLFW\"",
 					"\"$(SRCROOT)/../../exec/ios/Debug\"",
 					"\"$(SRCROOT)/../thirdparty/OGLSDK/lib\"",
 					"\"$(SRCROOT)/../../exec/ios/Debug-iphoneos\"",
@@ -330,7 +329,6 @@
 				INFOPLIST_FILE = "gkLauncherMac/gkLauncherMac-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../thirdparty/GLFW\"",
 					"\"$(SRCROOT)/../../exec/ios/Debug\"",
 					"\"$(SRCROOT)/../thirdparty/OGLSDK/lib\"",
 					"\"$(SRCROOT)/../../exec/ios/Debug-iphoneos\"",
@@ -432,7 +430,6 @@
 				INFOPLIST_FILE = "gkLauncherMac/gkLauncherMac-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../thirdparty/GLFW\"",
 					"\"$(SRCROOT)/../../exec/ios/Debug\"",
 					"\"$(SRCROOT)/../thirdparty/OGLSDK/lib\"",
 					"\"$(SRCROOT)/../../exec/ios/Debug-iphoneos\"",
@@ -452,7 +449,6 @@
 				INFOPLIST_FILE = "gkLauncherMac/gkLauncherMac-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../thirdparty/GLFW\"",
 					"\"$(SRCROOT)/../../exec/ios/Debug\"",
 					"\"$(SRCROOT)/../thirdparty/OGLSDK/lib\"",
 					"\"$(SRCROOT)/../../exec/ios/Debug-iphoneos\"",

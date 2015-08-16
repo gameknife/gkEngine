@@ -2324,7 +2324,7 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)";
 				DEAD_CODE_STRIPPING = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2492,10 +2492,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks\"",
-				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					_STATIC_LIB,
@@ -2519,10 +2515,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks\"",
-				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					_STATIC_LIB,
@@ -2546,11 +2538,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks\"",
-				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					_STATIC_LIB,
@@ -2579,7 +2566,7 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)";
 				DEAD_CODE_STRIPPING = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2604,10 +2591,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks\"",
-				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					_STATIC_LIB,
@@ -2778,6 +2761,7 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)";
 				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2808,6 +2792,7 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)";
 				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (

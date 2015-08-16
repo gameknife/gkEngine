@@ -3,6 +3,13 @@
    version = "1.0">
    <Group
       location = "container:"
+      name = "Tools">
+      <FileRef
+         location = "group:../../editor/gkResourceCompiler/gkResourceCompiler.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
       name = "GameDll">
       <FileRef
          location = "group:../gkTestApps/TestCases.xcodeproj">
