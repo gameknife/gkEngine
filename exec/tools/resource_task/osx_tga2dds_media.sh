@@ -18,7 +18,7 @@ then
 echo $file
 #$GKENGINE_HOME/tools/pvrtextool -m -f a8r8g8b8 -shh -i $file -o ${file%.*}.dds
 #$GKENGINE_HOME/tools/convert $file ${file%.*}.dds
-$GKENGINE_HOME/tools/nvcompress -rgb $file ${file%.*}.dds
+$GKENGINE_HOME/tools/nvcompress -bc3 $file ${file%.*}.dds
 fi
 
 
@@ -26,6 +26,4 @@ fi
 done
 }
 
-foreachd "$GKENGINE_HOME/engine/assets"
-
-#   	%GKENGINE_HOME%\tools\pvrtextool -m -fOGL8888 -yflip0 -square -silent -i %%~fA
+foreachd "$GKENGINE_HOME/media"

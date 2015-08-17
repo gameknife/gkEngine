@@ -22,3 +22,5 @@ exec/bin64/
 *.user
 archive.zip
 *.suo
+
+code/editor/gkResourceCompiler/gkResourceCompiler.xcodeproj/xcuserdata/gameknife.xcuserdatad/xcschemes/xcschememanagement.plist
