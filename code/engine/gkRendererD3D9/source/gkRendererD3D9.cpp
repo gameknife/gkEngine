@@ -1718,6 +1718,17 @@ bool gkRendererD3D9::SetWindow(int width, int height, bool fullscreen, HWND hWnd
 				20, 20, width, height, 0,
 				NULL, hInstance, 0 );
 			//m_hWnd = CreateWindowEx(exstyle, _T("gkENGINE"), _T("gkENGINE"),style,x,y,wdt,hgt, NULL, NULL, hInstance, NULL);
+
+			RECT realRect;
+			GetClientRect(m_hWnd, &realRect);
+
+			int realwidth = realRect.right - realRect.left;
+			int realheight = realRect.bottom - realRect.top;
+			width = width * 2 - realwidth;
+			height = height * 2 - realheight;
+
+			MoveWindow(m_hWnd, GetSystemMetrics(SM_CXSCREEN) / 2 - width / 2, GetSystemMetrics(SM_CYSCREEN) / 2 - height / 2, width, height, FALSE);
+
 		}
 		else
 			m_hWnd = (HWND)hWnd;

@@ -240,12 +240,9 @@ void gkSceneNode::_findVisibleObjects( gkCamera* cam, IRenderSequence* sequence,
 			}
 			if( cam->getHideMask() & mo->getHideMask() )
 			{
-				
-
- 				//if (cam->checkRenderable(aabb) || mo->getRenderLayer() == RENDER_LAYER_SKIES_EARLY)
+ 				if (cam->checkRenderable(aabb) || mo->getRenderLayer() == RENDER_LAYER_SKIES_EARLY)
  				{
 					mo -> _updateRenderSequence( sequence );
-
 				}
 			}
 		}
