@@ -12,12 +12,49 @@
 
 call ..\global_task\set_global_env.bat
 
-mkdir %GKENGINE_HOME%\..\code\thirdparty
+set restore=%cd%
+
+IF NOT EXIST %GKENGINE_HOME%\..\code\thirdparty mkdir %GKENGINE_HOME%\..\code\thirdparty
+
 cd %GKENGINE_HOME%\..\code\thirdparty
 
-%GKENGINE_HOME%\tools\wget http://www.gameknife.cc/gkENGINE_RES/depends.7z
-%GKENGINE_HOME%\tools\7zr x %GKENGINE_HOME%\..\code\thirdparty\depends.7z
+echo Start Downloading dependency win32 from github...
 
-del %GKENGINE_HOME%\..\code\thirdparty\depends.7z
+
+IF NOT EXIST %GKENGINE_HOME%\..\code\thirdparty\dxsdk.7z (
+%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/dependency/dxsdk.7z
+)
+IF NOT EXIST %GKENGINE_HOME%\..\code\thirdparty\freetype.7z (
+%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/dependency/freetype.7z
+)
+IF NOT EXIST %GKENGINE_HOME%\..\code\thirdparty\havoksdk.7z (
+%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/dependency/havoksdk.7z
+)
+IF NOT EXIST %GKENGINE_HOME%\..\code\thirdparty\misc.7z (
+%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/dependency/misc.7z
+)
+IF NOT EXIST %GKENGINE_HOME%\..\code\thirdparty\mscrt.7z (
+%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/dependency/mscrt.7z
+)
+IF NOT EXIST %GKENGINE_HOME%\..\code\thirdparty\oglsdk.7z (
+%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/dependency/oglsdk.7z
+)
+IF NOT EXIST %GKENGINE_HOME%\..\code\thirdparty\havoksdk_win32.7z (
+%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/dependency/havoksdk_win32.7z
+)
+IF NOT EXIST %GKENGINE_HOME%\..\code\thirdparty\toolkitpro_15.7z (
+%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/dependency/toolkitpro_15.7z
+)
+
+echo Download Success! Extracting...
+
+
+
+
+cd %restore%
+rem https://raw.githubusercontent.com/gameKnife/gkengine-resource/dependency/dxsdk.7z
+rem %GKENGINE_HOME%\tools\7zr x %GKENGINE_HOME%\..\code\thirdparty\depends.7z
+
+rem del %GKENGINE_HOME%\..\code\thirdparty\depends.7z
 
 pause
