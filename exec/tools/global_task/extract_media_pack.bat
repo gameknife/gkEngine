@@ -12,12 +12,34 @@
 
 call ..\global_task\set_global_env.bat
 
-mkdir %GKENGINE_HOME%\media
+set restore=%cd%
+
+IF NOT EXIST %GKENGINE_HOME%\media mkdir %GKENGINE_HOME%\media
+
 cd %GKENGINE_HOME%\media
 
-%GKENGINE_HOME%\tools\wget http://www.gameknife.cc/gkENGINE_RES/media.7z
-%GKENGINE_HOME%\tools\7zr x %GKENGINE_HOME%\media\media.7z
+IF NOT EXIST %GKENGINE_HOME%\media\terrian.7z (
+%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/media/terrian.7z
+)
 
-del %GKENGINE_HOME%\media\media.7z
+IF NOT EXIST %GKENGINE_HOME%\media\textures.7z (
+%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/media/textures.7z
+)
+
+IF NOT EXIST %GKENGINE_HOME%\media\textures.7z (
+%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/media/basic.7z
+)
+
+IF NOT EXIST %GKENGINE_HOME%\media\conf_room.7z (
+%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/media/conf_room.7z
+)
+
+%GKENGINE_HOME%\tools\7zr x -y %GKENGINE_HOME%\media\terrian.7z
+%GKENGINE_HOME%\tools\7zr x -y %GKENGINE_HOME%\media\textures.7z
+%GKENGINE_HOME%\tools\7zr x -y %GKENGINE_HOME%\media\basic.7z
+
+%GKENGINE_HOME%\tools\7zr x -y %GKENGINE_HOME%\media\conf_room.7z
+
+rem del %GKENGINE_HOME%\media\media.7z
 
 pause
