@@ -27,4 +27,4 @@ for /R %GKENGINE_HOME%\media %%A in (*.atc) do (
     del %%A
 )
 
-pause
+rem pause

@@ -22,4 +22,4 @@ for /R %GKENGINE_HOME%\engine\assets %%A in (*.gmf) do (
     del %%A
 )
 
-pause
+rem pause

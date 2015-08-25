@@ -23,4 +23,4 @@ del %GKENGINE_HOME%\engine\shaders\d3d9\shadercache\* /Q /S /F
 rmdir %GKENGINE_HOME%\..\code\Lib /Q /S
 
 
-pause
+rem pause

@@ -17,4 +17,4 @@ for /R %GKENGINE_HOME%\paks %%A in (*.gpk) do (
     del %%A
 )
 
-pause
+rem pause
