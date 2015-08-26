@@ -42,43 +42,72 @@ echo Now choose optional media pack.
 echo -------------------------------------------------------------------------
 echo .
 
-CHOICE /C YN /M "Install conf_room demo?: Y:Install ; N:Skip"
-IF %errorlevel%==1 goto :CONFROOM
-goto :CONFROOMEND
+IF "%chosenmedia%"=="1" (
+goto :AUTOINSTALL 
+) ELSE (
+goto :MANMALINSTALL
+)
+:AUTOINSTALL
 
-:CONFROOM
-
+IF "%confroom%"=="1" (
 IF NOT EXIST %GKENGINE_HOME%\media\conf_room.7z (
 %GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/media/conf_room.7z
 )
 
 %GKENGINE_HOME%\tools\7zr x -y %GKENGINE_HOME%\media\conf_room.7z
+)
 
-:CONFROOMEND
-
-CHOICE /C YN /M "Install out_door demo?: Y; N"
-IF %errorlevel%==1 goto :OUTDOOR
-goto :OUTDOOREND
-
-:OUTDOOR
+IF "%outdoor%"=="1" (
 IF NOT EXIST %GKENGINE_HOME%\media\outdoor.7z (
 %GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/media/outdoor.7z
 )
 
 %GKENGINE_HOME%\tools\7zr x -y %GKENGINE_HOME%\media\outdoor.7z
-:OUTDOOREND
+)
 
-CHOICE /C YN /M "Install character demo?: Y; N"
-IF %errorlevel%==1 goto :CHARA
-goto :CHARAEND
-
-:CHARA
+IF "%character%"=="1" (
 IF NOT EXIST %GKENGINE_HOME%\media\character.7z (
 %GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/media/character.7z
 )
 
 %GKENGINE_HOME%\tools\7zr x -y %GKENGINE_HOME%\media\character.7z
+)
+
+goto :POSTPROCESS
+
+:MANMALINSTALL
+
+CHOICE /C YN /M "Install conf_room demo?: Y:Install ; N:Skip"
+IF %errorlevel%==1 goto :CONFROOM
+goto :CONFROOMEND
+:CONFROOM
+IF NOT EXIST %GKENGINE_HOME%\media\conf_room.7z (
+%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/media/conf_room.7z
+)
+%GKENGINE_HOME%\tools\7zr x -y %GKENGINE_HOME%\media\conf_room.7z
+:CONFROOMEND
+CHOICE /C YN /M "Install out_door demo?: Y; N"
+IF %errorlevel%==1 goto :OUTDOOR
+goto :OUTDOOREND
+:OUTDOOR
+IF NOT EXIST %GKENGINE_HOME%\media\outdoor.7z (
+%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/media/outdoor.7z
+)
+%GKENGINE_HOME%\tools\7zr x -y %GKENGINE_HOME%\media\outdoor.7z
+:OUTDOOREND
+CHOICE /C YN /M "Install character demo?: Y; N"
+IF %errorlevel%==1 goto :CHARA
+goto :CHARAEND
+:CHARA
+IF NOT EXIST %GKENGINE_HOME%\media\character.7z (
+%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/media/character.7z
+)
+%GKENGINE_HOME%\tools\7zr x -y %GKENGINE_HOME%\media\character.7z
 :CHARAEND
+
+goto :POSTPROCESS
+
+:POSTPROCESS
 
 echo .
 echo .

@@ -12,12 +12,12 @@ ddsCompiler::~ddsCompiler(void)
 
 bool ddsCompiler::encode(const char* filename, const char* cfg)
 {
-	
+	return false;
 }
 
 bool ddsCompiler::writeFile(const char* filename, const char* cfg)
 {
-	
+	return false;
 }
 
 bool ddsCompiler::supportInput(const char* ext)
