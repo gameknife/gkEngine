@@ -1,11 +1,19 @@
-sh ../global_task/set_global_env.sh
+source set_global_env.sh
 
+if []
 mkdir $GKENGINE_HOME/../code/thirdparty
 cd $GKENGINE_HOME/../code/thirdparty
 
-#%GKENGINE_HOME%\tools\wget http://www.gameknife.cc/gkENGINE_RES/depends.7z
-$GKENGINE_HOME/tools/7zr x $GKENGINE_HOME/../code/thirdparty/depends.7z
+downloadsdk(){
+file=$GKENGINE_HOME/../code/thirdparty/$0.7z
+if [ -f "$file" ]
+then
+echo find sdk.
+else
+curl -o $GKENGINE_HOME/../code/thirdparty/$0.7z https://raw.githubusercontent.com/gameknife/gkengine-resource/master/dependency/$0.7z
+fi
+}
 
-#del %GKENGINE_HOME%\..\code\thirdparty\depends.7z
+downloadsdk dxsdk
 
 #pause
