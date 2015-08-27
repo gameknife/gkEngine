@@ -17,7 +17,7 @@ if [ "${file##*.}" = "tga" ];
 then
 echo $file
 #$GKENGINE_HOME/tools/pvrtextool -m -f a8r8g8b8 -shh -i $file -o ${file%.*}.dds
-$GKENGINE_HOME/tools/nvcompress -rgb -silent $file ${file%.*}.dds
+$GKENGINE_HOME/tools/nvcompress -bc3 -silent $file ${file%.*}.dds
 fi
 
 
@@ -25,6 +25,6 @@ fi
 done
 }
 
-foreachd "$GKENGINE_HOME/engine/assets"
+foreachd "$GKENGINE_HOME/media"
 
 #   	%GKENGINE_HOME%\tools\pvrtextool -m -fOGL8888 -yflip0 -square -silent -i %%~fA
