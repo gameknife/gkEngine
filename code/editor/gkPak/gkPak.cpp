@@ -14,7 +14,25 @@
 #include <iostream>
 
 #include "crc32.h"
-#include "lzma\LzmaLib.h"
+#include "lzma/LzmaLib.h"
+
+#include <mach-o/dyld.h>
+#include <limits.h>
+
+std::string macBundlePath(void)
+{
+    std::string ret = "";
+    char buf [PATH_MAX];
+    uint32_t bufsize = PATH_MAX;
+    if(!_NSGetExecutablePath(buf, &bufsize))
+    {
+        ret = buf;
+        ret = GetParent(ret);
+        ret = GetParent(ret);
+    }
+    
+    return ret;
+}
 
 struct gPakStatus
 {
@@ -248,6 +266,8 @@ void WriteFile( const TCHAR* file)
 	gkStdString relpath = gkGetExecRelativePath( file );	
 	gkStdString absPath = gkGetExecRootDir();
 	absPath += relpath;
+    
+    gkNormalizePath( relpath );
 
 	tmpFile = fopen( absPath.c_str(), "rb" );
 
@@ -274,10 +294,10 @@ void WriteFile( const TCHAR* file)
 
 				if ( size > GKPAK_UNCOMPRESS_HEADER_SIZE && needCompress)
 				{
-					Byte* pTmpCompressed = new Byte[size];
+					uint8* pTmpCompressed = new uint8[size];
 					SizeT compressSize = size;
 
-					Byte header[LZMA_PROPS_SIZE + 8];
+					uint8 header[LZMA_PROPS_SIZE + 8];
 					size_t headerSize = LZMA_PROPS_SIZE;
 
 					// 前1KB不压缩，一般文件头就这么大把？
@@ -427,6 +447,9 @@ int main(int numArgs, const char *args[])
 
 		gkStdString outfile = gkGetExecRootDir();
 		outfile += g_outputPath;
+        
+        
+        
 		g_status.pakFile = fopen( outfile.c_str(), "wb" );
 		if ( !g_status.pakFile)
 		{

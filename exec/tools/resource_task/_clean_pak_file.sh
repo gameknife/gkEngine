@@ -1,6 +1,6 @@
 cd ../global_task/
 source set_global_env.sh
 
-rm -rf $GKENGINE_HOME/*.gpk
+find $GKENGINE_HOME/ -type f -name "*.gpk" -delete
 
 # pause

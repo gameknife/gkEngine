@@ -1,14 +1,15 @@
 cd ../global_task/
 source set_global_env.sh
 
-rm `find $GKENGINE_HOME/../INTERMEDIATE -type f -name "*"`
-rmdir -p $GKENGINE_HOME/../INTERMEDIATE
+#find $GKENGINE_HOME/../INTERMEDIATE/ -type f -name "*" -delete
+rm -rf $GKENGINE_HOME/../INTERMEDIATE
 
-rm `find $GKENGINE_HOME/.. -type f -name "*.pdb"`
-rm `find $GKENGINE_HOME/.. -type f -name "*.ilk"`
-rm `find $GKENGINE_HOME/.. -type f -name "*.user"`
-rm `find $GKENGINE_HOME/.. -type f -name "*.ipch"`
-rm `find $GKENGINE_HOME/.. -type f -name "*.sdf"`
-rm `find $GKENGINE_HOME/.. -type f -name "*.aps"`
-rmdir -p $GKENGINE_HOME/../code/Lib
+find $GKENGINE_HOME/../ -type f -name "*.pdb" -delete
+find $GKENGINE_HOME/../ -type f -name "*.ilk" -delete
+find $GKENGINE_HOME/../ -type f -name "*.user" -delete
+find $GKENGINE_HOME/../ -type f -name "*.ipch" -delete
+find $GKENGINE_HOME/../ -type f -name "*.sdf" -delete
+find $GKENGINE_HOME/../ -type f -name "*.aps" -delete
+
+rm -rf $GKENGINE_HOME/../code/Lib
 # pause

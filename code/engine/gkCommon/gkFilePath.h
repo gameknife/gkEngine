@@ -1,4 +1,4 @@
-﻿//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 /*
 Copyright (c) 2011-2015 Kaiming Yi
 	
@@ -43,6 +43,9 @@ Copyright (c) 2011-2015 Kaiming Yi
 #include "gkPlatform.h"
 
 #ifdef OS_IOS
+#import <Foundation/Foundation.h>
+#import <CoreFoundation/CoreFoundation.h>
+
 std::string macCachePath();
 std::string macBundlePath(void);
 std::string iOSDocumentsDirectory(void);
@@ -103,12 +106,23 @@ inline bool is_end_with_slash( const TCHAR* filename )
 #define _ascii_tolower(c)     ( (((c) >= L'A') && ((c) <= L'Z')) ? ((c) - L'A' + L'a') : (c) )
 
 
+
 //! Removes the trailing slash or backslash from a given path.
 inline gkStdString RemoveSlash( const gkStdString &path )
 {
 	if (path.empty() || (path[path.length()-1] != '/' && path[path.length()-1] != '\\'))
 		return path;
 	return path.substr(0,path.length()-1);
+}
+
+inline gkStdString GetParent( const gkStdString &path )
+{
+    gkStdString ret = RemoveSlash(path);
+    size_t slash = ret.find_last_of('/');
+    if (slash != gkStdString::npos) {
+        ret = ret.substr(0,slash);
+    }
+    return ret;
 }
 
 inline void gkNormalizeResName( gkStdString &path )
@@ -237,7 +251,8 @@ inline gkStdString gkGetExecRootDir()
 #if defined ( OS_ANDROID )
 	return gkStdString(ANDROID_APP_SDCARDROOT);
 #elif defined ( OS_IOS ) 
-    return iOSDocumentsDirectory() + "/";
+    //return iOSDocumentsDirectory() + "/";
+    return macBundlePath() + "/";
 #else
 	// Get the exe name, and exe path
 	TCHAR strExePath[MAX_PATH] = {0};
@@ -280,11 +295,36 @@ inline gkStdString gkGetMaterialDir()
 
 typedef void (*fnGoThrough)(const TCHAR* filename);
 
-inline bool gkGoThroughFolder(const TCHAR* SrcFolderpath, fnGoThrough func )
+inline bool gkGoThroughFolder(const TCHAR* root_path, fnGoThrough func )
 {
-#if defined ( OS_ANDROID ) || defined ( OS_IOS ) 
-	return S_FALSE;
+#if defined ( OS_ANDROID ) 
+    
+    return false;
+    
+#elif defined ( OS_IOS )
+	
+    //fileList便是包含有该文件夹下所有文件的文件名及文件夹名的数组
+    NSString* docsDir = [[NSString alloc] initWithBytes:root_path length:strlen(root_path) encoding:NSUTF8StringEncoding];
+    NSFileManager *localFileManager = [NSFileManager defaultManager];
+    NSDirectoryEnumerator *dirEnum = [localFileManager enumeratorAtPath:docsDir];
+    NSString *file = nil;
+    NSData *fileContents = [NSData data];
+    while ((file = [dirEnum nextObject]))
+    {
+        NSString *fileNamePath = [docsDir stringByAppendingPathComponent:file];
+        fileContents = [NSData dataWithContentsOfFile:fileNamePath]; // This will store file contents in form of bytes
+        
+        BOOL isdir = NO;
+        [localFileManager fileExistsAtPath:fileNamePath isDirectory:&isdir];
+        
+        if(!isdir)
+        {
+            func( [fileNamePath UTF8String] );
+        }
+        
+    }
 
+    return true;
 #else
 
 	TCHAR path[1024];
@@ -372,14 +412,6 @@ inline bool gkFindFirstFile(TCHAR* destFilepath, const TCHAR* SrcFolderpath, con
 inline bool gkFindMediaSearchParentDirs( TCHAR* strSearchPath, int cchSearch, const TCHAR* strLeaf,
 										const TCHAR* strExePath )
 {
-// #ifdef OS_WIN32
-// 	if( GetFileAttributes( strLeaf ) != 0xFFFFFFFF )
-// 	{
-// 		_stprintf( strSearchPath, _T("%s"), strLeaf );
-// 		return true;
-// 	}
-// #endif
-
 	gkStdString normalized = RemoveSlash(strExePath);
 	_stprintf( strSearchPath, _T("%s/%s"), normalized.c_str(), strLeaf );
 	
@@ -422,20 +454,12 @@ inline HRESULT gkFindFileRelativeExec( TCHAR* strDestPath, int cchDest, const TC
 	TCHAR* strLastSlash = NULL;
 	TCHAR strPureFilename[MAX_PATH] = {0};
 	_tcscpy( strPureFilename, strFilename );
-// 	strLastSlash = _tcsrchr( strPureFilename, _T( '\\' ) );
-// 	if (strLastSlash)
-// 	{
-// 		_tcscpy( strPureFilename, strLastSlash );
-// 	}
-// 	else
-// 	{
+
 		strLastSlash = _tcsrchr( strPureFilename, _T( '/' ) );
 		if (strLastSlash)
 		{
 			_tcscpy( strPureFilename, strLastSlash + 1 );
 		}
-//	}
-
 
 	bFound = gkFindFirstFile(strDestPath, wstrGameRoot.c_str(), strPureFilename);
 	if( bFound )
@@ -477,13 +501,7 @@ inline HRESULT gkFindFileRelativeGame( TCHAR* strDestPath, int cchDest, const TC
 	bFound = gkFindFirstFile(strDestPath, wstrGameRoot.c_str(), strPureFilename);
 	if( bFound )
 		return S_OK;
-
-	// do not help find exec dir
-// 	HRESULT hr = gkFindFileRelativeExec(strDestPath, cchDest, strPureFilename);
-// 	if (hr == S_OK)
-// 		return S_OK;
-
-	// On failure, return the file as the path but also return an error code
+    
 	_tcscpy( strDestPath, strFilename );
 
 	return S_FALSE;
@@ -501,6 +519,17 @@ inline gkStdString gkGetAbsExecPath( const gkStdString relPath )
 
 inline gkStdString gkGetExecRelativePath(const gkStdString absPath, bool purename = false)
 {
+#ifdef OS_IOS
+    gkStdString relpath = "bad";
+    size_t start_pos = absPath.find_first_of(gkGetExecRootDir());
+    if(start_pos != gkStdString::npos)
+    {
+        relpath = absPath.substr( gkGetExecRootDir().length() );
+    }
+    
+    
+    return relpath;
+#else
 	// 如果已经是相对路径了，直接返回
 	if ( gkIsRelPath(absPath) && !purename )
 	{
@@ -526,6 +555,7 @@ inline gkStdString gkGetExecRelativePath(const gkStdString absPath, bool purenam
 	gkStdString relpath(fullpath + start);
 	gkNormalizePath(relpath);
 	return relpath;
+#endif
 }
 
 inline gkStdString gkGetGameRelativePath(const gkStdString absPath, bool purename = false)
