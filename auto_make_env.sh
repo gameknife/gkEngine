@@ -1,15 +1,15 @@
+echo .
+echo .
+echo -------------------------------------------------------------------------
+echo "\033[36m This is the automatic deploy script for gkENGINE. \033[0m"
+echo "\033[36m It will download dependency, medias packs from github, then unzip them. \033[0m"
+echo "\033[36m Finally, it will try to build the whole Engine with MsBuild. And auto run the TestCase Demo. \033[0m"
+echo -------------------------------------------------------------------------
+echo .
+
 # shadercache folder
+source init_engine_res.sh
 cd exec/tools/global_task
-
-echo .
-echo .
-echo -------------------------------------------------------------------------
-echo This is the automatic deploy script for gkENGINE.
-echo It will download dependency, medias packs from github, then unzip them.
-echo Finally, it will try to build the whole Engine with MsBuild. And auto run the TestCase Demo.
-echo -------------------------------------------------------------------------
-echo .
-
 
 autoinstall=1
 
@@ -17,21 +17,21 @@ install_conf_room=0
 install_outdoor=0
 install_character=0
 
-echo "Do you want install conf_room demo? y/n:"
+echo "\033[33m Do you want install conf_room demo? y/n: \033[0m"
 read var
 if  [ $var = "y" ]
 then
 install_conf_room=1
 fi
 
-echo "Do you want install outdoor demo? y/n:"
+echo "\033[33m Do you want install outdoor demo? y/n: \033[0m"
 read var
 if  [ $var = "y" ]
 then
 install_outdoor=1
 fi
 
-echo "Do you want install character demo? y/n:"
+echo "\033[33m Do you want install character demo? y/n: \033[0m"
 read var
 if  [ $var = "y" ]
 then
@@ -39,18 +39,31 @@ install_character=1
 fi
 
 echo .
-echo Next, All process will execute automaticly, just take seet and have a coffee.
+echo "\033[36m Next, All process will execute automaticly, just take seet and have a coffee. \033[0m"
 echo -------------------------------------------------------------------------
 read -n1 -p "Press any key to continue..."
 
+#exit 0
+
 source set_global_env.sh
 
+
+echo .
+echo "\033[36m [step 1] download & extract dependecies... \033[0m"
+echo -------------------------------------------------------------------------
 sh extract_thirdparty.sh
 sh unzip_thirdparty.sh
+
+
+echo .
+echo "\033[36m [step 2] prepare the basic engine resources... \033[0m"
+echo -------------------------------------------------------------------------
 
 sh ../resource_task/_obj2gmf_media.sh
 sh ../resource_task/osx_tga2dds_engine.sh
 sh ../resource_task/sgx_tga2pvr_engine.sh
+
+
 
 # media packs
 

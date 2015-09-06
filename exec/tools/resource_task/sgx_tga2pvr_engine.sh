@@ -21,7 +21,7 @@ if [ -f "${file%.*}.pvr"  ]
 then
 echo "${file%.*}.pvr exist.";
 else
-$GKENGINE_HOME/tools/pvrtextoolcli -m -f r8g8b8a8 -flip y -squarecanvas + -i $file
+$GKENGINE_HOME/tools/pvrtextoolcli -m -f r8g8b8a8 -square + -i $file
 fi
 
 fi
