@@ -25,3 +25,13 @@ archive.zip
 *.pdb
 thirdparty/
 gkENGINE_CORE_Vc10.sln.cache
+exec/ios/
+code/editor/gkPak/gkPak.xcodeproj/xcuserdata/
+code/editor/gkResourceCompiler/gkResourceCompiler.xcodeproj/xcuserdata/
+code/engine/gkENGINE_CoreModule.xcodeproj/xcuserdata/
+code/engine/gkLauncherMac.xcodeproj/xcuserdata/
+code/engine/gkLauncherUniverse.xcodeproj/xcuserdata/
+code/engine/gkTestApps/TestCases.xcodeproj/xcuserdata/
+code/engine/solutions/gkENGINE_xcode.xcworkspace/xcuserdata/
+code/gkENGINE_xcode.xcworkspace/xcuserdata/
+code/gkENGINE_Tools.xcworkspace/xcuserdata/

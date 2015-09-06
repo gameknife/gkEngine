@@ -16,7 +16,7 @@ then
 echo find sdk package [ $1 ].
 else
 echo sdk package [ $1 ] not found, downloading...
-curl -o $GKENGINE_HOME/../code/thirdparty/$1.7z https://raw.githubusercontent.com/gameknife/gkengine-resource/master/dependency/$1.7z
+curl -o $GKENGINE_HOME/../code/thirdparty/$1.7z https://raw.githubusercontent.com/gameknife/gkEngine-Resource/master/dependency/$1.7z
 fi
 }
 

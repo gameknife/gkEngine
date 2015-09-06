@@ -56,6 +56,12 @@ sh ../resource_task/sgx_tga2pvr_engine.sh
 
 source extract_media_pack.sh
 
+sh ../resource_task/sgx_tga2pvr_media.sh
+
+# pak
+
+sh ../resource_task/task_pak_resource_ios.sh
+
 # build gkENGINE
 xcodebuild -workspace $GKENGINE_HOME/../code/engine/solutions/gkENGINE_xcode.xcworkspace -scheme release_osx
 

@@ -501,7 +501,7 @@ inline gkStdString gkGetExecRelativePath(const gkStdString absPath, bool purenam
     size_t start_pos = absPath.find_first_of(gkGetExecRootDir());
     if(start_pos != gkStdString::npos)
     {
-        relpath = absPath.substr( gkGetExecRootDir().length() );
+        relpath = absPath.substr( gkGetExecRootDir().length() - 1 );
     }
     return relpath;
 #else
