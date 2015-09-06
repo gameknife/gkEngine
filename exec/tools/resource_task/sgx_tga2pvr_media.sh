@@ -15,8 +15,8 @@ then
 #echo $file pvr process
 if [ "${file##*.}" = "tga" ];
 then
-echo $file
-$GKENGINE_HOME/tools/pvrtextoolcli -m -f r8g8b8a8 -flip y -squarecanvas + -i $file
+#echo $file
+$GKENGINE_HOME/tools/pvrtextoolcli -m -f PVRTC1_4_RGB -flip y -squarecanvas + -i $file
 fi
 
 
@@ -24,6 +24,6 @@ fi
 done
 }
 
-foreachd "$GKENGINE_HOME/engine/assets"
+foreachd "$GKENGINE_HOME/media"
 #-m -f RGBG8888 -flip y -squarecanvas + -shh -i $file
 #   	%GKENGINE_HOME%\tools\pvrtextool -m -fOGL8888 -yflip0 -square -silent -i %%~fA

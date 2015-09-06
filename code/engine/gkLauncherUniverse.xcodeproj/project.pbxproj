@@ -16,7 +16,6 @@
 		A04B42F81734038500EF0763 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B42F71734038500EF0763 /* CoreGraphics.framework */; };
 		A04B433517340CE700EF0763 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B433317340CE700EF0763 /* OpenGLES.framework */; };
 		A04B433617340CE700EF0763 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B433417340CE700EF0763 /* QuartzCore.framework */; };
-		A0AE74331B90B8EF0065C00B /* libgkAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AE742A1B90B8EF0065C00B /* libgkAnimation.a */; };
 		A0AE74341B90B8EF0065C00B /* libgkCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AE742B1B90B8EF0065C00B /* libgkCore.a */; };
 		A0AE74351B90B8EF0065C00B /* libgkFont.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AE742C1B90B8EF0065C00B /* libgkFont.a */; };
 		A0AE74361B90B8EF0065C00B /* libgkGameFramework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AE742D1B90B8EF0065C00B /* libgkGameFramework.a */; };
@@ -65,7 +64,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0AE74331B90B8EF0065C00B /* libgkAnimation.a in Frameworks */,
 				A0AE74341B90B8EF0065C00B /* libgkCore.a in Frameworks */,
 				A0AE74351B90B8EF0065C00B /* libgkFont.a in Frameworks */,
 				A0AE74361B90B8EF0065C00B /* libgkGameFramework.a in Frameworks */,
@@ -230,7 +228,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#rm -rf \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Data\"\n#cp -Rf \"$PROJECT_DIR/Data\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Data\"";
+			shellScript = "rm -rf \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/data\"\nmkdir \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/data\"\ncp -Rf \"$BUILD_DIR/../../paks\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/data/paks\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -42,10 +42,10 @@ Copyright (c) 2011-2015 Kaiming Yi
 
 #include "gkPlatform.h"
 
-#ifdef OS_IOS
-#import <Foundation/Foundation.h>
-#import <CoreFoundation/CoreFoundation.h>
+typedef void (*fnGoThrough)(const TCHAR* filename);
 
+#ifdef OS_IOS
+bool mac_gothrough(const TCHAR* root_path, fnGoThrough func );
 std::string macCachePath();
 std::string macBundlePath(void);
 std::string iOSDocumentsDirectory(void);
@@ -293,38 +293,15 @@ inline gkStdString gkGetMaterialDir()
 	return (gkGetExecRootDir() + _T("media/material/"));
 }
 
-typedef void (*fnGoThrough)(const TCHAR* filename);
-
 inline bool gkGoThroughFolder(const TCHAR* root_path, fnGoThrough func )
 {
-#if defined ( OS_ANDROID ) 
+#if defined ( OS_ANDROID )
     
     return false;
     
 #elif defined ( OS_IOS )
 	
-    //fileList便是包含有该文件夹下所有文件的文件名及文件夹名的数组
-    NSString* docsDir = [[NSString alloc] initWithBytes:root_path length:strlen(root_path) encoding:NSUTF8StringEncoding];
-    NSFileManager *localFileManager = [NSFileManager defaultManager];
-    NSDirectoryEnumerator *dirEnum = [localFileManager enumeratorAtPath:docsDir];
-    NSString *file = nil;
-    NSData *fileContents = [NSData data];
-    while ((file = [dirEnum nextObject]))
-    {
-        NSString *fileNamePath = [docsDir stringByAppendingPathComponent:file];
-        fileContents = [NSData dataWithContentsOfFile:fileNamePath]; // This will store file contents in form of bytes
-        
-        BOOL isdir = NO;
-        [localFileManager fileExistsAtPath:fileNamePath isDirectory:&isdir];
-        
-        if(!isdir)
-        {
-            func( [fileNamePath UTF8String] );
-        }
-        
-    }
-
-    return true;
+    return mac_gothrough(root_path, func);
 #else
 
 	TCHAR path[1024];
@@ -526,8 +503,6 @@ inline gkStdString gkGetExecRelativePath(const gkStdString absPath, bool purenam
     {
         relpath = absPath.substr( gkGetExecRootDir().length() );
     }
-    
-    
     return relpath;
 #else
 	// 如果已经是相对路径了，直接返回

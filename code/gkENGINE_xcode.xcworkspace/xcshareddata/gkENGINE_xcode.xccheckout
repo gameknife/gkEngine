@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>36394AAA-C899-4250-9F1A-6C7225CC4D66</string>
+	<key>IDESourceControlProjectName</key>
+	<string>gkENGINE_xcode</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>27E19D59A5B186DBD23EBDDCBFF6C8E06CE508D9</key>
+		<string>https://github.com/gameknife/gkEngine</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>code/gkENGINE_xcode.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>27E19D59A5B186DBD23EBDDCBFF6C8E06CE508D9</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/gameknife/gkEngine</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>27E19D59A5B186DBD23EBDDCBFF6C8E06CE508D9</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>27E19D59A5B186DBD23EBDDCBFF6C8E06CE508D9</string>
+			<key>IDESourceControlWCCName</key>
+			<string>gkEngine</string>
+		</dict>
+	</array>
+</dict>
+</plist>

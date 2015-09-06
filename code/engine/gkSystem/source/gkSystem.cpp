@@ -244,11 +244,11 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 				gkNormalizePath(file);
 				gkStdString filename = gkGetFilename( file.c_str() );
 
-#ifdef OS_IOS
-				
-#else
+//#ifdef OS_IOS
+//				
+//#else
 				file = _T("/paks") + file;
-#endif
+//#endif
 
 				gkLogMessage( _T("pak file [%s] loaded."), filename.c_str() );
 				m_ResFileManager.openPak( file.c_str() );

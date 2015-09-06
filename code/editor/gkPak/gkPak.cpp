@@ -19,6 +19,8 @@
 #include <mach-o/dyld.h>
 #include <limits.h>
 
+#import <Foundation/Foundation.h>
+
 std::string macBundlePath(void)
 {
     std::string ret = "";
@@ -33,6 +35,35 @@ std::string macBundlePath(void)
     
     return ret;
 }
+
+
+bool mac_gothrough(const TCHAR* root_path, fnGoThrough func )
+{
+    //fileList便是包含有该文件夹下所有文件的文件名及文件夹名的数组
+    NSString* docsDir = [[NSString alloc] initWithBytes:root_path length:strlen(root_path) encoding:NSUTF8StringEncoding];
+    NSFileManager *localFileManager = [NSFileManager defaultManager];
+    NSDirectoryEnumerator *dirEnum = [localFileManager enumeratorAtPath:docsDir];
+    NSString *file = nil;
+    NSData *fileContents = [NSData data];
+    while ((file = [dirEnum nextObject]))
+    {
+        NSString *fileNamePath = [docsDir stringByAppendingPathComponent:file];
+        fileContents = [NSData dataWithContentsOfFile:fileNamePath]; // This will store file contents in form of bytes
+        
+        BOOL isdir = NO;
+        [localFileManager fileExistsAtPath:fileNamePath isDirectory:&isdir];
+        
+        if(!isdir)
+        {
+            func( [fileNamePath UTF8String] );
+        }
+        
+    }
+    
+    return true;
+}
+
+
 
 struct gPakStatus
 {
