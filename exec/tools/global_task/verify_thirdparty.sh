@@ -8,6 +8,8 @@ hash="$(echo -n $file | md5)"
 if [ ! $hash = $2 ]
 then
 verifyresult=0
+#delete broken file
+rm -rf $file
 fi
 }
 
