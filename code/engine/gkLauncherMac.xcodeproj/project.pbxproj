@@ -28,6 +28,7 @@
 		A06034E11799925D00B2F4C6 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		A06034E817999A1900B2F4C6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A06034EA17999A2200B2F4C6 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		A09F39BA1B9DE25F00DF065A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		A0A7A08617A9FD73003FC387 /* libgkCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkCore.a; path = "../../exec/ios/Debug-OSX/libgkCore.a"; sourceTree = "<group>"; };
 		A0A7A08717A9FD73003FC387 /* libgkFont.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkFont.a; path = "../../exec/ios/Debug-OSX/libgkFont.a"; sourceTree = "<group>"; };
 		A0A7A08817A9FD73003FC387 /* libgkGameFramework.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkGameFramework.a; path = "../../exec/ios/Debug-OSX/libgkGameFramework.a"; sourceTree = "<group>"; };
@@ -103,6 +104,7 @@
 		A0F19FBD17928FFD00F788C5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A09F39BA1B9DE25F00DF065A /* CoreFoundation.framework */,
 				A0F19FBE17928FFD00F788C5 /* Cocoa.framework */,
 				A0F19FC017928FFD00F788C5 /* Other Frameworks */,
 			);
