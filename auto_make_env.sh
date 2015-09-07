@@ -52,6 +52,19 @@ echo .
 echo "\033[36m [step 1] download & extract dependecies... \033[0m"
 echo -------------------------------------------------------------------------
 sh extract_thirdparty.sh
+
+source verify_thirdparty.sh
+
+if [ $verifyresult = 0 ]
+then
+echo -------------------------------------------------------------------------
+echo "\033[33m dependency archive file download unsuccessful, the auto deploy must shutup. Please check your network. and try again. \033[0m"
+echo "\033[33m [Optinal choice of bad network with github: download dependency archives manmally, and run this script again.] \033[0m"
+echo -------------------------------------------------------------------------
+read -n1 -p "Press any key to exit..."
+exit 0
+fi
+
 sh unzip_thirdparty.sh
 
 
