@@ -13,6 +13,8 @@
 call ..\global_task\set_global_env.bat
 	
 del %GKENGINE_HOME%\..\INTERMEDIATE\* /Q /S /F
+rmdir %GKENGINE_HOME%\..\INTERMEDIATE /Q /S
+
 del %GKENGINE_HOME%\..\*.pdb /Q /S /F
 del %GKENGINE_HOME%\..\*.ilk /Q /S /F
 del %GKENGINE_HOME%\..\*.user /Q /S /F
@@ -21,6 +23,5 @@ del %GKENGINE_HOME%\..\*.sdf /Q /S /F
 del %GKENGINE_HOME%\..\*.aps /Q /S /F
 del %GKENGINE_HOME%\engine\shaders\d3d9\shadercache\* /Q /S /F
 rmdir %GKENGINE_HOME%\..\code\Lib /Q /S
-
 
 rem pause

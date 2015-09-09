@@ -305,7 +305,7 @@ inline bool gkGoThroughFolder(const TCHAR* root_path, fnGoThrough func )
 #else
 
 	TCHAR path[1024];
-	_tcscpy_s(path, SrcFolderpath);
+	_tcscpy_s(path, root_path);
 	_tcscat_s(path, _T("\\*.*"));
 
 	WIN32_FIND_DATA fd;
@@ -319,14 +319,14 @@ inline bool gkGoThroughFolder(const TCHAR* root_path, fnGoThrough func )
 		{
 			if(_tcscmp(fd.cFileName, _T(".")) && _tcscmp(fd.cFileName, _T("..")))
 			{
-				_stprintf_s(newpath, _T("%s\\%s"), SrcFolderpath, fd.cFileName);
+				_stprintf_s(newpath, _T("%s\\%s"), root_path, fd.cFileName);
 				gkGoThroughFolder(newpath, func);
 			}
 		}
 		else
 		{
 			TCHAR buffer[MAX_PATH];
-			_tcscpy(buffer, SrcFolderpath);
+			_tcscpy(buffer, root_path);
 			_tcscat(buffer, _T("\\"));
 			_tcscat(buffer, fd.cFileName);
 			func( buffer );
