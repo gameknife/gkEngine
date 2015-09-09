@@ -35,3 +35,6 @@ code/engine/gkTestApps/TestCases.xcodeproj/xcuserdata/
 code/engine/solutions/gkENGINE_xcode.xcworkspace/xcuserdata/
 code/gkENGINE_xcode.xcworkspace/xcuserdata/
 code/gkENGINE_Tools.xcworkspace/xcuserdata/
+exec/tools/gkPak.dSYM/
+exec/tools/gkResourceCompiler.dSYM/
+
