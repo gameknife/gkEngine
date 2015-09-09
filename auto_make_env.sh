@@ -53,7 +53,7 @@ echo "\033[36m [step 1] download & extract dependecies... \033[0m"
 echo -------------------------------------------------------------------------
 sh extract_thirdparty.sh
 
-source verify_thirdparty.sh
+#source verify_thirdparty.sh
 
 if [ $verifyresult = 0 ]
 then
