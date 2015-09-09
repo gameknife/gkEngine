@@ -9,6 +9,7 @@ fi
 mkdir_ifnotexsit code/thirdparty
 mkdir_ifnotexsit exec/media
 mkdir_ifnotexsit exec/media/config
+mkdir_ifnotexsit exec/media/paks
 
 cp exec/tools/default_cfg/startup.cfg exec/media/config
 

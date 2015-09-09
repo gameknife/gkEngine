@@ -9,27 +9,7 @@ echo
 fi
 cd $GKENGINE_HOME/media
 
-downloadmedia(){
-file=$GKENGINE_HOME/media/$1.7z
-if [ -f "$file" ]
-then
-echo find media package [ $1 ].
-else
-echo media package [ $1 ] not found, downloading...
-curl -o $GKENGINE_HOME/media/$1.7z https://raw.githubusercontent.com/gameknife/gkengine-resource/master/media/$1.7z
-fi
-}
-
-unzipmedia(){
-file=$GKENGINE_HOME/media/$1.7z
-if [ -f "$file" ]
-then
-echo find media package [ $1 ]. extracting...
-$GKENGINE_HOME/tools/7zr x -y $GKENGINE_HOME/media/$1.7z
-else
-echo not found media package [ $1 ]. go next
-fi
-}
+source common_func.sh
 
 downloadmedia terrian
 downloadmedia textures
@@ -94,6 +74,15 @@ then
 downloadmedia character
 unzipmedia character
 fi
+
+verifyresult=1
+
+verifymd5 $GKENGINE_HOME/media/terrian.7z
+verifymd5 $GKENGINE_HOME/media/textures.7z
+verifymd5 $GKENGINE_HOME/media/basic.7z
+verifymd5 $GKENGINE_HOME/media/conf_room.7z
+verifymd5 $GKENGINE_HOME/media/outdoor.7z
+verifymd5 $GKENGINE_HOME/media/character.7z
 
 echo .
 echo .
