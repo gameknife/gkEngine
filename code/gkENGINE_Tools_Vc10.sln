@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gkCommon", "gkCommon", "{420B7F68-3912-45A7-BD80-08231628F27A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gkCommon", "code\engine\gkCommon\gkCommon.vcxproj", "{BD439D52-5D90-482B-8265-B443F54A5E01}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gkCommon", "engine\gkCommon\gkCommon.vcxproj", "{BD439D52-5D90-482B-8265-B443F54A5E01}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Editor", "Editor", "{4B6E3C54-C7B7-4DD3-9BC9-1DF1A3DC4AE1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gkStudio", "code\editor\gkstudio\gkStudio.vcxproj", "{74425658-5624-3347-1169-196982168723}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gkStudio", "editor\gkstudio\gkStudio.vcxproj", "{74425658-5624-3347-1169-196982168723}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gkResourceCompiler", "code\editor\gkResourceCompiler\gkResourceCompiler.vcxproj", "{CB745F0E-F3CD-462B-84FE-53F4A641A5EE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gkResourceCompiler", "editor\gkResourceCompiler\gkResourceCompiler.vcxproj", "{CB745F0E-F3CD-462B-84FE-53F4A641A5EE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gkPak", "code\editor\gkPak\gkPak.vcxproj", "{5D7CF444-82C9-4F2C-8A17-ACF5F822D38E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gkPak", "editor\gkPak\gkPak.vcxproj", "{5D7CF444-82C9-4F2C-8A17-ACF5F822D38E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
