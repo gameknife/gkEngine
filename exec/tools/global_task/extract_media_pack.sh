@@ -1,4 +1,5 @@
 source set_global_env.sh
+source common_func.sh
 
 dir=$GKENGINE_HOME/media
 if [ ! -d "$dir" ]
@@ -9,7 +10,7 @@ echo
 fi
 cd $GKENGINE_HOME/media
 
-source common_func.sh
+
 
 downloadmedia terrian
 downloadmedia textures

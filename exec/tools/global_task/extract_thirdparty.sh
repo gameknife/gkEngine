@@ -1,4 +1,5 @@
 source set_global_env.sh
+source common_func.sh
 
 dir=$GKENGINE_HOME/../code/thirdparty
 if [ ! -d "$dir" ]
@@ -9,7 +10,7 @@ echo
 fi
 cd $GKENGINE_HOME/../code/thirdparty
 
-source common_func.sh
+
 
 downloadsdk freetype
 downloadsdk havoksdk

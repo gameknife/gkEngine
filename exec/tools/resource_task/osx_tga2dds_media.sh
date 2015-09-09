@@ -13,11 +13,19 @@ foreachd $file
 elif [ -f $file ]
 then
 #echo $file pvr process
+
+
+
 if [ "${file##*.}" = "tga" ];
 then
-echo $file
-#$GKENGINE_HOME/tools/pvrtextool -m -f a8r8g8b8 -shh -i $file -o ${file%.*}.dds
+
+if [ -f "${file%.*}.dds"  ]
+then
+echo "${file%.*}.dds exist.";
+else
 $GKENGINE_HOME/tools/nvcompress -bc3 -silent $file ${file%.*}.dds
+fi
+
 fi
 
 
