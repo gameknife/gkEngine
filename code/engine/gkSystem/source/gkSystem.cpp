@@ -228,11 +228,7 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 
 	gkStdString path;
 
-#ifdef OS_IOS
-    path = gkGetExecRootDir();
-#else
 	path = gkGetExecRootDir() + _T("paks/");
-#endif
 
 	enum_all_files_in_folder(path.c_str(), result, false);
 
@@ -248,11 +244,11 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 				gkNormalizePath(file);
 				gkStdString filename = gkGetFilename( file.c_str() );
 
-#ifdef OS_IOS
-				
-#else
+//#ifdef OS_IOS
+//				
+//#else
 				file = _T("/paks") + file;
-#endif
+//#endif
 
 				gkLogMessage( _T("pak file [%s] loaded."), filename.c_str() );
 				m_ResFileManager.openPak( file.c_str() );

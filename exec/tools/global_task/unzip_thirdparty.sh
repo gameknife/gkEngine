@@ -1,10 +1,23 @@
-sh ../global_task/set_global_env.sh
+source set_global_env.sh
 
-#set restore=%cd%
-echo $GKENGINE_HOME
-
-mkdir $GKENGINE_HOME/../code/thirdparty
 cd $GKENGINE_HOME/../code/thirdparty
-$GKENGINE_HOME/tools/7zr x $GKENGINE_HOME/../code/thirdparty/depends.7z
+
+unzipsdk(){
+file=$GKENGINE_HOME/../code/thirdparty/$1.7z
+if [ -f "$file" ]
+then
+echo find sdk package [ $1 ]. extracting...
+$GKENGINE_HOME/tools/7zr x -y $GKENGINE_HOME/../code/thirdparty/$1.7z
+else
+echo not found sdk package [ $1 ]. go next
+fi
+}
+
+unzipsdk freetype
+unzipsdk havoksdk
+unzipsdk misc
+unzipsdk oglsdk
+unzipsdk havoksdk_ios
+
 #cd %restore%
 #del %GKENGINE_HOME%\..\code\thirdparty\depends.7z

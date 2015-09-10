@@ -840,7 +840,7 @@ void gkSystemProfiler::benchmark()
 	}
 
 	// DRAW TIME BAR
-	int start_pos_y = whole_screen_box_y - 210;
+	int start_pos_y = whole_screen_box_y - 230;
 	int start_pos_x = 50;
 	float total_sum = 0;
 
@@ -857,7 +857,7 @@ void gkSystemProfiler::benchmark()
 	POST_GPU_ITME( PostProcess )
 
 	start_pos_x = 200;
-	start_pos_y = whole_screen_box_y - 210;
+	start_pos_y = whole_screen_box_y - 230;
 
 	POST_ELEMENT_ITME( ePe_3DEngine_Cost )
 	POST_ELEMENT_ITME( ePe_Font_Cost )
@@ -872,6 +872,8 @@ void gkSystemProfiler::benchmark()
 	POST_ELEMENT_ITME( ePe_MT_Part2 )
 	POST_ELEMENT_ITME( ePe_MT_Part3 )
 
+	//whole_screen_box_y
+
 	int whole_len = gEnv->pRenderer->GetScreenWidth() - 100;
 	int start_bar_x = 50;
 	int disp_count = 0;
@@ -880,16 +882,26 @@ void gkSystemProfiler::benchmark()
 	gEnv->pRenderer->getAuxRenderer()->AuxRenderText( _T("GPU TIME MEASURE"), 50, whole_screen_box_y + 20, m_subtitleFont );
 
 
-	DISP_GPU_TIME( ReflectGen )
-		DISP_GPU_TIME( ShadowMapGen )
-		DISP_GPU_TIME( Zpass )
-		DISP_GPU_TIME( SSAO )
-		DISP_GPU_TIME( ShadowMaskGen )
-		DISP_GPU_TIME( Deferred Lighting )
-		DISP_GPU_TIME( Opaque )
-		DISP_GPU_TIME( Transparent )
-		DISP_GPU_TIME( HDR )
-		DISP_GPU_TIME( PostProcess )
+	gkCVar* pgpu = gEnv->pCVManager->getCVar(_T("r_profilegpu"));
+	if ( pgpu && pgpu->getInt() != 0 )
+	{
+			DISP_GPU_TIME( ReflectGen )
+			DISP_GPU_TIME( ShadowMapGen )
+			DISP_GPU_TIME( Zpass )
+			DISP_GPU_TIME( SSAO )
+			DISP_GPU_TIME( ShadowMaskGen )
+			DISP_GPU_TIME( Deferred Lighting )
+			DISP_GPU_TIME( Opaque )
+			DISP_GPU_TIME( Transparent )
+			DISP_GPU_TIME( HDR )
+			DISP_GPU_TIME( PostProcess )
+	}
+	else
+	{
+		gEnv->pRenderer->getAuxRenderer()->AuxRenderText( _T("ProfileGpu is not enable, please set r_profilegpu = 1."), 50, whole_screen_box_y + 50, m_profilerFont );
+	}
+
+	
 
 	gEnv->pRenderer->getAuxRenderer()->AuxRenderText( _T("FRAME TIME CURVE"), 50, whole_screen_box_y + 160, m_subtitleFont );
 
@@ -903,13 +915,13 @@ void gkSystemProfiler::benchmark()
 
 	{
 		float* datasrc = m_fFrameTimeRenderingCurve;
-		ColorB lineColor(255,0,0,255);
+		ColorB lineColor(255,200,200,255);
 		DrawProfileCurve(whole_screen_box_y, datasrc, lineColor);
 	}
 
 	{
 		float* datasrc = m_fFramwTimeCurve + 1;
-		ColorB lineColor(0,0,255,255);
+		ColorB lineColor(200,200,255,255);
 		DrawProfileCurve(whole_screen_box_y, datasrc, lineColor);
 	}
 

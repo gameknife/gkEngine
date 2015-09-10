@@ -15,8 +15,14 @@ then
 #echo $file pvr process
 if [ "${file##*.}" = "obj" ];
 then
-#echo $file
+
+if [ -f "${file%.*}.gmf"  ]
+then
+echo "${file%.*}.gmf exist.";
+else
 $GKENGINE_HOME/tools/gkResourceCompiler -i $file -o ${file%.*}.gmf -l 5 -p 0-i
+fi
+
 fi
 
 

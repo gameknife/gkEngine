@@ -15,8 +15,15 @@ then
 #echo $file pvr process
 if [ "${file##*.}" = "tga" ];
 then
-echo $file
-$GKENGINE_HOME/tools/pvrtextool -m -f RGBG8888 -flip y -squarecanvas + -shh -i $file
+
+#if pvr exist do not process
+if [ -f "${file%.*}.pvr"  ]
+then
+echo "${file%.*}.pvr exist.";
+else
+$GKENGINE_HOME/tools/pvrtextoolcli -m -f r8g8b8a8 -square + -i $file
+fi
+
 fi
 
 
@@ -25,5 +32,5 @@ done
 }
 
 foreachd "$GKENGINE_HOME/engine/assets"
-
+#-m -f RGBG8888 -flip y -squarecanvas + -shh -i $file
 #   	%GKENGINE_HOME%\tools\pvrtextool -m -fOGL8888 -yflip0 -square -silent -i %%~fA

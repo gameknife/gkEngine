@@ -39,6 +39,8 @@ std::string macBundlePath()
     CFRelease(mainBundleURL);
     CFRelease(cfStringRef);
     
+    strcat(path, "/data");
+    
     return std::string(path);
 }
 
@@ -76,6 +78,32 @@ void enum_all_files_in_folder( const TCHAR* root_path,std::vector<gkStdString>& 
     
     
     return;
+}
+
+bool mac_gothrough(const TCHAR* root_path, fnGoThrough func )
+{
+    //fileList便是包含有该文件夹下所有文件的文件名及文件夹名的数组
+    NSString* docsDir = [[NSString alloc] initWithBytes:root_path length:strlen(root_path) encoding:NSUTF8StringEncoding];
+    NSFileManager *localFileManager = [NSFileManager defaultManager];
+    NSDirectoryEnumerator *dirEnum = [localFileManager enumeratorAtPath:docsDir];
+    NSString *file = nil;
+    NSData *fileContents = [NSData data];
+    while ((file = [dirEnum nextObject]))
+    {
+        NSString *fileNamePath = [docsDir stringByAppendingPathComponent:file];
+        fileContents = [NSData dataWithContentsOfFile:fileNamePath]; // This will store file contents in form of bytes
+        
+        BOOL isdir = NO;
+        [localFileManager fileExistsAtPath:fileNamePath isDirectory:&isdir];
+        
+        if(!isdir)
+        {
+            func( [fileNamePath UTF8String] );
+        }
+        
+    }
+    
+    return true;
 }
 
 @implementation AppDelegate

@@ -17,4 +17,4 @@ for /R %GKENGINE_HOME%\engine\assets %%A in (*.dds *.pvr *atc) do (
     del %%A
 )
 
-pause
+rem pause

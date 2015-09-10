@@ -1,11 +1,21 @@
-sh ../global_task/set_global_env.sh
+source set_global_env.sh
+source common_func.sh
 
+dir=$GKENGINE_HOME/../code/thirdparty
+if [ ! -d "$dir" ]
+then
 mkdir $GKENGINE_HOME/../code/thirdparty
+else
+echo
+fi
 cd $GKENGINE_HOME/../code/thirdparty
 
-#%GKENGINE_HOME%\tools\wget http://www.gameknife.cc/gkENGINE_RES/depends.7z
-$GKENGINE_HOME/tools/7zr x $GKENGINE_HOME/../code/thirdparty/depends.7z
 
-#del %GKENGINE_HOME%\..\code\thirdparty\depends.7z
+
+downloadsdk freetype
+downloadsdk havoksdk
+downloadsdk misc
+downloadsdk oglsdk
+downloadsdk havoksdk_ios
 
 #pause

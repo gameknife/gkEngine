@@ -200,10 +200,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					../gkCommon,
+					../../engine/gkCommon,
 					../../thirdparty/rapidxml,
 					../../thirdparty,
+					"$(inherited)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -245,10 +245,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					../gkCommon,
+					../../engine/gkCommon,
 					../../thirdparty/rapidxml,
 					../../thirdparty,
+					"$(inherited)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -261,12 +261,6 @@
 		A0A120561B7EE4DC004BA920 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = (
-					../../engine/gkCommon,
-					../../thirdparty/rapidxml,
-					../../thirdparty,
-					"$(inherited)",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -274,12 +268,6 @@
 		A0A120571B7EE4DC004BA920 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = (
-					../../engine/gkCommon,
-					../../thirdparty/rapidxml,
-					../../thirdparty,
-					"$(inherited)",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

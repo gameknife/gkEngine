@@ -14,7 +14,56 @@
 #include <iostream>
 
 #include "crc32.h"
-#include "lzma\LzmaLib.h"
+#include "lzma/LzmaLib.h"
+
+#include <mach-o/dyld.h>
+#include <limits.h>
+
+#import <Foundation/Foundation.h>
+
+std::string macBundlePath(void)
+{
+    std::string ret = "";
+    char buf [PATH_MAX];
+    uint32_t bufsize = PATH_MAX;
+    if(!_NSGetExecutablePath(buf, &bufsize))
+    {
+        ret = buf;
+        ret = GetParent(ret);
+        ret = GetParent(ret);
+    }
+    
+    return ret;
+}
+
+
+bool mac_gothrough(const TCHAR* root_path, fnGoThrough func )
+{
+    //fileList便是包含有该文件夹下所有文件的文件名及文件夹名的数组
+    NSString* docsDir = [[NSString alloc] initWithBytes:root_path length:strlen(root_path) encoding:NSUTF8StringEncoding];
+    NSFileManager *localFileManager = [NSFileManager defaultManager];
+    NSDirectoryEnumerator *dirEnum = [localFileManager enumeratorAtPath:docsDir];
+    NSString *file = nil;
+    NSData *fileContents = [NSData data];
+    while ((file = [dirEnum nextObject]))
+    {
+        NSString *fileNamePath = [docsDir stringByAppendingPathComponent:file];
+        fileContents = [NSData dataWithContentsOfFile:fileNamePath]; // This will store file contents in form of bytes
+        
+        BOOL isdir = NO;
+        [localFileManager fileExistsAtPath:fileNamePath isDirectory:&isdir];
+        
+        if(!isdir)
+        {
+            func( [fileNamePath UTF8String] );
+        }
+        
+    }
+    
+    return true;
+}
+
+
 
 struct gPakStatus
 {
@@ -248,6 +297,8 @@ void WriteFile( const TCHAR* file)
 	gkStdString relpath = gkGetExecRelativePath( file );	
 	gkStdString absPath = gkGetExecRootDir();
 	absPath += relpath;
+    
+    gkNormalizePath( relpath );
 
 	tmpFile = fopen( absPath.c_str(), "rb" );
 
@@ -274,10 +325,10 @@ void WriteFile( const TCHAR* file)
 
 				if ( size > GKPAK_UNCOMPRESS_HEADER_SIZE && needCompress)
 				{
-					Byte* pTmpCompressed = new Byte[size];
+					uint8* pTmpCompressed = new uint8[size];
 					SizeT compressSize = size;
 
-					Byte header[LZMA_PROPS_SIZE + 8];
+					uint8 header[LZMA_PROPS_SIZE + 8];
 					size_t headerSize = LZMA_PROPS_SIZE;
 
 					// 前1KB不压缩，一般文件头就这么大把？
@@ -427,6 +478,9 @@ int main(int numArgs, const char *args[])
 
 		gkStdString outfile = gkGetExecRootDir();
 		outfile += g_outputPath;
+        
+        
+        
 		g_status.pakFile = fopen( outfile.c_str(), "wb" );
 		if ( !g_status.pakFile)
 		{

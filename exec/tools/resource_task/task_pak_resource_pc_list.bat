@@ -18,5 +18,5 @@ rem global env
 call ..\global_task\set_global_env.bat
 
 rem Step2 pak
-%GKENGINE_HOME%\tools\gkPak -i "paks\objects.gpk" -o "123" -l 5 -p 0
+%GKENGINE_HOME%\tools\gkPak -i "paks\engine.gpk" -o "123" -l 5 -p 0
 pause

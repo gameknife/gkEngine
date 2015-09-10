@@ -16,6 +16,14 @@
 		A04B42F81734038500EF0763 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B42F71734038500EF0763 /* CoreGraphics.framework */; };
 		A04B433517340CE700EF0763 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B433317340CE700EF0763 /* OpenGLES.framework */; };
 		A04B433617340CE700EF0763 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B433417340CE700EF0763 /* QuartzCore.framework */; };
+		A0AE74341B90B8EF0065C00B /* libgkCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AE742B1B90B8EF0065C00B /* libgkCore.a */; };
+		A0AE74351B90B8EF0065C00B /* libgkFont.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AE742C1B90B8EF0065C00B /* libgkFont.a */; };
+		A0AE74361B90B8EF0065C00B /* libgkGameFramework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AE742D1B90B8EF0065C00B /* libgkGameFramework.a */; };
+		A0AE74371B90B8EF0065C00B /* libgkGameObjectSystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AE742E1B90B8EF0065C00B /* libgkGameObjectSystem.a */; };
+		A0AE74381B90B8EF0065C00B /* libgkInput.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AE742F1B90B8EF0065C00B /* libgkInput.a */; };
+		A0AE74391B90B8EF0065C00B /* libgkRendererGLES2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AE74301B90B8EF0065C00B /* libgkRendererGLES2.a */; };
+		A0AE743A1B90B8EF0065C00B /* libgkSystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AE74311B90B8EF0065C00B /* libgkSystem.a */; };
+		A0AE743B1B90B8EF0065C00B /* libTestCases.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AE74321B90B8EF0065C00B /* libTestCases.a */; };
 		A0F485B11AB5A77900DD38D8 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0F485B01AB5A77900DD38D8 /* AppDelegate.mm */; };
 		A0F485B31AB5A78300DD38D8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0F485B21AB5A78300DD38D8 /* Images.xcassets */; };
 		A0F485B71AB5A85100DD38D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F485B61AB5A85100DD38D8 /* main.m */; };
@@ -34,6 +42,15 @@
 		A04B42F71734038500EF0763 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A04B433317340CE700EF0763 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A04B433417340CE700EF0763 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A0AE742A1B90B8EF0065C00B /* libgkAnimation.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkAnimation.a; path = "../../exec/ios/Release-iphoneos/libgkAnimation.a"; sourceTree = "<group>"; };
+		A0AE742B1B90B8EF0065C00B /* libgkCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkCore.a; path = "../../exec/ios/Release-iphoneos/libgkCore.a"; sourceTree = "<group>"; };
+		A0AE742C1B90B8EF0065C00B /* libgkFont.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkFont.a; path = "../../exec/ios/Release-iphoneos/libgkFont.a"; sourceTree = "<group>"; };
+		A0AE742D1B90B8EF0065C00B /* libgkGameFramework.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkGameFramework.a; path = "../../exec/ios/Release-iphoneos/libgkGameFramework.a"; sourceTree = "<group>"; };
+		A0AE742E1B90B8EF0065C00B /* libgkGameObjectSystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkGameObjectSystem.a; path = "../../exec/ios/Release-iphoneos/libgkGameObjectSystem.a"; sourceTree = "<group>"; };
+		A0AE742F1B90B8EF0065C00B /* libgkInput.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkInput.a; path = "../../exec/ios/Release-iphoneos/libgkInput.a"; sourceTree = "<group>"; };
+		A0AE74301B90B8EF0065C00B /* libgkRendererGLES2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkRendererGLES2.a; path = "../../exec/ios/Release-iphoneos/libgkRendererGLES2.a"; sourceTree = "<group>"; };
+		A0AE74311B90B8EF0065C00B /* libgkSystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkSystem.a; path = "../../exec/ios/Release-iphoneos/libgkSystem.a"; sourceTree = "<group>"; };
+		A0AE74321B90B8EF0065C00B /* libTestCases.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTestCases.a; path = "../../exec/ios/Release-iphoneos/libTestCases.a"; sourceTree = "<group>"; };
 		A0F485AF1AB5A77900DD38D8 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = gkLauncherUniverse/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		A0F485B01AB5A77900DD38D8 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = gkLauncherUniverse/AppDelegate.mm; sourceTree = SOURCE_ROOT; };
 		A0F485B21AB5A78300DD38D8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = gkLauncherUniverse/Images.xcassets; sourceTree = SOURCE_ROOT; };
@@ -47,6 +64,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0AE74341B90B8EF0065C00B /* libgkCore.a in Frameworks */,
+				A0AE74351B90B8EF0065C00B /* libgkFont.a in Frameworks */,
+				A0AE74361B90B8EF0065C00B /* libgkGameFramework.a in Frameworks */,
+				A0AE74371B90B8EF0065C00B /* libgkGameObjectSystem.a in Frameworks */,
+				A0AE74381B90B8EF0065C00B /* libgkInput.a in Frameworks */,
+				A0AE74391B90B8EF0065C00B /* libgkRendererGLES2.a in Frameworks */,
+				A0AE743A1B90B8EF0065C00B /* libgkSystem.a in Frameworks */,
+				A0AE743B1B90B8EF0065C00B /* libTestCases.a in Frameworks */,
 				A00A4AA2188B7594005376F7 /* CoreFoundation.framework in Frameworks */,
 				A00A4AA0188B758A005376F7 /* CoreData.framework in Frameworks */,
 				A00A4A9E188B73D3005376F7 /* SystemConfiguration.framework in Frameworks */,
@@ -82,6 +107,15 @@
 		A04B42F21734038500EF0763 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A0AE742A1B90B8EF0065C00B /* libgkAnimation.a */,
+				A0AE742B1B90B8EF0065C00B /* libgkCore.a */,
+				A0AE742C1B90B8EF0065C00B /* libgkFont.a */,
+				A0AE742D1B90B8EF0065C00B /* libgkGameFramework.a */,
+				A0AE742E1B90B8EF0065C00B /* libgkGameObjectSystem.a */,
+				A0AE742F1B90B8EF0065C00B /* libgkInput.a */,
+				A0AE74301B90B8EF0065C00B /* libgkRendererGLES2.a */,
+				A0AE74311B90B8EF0065C00B /* libgkSystem.a */,
+				A0AE74321B90B8EF0065C00B /* libTestCases.a */,
 				A00A4AA1188B7594005376F7 /* CoreFoundation.framework */,
 				A00A4A9F188B758A005376F7 /* CoreData.framework */,
 				A00A4A9D188B73D3005376F7 /* SystemConfiguration.framework */,
@@ -127,6 +161,7 @@
 				A04B42EB1734038500EF0763 /* Sources */,
 				A04B42EC1734038500EF0763 /* Frameworks */,
 				A04B42ED1734038500EF0763 /* Resources */,
+				A0AE743C1B90B92A0065C00B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -180,6 +215,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A0AE743C1B90B92A0065C00B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -rf \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/data\"\nmkdir \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/data\"\ncp -Rf \"$BUILD_DIR/../../paks\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/data/paks\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A04B42EB1734038500EF0763 /* Sources */ = {
