@@ -11,6 +11,5 @@ rem tex process
 cd exec\tools\resource_task
 call desktop_tga2dds_engine.bat
 call sgx_tga2pvr_engine.bat
-call adreno_tga2atc_engine.bat
-
-PAUSE
+cd ..\..\..\
+rem call adreno_tga2atc_engine.bat

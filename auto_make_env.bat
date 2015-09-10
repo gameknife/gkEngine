@@ -1,6 +1,5 @@
 @echo off
 
-cd exec\tools\global_task
 
 echo .
 echo .
@@ -31,6 +30,10 @@ echo Next, All process will execute automaticly, just take seet and have a coffe
 echo -------------------------------------------------------------------------
 pause
 
+
+call init_engine_res.bat
+
+cd exec\tools\global_task
 
 call set_global_env.bat
 
