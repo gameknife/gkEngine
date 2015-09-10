@@ -2,16 +2,7 @@ source set_global_env.sh
 
 verifyresult=1
 
-verifysdk(){
-file=$GKENGINE_HOME/../code/thirdparty/$1.7z
-hash=`md5 -q $file`
-if [ ! $hash = $2 ]
-then
-verifyresult=0
-#delete broken file
-rm -rf $file
-fi
-}
+source common_func.h
 
 verifysdk freetype      8d04c711e4ba7e551585b941a3e87fc1
 verifysdk havoksdk      2027cb6828420778520c13024d8a0552

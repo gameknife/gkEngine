@@ -1,4 +1,5 @@
 source set_global_env.sh
+source common_func.sh
 
 dir=$GKENGINE_HOME/../code/thirdparty
 if [ ! -d "$dir" ]
@@ -9,16 +10,7 @@ echo
 fi
 cd $GKENGINE_HOME/../code/thirdparty
 
-downloadsdk(){
-file=$GKENGINE_HOME/../code/thirdparty/$1.7z
-if [ -f "$file" ]
-then
-echo find sdk package [ $1 ].
-else
-echo sdk package [ $1 ] not found, downloading...
-curl -o $GKENGINE_HOME/../code/thirdparty/$1.7z https://raw.githubusercontent.com/gameknife/gkEngine-Resource/master/dependency/$1.7z
-fi
-}
+
 
 downloadsdk freetype
 downloadsdk havoksdk

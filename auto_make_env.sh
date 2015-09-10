@@ -9,6 +9,7 @@ echo .
 
 # shadercache folder
 source init_engine_res.sh
+
 cd exec/tools/global_task
 
 autoinstall=1
