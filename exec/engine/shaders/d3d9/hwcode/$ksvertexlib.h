@@ -85,7 +85,6 @@ struct app2vertGeneral
 	 float3 BinormalWS	: TEXCOORD2;
 	 float4 PosTex		: TEXCOORD3;
 	 float3 WorldPos	: TEXCOORD4;
-
  };
 
  struct vert2FragZpassV
@@ -95,6 +94,7 @@ struct app2vertGeneral
 	 float4 TangentWS	: TEXCOORD1;
 	 float3 BinormalWS	: TEXCOORD2;
 	 float4 PosTex		: TEXCOORD3;
+	 float3 WorldPos	: TEXCOORD4;
 
 	  int2 ScreenPos		: VPOS;
  };
@@ -146,12 +146,19 @@ void vs_shared_output( in app2vertGeneral IN, inout vert2FragGeneral OUT, bool b
 void vs_shared_output_detail( in app2vertGeneral IN, inout vert2FragGeneral OUT, bool bUseBump )
 {
 	// Common data
-	OUT.HPosition = mul( float4(IN.vertCommon.Position.xyz,1), g_mWorldViewProj);
+	float3 position = IN.vertCommon.Position.xyz;
+#if SKIN
+	float blendWeightsArray[4] = (float[4])IN.vertCommon.BoneWeight;
+	int   indexArray[4] = (int[4])IN.vertCommon.BoneIndex;
+	skinPosition( IN.vertCommon.Position.xyz, blendWeightsArray, indexArray, position);    
+#endif
+
+	OUT.HPosition = mul( float4(position,1), g_mWorldViewProj);
 	OUT.baseTC = (IN.vertCommon.Texcoord + float4(g_UVParam.zw,0,0)) * float4(g_UVParam.xy,1,1);
 	OUT.detailTC = (IN.vertCommon.Texcoord + float4(0,0,0,0)) * float4(512,512,1,1);
 
 	OUT.screenTC = HPosToScreenTC(OUT.HPosition);
-	OUT.worldPos = mul( float4(IN.vertCommon.Position.xyz,1), g_mWorld);
+	OUT.worldPos = mul( float4(position,1), g_mWorld);
 	//HPosToScreenTC(OUT.HPosition);
 }
 
@@ -185,15 +192,27 @@ void vs_shared_output_zpass( in app2vertGeneral IN, inout vert2FragZpass OUT, bo
 void vs_shared_output_zpass_autoflip( in app2vertGeneral IN, inout vert2FragZpass OUT, bool bUseBump )
 {
 	// Common data
-	OUT.HPosition = mul( float4(IN.vertCommon.Position.xyz,1), g_mWorldViewProj);
+	float3 position = IN.vertCommon.Position.xyz;
+	float3 tangent = IN.vertCommon.Tangent.xyz;
+	float3 binormal = IN.vertCommon.Binormal.xyz;
+
+#if SKIN
+	float blendWeightsArray[4] = (float[4])IN.vertCommon.BoneWeight;
+	int   indexArray[4] = (int[4])IN.vertCommon.BoneIndex;
+	skinPosition( IN.vertCommon.Position.xyz, blendWeightsArray, indexArray, position);    
+	skinNormal( IN.vertCommon.Tangent.xyz, blendWeightsArray, indexArray, tangent);
+	skinNormal( IN.vertCommon.Binormal.xyz, blendWeightsArray, indexArray, binormal);
+#endif
+
+	OUT.HPosition = mul( float4(position,1), g_mWorldViewProj);
 	OUT.baseTC = (IN.vertCommon.Texcoord + float4(g_UVParam.zw,0,0)) * float4(g_UVParam.xy,1,1);
 
-	OUT.TangentWS = float4( mul( IN.vertCommon.Tangent.xyz,  (float3x3) g_mWorld ), IN.vertCommon.Tangent.w );
-	OUT.BinormalWS = mul( IN.vertCommon.Binormal.xyz,  (float3x3) g_mWorld );
+	OUT.TangentWS = float4( mul( tangent,  (float3x3) g_mWorld ), IN.vertCommon.Tangent.w );
+	OUT.BinormalWS = mul( binormal.xyz,  (float3x3) g_mWorld );
 
 	float3 normalWS = cross(OUT.TangentWS.xyz, OUT.BinormalWS) * OUT.TangentWS.w;
 
-	OUT.WorldPos = mul( float4(IN.vertCommon.Position.xyz,1), g_mWorld);
+	OUT.WorldPos = mul( float4(position,1), g_mWorld);
 
 	OUT.PosTex.xy = OUT.HPosition.zw;
 }

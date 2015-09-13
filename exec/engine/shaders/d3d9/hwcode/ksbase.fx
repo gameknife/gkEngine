@@ -70,7 +70,7 @@ void pipe_set_para_impl( inout fragPass pPass )
 void pipe_start_impl( inout fragPass pPass )
 {
 	float4 baseTC = pPass.IN.baseTC;
-	float4 bumpTC = pPass.IN.bumpTC;
+	float4 bumpTC = pPass.IN.bumpTC; 
 
 	pPass.cDiffuseMap = tex2D(samDiffuse, baseTC.xy);
 	if (pPass.bDiffuseAlphaSpec)
@@ -132,20 +132,19 @@ void pipe_per_light_impl( inout fragPass pPass, inout fragLightPass pLight )
 
 void pipe_end_impl( inout fragPass pPass, inout float3 cFinal )
 {
-
 }
 
-#include "$ksPixelLib.h"
-
+#include "$ksPixelLib.h" 
+ 
 //--------------------------------------------------------------------------------------
 // Vertex Shader
-//--------------------------------------------------------------------------------------
+//-------------- ------------------------------------------------------------------------
 vert2FragGeneral GeneralVS( app2vertGeneral	IN	)
 {	
 	vert2FragGeneral OUT = (vert2FragGeneral)0; 
 	vs_shared_output(IN, OUT, true);
 	return OUT;
-}
+}  
 
 pixout GeneralPS(vert2FragGeneral IN)
 {

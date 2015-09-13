@@ -18,11 +18,13 @@ vert2FragZpass ZPassVS( app2vertGeneral	IN	)
 	return OUT;
 }
 
-pixout_zpass ZPassPS(vert2FragZpass IN)
+pixout_zpass ZPassPS(vert2FragZpassV IN)
 {
 	pixout_zpass OUT = (pixout_zpass)0;
 
-
+	float alpha = tex2D(samDiffuse, IN.baseTC.xy).a;
+	GetDotAlpha(alpha, IN.ScreenPos.xy);
+	clip(alpha - 0.9f);
 
 	float fDepth = saturate( IN.PosTex.x / g_fScreenSize.w );
 	float2 grad = float2(fDepth, fDepth);

@@ -130,7 +130,6 @@ pixout_zpass ZPassPS(vert2FragZpassV IN)
 	pixout_zpass OUT = (pixout_zpass)0;
 
 	float alpha = tex2D(samDiffuse, IN.baseTC.xy).a;
-
 	GetDotAlpha(alpha, IN.ScreenPos.xy);
 	clip(alpha - 0.9f);
 

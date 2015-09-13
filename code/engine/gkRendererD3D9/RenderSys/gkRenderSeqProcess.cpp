@@ -162,9 +162,19 @@ void gkRendererD3D9::RP_ProcessShaderGroup( const gkShaderGroup* pShaderGroup, E
 		gkTextureManager::ms_ShadowMask->Apply(13,0);
 	}
 
-	int blendIndex = gEnv->pProfiler->getFrameCount() % 2;
- 	gkTextureManager::ms_Blend25[blendIndex]->Apply(14,0);
- 	gkTextureManager::ms_Blend50[blendIndex]->Apply(15,0);
+	if ( g_pRendererCVars->r_PostMsaa)
+	{
+		int blendIndex = gEnv->pProfiler->getFrameCount() % 2;
+		gkTextureManager::ms_Blend25[blendIndex]->Apply(14,0);
+		gkTextureManager::ms_Blend50[blendIndex]->Apply(15,0);
+	}
+	else
+	{
+		int blendIndex = gEnv->pProfiler->getFrameCount() % 2;
+		gkTextureManager::ms_Blend25[0]->Apply(14,0);
+		gkTextureManager::ms_Blend50[0]->Apply(15,0);
+	}
+
 
 	//gkTextureManager::ms_Blend25[0]->Apply(14,0);
 	//gkTextureManager::ms_Blend50[0]->Apply(15,0);

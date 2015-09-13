@@ -227,8 +227,10 @@ float4 GetLuminanceMap( sampler2D lum, float2 tc )
 
 float GetDotAlpha(inout float alpha, in float2 ScreenPos)
 {
-	alpha = saturate(alpha * 1.5);
-	alpha = alpha * alpha;
+	//alpha *= 3.0;
+	alpha = pow(alpha, 1.0 / 2.2);
+	//alpha = saturate(alpha * 0.3);
+	//alpha = alpha * alpha;
 	
 	float2 screenCoord = float2( ScreenPos.x % 4, ScreenPos.y % 4);
 	screenCoord = screenCoord * 0.25 + 0.125;

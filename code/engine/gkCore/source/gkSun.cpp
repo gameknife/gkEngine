@@ -186,10 +186,10 @@ void gkSun::update( void ) const
   	if (cam)
   	{
 		// here the magic number, from test
-		Vec3 desirePoint = cam->getPosition() + cam->getOrientation().GetColumn1() * 3;
+		Vec3 desirePoint = cam->getPosition();// + cam->getOrientation().GetColumn1() * 3;
 		desirePoint.z = cam->getPosition().z;
 
-		Vec3 desirePoint1 = cam->getPosition() + cam->getOrientation().GetColumn1() * 12;
+		Vec3 desirePoint1 = cam->getPosition();// + cam->getOrientation().GetColumn1() * 12;
 		desirePoint1.z = cam->getPosition().z;
 
 		Vec3 desirePoint2 = cam->getPosition();
@@ -207,16 +207,9 @@ void gkSun::update( void ) const
 		if( gEnv->pProfiler->getFrameCount() % GSM_SHADOWCASCADE2_DELAY == 0);
 			m_pAttachSceneNode2->setPosition(desirePoint2 + off);
 
-		// ensure it update
-		//m_pCameraToBeRelativeTo->getViewMatrix();
+	
   	}
 
-	//m_pCameraToBeRelativeTo->setOrientation(Quat::CreateIdentity());
-// 	if (m_pBindSceneNode)
-// 	{
-// 		m_pAttachSceneNode->setPosition(m_pBindSceneNode->getPosition() + m_vSunVector);
-// 		m_pAttachSceneNode->lookat(Vec3(0,0,0));
-// 	}
 	// detrive
 	gkLight::update();
 }
