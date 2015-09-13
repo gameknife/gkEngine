@@ -47,7 +47,7 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 	{
 		pipe_general.push_back( RP_ShadowMapGen );
 	}
-	pipe_general.push_back( RP_ReflMapGen );
+	//pipe_general.push_back( RP_ReflMapGen );
 	switch ( g_pRendererCVars->r_ShadingMode )
 	{
 	case eSM_DeferredLighing:
@@ -73,8 +73,6 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 		pipe_general.push_back( RP_SSRL );
 	}
 	pipe_general.push_back( RP_DeferredFog );
-
-
 
 	_beginScene();
 	FX_ClearAllSampler();
@@ -191,89 +189,6 @@ bool gkRendererD3D9::RP_RenderScene(ERenderStereoType stereoType)
 	return true;
 }
 
-//////////////////////////////////////////////////////////////////////////
-void gkRendererD3D9::RP_GenReflectExcute( const gkRenderableList* objs, IShader* pShader, BYTE sortType /*= 0*/ )
-{
-	if(!pShader)
-		return;
-
-
-
-	// set the RT
-	FX_PushRenderTarget(0, gkTextureManager::ms_ReflMap0Tmp, 0, 0, true);
-	_clearBuffer(true, 0xff469fe9);
-
-
-	//fix: 这里直接找一个可用技术，对于单技术shader好用，以后实现复杂功能
-	GKHANDLE hTech = NULL;
-
-	hTech = pShader->FX_GetTechniqueByName("BasicPass");
-
-	pShader->FX_SetTechnique( hTech );
-
-	float fShadowsSlopeScaleBias = 0.8f;
-	UINT cPasses;
-	pShader->FX_Begin( &cPasses, 0 );
-	for( UINT p = 0; p < cPasses; ++p )
-	{
-		pShader->FX_BeginPass( p );
-
-		// 全局参数设置，以后可考虑放置与_renderScene
-		pShader->FX_SetValue( "g_mView", &(m_pShaderParamDataSource.getViewMatrix()), sizeof(Matrix44) );
-		pShader->FX_SetValue( "g_mProjection", &(m_pShaderParamDataSource.getProjectionMatrix()), sizeof(Matrix44)  );
-		pShader->FX_SetValue( "g_mViewI", &(m_pShaderParamDataSource.getInverseViewMatrix()), sizeof(Matrix44) );
-		pShader->FX_Commit();
-
-		// 渲染list中的每一个renderable
-		std::list<gkRenderable*>::const_iterator iter, iterend;
-		iterend = objs->m_vecRenderable.end();
-		for (iter = objs->m_vecRenderable.begin(); iter != iterend; ++iter)
-		{
-			// 首先设置dataSource的currentRenderable
-			m_pShaderParamDataSource.setCurrentRenderable((*iter));
-
-			// 然后，设置world矩阵相关
-			pShader->FX_SetValue( "g_mWorld", &(m_pShaderParamDataSource.getWorldMatrix()) , sizeof(Matrix44) );
-			pShader->FX_SetValue( "g_mWorldI", &(m_pShaderParamDataSource.getInverseWorldMatrix()), sizeof(Matrix44) );
-			pShader->FX_SetValue( "g_mWorldViewProj", &(m_pShaderParamDataSource.getWorldViewProjMatrix()), sizeof(Matrix44) );
-			pShader->FX_SetValue( "g_mWorldView", &(m_pShaderParamDataSource.getWorldViewMatrix()), sizeof(Matrix44) );
-
-			// 设置texture， 关乎阴影的alphatest
-			IMaterial* pMatPtr = (*iter)->getMaterial();
-			if(pMatPtr)
-			{
-				if (pMatPtr->getName() == _T("skysphere"))
-				{
-					continue;
-				}
-
-				if (pMatPtr->isDoubleSide())
-					RS_SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-				// set normal and alpha
-				pMatPtr->getTexture(eMS_Diffuse)->Apply(0,0);
-			}
-			pShader->FX_Commit();
-
-			// 最后，取出vb和ib
-			gkRenderOperation op; 
-			(*iter)->getRenderOperation(op);
-
-			// code for drawprimitives
-			_render(op);
-
-			// 一个物体渲染完成
-			if(pMatPtr)
-				if (pMatPtr->isDoubleSide())
-					RS_SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-
-		}
-
-		pShader->FX_EndPass();
-	}
-	pShader->FX_End();
-
-	FX_PopRenderTarget(0);
-}
 //////////////////////////////////////////////////////////////////////////
 void gkRendererD3D9::RP_StretchRefraction()
 {

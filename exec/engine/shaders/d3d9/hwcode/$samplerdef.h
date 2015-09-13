@@ -207,8 +207,8 @@ sampler2D samShadowMask: register(s13) = sampler_state
 
 sampler2D samBlend25: register(s14) = sampler_state
 {
-	AddressU = Clamp;
-	AddressV = Clamp;
+	AddressU = Wrap;
+	AddressV = Wrap;
 	MinFilter = Point;
 	MagFilter = Point;
 	MipFilter = Point;
@@ -216,8 +216,8 @@ sampler2D samBlend25: register(s14) = sampler_state
 
 sampler2D samBlend50: register(s15) = sampler_state
 {
-	AddressU = Clamp;
-	AddressV = Clamp;
+	AddressU = Wrap;
+	AddressV = Wrap;
 	MinFilter = Point;
 	MagFilter = Point;
 	MipFilter = Point;

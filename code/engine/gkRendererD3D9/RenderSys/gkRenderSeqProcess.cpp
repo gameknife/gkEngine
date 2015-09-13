@@ -163,8 +163,11 @@ void gkRendererD3D9::RP_ProcessShaderGroup( const gkShaderGroup* pShaderGroup, E
 	}
 
 	int blendIndex = gEnv->pProfiler->getFrameCount() % 2;
-	gkTextureManager::ms_Blend25[blendIndex]->Apply(14,0);
-	gkTextureManager::ms_Blend50[blendIndex]->Apply(15,0);
+ 	gkTextureManager::ms_Blend25[blendIndex]->Apply(14,0);
+ 	gkTextureManager::ms_Blend50[blendIndex]->Apply(15,0);
+
+	//gkTextureManager::ms_Blend25[0]->Apply(14,0);
+	//gkTextureManager::ms_Blend50[0]->Apply(15,0);
 
 	if ( pShader->getDefaultRenderLayer() == RENDER_LAYER_WATER )
 	{

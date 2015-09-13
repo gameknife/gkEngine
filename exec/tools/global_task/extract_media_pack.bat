@@ -26,7 +26,7 @@ IF NOT EXIST %GKENGINE_HOME%\media\textures.7z (
 %GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/media/textures.7z
 )
 
-IF NOT EXIST %GKENGINE_HOME%\media\textures.7z (
+IF NOT EXIST %GKENGINE_HOME%\media\basic.7z (
 %GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/media/basic.7z
 )
 

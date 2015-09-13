@@ -134,6 +134,7 @@ pixout GeneralPS(vert2FragGeneral IN)
 	// Initialize fragPass structure
 	fragPass pPass = (fragPass) 0;
 
+
 	pipe_init(pPass, IN);
 	pPass.IN.terrainDetailTC = IN.detailTC;
 
@@ -141,7 +142,7 @@ pixout GeneralPS(vert2FragGeneral IN)
 	
 	HDROutput(OUT, cFinal, 1);
 
-	return OUT;	
+	return OUT;
 }
 
 vert2FragZpass ZPassVS( app2vertGeneral	IN	)
@@ -158,36 +159,10 @@ pixout_zpass ZPassPS(vert2FragZpassV IN)
 	pixout_zpass OUT = (pixout_zpass)0;
 
 	float alpha = tex2D(samDiffuse, IN.baseTC.xy).a;
-	float2 screenCoord = float2( IN.ScreenPos.x % 2, IN.ScreenPos.y % 2);
-	screenCoord = screenCoord * 0.5 + 0.25;
-
-	float mask1 = 1.f - tex2D(samBlend25, screenCoord).r;
-	float mask2 = 1.f - tex2D(samBlend50, screenCoord).r;
-
-	if (alpha < 0.1f)
-	{
-		alpha = 0;
-	}
-	else if (alpha < 0.3f)
-	{
-		alpha *= (mask1 * 100);
-	}
-	else if (alpha < 0.5f)
-	{
-		alpha *= ( mask2 * 100);
-	}
-// 	else if (alpha < 0.6f)
-// 	{
-// 		alpha *= ( (mask2 + mask1) * 100);
-// 	}
-	else
-	{
-		alpha = 1;
-	}
-
+	GetDotAlpha(alpha, IN.ScreenPos.xy);
 	clip(alpha - 0.9f);
 
-	// ·Å¿ªÊÖ½ÅÐ´¶ÀÁ¢µÄZPASS´¦Àí£¡
+	// ï¿½Å¿ï¿½ï¿½Ö½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ZPASSï¿½ï¿½ï¿½ï¿½
 	float3 normalTS = float3(0,0,1);
 
 	normalTS = normalize(normalTS);
@@ -250,7 +225,7 @@ pixout_zpass_ds ZPass_DSPS(vert2FragZpassV IN)
 
 	clip(alpha - 0.9f);
 
-	// ·Å¿ªÊÖ½ÅÐ´¶ÀÁ¢µÄZPASS´¦Àí£¡
+	// ï¿½Å¿ï¿½ï¿½Ö½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ZPASSï¿½ï¿½ï¿½ï¿½
 	float3 normalTS = float3(0,0,1);
 
 	normalTS = normalize(normalTS);

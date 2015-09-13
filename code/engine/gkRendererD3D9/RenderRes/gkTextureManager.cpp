@@ -194,7 +194,7 @@ gkTextureManager::gkTextureManager( void )
 	// Refl Map
 	createlist[_T("d3dpool")] = _T("D3DX_DEFAULT");
 	createlist[_T("usage")] = _T("RENDERTARGET");
-	createlist[_T("size")] = _T("full");
+	createlist[_T("size")] = _T("half");
 	createlist[_T("format")] = _T("A16B16G16R16F");
 	createlist[_T("mipmaprt")] = _T("true");
 	ms_ReflMap0 = create(_T("RT_REFLMAP"), _T("dyntex"), &createlist);

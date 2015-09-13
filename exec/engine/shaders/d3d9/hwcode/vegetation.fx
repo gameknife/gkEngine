@@ -95,9 +95,6 @@ void pipe_end_impl( inout fragPass pPass, inout float3 cFinal )
 vert2FragGeneral GeneralVS( app2vertGeneral	IN	)
 {	
 	vert2FragGeneral OUT = (vert2FragGeneral)0; 
-
-	//IN.vertCommon.Position.xyz += float3(0.2f * sin(g_fTime * WAVE_SPEED + (IN.vertCommon.Position.y + IN.vertCommon.Position.x)* DELAY_DIST) * pow(1 - IN.vertCommon.Texcoord.y, BENT_AMOUNT), 0,0);
-
 	vs_shared_output_detail(IN, OUT, true);
 	return OUT;
 }
@@ -128,48 +125,17 @@ vert2FragZpass ZPassVS( app2vertGeneral	IN	)
 	return OUT;
 }
 
-// struct vert2FragZpass
-// {  
-// 	float4 HPosition	: POSITION;
-// 	float4 baseTC		: TEXCOORD0;
-// 	float4 TangentWS	: TEXCOORD1;
-// 	float3 BinormalWS	: TEXCOORD2;
-// 	float4 PosTex		: TEXCOORD3;
-// };
-
 pixout_zpass ZPassPS(vert2FragZpassV IN)
 {
 	pixout_zpass OUT = (pixout_zpass)0;
 
 	float alpha = tex2D(samDiffuse, IN.baseTC.xy).a;
-	float2 screenCoord = float2( IN.ScreenPos.x % 2, IN.ScreenPos.y % 2);
-	screenCoord = screenCoord * 0.5 + 0.25;
 
-	float mask1 = 1.f - tex2D(samBlend25, screenCoord).r;
-	float mask2 = 1.f - tex2D(samBlend50, screenCoord).r;
-
-	if (alpha < 0.1f)
-	{
-		alpha = 0;
-	}
-	else if (alpha < 0.3f)
-	{
-		alpha *= (mask1 * 100);
-	}
-	else if (alpha < 0.5f)
-	{
-		alpha *= ( mask2 * 100);
-	}
-	else
-	{
-		alpha = 1;
-	}
-
+	GetDotAlpha(alpha, IN.ScreenPos.xy);
 	clip(alpha - 0.9f);
 
-	// 放开手脚写独立的ZPASS处理！
-	float3 normalTS = float3(0,0,1);
 
+	float3 normalTS = float3(0,0,1);
 	normalTS = normalize(normalTS);
 
 	float3 normalWS = cross(IN.TangentWS.xyz, IN.BinormalWS) * IN.TangentWS.w;
@@ -224,7 +190,6 @@ pixout_zpass_ds ZPass_DSPS(vert2FragZpassV IN)
 
 	clip(alpha - 0.9f);
 
-	// 放开手脚写独立的ZPASS处理！
 	float3 normalTS = float3(0,0,1);
 
 	normalTS = normalize(normalTS);
@@ -249,10 +214,6 @@ vert2FragShadow ShadowPassVS( app2vertGeneral	IN	)
 {	
 	vert2FragShadow OUT = (vert2FragShadow)0; 
 
-	//IN.vertCommon.Position.xyz += float3(0.2f * sin(g_fTime * WAVE_SPEED + (IN.vertCommon.Position.y + IN.vertCommon.Position.x)* DELAY_DIST) * pow(1 - IN.vertCommon.Texcoord.y, BENT_AMOUNT), 0,0);
-	//
-	// Compute the projected coordinates
-	//
 	OUT.HPosition = mul( float4(IN.vertCommon.Position.xyz, 1), g_mWorldViewProj );
 	OUT.baseTC = IN.vertCommon.Texcoord;
 

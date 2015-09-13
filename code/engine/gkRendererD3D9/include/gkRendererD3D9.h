@@ -323,8 +323,6 @@ public:
 
 	// ShadowMap Generation
 	static void RP_ProcessShadowObjects( const gkRenderableList* objs, uint8 cascade, BYTE sortType = 0 );
-	// ReflectionMap Generation
-	void RP_GenReflectExcute( const gkRenderableList* objs, IShader* pShader, BYTE sortType /*= 0*/);
 
 	// Zpass Generation
 	static void RP_ZprepassPrepare();

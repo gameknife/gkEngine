@@ -28,13 +28,6 @@ gkShader::~gkShader( void )
 	if(isLoaded())
 		unload();
 
-	std::map<uint32, LPD3DXEFFECT>::iterator it = m_macro_effects.begin();
-	for( ; it != m_macro_effects.end(); ++it)
-	{
-		SAFE_RELEASE( it->second );
-	}
-	m_macro_effects.clear();
-
 	gEnv->pFileChangeMonitor->RemoveListener(this);
 }
 

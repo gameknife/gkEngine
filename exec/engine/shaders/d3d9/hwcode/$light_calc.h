@@ -225,4 +225,30 @@ float4 GetLuminanceMap( sampler2D lum, float2 tc )
 	return tex2D(lum, tc);
 }
 
+float GetDotAlpha(inout float alpha, in float2 ScreenPos)
+{
+	alpha = saturate(alpha * 1.5);
+	alpha = alpha * alpha;
+	
+	float2 screenCoord = float2( ScreenPos.x % 4, ScreenPos.y % 4);
+	screenCoord = screenCoord * 0.25 + 0.125;
+	
+	float4 mask1 = tex2D(samBlend25, screenCoord);
+	
+	if(alpha < 0.95)
+	{
+		int process = alpha * 16;
+		
+		int rchannel = (fmod(process, 2) == 1) ? 1 : 0; 
+		int gchannel = (fmod(process, 4) >= 2) ? 1 : 0;  
+		int bchannel = (fmod(process, 8) >= 4) ? 1 : 0; 
+		int achannel = (fmod(process, 16) >= 8) ? 1 : 0; 
+		
+		alpha = mask1.r * rchannel + mask1.g * gchannel + mask1.b * bchannel + mask1.a * achannel;		
+	}
+
+	return alpha;
+}
+
+
 #endif
