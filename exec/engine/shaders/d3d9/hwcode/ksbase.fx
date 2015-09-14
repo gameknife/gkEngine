@@ -72,7 +72,9 @@ void pipe_start_impl( inout fragPass pPass )
 	float4 baseTC = pPass.IN.baseTC;
 	float4 bumpTC = pPass.IN.bumpTC; 
 
+
 	pPass.cDiffuseMap = tex2D(samDiffuse, baseTC.xy);
+
 	if (pPass.bDiffuseAlphaSpec)
 	{
 		pPass.cGlossMap = pPass.cDiffuseMap.a;

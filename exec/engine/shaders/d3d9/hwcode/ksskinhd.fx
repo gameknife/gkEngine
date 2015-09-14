@@ -14,7 +14,6 @@ struct fragPassCustom
 	// Custom per pass data     
 	float3 vTangent;        // perturbed tangent vector
 	float3 vBinormal;       // perturbed binormal vector
-
 	float3 cRim;            // rim term  
 	float fFresnel;         // fresnel term
 	float fRimMultiplier;

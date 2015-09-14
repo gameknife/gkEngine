@@ -160,33 +160,7 @@ pixout_zpass ZPassPS(vert2FragZpassV IN)
 	pixout_zpass OUT = (pixout_zpass)0;
 
 	float alpha = tex2D(samDiffuse, IN.baseTC.xy).a;
-	float2 screenCoord = float2( IN.ScreenPos.x % 2, IN.ScreenPos.y % 2);
-	screenCoord = screenCoord * 0.5 + 0.25;
-
-	float mask1 = 1.f - tex2D(samBlend25, screenCoord).r;
-	float mask2 = 1.f - tex2D(samBlend50, screenCoord).r;
-
-	if (alpha < 0.1f)
-	{
-		alpha = 0;
-	}
-	else if (alpha < 0.3f)
-	{
-		alpha *= (mask1 * 100);
-	}
-	else if (alpha < 0.5f)
-	{
-		alpha *= ( mask2 * 100);
-	}
-// 	else if (alpha < 0.6f)
-// 	{
-// 		alpha *= ( (mask2 + mask1) * 100);
-// 	}
-	else
-	{
-		alpha = 1;
-	}
-
+	GetDotAlpha(alpha, IN.ScreenPos.xy);
 	clip(alpha - 0.9f);
 
 	// 放开手脚写独立的ZPASS处理！

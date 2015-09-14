@@ -124,16 +124,15 @@ vert2FragZpass ZPassVS( app2vertGeneral	IN	)
 	vs_shared_output_zpass_autoflip(IN, OUT, true);
 	return OUT;
 }
-
+ 
 pixout_zpass ZPassPS(vert2FragZpassV IN)
 {
-	pixout_zpass OUT = (pixout_zpass)0;
+	pixout_zpass OUT = (pixout_zpass)0; 
 
 	float alpha = tex2D(samDiffuse, IN.baseTC.xy).a;
 	GetDotAlpha(alpha, IN.ScreenPos.xy);
 	clip(alpha - 0.9f);
-
-
+	 
 	float3 normalTS = float3(0,0,1);
 	normalTS = normalize(normalTS);
 
