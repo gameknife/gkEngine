@@ -55,6 +55,9 @@ const int GK_SHADER_DWORDCOLOR_ARRAY = 1;
 
 struct CRapidXmlParseNode;
 
+typedef std::map<std::string, int> UniformMap;
+typedef std::pair< GLuint, UniformMap > MacroGroup;
+
 class gkShaderGLES2 : public IShader
 	,public IFileChangeMonitorListener
 {
@@ -63,8 +66,9 @@ protected:
 	GLuint				m_FragmentShader;
 	GLuint				m_Program;
 	gkStdString			m_internalName;
-	std::map<uint32, GLuint> m_macroPrograms;
-
+	std::map<uint32, MacroGroup> m_macroPrograms;
+    UniformMap*         m_currUniformGroup;
+    UniformMap          m_defaultUniformGroup;
 public:
 	//gkTexture(void);
 	gkShaderGLES2(IResourceManager* creator, const gkStdString& name, gkResourceHandle handle,
@@ -113,6 +117,8 @@ private:
 	bool CompileShader( const char* source, GLuint& shader, GLenum type );
 
 	void PreProcess( std::string &vsSource );
+    
+    int get_cache_handle_by_name(GKHANDLE hParam);
 
 	uint32		m_uDefaultRenderLayer;
 	struct ShaderState
