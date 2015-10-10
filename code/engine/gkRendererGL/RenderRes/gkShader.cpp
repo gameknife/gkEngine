@@ -1,4 +1,4 @@
-﻿#include "StableHeader.h"
+#include "StableHeader.h"
 #include "IRenderer.h"
 #include "gkShader.h"
 #include "gkIterator.h"
@@ -315,13 +315,13 @@ void gkShaderGLES2::FX_SetValue( GKHANDLE hParam, const void* data, uint32 bytes
 		{
 			int location = get_cache_handle_by_name(hParam);
 			const Vec2& tmp = *((const Vec2*)data);
-			glUniform2f( location, tmp.x, tmp.y );
+			if(location != -1) glUniform2f( location, tmp.x, tmp.y );
 		}
 		break;
 	case 1 * sizeof(float):
 		{
 			int location = get_cache_handle_by_name(hParam);
-			glUniform1f( location, *((float*)data) );
+			if(location != -1) glUniform1f( location, *((float*)data) );
 		}
 		break;
 	default:
@@ -332,7 +332,7 @@ void gkShaderGLES2::FX_SetValue( GKHANDLE hParam, const void* data, uint32 bytes
 	if ( vec && (bytes % sizeof(Vec4) == 0) && (bytes / sizeof(Vec4) > 1))
 	{
 		int location = get_cache_handle_by_name(hParam);
-		glUniform4fv( location, bytes / sizeof(Vec4), (const float*)data);
+		if(location != -1) glUniform4fv( location, bytes / sizeof(Vec4), (const float*)data);
 	}
 }
 
@@ -363,7 +363,7 @@ void gkShaderGLES2::FX_SetMatrix( GKHANDLE hParam, const Matrix44& data )
 {
 	// bind MVP MATRIX
 	int location = get_cache_handle_by_name(hParam);
-	glUniformMatrix4fv( location, 1, GL_FALSE, &(data.m00) );
+    if(location != -1) glUniformMatrix4fv( location, 1, GL_FALSE, &(data.m00) );
 }
 
 //-----------------------------------------------------------------------
@@ -375,20 +375,23 @@ void gkShaderGLES2::FX_SetFloat( GKHANDLE hParam, float data)
 void gkShaderGLES2::FX_SetFloat3( GKHANDLE hParam, const Vec3& data )
 {
 	int location = get_cache_handle_by_name(hParam);
-	glUniform3f( location, data.x, data.y, data.z );
+	if(location != -1) glUniform3f( location, data.x, data.y, data.z );
 }
 
 //-----------------------------------------------------------------------
 void gkShaderGLES2::FX_SetFloat4( GKHANDLE hParam, const Vec4& data )
 {
 	int location = get_cache_handle_by_name(hParam);
-	glUniform4f( location, data.x, data.y, data.z, data.w );
+	if(location != -1) glUniform4f( location, data.x, data.y, data.z, data.w );
 }
 //////////////////////////////////////////////////////////////////////////
 void gkShaderGLES2::FX_SetColor4( GKHANDLE hParam, const ColorF& data )
 {
 	FX_SetValue(hParam, &data, sizeof(ColorF));
 }
+
+#define BIND_TEX_UNIT(X,Y) {int location = get_cache_handle_by_name(#X);\
+if(location != -1) glUniform1i( location, Y );}
 
 //-----------------------------------------------------------------------
 void gkShaderGLES2::FX_Begin( uint32* pPasses, DWORD flag )
@@ -400,14 +403,16 @@ void gkShaderGLES2::FX_Begin( uint32* pPasses, DWORD flag )
 
 	if (flag == 1)
 	{
-		glUniform1i( glGetUniformLocation(m_Program, "texDiffuse"), 0 );
-		glUniform1i( glGetUniformLocation(m_Program, "texNormal"), 1 );
-		glUniform1i( glGetUniformLocation(m_Program, "texSpecular"), 2 );
-		glUniform1i( glGetUniformLocation(m_Program, "texDetail"), 3 );
-		glUniform1i( glGetUniformLocation(m_Program, "texCustom1"), 4 );
-        glUniform1i( glGetUniformLocation(m_Program, "texCustom2"), 5 );
-        glUniform1i( glGetUniformLocation(m_Program, "texEnvmap"), 6 );
-        glUniform1i( glGetUniformLocation(m_Program, "texCubemap"), 7 );
+        //int location = get_cache_handle_by_name("texDiffuse");
+        //if(location != -1) glUniform1i( location, 0 );
+        BIND_TEX_UNIT(texDiffuse,0)
+        BIND_TEX_UNIT(texNormal,1)
+        BIND_TEX_UNIT(texSpecular,2)
+        BIND_TEX_UNIT(texDetail,3)
+        BIND_TEX_UNIT(texCustom1,4)
+        BIND_TEX_UNIT(texCustom2,5)
+        BIND_TEX_UNIT(texEnvmap,6)
+        BIND_TEX_UNIT(texCubemap,7)
 	}
 	else
 	{
@@ -415,29 +420,14 @@ void gkShaderGLES2::FX_Begin( uint32* pPasses, DWORD flag )
         ApplyState();
         
 		// bind texture sampler
-		int location = glGetUniformLocation(m_Program, "texDiffuse");
-		if(location > -1) glUniform1i( location  ,0);
-
-		location = glGetUniformLocation(m_Program, "texNormal");
-		if(location > -1) glUniform1i( location  ,1);
-
-		location = glGetUniformLocation(m_Program, "texSpecular");
-		if(location > -1) glUniform1i( location  ,2);
-
-		location = glGetUniformLocation(m_Program, "texDetail");
-		if(location > -1) glUniform1i( location  ,3);
-
-		location = glGetUniformLocation(m_Program, "texCustom1");
-		if(location > -1) glUniform1i( location  ,4);
-
-		location = glGetUniformLocation(m_Program, "texCustom2");
-		if(location > -1) glUniform1i( location  ,5);
-
-		location = glGetUniformLocation(m_Program, "texEnvmap");
-		if(location > -1) glUniform1i( location  ,6);
-
-		location = glGetUniformLocation(m_Program, "texCubemap");
-		if(location > -1) glUniform1i( location  ,7);
+        BIND_TEX_UNIT(texDiffuse,0)
+        BIND_TEX_UNIT(texNormal,1)
+        BIND_TEX_UNIT(texSpecular,2)
+        BIND_TEX_UNIT(texDetail,3)
+        BIND_TEX_UNIT(texCustom1,4)
+        BIND_TEX_UNIT(texCustom2,5)
+        BIND_TEX_UNIT(texEnvmap,6)
+        BIND_TEX_UNIT(texCubemap,7)
 	}
 
 }
@@ -477,8 +467,7 @@ uint32 gkShaderGLES2::getDefaultRenderLayer()
 void gkShaderGLES2::FX_SetMatrixArray( GKHANDLE hParam, D3DXMATRIX* data, uint32 size )
 {
 	int location = get_cache_handle_by_name(hParam);
-	//Matrix44 mvpMat = gkRendererGLES2::getShaderContent().getWorldViewProjMatrix();
-	glUniformMatrix4fv( location, size, GL_FALSE, (float*)(data) );
+	if(location != -1) glUniformMatrix4fv( location, size, GL_FALSE, (float*)(data) );
 }
 
 bool gkShaderGLES2::ApplyState()

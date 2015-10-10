@@ -399,10 +399,10 @@ bool gkMaterial::loadMaterialFormRapidXmlNode( CRapidXmlParseNode* rootXmlNode )
 	m_vecTextureArray[eMS_Diffuse] = gkTextureManager::ms_DefaultDiffuse;
 	m_vecTextureArray[eMS_Normal] = gkTextureManager::ms_DefaultNormal;
 	m_vecTextureArray[eMS_Specular] = gkTextureManager::ms_DefaultDiffuse;
-	m_vecTextureArray[eMS_Detail] = gkTextureManager::ms_DefaultNormal;
+	//m_vecTextureArray[eMS_Detail] = gkTextureManager::ms_DefaultNormal;
 	m_vecTextureArray[eMS_Custom1] = gkTextureManager::ms_DefaultDiffuse;
-	m_vecTextureArray[eMS_Custom2] = gkTextureManager::ms_DefaultDiffuse;
-	m_vecTextureArray[eMS_EnvMap] = gkTextureManager::ms_DefaultDiffuse;
+    m_vecTextureArray[eMS_Custom2] = gkTextureManager::ms_DefaultDiffuse;
+	//m_vecTextureArray[eMS_EnvMap] = gkTextureManager::ms_DefaultDiffuse;
 	//m_vecTextureArray[eMS_CubeMap] = gkTextureManager::ms_DefaultDiffuse;
     
     CRapidXmlParseNode* texChannelNode = rootXmlNode->getChildNode(_T("TexChannel"));

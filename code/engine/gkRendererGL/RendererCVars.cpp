@@ -115,6 +115,8 @@ gkRendererCVars::gkRendererCVars()
 		_T("像素缩放比\n")
 		_T("Usage: r_ldrfakebrightness [4.0]\n")
 		_T("默认为4.0 (原始比例)."), 0.1, 20.0, 4.0);
+    
+    REGISTER_CVARINT_DESC(r_ambient_inte, _T("ambient集成于shading中, 0:否, 1:是"), 0);
 
 
 }

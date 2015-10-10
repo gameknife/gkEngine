@@ -1,4 +1,4 @@
-﻿#include "StableHeader.h"
+#include "StableHeader.h"
 #include "gkTextureGLES2.h"
 #include "gkIterator.h"
 #include "gkFilePath.h"
@@ -102,6 +102,8 @@ gkTextureGLES2::gkTextureGLES2( IResourceManager* creator, const gkStdString& na
 		loadingParams = *params;
 	}
 
+    m_filter = eGTF_UnoknownFilter;
+    m_warp = eGTF_UnoknownAddress;
 }
 
 gkTextureGLES2::~gkTextureGLES2( void )
@@ -428,66 +430,87 @@ void gkTextureGLES2::onLost()
 	}
 }
 
+void gkTextureGLES2::applyFilter( EGKTextureFilterMode mode )
+{
+    if( m_filter != mode )
+    {
+        m_filter = mode;
+        switch (mode) {
+            case eGTF_Linear:
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                break;
+            case eGTF_Nearest:
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+void gkTextureGLES2::applyAddress( EGKTextureAddressMode mode )
+{
+    if( m_warp != mode )
+    {
+        m_warp = mode;
+        switch (mode) {
+            case eGTF_Clamp:
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+                break;
+            case eGTF_Wrap:
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+                break;
+            default:
+                break;
+        }
+    }
+}
+
 void gkTextureGLES2::Apply( uint32 channel, uint8 filter )
 {
 	touch();
-
 	RawDataFlush();
 
-	glActiveTexture(GL_TEXTURE0 + channel);
-	//glUniform1i(userData->samplerLoc, 0);
-
 	GLenum texUnit = GL_TEXTURE_2D;
-
 	if (m_bCubemap)
 	{
 		texUnit = GL_TEXTURE_CUBE_MAP;
 	}
+    getRenderer()->internalApplyTexture(channel, texUnit, m_uHwTexture2D);
 
-	GLenum error = glGetError();
-
-
-	glBindTexture(texUnit, m_uHwTexture2D);
-	error = glGetError();
-	if (error)
-	{
-		gkLogWarning(_T("bind tex failed.") );
-	}
 	if (m_rt)
 	{
 		if (filter)
 		{
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            applyFilter(eGTF_Linear);
 		}
 		else
 		{
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			applyFilter(eGTF_Nearest);
 		}
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        applyAddress(eGTF_Clamp);
 
 	}
 	else
 	{
 		if (m_rawData)
 		{
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            applyFilter(eGTF_Nearest);
 		}
 		else
 		{
 			if (filter == 2)
 			{
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+                applyFilter(eGTF_Nearest);
 			}
 			else
 			{
-				//glTexParameteri(texUnit, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				//glTexParameteri(texUnit, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+
 			}
 		}
 
@@ -616,8 +639,8 @@ void gkTextureGLES2::RawDataFlush()
 		{
 			gkLogWarning(_T("flush raw texture error."));
 		}
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+
+        applyFilter(eGTF_Nearest);
 
 		m_rawDirty = false;
 	}

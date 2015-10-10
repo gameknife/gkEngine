@@ -182,7 +182,7 @@
 				ORGANIZATIONNAME = gameKnife;
 				TargetAttributes = {
 					A04B42EE1734038500EF0763 = {
-						DevelopmentTeam = 5EF477Q8LK;
+						DevelopmentTeam = 9YSZ2JWU8J;
 					};
 				};
 			};
@@ -264,6 +264,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -288,6 +289,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -383,6 +385,7 @@
 					"-lgkSystem",
 					"-lTestCases",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = tencent.gkENGINE;
 				PRODUCT_NAME = gkENGINE;
 				PROVISIONING_PROFILE = "";
 				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
@@ -441,6 +444,7 @@
 					"-lhkSceneData",
 					"-lhkSerialize",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = tencent.gkENGINE;
 				PRODUCT_NAME = gkENGINE;
 				PROVISIONING_PROFILE = "";
 				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
