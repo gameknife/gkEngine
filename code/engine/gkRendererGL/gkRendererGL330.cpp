@@ -161,18 +161,26 @@ bool gkRendererGL::RT_EndRender()
 	return true;
 }
 
-//#ifdef OS_IOS
-//
-//#define PUSH_GPU_MARKER(x) glPushGroupMarkerEXT(strlen(#x) + 1, #x);
-//#define POP_GPU_MARKER(x) glPopGroupMarkerEXT();
-//
-//
-//#else
+#if defined( OS_IOS )
+
+#if defined( OS_APPLE )
 
 #define PUSH_GPU_MARKER( x )
 #define POP_GPU_MARKER( x )
 
-//#endif
+#else
+
+#define PUSH_GPU_MARKER(x) glPushGroupMarkerEXT(strlen(#x) + 1, #x);
+#define POP_GPU_MARKER(x) glPopGroupMarkerEXT();
+
+#endif
+
+#else
+
+#define PUSH_GPU_MARKER( x )
+#define POP_GPU_MARKER( x )
+
+#endif
 
 bool gkRendererGL::RT_StartRender()
 {
