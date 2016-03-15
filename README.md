@@ -9,6 +9,13 @@
 
 <br>
 
+
+gkENGINE's Future Flag
+---
+
+* 接入Mono作为逻辑驱动入口，Export引擎组件
+* 支持无限地形生成
+
 gkENGINE的技术特性
 ---
 
