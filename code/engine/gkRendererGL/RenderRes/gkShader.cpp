@@ -345,7 +345,7 @@ int gkShaderGLES2::get_cache_handle_by_name(GKHANDLE hParam)
     {
         return 0;
     }
-    gkStdString name(hParam);
+    std::string name(hParam);
     auto it = m_currUniformGroup->find(name);
     if( it != m_currUniformGroup->end() )
     {

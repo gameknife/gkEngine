@@ -161,15 +161,16 @@ bool gkRendererGL::RT_EndRender()
 	return true;
 }
 
-#ifdef OS_APPLE
-
-#define PUSH_GPU_MARKER( x )
-#define POP_GPU_MARKER( x )
-
-#else
+#ifdef OS_IOS
 
 #define PUSH_GPU_MARKER(x) glPushGroupMarkerEXT(strlen(#x) + 1, #x);
 #define POP_GPU_MARKER(x) glPopGroupMarkerEXT();
+
+
+#else
+
+#define PUSH_GPU_MARKER( x )
+#define POP_GPU_MARKER( x )
 
 #endif
 
