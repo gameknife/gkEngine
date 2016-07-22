@@ -1370,11 +1370,13 @@ void WINAPI DXUTGetDesktopResolution( UINT AdapterOrdinal, UINT* pWidth, UINT* p
 HRESULT WINAPI DXUTTrace( const CHAR* strFile, DWORD dwLine, HRESULT hr,
                           const WCHAR* strMsg, bool bPopMsgBox )
 {
-    bool bShowMsgBoxOnError = DXUTGetShowMsgBoxOnError();
-    if( bPopMsgBox && bShowMsgBoxOnError == false )
-        bPopMsgBox = false;
+//     bool bShowMsgBoxOnError = DXUTGetShowMsgBoxOnError();
+//     if( bPopMsgBox && bShowMsgBoxOnError == false )
+//         bPopMsgBox = false;
+// 
+//     return DXTrace( strFile, dwLine, hr, strMsg, bPopMsgBox );
 
-    return DXTrace( strFile, dwLine, hr, strMsg, bPopMsgBox );
+	return S_OK;
 }
 
 

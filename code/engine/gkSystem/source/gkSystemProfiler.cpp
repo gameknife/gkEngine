@@ -9,16 +9,16 @@
 #include "IMesh.h"
 
 #define MAKE_SWITCH( x ) \
-	gkCVar* var = gEnv->pCVManager->getCVar( _T( #x ));\
+	gkCVar* var = gEnv->pCVManager->getCVar(_T(#x));\
 	if( var && var->getInt() == 0 )\
 		{\
 		buttonBgColor = ColorB(0,0,0,150);\
-		_stprintf(buffer, (_T(#x)_T(" 1")));\
+		_stprintf(buffer, ( _T(#x) _T(" 1")));\
 		}\
 		else\
 		{\
 		buttonBgColor = ColorB(40,127,200,150);\
-		_stprintf(buffer, (_T(#x)_T(" 0")));\
+		_stprintf(buffer, ( _T(#x) _T(" 0")));\
 		}
 
 //-----------------------------------------------------------------------
@@ -725,7 +725,20 @@ void gkSystemProfiler::features()
 		{
 		case 0:
 			{
-				MAKE_SWITCH( r_hdrrendering );
+				MAKE_SWITCH(r_hdrrendering);
+
+// 				gkCVar* var = gEnv->pCVManager->getCVar(_T("r_hdrrendering")); \
+// 					if (var && var->getInt() == 0)\
+// 					{\
+// 						buttonBgColor = ColorB(0, 0, 0, 150); \
+// 						_stprintf(buffer, (_T("r_hdrrendering")_T(" 1"))); \
+// 					}\
+// 					else\
+// 					{\
+// 						buttonBgColor = ColorB(40, 127, 200, 150); \
+// 						_stprintf(buffer, (_T("r_hdrrendering")_T(" 0"))); \
+// 					}
+
 				_stprintf(bufferT, _T("HDR PROCESS"), i);
 			}
 
@@ -783,14 +796,14 @@ void gkSystemProfiler::features()
 
 #define POST_GPU_ITME( X ) 	{\
 TCHAR text[MAX_PATH];\
-	_stprintf( text, _T(#X)_T("： %.2fms"), getGpuTimerElement( _T(#X) ) );\
+	_stprintf( text, _T(#X) _T("： %.2fms"), getGpuTimerElement( _T(#X) ) );\
 gEnv->pRenderer->getAuxRenderer()->AuxRenderText( text, start_pos_x, start_pos_y+=20, m_profilerFont );\
 	total_sum+=getGpuTimerElement( _T(#X) );\
 }
 
 #define POST_ELEMENT_ITME( X ) 	{\
 	TCHAR text[MAX_PATH];\
-	_stprintf( text, _T(#X)_T("： %.2fms"), getElementTime( X ) * 1000.0f );\
+	_stprintf( text, _T(#X) _T("： %.2fms"), getElementTime( X ) * 1000.0f );\
 	gEnv->pRenderer->getAuxRenderer()->AuxRenderText( text, start_pos_x, start_pos_y+=20, m_profilerFont );\
 }
 

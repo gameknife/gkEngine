@@ -5,6 +5,10 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Develop_Latest|Win32">
+      <Configuration>Develop_Latest</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Profile_MultiBytes|Win32">
       <Configuration>Profile_MultiBytes</Configuration>
       <Platform>Win32</Platform>
@@ -33,6 +37,11 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
@@ -59,6 +68,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Solutions\gkSystemInclude.props" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
@@ -81,18 +94,22 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">false</LinkIncremental>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" />
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'" />
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'" />
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
@@ -160,6 +177,27 @@
     <Link>
       <AdditionalLibraryDirectories>../../thirdparty/physxsdk/lib/win32/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>..\..\Lib\Release\$(ProjectName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalOptions>Winmm.lib /LIBPATH:../../../Common/lib/win32 /LIBPATH:../../lib/win32 /LIBPATH:../../../Lib/win32 PhysX3Common_x86.lib PhysX3_x86.lib PhysX3Cooking_x86.lib PhysX3CharacterKinematic_x86.lib PhysX3Extensions.lib PhysX3Vehicle.lib RepX3.lib RepXUpgrader3.lib PhysXProfileSDK.lib PhysXVisualDebuggerSDK.lib PxTask.lib %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\ThirdParty\PhysXSDK\include;../../ThirdParty/PhysXSDK/Source/foundation/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKPHYSX_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>StableHeader.h</PrecompiledHeaderFile>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>../../thirdparty/physxsdk/lib/win32/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>No</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -237,6 +275,7 @@
     <ClCompile Include="source\gkPhysXStream.cpp" />
     <ClCompile Include="source\StableHeader.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>

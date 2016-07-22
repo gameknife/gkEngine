@@ -5,6 +5,10 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Develop_Latest|Win32">
+      <Configuration>Develop_Latest</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Develop|Win32">
       <Configuration>Develop</Configuration>
       <Platform>Win32</Platform>
@@ -17,6 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BD439D52-5D90-482B-8265-B443F54A5E01}</ProjectGuid>
     <RootNamespace>gkCommon</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'" Label="Configuration">
@@ -24,6 +29,12 @@
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Utility</ConfigurationType>
@@ -41,6 +52,9 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -55,7 +69,9 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">$(Configuration)\</IntDir>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />

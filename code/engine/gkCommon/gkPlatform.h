@@ -316,12 +316,12 @@ inline void gkOpenModule( HINSTANCE& hHandle, const TCHAR* moduleName)
 
 //////////////////////////////////////////////////////////////////////////
 // STD PLATFORM DEFINE
-#if defined( OS_WIN32 )
-#	include <hash_map>
-#	define gkHashMap stdext::hash_map
-#else
+// #if defined( OS_WIN32 )
+// #	include <hash_map>
+// #	define gkHashMap stdext::hash_map
+// #else
 #	define gkHashMap std::map
-#endif
+//#endif
 
 //////////////////////////////////////////////////////////////////////////
 // string binding

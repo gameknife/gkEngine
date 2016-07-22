@@ -4,10 +4,6 @@
     <NsightTegraProjectRevisionNumber>9</NsightTegraProjectRevisionNumber>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Tegra-Android">
-      <Configuration>Debug</Configuration>
-      <Platform>Tegra-Android</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -16,9 +12,13 @@
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Profile_MultiBytes|Tegra-Android">
-      <Configuration>Profile_MultiBytes</Configuration>
-      <Platform>Tegra-Android</Platform>
+    <ProjectConfiguration Include="Develop_Latest|Win32">
+      <Configuration>Develop_Latest</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Develop_Latest|x64">
+      <Configuration>Develop_Latest</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Profile_MultiBytes|Win32">
       <Configuration>Profile_MultiBytes</Configuration>
@@ -28,10 +28,6 @@
       <Configuration>Profile_MultiBytes</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="StaticBuild|Tegra-Android">
-      <Configuration>StaticBuild</Configuration>
-      <Platform>Tegra-Android</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="StaticBuild|Win32">
       <Configuration>StaticBuild</Configuration>
       <Platform>Win32</Platform>
@@ -40,10 +36,6 @@
       <Configuration>StaticBuild</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Develop|Tegra-Android">
-      <Configuration>Develop</Configuration>
-      <Platform>Tegra-Android</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Develop|Win32">
       <Configuration>Develop</Configuration>
       <Platform>Win32</Platform>
@@ -51,10 +43,6 @@
     <ProjectConfiguration Include="Develop|x64">
       <Configuration>Develop</Configuration>
       <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Tegra-Android">
-      <Configuration>Release</Configuration>
-      <Platform>Tegra-Android</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
@@ -76,57 +64,36 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Tegra-Android'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Tegra-Android'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>MultiByte</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <AndroidAPILevel>android-9</AndroidAPILevel>
-    <PlatformToolset>arm-linux-androideabi-4.4.3</PlatformToolset>
-    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -161,33 +128,20 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Solutions\gkSystemInclude.props" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
     <Import Project="..\Solutions\gkStaticLib.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\Solutions\gkSystemInclude.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Tegra-Android'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\Solutions\gkSystemInclude.props" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Tegra-Android'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\Solutions\gkSystemInclude.props" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\Solutions\gkPropRelease.props" />
-    <Import Project="..\Solutions\gkSystemInclude.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkPropRelease.props" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
@@ -197,11 +151,11 @@
     <Import Project="..\Solutions\gkSystemInclude.props" />
     <Import Project="..\solutions\DebugWin.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'" Label="PropertySheets">
-    <Import Project="..\Solutions\gkSystemInclude.props" />
-    <Import Project="..\Solutions\gkAndroid.props" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Solutions\gkSystemInclude.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
   </ImportGroup>
@@ -227,62 +181,50 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Tegra-Android'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Tegra-Android'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='StaticBuild|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|x64'">false</LinkIncremental>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'" />
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Tegra-Android'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Tegra-Android'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" />
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'" />
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'" />
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Tegra-Android'" />
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'" />
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Tegra-Android'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Tegra-Android'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Tegra-Android'" />
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='StaticBuild|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Develop|x64'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'" />
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='StaticBuild|x64'" />
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Develop|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='StaticBuild|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|x64'" />
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'" />
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
@@ -305,23 +247,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <MinimalRebuild>true</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <AdditionalOptions>-ggdb %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions>_7ZIP_ST</PreprocessorDefinitions>
-    </ClCompile>
-    <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-      <AndroidSystemLibs>c;m;log;gcc;dl</AndroidSystemLibs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -367,27 +292,6 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>..\..\ThirdParty\tinyxml;..\..\ThirdParty\rapidxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKSYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>gkSystemStableHeader.h</PrecompiledHeaderFile>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>winmm.lib;tinyxml.lib;..\..\Lib\win32\Release\CrashRpt.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\Lib\win32\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -437,6 +341,25 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKSYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>gkSystemStableHeader.h</PrecompiledHeaderFile>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\ThirdParty\CrashRpt\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>No</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -458,52 +381,6 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\ThirdParty\rapidxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKSYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>gkSystemStableHeader.h</PrecompiledHeaderFile>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>winmm.lib;CrashRpt.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\ThirdParty\CrashRpt\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Tegra-Android'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\ThirdParty\rapidxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKSYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>gkSystemStableHeader.h</PrecompiledHeaderFile>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>winmm.lib;CrashRpt.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\ThirdParty\CrashRpt\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">
@@ -529,30 +406,30 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Tegra-Android'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\ThirdParty\rapidxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKSYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>gkSystemStableHeader.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <PreprocessorDefinitions>WIN64;NDEBUG;_WINDOWS;_USRDLL;GKSYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>winmm.lib;CrashRpt.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\ThirdParty\CrashRpt\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">
     <Midl>
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
@@ -630,197 +507,222 @@
   <ItemGroup>
     <ClCompile Include="..\..\thirdparty\lzma\Alloc.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\Bcj2.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\Bra.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\Bra86.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\BraIA64.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\CpuArch.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\Delta.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\LzFind.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\LzFindMt.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">true</ExcludedFromBuild>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\Lzma2Dec.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\Lzma2Enc.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\Lzma86Dec.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\Lzma86Enc.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\LzmaDec.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\LzmaEnc.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\LzmaLib.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\MtCoder.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">true</ExcludedFromBuild>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\Sha256.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\thirdparty\lzma\Threads.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">true</ExcludedFromBuild>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\gkCommon\gkMeshFileLoader.cpp" />
-    <ClCompile Include="FileChangeMonitor.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="FileChangeMonitor.cpp" />
     <ClCompile Include="gkInGUI.cpp" />
     <ClCompile Include="gkSystemInfo.cpp" />
     <ClCompile Include="gkTaskDispatcher.cpp" />
     <ClCompile Include="source\dllmain.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Tegra-Android'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Tegra-Android'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="source\gkResFile.cpp" />
     <ClCompile Include="source\gkResFileManager.cpp" />
     <ClCompile Include="source\gkSystemStableHeader.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Tegra-Android'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Tegra-Android'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="source\gkConsoleVariablesManager.cpp" />
     <ClCompile Include="source\gkLog.cpp" />
     <ClCompile Include="source\gkSystem.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Tegra-Android'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Tegra-Android'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="source\gkSystemProfiler.cpp" />

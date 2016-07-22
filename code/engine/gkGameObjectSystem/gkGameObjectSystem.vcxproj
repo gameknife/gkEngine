@@ -4,10 +4,6 @@
     <NsightTegraProjectRevisionNumber>9</NsightTegraProjectRevisionNumber>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Tegra-Android">
-      <Configuration>Debug</Configuration>
-      <Platform>Tegra-Android</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -16,9 +12,13 @@
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Profile_MultiBytes|Tegra-Android">
-      <Configuration>Profile_MultiBytes</Configuration>
-      <Platform>Tegra-Android</Platform>
+    <ProjectConfiguration Include="Develop_Latest|Win32">
+      <Configuration>Develop_Latest</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Develop_Latest|x64">
+      <Configuration>Develop_Latest</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Profile_MultiBytes|Win32">
       <Configuration>Profile_MultiBytes</Configuration>
@@ -28,10 +28,6 @@
       <Configuration>Profile_MultiBytes</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="StaticBuild|Tegra-Android">
-      <Configuration>StaticBuild</Configuration>
-      <Platform>Tegra-Android</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="StaticBuild|Win32">
       <Configuration>StaticBuild</Configuration>
       <Platform>Win32</Platform>
@@ -40,10 +36,6 @@
       <Configuration>StaticBuild</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Develop|Tegra-Android">
-      <Configuration>Develop</Configuration>
-      <Platform>Tegra-Android</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Develop|Win32">
       <Configuration>Develop</Configuration>
       <Platform>Win32</Platform>
@@ -51,10 +43,6 @@
     <ProjectConfiguration Include="Develop|x64">
       <Configuration>Develop</Configuration>
       <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Tegra-Android">
-      <Configuration>Release</Configuration>
-      <Platform>Tegra-Android</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
@@ -76,6 +64,11 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
@@ -95,6 +88,11 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -122,15 +120,14 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>arm-linux-androideabi-4.4.3</PlatformToolset>
-    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
-  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Solutions\gkSystemInclude.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
   </ImportGroup>
@@ -156,6 +153,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Solutions\gkSystemInclude.props" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Solutions\gkSystemInclude.props" />
@@ -173,10 +174,6 @@
     <Import Project="..\Solutions\gkSystemInclude.props" />
     <Import Project="..\solutions\DebugWin.props" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
-    <Import Project="..\Solutions\gkSystemInclude.props" />
-    <Import Project="..\Solutions\gkAndroid.props" />
-  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
@@ -185,9 +182,11 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='StaticBuild|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|x64'">false</LinkIncremental>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
@@ -197,21 +196,27 @@
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" />
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'" />
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'" />
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='StaticBuild|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Develop|x64'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'" />
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='StaticBuild|x64'" />
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Develop|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='StaticBuild|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|x64'" />
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
@@ -337,6 +342,27 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKGAMEOBJECTSYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>StableHeader.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>No</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -387,6 +413,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;NDEBUG;_WINDOWS;_USRDLL;GKGAMEOBJECTSYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>StableHeader.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>..\..\Lib\Release\$(ProjectName).lib</ImportLibrary>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">
     <Midl>
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
@@ -464,11 +516,6 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
-    <ClCompile>
-      <AdditionalOptions>-ggdb %(AdditionalOptions)</AdditionalOptions>
-    </ClCompile>
-  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\dllmain.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
@@ -479,9 +526,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile_MultiBytes|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -497,11 +546,6 @@
     <ClInclude Include="include\StableHeader.h" />
     <ClInclude Include="include\targetver.h" />
     <ClInclude Include="include\gkGameObject.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="gkGameObjectSystem.rc">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">true</ExcludedFromBuild>
-    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />

@@ -298,11 +298,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="gkRendererD3D9.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="ReadMe.txt" />
   </ItemGroup>
 </Project>

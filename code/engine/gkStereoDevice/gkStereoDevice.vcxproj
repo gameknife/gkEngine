@@ -4,25 +4,17 @@
     <NsightTegraProjectRevisionNumber>9</NsightTegraProjectRevisionNumber>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Tegra-Android">
-      <Configuration>Debug</Configuration>
-      <Platform>Tegra-Android</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Develop|Tegra-Android">
-      <Configuration>Develop</Configuration>
-      <Platform>Tegra-Android</Platform>
+    <ProjectConfiguration Include="Develop_Latest|Win32">
+      <Configuration>Develop_Latest</Configuration>
+      <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Develop|Win32">
       <Configuration>Develop</Configuration>
       <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Tegra-Android">
-      <Configuration>Release</Configuration>
-      <Platform>Tegra-Android</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
@@ -40,24 +32,11 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
-    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -65,12 +44,12 @@
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -80,16 +59,7 @@
     <Import Project="..\solutions\gkSystemInclude.props" />
     <Import Project="..\solutions\DebugWin.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\solutions\gkSystemInclude.props" />
-    <Import Project="..\solutions\gkAndroid.props" />
-  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\solutions\gkSystemInclude.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\solutions\gkSystemInclude.props" />
   </ImportGroup>
@@ -97,7 +67,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\solutions\gkSystemInclude.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\solutions\gkSystemInclude.props" />
   </ImportGroup>
@@ -105,19 +75,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -132,23 +96,6 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
-    <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GKFONT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\thirdparty\freetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AndroidSystemLibs>c;m;log;gcc;freetype</AndroidSystemLibs>
-      <AdditionalLibraryDirectories>../../thirdparty/freetype/lib</AdditionalLibraryDirectories>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -169,25 +116,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKFONT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\thirdparty\freetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -205,7 +133,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>
@@ -213,15 +141,13 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKFONT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\thirdparty\freetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>No</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
