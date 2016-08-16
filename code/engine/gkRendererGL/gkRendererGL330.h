@@ -197,6 +197,10 @@ public:
 	IDeviceRenderContext* getDeviceContex();
 
 	virtual Vec3 ScreenPosToViewportPos(Vec3 screenPos);
+    
+    
+    void internalApplyTexture(int channel, GLenum unit, GLuint name);
+    
 private:
 	uint32 m_screenWidth;
 	uint32 m_screenHeight;
@@ -236,6 +240,8 @@ private:
 
 	GLuint tmpVAO;
 	GLuint tmpVBO;
+    
+    std::map<int, GLuint> m_texStages;
 };
 
 gkRendererGL* getRenderer();

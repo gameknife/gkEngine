@@ -56,6 +56,11 @@ HWND gkDeviceRenderContext::initDevice(ISystemInitInfo& sii)
 	_window = [[UIWindow alloc] initWithFrame:rect];
 
 	
+    UIViewController* vc = [[UIViewController alloc] init];
+    _window.rootViewController = vc;
+    
+    
+    
     //[_window ]
     
 	NSString *strColourFormat;
@@ -142,6 +147,9 @@ HWND gkDeviceRenderContext::initDevice(ISystemInitInfo& sii)
     //_window.autoresizesSubviews = true;
     
 	//Show the window
+    
+    vc.view = _touchView;
+    
 	[_window makeKeyAndVisible];
     
     m_eglView = _glView;

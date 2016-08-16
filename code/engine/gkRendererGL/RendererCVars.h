@@ -97,6 +97,9 @@ public:
 
 	double r_pixelscale;
 	double r_ldrfakebrightness;
+    
+    // integrate ambient in shading shader
+    int r_ambient_inte;
 
 	gkRendererCVars();
 	~gkRendererCVars();

@@ -12,6 +12,9 @@ TEST_CASE_FASTIMPL_HEAD( TestCase_CharacterAnimation, eTcc_Animation )
 		m_camDist = 5.0f;
 		m_tgt = NULL;
 
+		ICamera* maincam = gEnv->p3DEngine->getMainCamera();
+		maincam->setFOVy( DEG2RAD(45.0f) );
+
 		Vec3 pos;
 		Quat rot;
 		pos = Vec3(0, 0, 0);

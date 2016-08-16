@@ -48,11 +48,11 @@ enum GK_RESOURCE_MANAGER_TYPE
 	GK_RESOURCE_MANAGER_TYPE_SHADER,
 };
 
-#ifdef OS_WIN32
-typedef stdext::hash_map< gkStdString, gkResourcePtr >			gkResourceMap;
-#else
-typedef std::map< gkStdString, gkResourcePtr >			gkResourceMap;
-#endif
+// #ifdef OS_WIN32
+// typedef stdext::hash_map< gkStdString, gkResourcePtr >			gkResourceMap;
+// #else
+typedef gkHashMap< gkStdString, gkResourcePtr >			gkResourceMap;
+//#endif
 typedef std::map< gkResourceHandle, gkResourcePtr >			 	gkResourceHandleMap;
 typedef std::vector< gkStdString >								gkReloadList;
 

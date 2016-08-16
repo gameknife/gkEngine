@@ -1,4 +1,4 @@
-﻿#include "StableHeader.h"
+#include "StableHeader.h"
 #include "IRenderer.h"
 #include "gkShader.h"
 #include "gkIterator.h"
@@ -21,6 +21,8 @@ gkShaderGLES2::gkShaderGLES2( IResourceManager* creator, const gkStdString& name
 #ifdef OS_WIN32
 	gEnv->pFileChangeMonitor->AddListener(this);
 #endif
+    
+    m_currUniformGroup = &m_defaultUniformGroup;
 }
 
 gkShaderGLES2::~gkShaderGLES2( void )
@@ -257,10 +259,10 @@ bool gkShaderGLES2::loadFromGfxShader( CRapidXmlParseNode* rootNode )
 
 bool gkShaderGLES2::unloadImpl(void)
 {
-	std::map<uint32, GLuint>::iterator it = m_macroPrograms.begin();
+	std::map<uint32, MacroGroup>::iterator it = m_macroPrograms.begin();
 	for (;it != m_macroPrograms.end();++it)
 	{
-		GLuint program = it->second;
+		GLuint program = it->second.first;
 		glDeleteProgram(program); 
 	}
 	m_macroPrograms.clear();
@@ -311,15 +313,15 @@ void gkShaderGLES2::FX_SetValue( GKHANDLE hParam, const void* data, uint32 bytes
 		break;
 	case 2 * sizeof(float):
 		{
-			int location = glGetUniformLocation(m_Program, hParam);
+			int location = get_cache_handle_by_name(hParam);
 			const Vec2& tmp = *((const Vec2*)data);
-			glUniform2f( location, tmp.x, tmp.y );
+			if(location != -1) glUniform2f( location, tmp.x, tmp.y );
 		}
 		break;
 	case 1 * sizeof(float):
 		{
-			int location = glGetUniformLocation(m_Program, hParam);
-			glUniform1f( location, *((float*)data) );
+			int location = get_cache_handle_by_name(hParam);
+			if(location != -1) glUniform1f( location, *((float*)data) );
 		}
 		break;
 	default:
@@ -329,17 +331,39 @@ void gkShaderGLES2::FX_SetValue( GKHANDLE hParam, const void* data, uint32 bytes
 
 	if ( vec && (bytes % sizeof(Vec4) == 0) && (bytes / sizeof(Vec4) > 1))
 	{
-		int location = glGetUniformLocation(m_Program, hParam);
-		glUniform4fv( location, bytes / sizeof(Vec4), (const float*)data);
+		int location = get_cache_handle_by_name(hParam);
+		if(location != -1) glUniform4fv( location, bytes / sizeof(Vec4), (const float*)data);
 	}
+}
+
+int gkShaderGLES2::get_cache_handle_by_name(GKHANDLE hParam)
+{
+    if (m_currUniformGroup == nullptr) {
+        return 0;
+    }
+    if(m_Program == 0)
+    {
+        return 0;
+    }
+    std::string name(hParam);
+    auto it = m_currUniformGroup->find(name);
+    if( it != m_currUniformGroup->end() )
+    {
+        return it->second;
+    }
+    else
+    {
+        int location = glGetUniformLocation(m_Program,hParam);
+        m_currUniformGroup->insert( std::map<std::string, int>::value_type( name, location) );
+        return location;
+    }
 }
 
 void gkShaderGLES2::FX_SetMatrix( GKHANDLE hParam, const Matrix44& data )
 {
 	// bind MVP MATRIX
-	int location = glGetUniformLocation(m_Program, hParam);
-	//Matrix44 mvpMat = gkRendererGLES2::getShaderContent().getWorldViewProjMatrix();
-	glUniformMatrix4fv( location, 1, GL_FALSE, &(data.m00) );
+	int location = get_cache_handle_by_name(hParam);
+    if(location != -1) glUniformMatrix4fv( location, 1, GL_FALSE, &(data.m00) );
 }
 
 //-----------------------------------------------------------------------
@@ -350,21 +374,24 @@ void gkShaderGLES2::FX_SetFloat( GKHANDLE hParam, float data)
 
 void gkShaderGLES2::FX_SetFloat3( GKHANDLE hParam, const Vec3& data )
 {
-	int location = glGetUniformLocation(m_Program, hParam);
-	glUniform3f( location, data.x, data.y, data.z );
+	int location = get_cache_handle_by_name(hParam);
+	if(location != -1) glUniform3f( location, data.x, data.y, data.z );
 }
 
 //-----------------------------------------------------------------------
 void gkShaderGLES2::FX_SetFloat4( GKHANDLE hParam, const Vec4& data )
 {
-	int location = glGetUniformLocation(m_Program, hParam);
-	glUniform4f( location, data.x, data.y, data.z, data.w );
+	int location = get_cache_handle_by_name(hParam);
+	if(location != -1) glUniform4f( location, data.x, data.y, data.z, data.w );
 }
 //////////////////////////////////////////////////////////////////////////
 void gkShaderGLES2::FX_SetColor4( GKHANDLE hParam, const ColorF& data )
 {
 	FX_SetValue(hParam, &data, sizeof(ColorF));
 }
+
+#define BIND_TEX_UNIT(X,Y) {int location = get_cache_handle_by_name(#X);\
+if(location != -1) glUniform1i( location, Y );}
 
 //-----------------------------------------------------------------------
 void gkShaderGLES2::FX_Begin( uint32* pPasses, DWORD flag )
@@ -376,14 +403,16 @@ void gkShaderGLES2::FX_Begin( uint32* pPasses, DWORD flag )
 
 	if (flag == 1)
 	{
-		glUniform1i( glGetUniformLocation(m_Program, "texDiffuse"), 0 );
-		glUniform1i( glGetUniformLocation(m_Program, "texNormal"), 1 );
-		glUniform1i( glGetUniformLocation(m_Program, "texSpecular"), 2 );
-		glUniform1i( glGetUniformLocation(m_Program, "texDetail"), 3 );
-		glUniform1i( glGetUniformLocation(m_Program, "texCustom1"), 4 );
-        glUniform1i( glGetUniformLocation(m_Program, "texCustom2"), 5 );
-        glUniform1i( glGetUniformLocation(m_Program, "texEnvmap"), 6 );
-        glUniform1i( glGetUniformLocation(m_Program, "texCubemap"), 7 );
+        //int location = get_cache_handle_by_name("texDiffuse");
+        //if(location != -1) glUniform1i( location, 0 );
+        BIND_TEX_UNIT(texDiffuse,0)
+        BIND_TEX_UNIT(texNormal,1)
+        BIND_TEX_UNIT(texSpecular,2)
+        BIND_TEX_UNIT(texDetail,3)
+        BIND_TEX_UNIT(texCustom1,4)
+        BIND_TEX_UNIT(texCustom2,5)
+        BIND_TEX_UNIT(texEnvmap,6)
+        BIND_TEX_UNIT(texCubemap,7)
 	}
 	else
 	{
@@ -391,32 +420,15 @@ void gkShaderGLES2::FX_Begin( uint32* pPasses, DWORD flag )
         ApplyState();
         
 		// bind texture sampler
-		int location = glGetUniformLocation(m_Program, "texDiffuse");
-		if(location > -1) glUniform1i( location  ,0);
-
-		location = glGetUniformLocation(m_Program, "texNormal");
-		if(location > -1) glUniform1i( location  ,1);
-
-		location = glGetUniformLocation(m_Program, "texSpecular");
-		if(location > -1) glUniform1i( location  ,2);
-
-		location = glGetUniformLocation(m_Program, "texDetail");
-		if(location > -1) glUniform1i( location  ,3);
-
-		location = glGetUniformLocation(m_Program, "texCustom1");
-		if(location > -1) glUniform1i( location  ,4);
-
-		location = glGetUniformLocation(m_Program, "texCustom2");
-		if(location > -1) glUniform1i( location  ,5);
-
-		location = glGetUniformLocation(m_Program, "texEnvmap");
-		if(location > -1) glUniform1i( location  ,6);
-
-		location = glGetUniformLocation(m_Program, "texCubemap");
-		if(location > -1) glUniform1i( location  ,7);
+        BIND_TEX_UNIT(texDiffuse,0)
+        BIND_TEX_UNIT(texNormal,1)
+        BIND_TEX_UNIT(texSpecular,2)
+        BIND_TEX_UNIT(texDetail,3)
+        BIND_TEX_UNIT(texCustom1,4)
+        BIND_TEX_UNIT(texCustom2,5)
+        BIND_TEX_UNIT(texEnvmap,6)
+        BIND_TEX_UNIT(texCubemap,7)
 	}
-	//location = glGetUniformLocation(m_Program, "tex4");
-	//glUniform1i( location  ,4);
 
 }
 //-----------------------------------------------------------------------
@@ -454,9 +466,8 @@ uint32 gkShaderGLES2::getDefaultRenderLayer()
 //////////////////////////////////////////////////////////////////////////
 void gkShaderGLES2::FX_SetMatrixArray( GKHANDLE hParam, D3DXMATRIX* data, uint32 size )
 {
-	int location = glGetUniformLocation(m_Program, hParam);
-	//Matrix44 mvpMat = gkRendererGLES2::getShaderContent().getWorldViewProjMatrix();
-	glUniformMatrix4fv( location, size, GL_FALSE, (float*)(data) );
+	int location = get_cache_handle_by_name(hParam);
+	if(location != -1) glUniformMatrix4fv( location, size, GL_FALSE, (float*)(data) );
 }
 
 bool gkShaderGLES2::ApplyState()
@@ -742,11 +753,12 @@ bool gkShaderGLES2::CompileShader( const char* source, GLuint& shader, GLenum ty
 
 void gkShaderGLES2::switchSystemMacro(uint32 systemMarcro /*= 0*/)
 {
-	std::map<uint32, GLuint>::iterator it = m_macroPrograms.find(systemMarcro);
+	std::map<uint32, MacroGroup>::iterator it = m_macroPrograms.find(systemMarcro);
 	if (it != m_macroPrograms.end())
 	{
         m_rtMacroMask = systemMarcro;
-		m_Program = it->second;
+		m_Program = it->second.first;
+        m_currUniformGroup = &(it->second.second);
 		return;
 	}
 
@@ -755,7 +767,7 @@ void gkShaderGLES2::switchSystemMacro(uint32 systemMarcro /*= 0*/)
     m_rtMacroMask = systemMarcro;
 	buildShader( final_mask );
 
-	m_macroPrograms.insert( std::map<uint32, GLuint>::value_type( systemMarcro, m_Program ) );
+    m_macroPrograms.insert( std::map<uint32, MacroGroup>::value_type( systemMarcro, MacroGroup(m_Program, UniformMap() ) ) );
 }
 
 bool gkShaderGLES2::buildShader(uint32 marco_mask)

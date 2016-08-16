@@ -161,16 +161,42 @@ bool gkRendererGL::RT_EndRender()
 	return true;
 }
 
+#if defined( OS_IOS )
+
+#if defined( OS_APPLE )
+
+#define PUSH_GPU_MARKER( x )
+#define POP_GPU_MARKER( x )
+
+#else
+
+#define PUSH_GPU_MARKER(x) glPushGroupMarkerEXT(strlen(#x) + 1, #x);
+#define POP_GPU_MARKER(x) glPopGroupMarkerEXT();
+
+#endif
+
+#else
+
+#define PUSH_GPU_MARKER( x )
+#define POP_GPU_MARKER( x )
+
+#endif
+
 bool gkRendererGL::RT_StartRender()
 {
+    //g_pRendererCVars->r_ShadingMode = 2;
+    
 	gEnv->pProfiler->setStartRendering();
 
 	m_pDeviceContext->startRender();
 
 	if (m_bSkipThisFrame == 0)
 	{
+        //////////////////////////////////////////////////////////////////////////
 		// shadow map gen
-		//FX_PushHwDepthTarget( gkTextureManager::ms_ShadowCascade1, true );
+        
+        PUSH_GPU_MARKER( ShadowMapGen )
+        
 		FX_PushRenderTarget(0, NULL, gkTextureManager::ms_ShadowCascade1);
 		glClear(GL_DEPTH_BUFFER_BIT);
 		if (g_pRendererCVars->r_Shadow)
@@ -183,208 +209,239 @@ bool gkRendererGL::RT_StartRender()
 			glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 			shader->FX_End();
 		}
-		//FX_PopHwDepthTarget();
 		FX_PopRenderTarget(0);
+        
+        POP_GPU_MARKER( ShadowMapGen )
+        //glPopGroupMarkerEXT();
+        
+        if(g_pRendererCVars->r_ShadingMode != 2)
+        {
+            //////////////////////////////////////////////////////////////////////////
+            // Z Pass
+            
+            PUSH_GPU_MARKER( Zpass )
+            
+            FX_PushRenderTarget(0, gkTextureManager::ms_SceneNormal, gkTextureManager::ms_SceneDepth);
+            
+            glClear(GL_DEPTH_BUFFER_BIT);
+            
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+            glFrontFace(GL_CCW);
+            glCullFace(GL_BACK);
+            glEnable(GL_CULL_FACE);
+            glEnable(GL_DEPTH_TEST);
+            
+            RP_ProcessRenderLayer(RENDER_LAYER_SKIES_EARLY, false, eSSM_Zpass);
+            RP_ProcessRenderLayer(RENDER_LAYER_OPAQUE, false, eSSM_Zpass);
+            RP_ProcessRenderLayer(RENDER_LAYER_OPAQUE, true, eSSM_Zpass | eSSM_Skinned);
+            RP_ProcessRenderLayer(RENDER_LAYER_TERRIAN, false, eSSM_Zpass);
+            
+            FX_PopRenderTarget(0);
+            
+            POP_GPU_MARKER( Zpass )
+            
+            
+            //////////////////////////////////////////////////////////////////////////
+            // LinearDepth Resolver, may not just use for VolumeFog
+            if (g_pRendererCVars->r_Fog)
+            {
+                PUSH_GPU_MARKER( ResolveLinearDepth )
+                
+                FX_PushRenderTarget(0, gkTextureManager::ms_SceneDepth_Linear, NULL);
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                
+                gkShaderPtr pShader = gkShaderManager::ms_postcvtlineardepth;
+                pShader->FX_Begin(0, 1);
+                
+                pShader->FX_SetFloat4("ViewportParam", getShaderContent().getViewParam());
+                
+                gkTextureManager::ms_SceneDepth->Apply(0, 0);
+                FX_DrawScreenQuad();
+                
+                pShader->FX_End();
+                
+                FX_PopRenderTarget(0);
+                
+                POP_GPU_MARKER( ResolveLinearDepth )
+            }
+            
+            PUSH_GPU_MARKER( DeferredShading )
+            
+            //////////////////////////////////////////////////////////////////////////
+            // DeferredShading Ambient Pass, OPTIMIZE: consider pass to opaque
+            {
+                PUSH_GPU_MARKER( AmbientPass )
+                
+                FX_PushRenderTarget(0, gkTextureManager::ms_SceneDifAcc, NULL);
+                
+                glClear(GL_COLOR_BUFFER_BIT);
+                
+                gkShaderPtr pShader = gkShaderManager::ms_DeferredLighting_Ambient;
+                pShader->FX_Begin(0, 1);
+                
+                pShader->FX_SetFloat4("ViewportParam", getShaderContent().getViewParam());
+                pShader->FX_SetFloat3("campos", getShaderContent().getCamPos());
+                
+                const STimeOfDayKey& tod = gEnv->p3DEngine->getTimeOfDay()->getCurrentTODKey();
+                pShader->FX_SetFloat4("g_Ambient", tod.clGroundAmb.toVec4());
+                pShader->FX_SetFloat3("g_LightPos", getShaderContent().getLightDir());
+                
+                gkTextureManager::ms_SceneDepth_Linear->Apply(0, 0);
+                gkTextureManager::ms_SceneNormal->Apply(1, 0);
+                
+                FX_DrawScreenQuad();
+                
+                pShader->FX_End();
+                
+                FX_PopRenderTarget(0);
+                
+                POP_GPU_MARKER( AmbientPass )
+            }
+            
+            //////////////////////////////////////////////////////////////////////////
+            //  DeferredShading PointLightPass
+            if (1)
+            {
+                PUSH_GPU_MARKER( PointLightPass )
+                
+                gkRenderLightList& lights = m_pRenderingRenderSequence->getRenderLightList();
+                gkRenderLightList::iterator it = lights.begin();
+                FX_PushRenderTarget(0, gkTextureManager::ms_SceneDifAcc, gkTextureManager::ms_SceneDepth);
+                
+                glDepthMask(GL_FALSE);
+                glEnable(GL_CULL_FACE);
+                
+                glEnable(GL_BLEND);
+                glBlendFunc(GL_ONE, GL_ONE);
+                
+                for (; it != lights.end(); ++it)
+                {
+                    //glDisable(GL_CULL_FACE);
+                    gkShaderManager::ms_Simple->FX_Begin(0, 0);
+                    
+                    if ((getShaderContent().getCamPos() - (*it).m_vPos).GetLength() < (*it).m_fRadius) {
+                        glDisable(GL_DEPTH_TEST);
+                        glCullFace(GL_FRONT);
+                    }
+                    else
+                    {
+                        glEnable(GL_DEPTH_TEST);
+                        glCullFace(GL_BACK);
+                    }
+                    
+                    // build matrix
+                    Matrix34 mat;
+                    mat.Set(Vec3((*it).m_fRadius, (*it).m_fRadius, (*it).m_fRadius),
+                            Quat::CreateIdentity(), (*it).m_vPos);
+                    Matrix44 matForRender(mat);
+                    matForRender.Transpose();
+                    gkShaderManager::ms_Simple->FX_SetMatrix("g_matWorld", matForRender);
+                    matForRender = matForRender * getShaderContent().getViewMatrix();
+                    matForRender = matForRender * getShaderContent().getProjectionMatrix();
+                    gkShaderManager::ms_Simple->FX_SetMatrix("g_matWVP", matForRender);
+                    
+                    Vec4 cam_far(getShaderContent().getCamPos(), getShaderContent().getMainCamera()->GetFarPlane());
+                    gkShaderManager::ms_Simple->FX_SetFloat4("g_campos_far", cam_far);
+                    Vec3 cam_dir = getShaderContent().getCamDir();
+                    cam_dir.Normalize();
+                    gkShaderManager::ms_Simple->FX_SetFloat3("g_camdir", cam_dir);
+                    
+                    gkShaderManager::ms_Simple->FX_SetFloat3("g_lightpos", (*it).m_vPos);
+                    Vec4 color((*it).m_vDiffuse.toVec3(), (*it).m_fRadius);
+                    gkShaderManager::ms_Simple->FX_SetFloat4("g_lightcolor", color);
+                    
+                    gkShaderManager::ms_Simple->FX_Commit();
+                    
+                    // light mesh
+                    gkMeshManager::ms_generalSphere->touch();
+                    gkRenderOperation rop;
+                    gkMeshManager::ms_generalSphere->getRenderOperation(rop);
+                    
+                    _render(rop);
+                    
+                    gkShaderManager::ms_Simple->FX_End();
+                }
+                
+                glCullFace(GL_BACK);
+                glEnable(GL_DEPTH_TEST);
+                glEnable(GL_CULL_FACE);
+                glDisable(GL_BLEND);
+                FX_PopRenderTarget(0);
+                
+                POP_GPU_MARKER( PointLightPass )
+            }
+            
+            //////////////////////////////////////////////////////////////////////////
+            // Shadow Mask Pass, OPTMIZE: consider move to OpaquePass
+            {
+                PUSH_GPU_MARKER( ShadowMask )
+                
+                FX_PushRenderTarget(0, gkTextureManager::ms_ShadowMask, NULL);
+                
+                const STimeOfDayKey& tod = gEnv->p3DEngine->getTimeOfDay()->getCurrentTODKey();
+                
+                float todTime = tod.fKeyTime;
+                if (todTime >= 6.0f && todTime <= 18.0f)
+                {
+                    glClear(GL_COLOR_BUFFER_BIT);
+                    
+                    gkShaderPtr pShader = gkShaderManager::ms_ShadowMaskGen;
+                    pShader->FX_Begin(0, 1);
+                    
+                    pShader->FX_SetFloat4("ViewportParam", getShaderContent().getViewParam());
+                    pShader->FX_SetFloat3("campos", getShaderContent().getCamPos());
+                    
+                    Matrix44 mViewToLightProj;
+                    Matrix44 mViewCascade[3];
+                    
+                    mViewToLightProj.SetIdentity();
+                    mViewToLightProj.Multiply(mViewToLightProj, getShaderContent().getViewMatrix_ShadowCascade(1));
+                    mViewToLightProj.Multiply(mViewToLightProj, getShaderContent().getProjectionMatrix_ShadowCascade(1));
+                    
+                    mViewCascade[1] = mViewToLightProj;
+                    
+                    pShader->FX_SetMatrix("g_mViewToLightProj0", mViewCascade[1]);
+                    
+                    gkTextureManager::ms_SceneDepth_Linear->Apply(0, 0);
+                    gkTextureManager::ms_ShadowCascade1->Apply(1, 0);
+                    
+                    static gkTexturePtr texRot;
+                    if (texRot.isNull())
+                    {
+                        texRot = gEnv->pSystem->getTextureMngPtr()->loadSync(_T("Engine/Assets/Textures/procedure/rotrandomcm.dds"), _T("internal"));
+                    }
+                    texRot->Apply(2, 2);
+                    
+                    
+                    FX_DrawScreenQuad();
+                    
+                    pShader->FX_End();
+                }
+                else
+                {
+                    //glClearColor(1,1,1,1);
+                    glClearColor(0, 0, 0, 0);
+                    glClear(GL_COLOR_BUFFER_BIT);
+                    glClearColor(0, 0, 0, 0);
+                }
+                
+                FX_PopRenderTarget(0);
+                
+                POP_GPU_MARKER( ShadowMask )
+            }
 
-		//////////////////////////////////////////////////////////////////////////
-		// General Forward Pass
-
-		FX_PushRenderTarget(0, gkTextureManager::ms_SceneNormal, gkTextureManager::ms_SceneDepth);
-
-		glClear(GL_DEPTH_BUFFER_BIT);
-
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glFrontFace(GL_CCW);
-		glCullFace(GL_BACK);
-		glEnable(GL_CULL_FACE);
-		glEnable(GL_DEPTH_TEST);
-
-		RP_ProcessRenderLayer(RENDER_LAYER_SKIES_EARLY, false, eSSM_Zpass);
-		RP_ProcessRenderLayer(RENDER_LAYER_OPAQUE, false, eSSM_Zpass);
-		RP_ProcessRenderLayer(RENDER_LAYER_OPAQUE, true, eSSM_Zpass | eSSM_Skinned);
-		RP_ProcessRenderLayer(RENDER_LAYER_TERRIAN, false, eSSM_Zpass);
-
-		FX_PopRenderTarget(0);
-
-		if (g_pRendererCVars->r_Fog)
-		{
-			FX_PushRenderTarget(0, gkTextureManager::ms_SceneDepth_Linear, NULL);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-			gkShaderPtr pShader = gkShaderManager::ms_postcvtlineardepth;
-			pShader->FX_Begin(0, 1);
-
-			pShader->FX_SetFloat4("ViewportParam", getShaderContent().getViewParam());
-
-			gkTextureManager::ms_SceneDepth->Apply(0, 0);
-			FX_DrawScreenQuad();
-
-			pShader->FX_End();
-
-			FX_PopRenderTarget(0);
-		}
-
-		{
-			FX_PushRenderTarget(0, gkTextureManager::ms_SceneDifAcc, NULL);
-
-			glClear(GL_COLOR_BUFFER_BIT);
-
-			gkShaderPtr pShader = gkShaderManager::ms_DeferredLighting_Ambient;
-			pShader->FX_Begin(0, 1);
-
-			pShader->FX_SetFloat4("ViewportParam", getShaderContent().getViewParam());
-			pShader->FX_SetFloat3("campos", getShaderContent().getCamPos());
-
-			const STimeOfDayKey& tod = gEnv->p3DEngine->getTimeOfDay()->getCurrentTODKey();
-			pShader->FX_SetFloat4("g_Ambient", tod.clGroundAmb.toVec4());
-			pShader->FX_SetFloat3("g_LightPos", getShaderContent().getLightDir());
-
-			gkTextureManager::ms_SceneDepth_Linear->Apply(0, 0);
-			gkTextureManager::ms_SceneNormal->Apply(1, 0);
-
-			FX_DrawScreenQuad();
-
-			pShader->FX_End();
-
-			FX_PopRenderTarget(0);
-		}
-
-		if (1)
-		{
+        }
 
 
-
-			gkRenderLightList& lights = m_pRenderingRenderSequence->getRenderLightList();
-
-			gkRenderLightList::iterator it = lights.begin();
-
-			FX_PushRenderTarget(0, gkTextureManager::ms_SceneDifAcc, gkTextureManager::ms_SceneDepth);
-
-
-
-			glDepthMask(GL_FALSE);
-			glEnable(GL_CULL_FACE);
-
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_ONE, GL_ONE);
-
-			for (; it != lights.end(); ++it)
-			{
-				//glDisable(GL_CULL_FACE);
-				gkShaderManager::ms_Simple->FX_Begin(0, 0);
-
-				if ((getShaderContent().getCamPos() - (*it).m_vPos).GetLength() < (*it).m_fRadius) {
-					glDisable(GL_DEPTH_TEST);
-					glCullFace(GL_FRONT);
-				}
-				else
-				{
-					glEnable(GL_DEPTH_TEST);
-					glCullFace(GL_BACK);
-				}
-
-
-				// build matrix
-				Matrix34 mat;
-				mat.Set(Vec3((*it).m_fRadius, (*it).m_fRadius, (*it).m_fRadius),
-					Quat::CreateIdentity(), (*it).m_vPos);
-				Matrix44 matForRender(mat);
-				matForRender.Transpose();
-				gkShaderManager::ms_Simple->FX_SetMatrix("g_matWorld", matForRender);
-				matForRender = matForRender * getShaderContent().getViewMatrix();
-				matForRender = matForRender * getShaderContent().getProjectionMatrix();
-				gkShaderManager::ms_Simple->FX_SetMatrix("g_matWVP", matForRender);
-
-
-				Vec4 cam_far(getShaderContent().getCamPos(), getShaderContent().getMainCamera()->GetFarPlane());
-				gkShaderManager::ms_Simple->FX_SetFloat4("g_campos_far", cam_far);
-				Vec3 cam_dir = getShaderContent().getCamDir();
-				cam_dir.Normalize();
-				gkShaderManager::ms_Simple->FX_SetFloat3("g_camdir", cam_dir);
-
-				gkShaderManager::ms_Simple->FX_SetFloat3("g_lightpos", (*it).m_vPos);
-				Vec4 color((*it).m_vDiffuse.toVec3(), (*it).m_fRadius);
-				gkShaderManager::ms_Simple->FX_SetFloat4("g_lightcolor", color);
-
-				gkShaderManager::ms_Simple->FX_Commit();
-
-				// light mesh
-				gkMeshManager::ms_generalSphere->touch();
-				gkRenderOperation rop;
-				gkMeshManager::ms_generalSphere->getRenderOperation(rop);
-
-				_render(rop);
-
-				gkShaderManager::ms_Simple->FX_End();
-			}
-
-			glCullFace(GL_BACK);
-			glEnable(GL_DEPTH_TEST);
-			glEnable(GL_CULL_FACE);
-			glDisable(GL_BLEND);
-			FX_PopRenderTarget(0);
-
-		}
-
-		{
-			FX_PushRenderTarget(0, gkTextureManager::ms_ShadowMask, NULL);
-
-			const STimeOfDayKey& tod = gEnv->p3DEngine->getTimeOfDay()->getCurrentTODKey();
-
-			float todTime = tod.fKeyTime;
-			if (todTime >= 6.0f && todTime <= 18.0f)
-			{
-				glClear(GL_COLOR_BUFFER_BIT);
-
-				gkShaderPtr pShader = gkShaderManager::ms_ShadowMaskGen;
-				pShader->FX_Begin(0, 1);
-
-				pShader->FX_SetFloat4("ViewportParam", getShaderContent().getViewParam());
-				pShader->FX_SetFloat3("campos", getShaderContent().getCamPos());
-
-				Matrix44 mViewToLightProj;
-				Matrix44 mViewCascade[3];
-
-				mViewToLightProj.SetIdentity();
-				mViewToLightProj.Multiply(mViewToLightProj, getShaderContent().getViewMatrix_ShadowCascade(1));
-				mViewToLightProj.Multiply(mViewToLightProj, getShaderContent().getProjectionMatrix_ShadowCascade(1));
-
-				mViewCascade[1] = mViewToLightProj;
-
-				pShader->FX_SetMatrix("g_mViewToLightProj0", mViewCascade[1]);
-
-				gkTextureManager::ms_SceneDepth_Linear->Apply(0, 0);
-				gkTextureManager::ms_ShadowCascade1->Apply(1, 0);
-
-				//gkTextureManager::ms_RotSamplerAO->Apply(2, 0);
-
-				static gkTexturePtr texRot;
-				if (texRot.isNull())
-				{
-					texRot = gEnv->pSystem->getTextureMngPtr()->loadSync(_T("Engine/Assets/Textures/procedure/rotrandomcm.dds"), _T("internal"));
-				}
-				texRot->Apply(2, 2);
-
-
-				FX_DrawScreenQuad();
-
-				pShader->FX_End();
-			}
-			else
-			{
-				//glClearColor(1,1,1,1);
-				glClearColor(0, 0, 0, 0);
-				glClear(GL_COLOR_BUFFER_BIT);
-				glClearColor(0, 0, 0, 0);
-			}
-
-			FX_PopRenderTarget(0);
-		}
-
-
-
+        POP_GPU_MARKER( DeferredShading )
+        
+        //////////////////////////////////////////////////////////////////////////
 		// GENERAL PASS
 
+        // temporal aa setup
+        
+        PUSH_GPU_MARKER( ShadingPass )
+        
 		if (g_pRendererCVars->r_PostMsaa) {
 
 			if (1)
@@ -402,9 +459,15 @@ bool gkRendererGL::RT_StartRender()
 			}
 		}
 
-		FX_PushRenderTarget(0, gkTextureManager::ms_HDRTarget0, gkTextureManager::ms_SceneDepth);
+        if(g_pRendererCVars->r_ShadingMode != 2)
+        {
+            FX_PushRenderTarget(0, gkTextureManager::ms_HDRTarget0, gkTextureManager::ms_SceneDepth);
+        }
+        
 		{
 
+            PUSH_GPU_MARKER( ObjectShading )
+            
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -425,8 +488,10 @@ bool gkRendererGL::RT_StartRender()
 			glDepthMask(GL_TRUE);
 			glDisable(GL_DEPTH_TEST);
 
+            POP_GPU_MARKER( ObjectShading )
 
-
+            //////////////////////////////////////////////////////////////////////////
+            // SSAO (blended method)
 			if (0 /*g_pRendererCVars->r_SSAO*/)
 			{
 				glEnable(GL_BLEND);
@@ -455,7 +520,11 @@ bool gkRendererGL::RT_StartRender()
 
 				glDisable(GL_BLEND);
 			}
+            
+            PUSH_GPU_MARKER( Fog )
 
+            //////////////////////////////////////////////////////////////////////////
+            // Fog, may use FrameBufferFetch
 			if (g_pRendererCVars->r_Fog)
 			{
 				glEnable(GL_BLEND);
@@ -483,17 +552,29 @@ bool gkRendererGL::RT_StartRender()
 				glDisable(GL_BLEND);
 			}
 
-
+            POP_GPU_MARKER( ObjectShading )
 		}
-		FX_PopRenderTarget(0);
-
+        
+        if(g_pRendererCVars->r_ShadingMode != 2)
+        {
+            FX_PopRenderTarget(0);
+        }
+        
         glDisable(GL_DEPTH_TEST);
         
+        POP_GPU_MARKER( ShadingPass )
 		// GENERAL PASS END
 		//////////////////////////////////////////////////////////////////////////
-		if (g_pRendererCVars->r_HDRRendering)
+        
+        
+        
+        
+        //////////////////////////////////////////////////////////////////////////
+        // HDR Tone Mapping
+		if (g_pRendererCVars->r_HDRRendering && g_pRendererCVars->r_ShadingMode != 2)
 		{
-
+            PUSH_GPU_MARKER( HDRProcess )
+            
 			//////////////////////////////////////////////////////////////////////////
 			// scale down
 			{
@@ -631,19 +712,27 @@ bool gkRendererGL::RT_StartRender()
 				pShader->FX_End();
 			}
 
+            POP_GPU_MARKER( HDRProcess )
 		}
 		else
 		{
-			gkShaderPtr pShader = gkShaderManager::ms_PostCommon;
-			pShader->FX_Begin(0, 1);
+            
+            if(g_pRendererCVars->r_ShadingMode != 2)
+            {
+                gkShaderPtr pShader = gkShaderManager::ms_PostCommon;
+                pShader->FX_Begin(0, 1);
+                
+                gkTextureManager::ms_HDRTarget0->Apply(0, 1);
+                
+                FX_DrawScreenQuad();
+                
+                pShader->FX_End();
+            }
 
-			gkTextureManager::ms_HDRTarget0->Apply(0, 1);
-
-			FX_DrawScreenQuad();
-
-			pShader->FX_End();
 		}
 		
+        PUSH_GPU_MARKER( PostHUD )
+        
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -651,6 +740,8 @@ bool gkRendererGL::RT_StartRender()
 
 		glDisable(GL_BLEND);
 
+        POP_GPU_MARKER( PostHUD )
+        
 		if (g_pRendererCVars->r_PostMsaa) {
 
 			FX_PopRenderTarget(0);
@@ -1025,11 +1116,10 @@ void gkRendererGL::RP_ProcessShaderGroup(const gkShaderGroup* pShaderGroup, bool
 		IMaterial* pMtl = it->first;
 		pMtl->ApplyParameterBlock();
 
-		gkTextureManager::ms_ShadowMask->Apply(6, 0);
-		gkTextureManager::ms_SceneDifAcc->Apply(3, 0);
-
 		if (!(pShader->getRealTimeShaderMarco() & eSSM_Zpass))
 		{
+            gkTextureManager::ms_ShadowMask->Apply(6, 0);
+            gkTextureManager::ms_SceneDifAcc->Apply(3, 0);
 			gkTextureManager::ms_SceneNormal->Apply(1, 1);
 		}
 
@@ -1321,47 +1411,44 @@ void gkRendererGL::FX_DrawScreenQuad(Vec4 region)
 		gkVirtualAPI::unbind_vao();
 	}
 
-	// update quad
-	glGetError();
-	glBindBuffer(GL_ARRAY_BUFFER, tmpVBO);
-	GLenum error = glGetError();
-	if(error)
-	{
-		gkLogWarning( _T("bindbuffer failed."));
-	}
-	uint32 size = 4 * sizeof(STmpVert);
-
-	GLvoid* Data = NULL;
-
-	gkVirtualAPI::gkVAPI_MapBuffer( &Data, GL_ARRAY_BUFFER, size, gkVirtualAPI::eVAPI_MapWrite );
-
-	
-	STmpVert verts[4];
-	verts[0].pos = Vec2(region.x, region.y);
-	verts[1].pos = Vec2(region.x + region.z, region.y);
-	verts[2].pos = Vec2(region.x, region.y + region.w);
-	verts[3].pos = Vec2(region.x + region.z, region.y + region.w);
-
-	verts[0].tex = Vec2(0, 0);
-	verts[1].tex = Vec2(1, 0);
-	verts[2].tex = Vec2(0, 1);
-	verts[3].tex = Vec2(1, 1);
-
-	verts[0].farclip = getShaderContent().getCamFarVerts(0);
-	verts[1].farclip = getShaderContent().getCamFarVerts(1);
-	verts[2].farclip = getShaderContent().getCamFarVerts(2);
-	verts[3].farclip = getShaderContent().getCamFarVerts(3);
-
-	//if(Data)
-	{
-		memcpy(Data, verts, size);
-	}
-	
-
-	gkVirtualAPI::gkVAPI_UnMapBuffer( Data, GL_ARRAY_BUFFER, size);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
+    
+    // one frame just bind once, thats enough
+    static int lastFrameCount = -1;
+    if( gEnv->pProfiler->getFrameCount() != lastFrameCount )
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, tmpVBO);
+        
+        lastFrameCount = gEnv->pProfiler->getFrameCount();
+        
+        uint32 size = 4 * sizeof(STmpVert);
+        GLvoid* Data = NULL;
+        gkVirtualAPI::gkVAPI_MapBuffer( &Data, GL_ARRAY_BUFFER, size, gkVirtualAPI::eVAPI_MapWrite );
+        
+        STmpVert verts[4];
+        verts[0].pos = Vec2(region.x, region.y);
+        verts[1].pos = Vec2(region.x + region.z, region.y);
+        verts[2].pos = Vec2(region.x, region.y + region.w);
+        verts[3].pos = Vec2(region.x + region.z, region.y + region.w);
+        
+        verts[0].tex = Vec2(0, 0);
+        verts[1].tex = Vec2(1, 0);
+        verts[2].tex = Vec2(0, 1);
+        verts[3].tex = Vec2(1, 1);
+        
+        verts[0].farclip = getShaderContent().getCamFarVerts(0);
+        verts[1].farclip = getShaderContent().getCamFarVerts(1);
+        verts[2].farclip = getShaderContent().getCamFarVerts(2);
+        verts[3].farclip = getShaderContent().getCamFarVerts(3);
+        
+        {
+            memcpy(Data, verts, size);
+        }
+        
+        gkVirtualAPI::gkVAPI_UnMapBuffer( Data, GL_ARRAY_BUFFER, size);
+        
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+    
 	gkVirtualAPI::gen_or_bind_vao( tmpVAO, tmpVBO );
 
 #ifdef RENDERAPI_GLES2
@@ -1573,4 +1660,16 @@ void gkRendererGL::apply_vertex_layout(const gkRenderOperation &op)
 	}
 	break;
 	}
+}
+
+void gkRendererGL::internalApplyTexture(int channel, GLenum unit, GLuint name)
+{
+    if( m_texStages[channel] != name )
+    {
+        glActiveTexture(GL_TEXTURE0 + channel);
+        glBindTexture(unit, name);
+        
+        m_texStages[channel] = name;
+    }
+
 }

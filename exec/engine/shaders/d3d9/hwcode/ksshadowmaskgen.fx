@@ -39,7 +39,7 @@ sampler_state
 sampler2D shadowMap : register(s1)=
 sampler_state
 {
-	  AddressU = Clamp;
+	AddressU = Clamp;
     AddressV = Clamp;
     MinFilter = Point;
     MagFilter = Point;
@@ -81,14 +81,14 @@ float2 TexelKernel[4]
 	string ConvertPixelsToTexels = "PixelKernel";
 >;
 
-float PCF_Filter(float2 uv, float4 LP, uniform sampler2D ShadowMap, 
-                uniform float bias, float filterWidth, float numSamples)
+float PCF_Filter(float2 uv, float2 Tex, float4 LP, uniform sampler2D ShadowMap, 
+                uniform float bias, float filterWidth, int numSamples)
 {
        // compute step size for iterating through the kernel
-       float stepSize = 2 * filterWidth / numSamples;
+       float stepSize = 0.4 * filterWidth / (float)numSamples;
 
        // compute uv coordinates for upper-left corner of the kernel
-       uv = uv - float2(filterWidth,filterWidth);
+       uv = uv - float2(filterWidth * 0.2,filterWidth * 0.2);
 
        float sum = 0;  // sum of successful depth tests
 
@@ -255,6 +255,24 @@ if(quality >= 3)
 }
 
 
+float Point_Filter(float2 uv, float2 Tex, float4 LP, uniform sampler2D ShadowMapxxx, 
+	uniform float bias, float filterWidth, int quality)
+{
+	// here we go through this point for first
+	float currDepth = bias + GetDepth(tex2D(ShadowMapxxx, uv));
+	// test if the depth in the shadow map is closer than
+	// the eye-view point
+
+	float width = filterWidth;
+
+	if(LP.z > currDepth)
+	{
+		return 0;
+	}
+
+	return 1;
+}
+
 //-----------------------------------------------------------------------------
 // Pixel Shader: PixScene
 // Desc: Process pixel (do per-pixel lighting) for enabled scene
@@ -282,7 +300,7 @@ float4 HighPerformence( float2 Tex : TEXCOORD0,
 		discard;
 	}
 
-	float LightAmount = Jittering_Filter(ShadowTexC, Tex, vPosLight, shadowMap, gsmShadowParam0.x, SOFT_SIZE, 3);
+	float LightAmount = Jittering_Filter(ShadowTexC, Tex, vPosLight, shadowMap, gsmShadowParam0.x, SOFT_SIZE, 1);
 
 	Diffuse = saturate( LightAmount );
 	return saturate(Diffuse + g_fShadowDepth);
@@ -294,6 +312,7 @@ float4 LowPerformence( float2 Tex : TEXCOORD0,
 	float Diffuse = 1;
 
 	//return 0;
+
 	float4 vPos = GetWorldPos(positionMap, Tex.xy, FarClip.xyz);
 	vPos.w = 1;
 
@@ -311,6 +330,7 @@ float4 LowPerformence( float2 Tex : TEXCOORD0,
 	}
 
 	float LightAmount = Jittering_Filter(ShadowTexC, Tex, vPosLight, shadowMap, gsmShadowParam0.x * 0.7f, SOFT_SIZE * 0.5f , 1);
+
 
 	Diffuse = saturate( LightAmount );
 

@@ -14,9 +14,18 @@
 #else
 
 #ifdef _DEBUG  
+
+#if _MSC_VER == 1900
+#pragma comment(lib,"..\\..\\thirdparty\\freetype\\lib\\freetype_win32debug_vc14.lib")
+#else
 #pragma comment(lib,"..\\..\\thirdparty\\freetype\\lib\\freetype_win32debug.lib")
+#endif
+#else
+#if _MSC_VER == 1900
+#pragma comment(lib,"..\\..\\thirdparty\\freetype\\lib\\freetype_win32release_vc14.lib")
 #else
 #pragma comment(lib,"..\\..\\thirdparty\\freetype\\lib\\freetype_win32release.lib")
+#endif
 #endif
 
 #endif

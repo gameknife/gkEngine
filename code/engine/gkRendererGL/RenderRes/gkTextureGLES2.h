@@ -1,4 +1,4 @@
-﻿//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 /*
 Copyright (c) 2011-2015 Kaiming Yi
 	
@@ -43,6 +43,20 @@ Copyright (c) 2011-2015 Kaiming Yi
 
 #include "ITexture.h"
 
+enum EGKTextureFilterMode
+{
+    eGTF_Nearest,
+    eGTF_Linear,
+    eGTF_UnoknownFilter,
+};
+
+enum EGKTextureAddressMode
+{
+    eGTF_Wrap,
+    eGTF_Clamp,
+    eGTF_UnoknownAddress,
+};
+
 
 class gkTextureGLES2 : public ITexture {
     
@@ -77,6 +91,9 @@ protected:
 	bool m_dynamic;
 
 	bool m_sizable;
+    
+    EGKTextureFilterMode m_filter;
+    EGKTextureAddressMode m_warp;
 
 public:
 	gkTextureGLES2(IResourceManager* creator, const gkStdString& name, gkResourceHandle handle,
@@ -119,7 +136,8 @@ protected:
 
 	virtual bool sizable();
 
-
+    void applyFilter( EGKTextureFilterMode mode );
+    void applyAddress( EGKTextureAddressMode mode );
 };
 
 

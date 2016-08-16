@@ -4,25 +4,13 @@
     <NsightTegraProjectRevisionNumber>9</NsightTegraProjectRevisionNumber>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Tegra-Android">
-      <Configuration>Debug</Configuration>
-      <Platform>Tegra-Android</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Develop|Tegra-Android">
-      <Configuration>Develop</Configuration>
-      <Platform>Tegra-Android</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Tegra-Android">
-      <Configuration>Release</Configuration>
-      <Platform>Tegra-Android</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="StaticBuild|Tegra-Android">
-      <Configuration>StaticBuild</Configuration>
-      <Platform>Tegra-Android</Platform>
+    <ProjectConfiguration Include="Develop_Latest|Win32">
+      <Configuration>Develop_Latest</Configuration>
+      <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="StaticBuild|Win32">
       <Configuration>StaticBuild</Configuration>
@@ -48,26 +36,11 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
-    <AndroidArch>armv7-a</AndroidArch>
-    <PlatformToolset>arm-linux-androideabi-4.6</PlatformToolset>
-    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -75,25 +48,18 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Tegra-Android'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -103,16 +69,7 @@
     <Import Project="..\solutions\gkSystemInclude.props" />
     <Import Project="..\solutions\DebugWin.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\solutions\gkSystemInclude.props" />
-    <Import Project="..\solutions\gkAndroid.props" />
-  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\solutions\gkSystemInclude.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\solutions\gkSystemInclude.props" />
   </ImportGroup>
@@ -120,7 +77,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\solutions\gkSystemInclude.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\solutions\gkSystemInclude.props" />
   </ImportGroup>
@@ -129,34 +86,20 @@
     <Import Project="..\solutions\gkSystemInclude.props" />
     <Import Project="..\solutions\gkStaticLib.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Tegra-Android'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\solutions\gkSystemInclude.props" />
-    <Import Project="..\solutions\gkStaticLib.props" />
-  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Tegra-Android'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -173,25 +116,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\..\thirdparty\havoksdk\Lib\win32_vs2010\dev_dll;</AdditionalLibraryDirectories>
       <AdditionalDependencies>hkBase.lib;hkSerialize.lib;hkSceneData.lib;hkGeometryUtilities.lib;hkInternal.lib;hkVisualize.lib;hkCompat.lib;hkcdInternal.lib;hkcdCollide.lib;hkaAnimation.lib;hkaInternal.lib;hkaPhysics2012Bridge.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
-    <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>GKANIMATIONHAVOK_EXPORTS;HK_DEBUG;HK_ANARCHY;PROFILING;_VISION_POSIX;_VISION_ANDROID;_VISION_NO_WARNING_IMAGE_FORMAT;VBASE_LIB;LINK_WITH_VISION;VISIONDLL_LIB;PARTICLEMODULE_IMPORTS;EFFECTSMODULE_IMPORTS;GUI_ENGINEPLUGIN_IMPORTS;SCRIPTMODULE_IMPORTS;VTERRAINPLUGIN_IMPORTS;ANIMATIONMODULE_IMPORTS;DEFERREDMODULE_IMPORTS;SCENEMODULE_IMPORTS;PATHRENDERINGMODULE_IMPORTS;HK_DISABLE_NEON</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\ThirdParty\HavokSDK\Source;</AdditionalIncludeDirectories>
-      <AdditionalOptions>-march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -W -Wno-overflow -Wno-ignored-qualifiers -Wno-sign-compare -Wno-unknown-pragmas -Wno-type-limits -Wno-multichar -Wno-unused -Wno-shadow -Wundef -Wno-inline -Wno-psabi -g -fno-strict-aliasing -fpic -ffunction-sections -fno-exceptions -funwind-tables -fno-short-enums -fno-rtti -funwind-tables %(AdditionalOptions)</AdditionalOptions>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\thirdparty\havoksdk\Lib\android_arm\dev;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>hkCompat;hkSceneData;hkSerialize;hkGeometryUtilities;hkcdInternal;hkcdCollide;hkaAnimation;hkaInternal;hkInternal;hkBase</AdditionalDependencies>
-      <AndroidSystemLibs>android;c;m;log;gcc;dl</AndroidSystemLibs>
-      <AdditionalOptions>-g -Wl,--fix-cortex-a8 -Wl,-shared %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -216,29 +140,6 @@
       <AdditionalOptions> /ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKANIMATIONHAVOK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\ThirdParty\HavokSDK\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PrecompiledHeaderFile>StableHeader.h</PrecompiledHeaderFile>
-      <StructMemberAlignment>16Bytes</StructMemberAlignment>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\..\thirdparty\havoksdk\Lib\win32_vs2010\dev_dll;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>hkBase.lib;hkSerialize.lib;hkSceneData.lib;hkGeometryUtilities.lib;hkInternal.lib;hkVisualize.lib;hkCompat.lib;hkcdInternal.lib;hkcdCollide.lib;hkaAnimation.lib;hkaInternal.lib;hkaPhysics2012Bridge.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions> /ignore:4099 %(AdditionalOptions)</AdditionalOptions>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -261,7 +162,7 @@
       <AdditionalOptions> /ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -275,13 +176,12 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>No</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>..\..\thirdparty\havoksdk\Lib\win32_vs2010\dev_dll;</AdditionalLibraryDirectories>
       <AdditionalDependencies>hkBase.lib;hkSerialize.lib;hkSceneData.lib;hkGeometryUtilities.lib;hkInternal.lib;hkVisualize.lib;hkCompat.lib;hkcdInternal.lib;hkcdCollide.lib;hkaAnimation.lib;hkaInternal.lib;hkaPhysics2012Bridge.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions> /ignore:4099 %(AdditionalOptions)</AdditionalOptions>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">
@@ -306,40 +206,15 @@
       <AdditionalOptions> /ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Tegra-Android'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GKANIMATIONHAVOK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\ThirdParty\HavokSDK\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PrecompiledHeaderFile>StableHeader.h</PrecompiledHeaderFile>
-      <StructMemberAlignment>16Bytes</StructMemberAlignment>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\..\thirdparty\havoksdk\Lib\win32_vs2010\dev_dll;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>hkBase.lib;hkSerialize.lib;hkSceneData.lib;hkGeometryUtilities.lib;hkInternal.lib;hkVisualize.lib;hkCompat.lib;hkcdInternal.lib;hkcdCollide.lib;hkaAnimation.lib;hkaInternal.lib;hkaPhysics2012Bridge.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions> /ignore:4099 %(AdditionalOptions)</AdditionalOptions>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="CharacterInstance.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="gkAnimationHavok.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Tegra-Android'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="gkHavokAssetManagementUtil.cpp" />
     <ClCompile Include="gkHavokLoader.cpp" />
@@ -348,11 +223,9 @@
     <ClCompile Include="RigManager.cpp" />
     <ClCompile Include="StableHeader.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop|Tegra-Android'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|Tegra-Android'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

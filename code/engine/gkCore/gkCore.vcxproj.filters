@@ -209,9 +209,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="GameKnifeCore.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="ReadMe.txt" />
   </ItemGroup>
 </Project>
