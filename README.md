@@ -1,5 +1,6 @@
 ![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/gkengine_logo.png "logo")
 [![Build Status](https://travis-ci.org/gameknife/gkEngine.svg?branch=master)](https://travis-ci.org/gameknife/gkEngine)
+[https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true)
 ========
 
 <br>
