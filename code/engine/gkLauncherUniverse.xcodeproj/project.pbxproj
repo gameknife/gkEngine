@@ -57,6 +57,7 @@
 		A0F485B61AB5A85100DD38D8 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = gkLauncherUniverse/main.m; sourceTree = SOURCE_ROOT; };
 		A0F485B91AB5A87500DD38D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = gkLauncherUniverse/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
 		A0F485BB1AB5A8B900DD38D8 /* gkLauncherUniverse-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "gkLauncherUniverse-Info.plist"; path = "gkLauncherUniverse/gkLauncherUniverse-Info.plist"; sourceTree = SOURCE_ROOT; };
+		FF7FDD571D71AA98003DFA57 /* libgkRendererGL330.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkRendererGL330.a; path = "../../../../Library/Developer/Xcode/DerivedData/gkENGINE_xcode-ehlgpdnawsoowzfhpukwaxbztqbw/Build/Products/libgkRendererGL330.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +108,7 @@
 		A04B42F21734038500EF0763 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FF7FDD571D71AA98003DFA57 /* libgkRendererGL330.a */,
 				A0AE742A1B90B8EF0065C00B /* libgkAnimation.a */,
 				A0AE742B1B90B8EF0065C00B /* libgkCore.a */,
 				A0AE742C1B90B8EF0065C00B /* libgkFont.a */,
@@ -322,6 +324,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(BUILD_DIR)",
 					"\"$(SRCROOT)/../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"",
 					../thirdparty/havoksdk/lib/ios_armv7/dev,
 				);
@@ -414,6 +417,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(BUILD_DIR)",
 					"\"$(SRCROOT)/../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"",
 					../thirdparty/havoksdk/lib/ios_armv7/dev,
 				);

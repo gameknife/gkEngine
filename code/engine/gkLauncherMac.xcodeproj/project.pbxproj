@@ -46,6 +46,7 @@
 		A0F19FC617928FFD00F788C5 /* gkLauncherMac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "gkLauncherMac-Info.plist"; sourceTree = "<group>"; };
 		A0F19FC817928FFD00F788C5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A0F19FCA17928FFD00F788C5 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		FF7FDD591D71AAAA003DFA57 /* libgkRendererGLES2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkRendererGLES2.a; path = "../../../../Library/Developer/Xcode/DerivedData/gkENGINE_xcode-ehlgpdnawsoowzfhpukwaxbztqbw/Build/Products/libgkRendererGLES2.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +105,7 @@
 		A0F19FBD17928FFD00F788C5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FF7FDD591D71AAAA003DFA57 /* libgkRendererGLES2.a */,
 				A09F39BA1B9DE25F00DF065A /* CoreFoundation.framework */,
 				A0F19FBE17928FFD00F788C5 /* Cocoa.framework */,
 				A0F19FC017928FFD00F788C5 /* Other Frameworks */,
@@ -231,7 +233,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CONFIGURATION_BUILD_DIR = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
 				CONFIGURATION_TEMP_DIR = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -257,7 +259,7 @@
 				OBJROOT = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = macosx;
-				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				SYMROOT = "$()/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 			};
 			name = "Debug-OSX";
 		};
@@ -270,6 +272,7 @@
 				INFOPLIST_FILE = "gkLauncherMac/gkLauncherMac-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(BUILD_DIR)",
 					"\"$(SRCROOT)/../../exec/ios/Debug\"",
 					"\"$(SRCROOT)/../thirdparty/OGLSDK/lib\"",
 					"\"$(SRCROOT)/../../exec/ios/Debug-iphoneos\"",
@@ -292,7 +295,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CONFIGURATION_BUILD_DIR = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
 				CONFIGURATION_TEMP_DIR = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -318,7 +321,7 @@
 				OBJROOT = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = macosx;
-				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				SYMROOT = "$()/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 			};
 			name = "Release-OSX";
 		};
@@ -331,6 +334,7 @@
 				INFOPLIST_FILE = "gkLauncherMac/gkLauncherMac-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(BUILD_DIR)",
 					"\"$(SRCROOT)/../../exec/ios/Debug\"",
 					"\"$(SRCROOT)/../thirdparty/OGLSDK/lib\"",
 					"\"$(SRCROOT)/../../exec/ios/Debug-iphoneos\"",
@@ -353,7 +357,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CONFIGURATION_BUILD_DIR = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
 				CONFIGURATION_TEMP_DIR = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -379,7 +383,7 @@
 				OBJROOT = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = macosx;
-				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				SYMROOT = "$()/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 			};
 			name = Debug;
 		};
@@ -395,7 +399,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CONFIGURATION_BUILD_DIR = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
 				CONFIGURATION_TEMP_DIR = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -419,7 +423,7 @@
 				OBJROOT = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = macosx;
-				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				SYMROOT = "$()/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 			};
 			name = Release;
 		};
@@ -432,6 +436,7 @@
 				INFOPLIST_FILE = "gkLauncherMac/gkLauncherMac-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(BUILD_DIR)",
 					"\"$(SRCROOT)/../../exec/ios/Debug\"",
 					"\"$(SRCROOT)/../thirdparty/OGLSDK/lib\"",
 					"\"$(SRCROOT)/../../exec/ios/Debug-iphoneos\"",
@@ -451,6 +456,7 @@
 				INFOPLIST_FILE = "gkLauncherMac/gkLauncherMac-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(BUILD_DIR)",
 					"\"$(SRCROOT)/../../exec/ios/Debug\"",
 					"\"$(SRCROOT)/../thirdparty/OGLSDK/lib\"",
 					"\"$(SRCROOT)/../../exec/ios/Debug-iphoneos\"",
