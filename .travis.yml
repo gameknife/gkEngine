@@ -2,7 +2,7 @@ osx_image: xcode7.3
 language: objective-c
 script: 
 - sh travis_setup.sh
-- xcodebuild -workspace ./code/engine/solutions/gkENGINE_xcode.xcworkspace -scheme release_osx
+- xcodebuild -workspace ./code/engine/solutions/gkENGINE_xcode.xcworkspace -scheme release_osx GCC_GENERATE_TEST_COVERAGE_FILES=YES GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES
 after_success:
 - cd ./code/engine
 - brew install macmade/tap/xcode-coveralls
