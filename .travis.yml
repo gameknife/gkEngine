@@ -3,3 +3,7 @@ language: objective-c
 script: 
 - sh travis_setup.sh
 - xcodebuild -workspace ./code/engine/solutions/gkENGINE_xcode.xcworkspace -scheme release_osx
+after_success:
+cd ./code/engine
+brew install macmade/tap/xcode-coveralls
+bash xc-coveralls.sh
