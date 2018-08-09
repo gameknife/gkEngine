@@ -276,7 +276,7 @@
 				OBJROOT = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = macosx;
-				SYMROOT = "$()/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				SYMROOT = "$(SRCROOT)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 			};
 			name = "Debug-OSX";
 		};
@@ -296,6 +296,7 @@
 					"\"$(SRCROOT)/../../exec/ios/Debug-OSX\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Debug-OSX";
@@ -338,7 +339,7 @@
 				OBJROOT = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = macosx;
-				SYMROOT = "$()/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				SYMROOT = "$(SRCROOT)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 			};
 			name = "Release-OSX";
 		};
@@ -358,6 +359,7 @@
 					"\"$(SRCROOT)/../../exec/ios/Debug-OSX\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Release-OSX";
@@ -400,7 +402,7 @@
 				OBJROOT = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = macosx;
-				SYMROOT = "$()/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				SYMROOT = "$(SRCROOT)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 			};
 			name = Debug;
 		};
@@ -440,7 +442,7 @@
 				OBJROOT = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = macosx;
-				SYMROOT = "$()/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				SYMROOT = "$(SRCROOT)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 			};
 			name = Release;
 		};
@@ -460,6 +462,7 @@
 					"\"$(SRCROOT)/../../exec/ios/Debug-OSX\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -480,6 +483,7 @@
 					"\"$(SRCROOT)/../../exec/ios/Debug-OSX\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
