@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A008A140211D7ECB00AA8B74 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A008A13F211D7ECB00AA8B74 /* Info.plist */; };
 		A00A4A9C188B73B7005376F7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00A4A9B188B73B7005376F7 /* CFNetwork.framework */; };
 		A00A4A9E188B73D3005376F7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00A4A9D188B73D3005376F7 /* SystemConfiguration.framework */; };
 		A00A4AA0188B758A005376F7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00A4A9F188B758A005376F7 /* CoreData.framework */; };
@@ -28,10 +29,10 @@
 		A0F485B31AB5A78300DD38D8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0F485B21AB5A78300DD38D8 /* Images.xcassets */; };
 		A0F485B71AB5A85100DD38D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F485B61AB5A85100DD38D8 /* main.m */; };
 		A0F485BA1AB5A87500DD38D8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0F485B81AB5A87500DD38D8 /* InfoPlist.strings */; };
-		A0F485BC1AB5A8B900DD38D8 /* gkLauncherUniverse-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F485BB1AB5A8B900DD38D8 /* gkLauncherUniverse-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A008A13F211D7ECB00AA8B74 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = gkLauncherUniverse/Info.plist; sourceTree = SOURCE_ROOT; };
 		A00A4A9B188B73B7005376F7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		A00A4A9D188B73D3005376F7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A00A4A9F188B758A005376F7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -56,7 +57,6 @@
 		A0F485B21AB5A78300DD38D8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = gkLauncherUniverse/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		A0F485B61AB5A85100DD38D8 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = gkLauncherUniverse/main.m; sourceTree = SOURCE_ROOT; };
 		A0F485B91AB5A87500DD38D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = gkLauncherUniverse/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
-		A0F485BB1AB5A8B900DD38D8 /* gkLauncherUniverse-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "gkLauncherUniverse-Info.plist"; path = "gkLauncherUniverse/gkLauncherUniverse-Info.plist"; sourceTree = SOURCE_ROOT; };
 		FF7FDD571D71AA98003DFA57 /* libgkRendererGL330.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgkRendererGL330.a; path = "../../../../Library/Developer/Xcode/DerivedData/gkENGINE_xcode-ehlgpdnawsoowzfhpukwaxbztqbw/Build/Products/libgkRendererGL330.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,7 +146,7 @@
 		A04B42FA1734038500EF0763 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				A0F485BB1AB5A8B900DD38D8 /* gkLauncherUniverse-Info.plist */,
+				A008A13F211D7ECB00AA8B74 /* Info.plist */,
 				A0F485B81AB5A87500DD38D8 /* InfoPlist.strings */,
 				A0F485B61AB5A85100DD38D8 /* main.m */,
 			);
@@ -210,9 +210,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0F485BC1AB5A8B900DD38D8 /* gkLauncherUniverse-Info.plist in Resources */,
 				A0F485B31AB5A78300DD38D8 /* Images.xcassets in Resources */,
 				A0F485BA1AB5A87500DD38D8 /* InfoPlist.strings in Resources */,
+				A008A140211D7ECB00AA8B74 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,7 +262,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = armv7;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -287,7 +287,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = armv7;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -317,11 +317,12 @@
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = 9CBRM438H6;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				HEADER_SEARCH_PATHS = "gkCommon/**";
-				INFOPLIST_FILE = "gkLauncherUniverse/gkLauncherUniverse-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				INFOPLIST_FILE = "$(SRCROOT)/gkLauncherUniverse/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(BUILD_DIR)",
@@ -388,7 +389,7 @@
 					"-lgkSystem",
 					"-lTestCases",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = gknife.gkENGINE;
+				PRODUCT_BUNDLE_IDENTIFIER = gameknife.testcase;
 				PRODUCT_NAME = gkENGINE;
 				PROVISIONING_PROFILE = "";
 				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
@@ -409,12 +410,13 @@
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = 9CBRM438H6;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				HEADER_SEARCH_PATHS = "gkCommon/**";
-				INFOPLIST_FILE = "gkLauncherUniverse/gkLauncherUniverse-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				INFOPLIST_FILE = "$(SRCROOT)/gkLauncherUniverse/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(BUILD_DIR)",
@@ -433,22 +435,8 @@
 					"-lgkGameFramework",
 					"-lgkSystem",
 					"-lTestCases",
-					"-lgkAnimation",
-					"-lhkaAnimation",
-					"-lhkaiInternal",
-					"-lhkaInternal",
-					"-lhkBase",
-					"-lhkbInternal",
-					"-lhkbUtilities",
-					"-lhkcdCollide",
-					"-lhkcdInternal",
-					"-lhkCompat",
-					"-lhkGeometryUtilities",
-					"-lhkInternal",
-					"-lhkSceneData",
-					"-lhkSerialize",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = gknife.gkENGINE;
+				PRODUCT_BUNDLE_IDENTIFIER = gameknife.testcase;
 				PRODUCT_NAME = gkENGINE;
 				PROVISIONING_PROFILE = "";
 				SYMROOT = "../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";

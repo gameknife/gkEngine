@@ -1,4 +1,4 @@
-﻿#include "StableHeader.h"
+#include "StableHeader.h"
 #include "gkTextureManager.h"
 #include "gkTextureGLES2.h"
 
@@ -245,7 +245,7 @@ gkTextureManager::gkTextureManager(void)
 
 	createlist[_T("d3dpool")] = _T("D3DX_DEFAULT");
 	createlist[_T("usage")] = _T("RENDERTARGET");
-	createlist[_T("size")] = _T("512");
+	createlist[_T("size")] = _T("2048");
 	createlist[_T("format")] = _T("D32F");
 	ms_ShadowCascade0 = create(_T("RT_SHADOWCASCADE0"), _T("dyntex"), &createlist);
 	ms_ShadowCascade1 = create(_T("RT_SHADOWCASCADE1"), _T("dyntex"), &createlist);

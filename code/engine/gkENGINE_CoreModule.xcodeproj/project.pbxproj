@@ -239,9 +239,6 @@
 		A02235A318895A84004B1475 /* libgkAnimation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libgkAnimation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A02235B118895A84004B1475 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		A02235B418895A84004B1475 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		A02235BB18895A84004B1475 /* gkAnimationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "gkAnimationTests-Info.plist"; sourceTree = "<group>"; };
-		A02235BD18895A84004B1475 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		A02235BF18895A84004B1475 /* gkAnimationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = gkAnimationTests.m; sourceTree = "<group>"; };
 		A02235D818896788004B1475 /* dllmain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dllmain.cpp; sourceTree = "<group>"; };
 		A02235D918896788004B1475 /* gkAnimationHavok.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gkAnimationHavok.cpp; sourceTree = "<group>"; };
 		A02235DA18896788004B1475 /* gkAnimationHavok.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gkAnimationHavok.h; sourceTree = "<group>"; };
@@ -677,24 +674,6 @@
 				A09798F21AC5BB3000173F60 /* gkRendererGL */,
 			);
 			name = Renderer;
-			sourceTree = "<group>";
-		};
-		A02235B918895A84004B1475 /* gkAnimationTests */ = {
-			isa = PBXGroup;
-			children = (
-				A02235BF18895A84004B1475 /* gkAnimationTests.m */,
-				A02235BA18895A84004B1475 /* Supporting Files */,
-			);
-			path = gkAnimationTests;
-			sourceTree = "<group>";
-		};
-		A02235BA18895A84004B1475 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				A02235BB18895A84004B1475 /* gkAnimationTests-Info.plist */,
-				A02235BC18895A84004B1475 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		A02235CB18896788004B1475 /* gkAnimationHavok */ = {
@@ -1371,7 +1350,6 @@
 				A0583600172D27CF00B168C8 /* gkGameFramework */,
 				A0583619172D27F500B168C8 /* gkGameObjectSystem */,
 				A07D49301785EA4D000F2DA7 /* gkFont */,
-				A02235B918895A84004B1475 /* gkAnimationTests */,
 				FF8A8BA215BEC9990039AACB /* Frameworks */,
 				FF8A8BA115BEC9990039AACB /* Products */,
 			);
@@ -1890,17 +1868,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		A02235BC18895A84004B1475 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A02235BD18895A84004B1475 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		A02235C218895A84004B1475 /* Debug */ = {
@@ -2755,7 +2722,7 @@
 		FF8A8B9715BEC96C0039AACB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = armv7;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
@@ -2786,7 +2753,7 @@
 		FF8A8B9815BEC96C0039AACB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = armv7;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";

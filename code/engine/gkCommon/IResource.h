@@ -1,4 +1,4 @@
-﻿//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 /*
 Copyright (c) 2011-2015 Kaiming Yi
 	
@@ -122,7 +122,7 @@ public:
 		m_pResetCallback = NULL;
 		m_resLock = NULL;
 		m_syncLoad = false;
-#ifdef __x86_64__
+#if defined( __x86_64__ ) || defined( __arm64__ )
         m_resLock = new gkScopedLock<gkMutexLock>( eLGID_Resource, (uint64)this );
 #else
 		m_resLock = new gkScopedLock<gkMutexLock>( eLGID_Resource, (uint32)this );

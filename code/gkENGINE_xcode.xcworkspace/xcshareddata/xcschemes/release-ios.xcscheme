@@ -28,20 +28,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A02235A218895A84004B1475"
-               BuildableName = "libgkAnimation.a"
-               BlueprintName = "gkAnimation"
-               ReferencedContainer = "container:engine/gkENGINE_CoreModule.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "A03FCC8A1732B9C700FFA4DF"
                BuildableName = "libgkCore.a"
                BlueprintName = "gkCore"

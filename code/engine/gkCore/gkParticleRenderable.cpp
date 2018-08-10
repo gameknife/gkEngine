@@ -1,4 +1,4 @@
-﻿#include "gkStableHeader.h"
+#include "gkStableHeader.h"
 #include "gkParticleRenderable.h"
 #include "IGameObjectLayer.h"
 #include "IParticle.h"
@@ -14,7 +14,7 @@ gkParticleRenderable::gkParticleRenderable( IParticleProxy* proxy, uint32 maxPar
 	TCHAR buffer[MAX_PATH];
 	// set params
 	createlist[_T("type")] =	_T("PARTICLE_VB");
-#ifdef __x86_64__
+#if defined(__x86_64__) || defined(__arm64__)
 	_stprintf(buffer, _T("particle_0x%x"), (uint64)this );
 #else
     _stprintf(buffer, _T("particle_0x%x"), (uint32)this );

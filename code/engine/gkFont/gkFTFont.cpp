@@ -156,7 +156,7 @@ void gkFTFont::addTexture()
 	createlist[_T("format")]		=	_T("A8");
 
 	TCHAR strName[MAX_PATH];
-#ifdef __x86_64__
+#if defined(__x86_64__) || defined(__arm64__)
 	_stprintf( strName, _T("FONTMAP_%u_%d"), (uint64)this, m_textRenderIndex );
 #else
     _stprintf( strName, _T("FONTMAP_%u_%d"), (uint32)this, m_textRenderIndex );

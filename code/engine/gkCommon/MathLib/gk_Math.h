@@ -1,4 +1,4 @@
-﻿//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 /*
 Copyright (c) 2011-2015 Kaiming Yi
 	
@@ -105,7 +105,7 @@ struct XMVec4A
 		unsigned char *p = ::new unsigned char[s + 16];
 		if (p)
 		{
-			unsigned char offset = (unsigned char)(16 - ((UINT_PTR)p & 15));
+			unsigned char offset = (unsigned char)(16 - ((uint64)p & 15));
 			p += offset;
 			p[-1] = offset;
 		}

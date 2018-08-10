@@ -1,4 +1,4 @@
-﻿//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 /*
 Copyright (c) 2011-2015 Kaiming Yi
 	
@@ -97,7 +97,11 @@ typedef uint64 gk_ptr_type;
 #else
 typedef int INT_PTR, *PINT_PTR;
 typedef unsigned int UINT_PTR, *PUINT_PTR;
+#if defined(__x86_64__) || defined(__arm64__)
+typedef uint64 gk_ptr_type;
+#else
 typedef uint32 gk_ptr_type;
+#endif
 #endif
 
 
