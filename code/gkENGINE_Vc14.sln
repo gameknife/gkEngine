@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gkCoreModule", "gkCoreModule", "{A2DAC854-D831-4546-9275-3BBBFF20389F}"
 EndProject
@@ -93,7 +93,6 @@ Global
 		{5B49F1B7-4AA2-4D32-9CC7-E9D703722815}.Develop_Latest|x64.Build.0 = Develop_Latest|x64
 		{91951428-FC3F-433A-96C8-44D0E162D856}.Develop_Latest|Win32.ActiveCfg = Develop_Latest|Win32
 		{91951428-FC3F-433A-96C8-44D0E162D856}.Develop_Latest|x64.ActiveCfg = Develop_Latest|x64
-		{91951428-FC3F-433A-96C8-44D0E162D856}.Develop_Latest|x64.Build.0 = Develop_Latest|x64
 		{F6645BB5-444B-44F3-9B7D-8294ECDA3087}.Develop_Latest|Win32.ActiveCfg = Develop_Latest|Win32
 		{F6645BB5-444B-44F3-9B7D-8294ECDA3087}.Develop_Latest|Win32.Build.0 = Develop_Latest|Win32
 		{F6645BB5-444B-44F3-9B7D-8294ECDA3087}.Develop_Latest|x64.ActiveCfg = Develop_Latest|x64
@@ -105,7 +104,6 @@ Global
 		{C5E45787-6DB2-43CA-A42F-42BB6EAEEA71}.Develop_Latest|Win32.ActiveCfg = Develop_Latest|Win32
 		{C5E45787-6DB2-43CA-A42F-42BB6EAEEA71}.Develop_Latest|Win32.Build.0 = Develop_Latest|Win32
 		{C5E45787-6DB2-43CA-A42F-42BB6EAEEA71}.Develop_Latest|x64.ActiveCfg = Develop_Latest|x64
-		{C5E45787-6DB2-43CA-A42F-42BB6EAEEA71}.Develop_Latest|x64.Build.0 = Develop_Latest|x64
 		{96F0C4C1-512E-4E4D-9A76-6B4812EDD8CA}.Develop_Latest|Win32.ActiveCfg = Develop_Latest|Win32
 		{96F0C4C1-512E-4E4D-9A76-6B4812EDD8CA}.Develop_Latest|x64.ActiveCfg = Develop_Latest|Win32
 		{D22B0E19-5934-416F-854E-CDA643078FA0}.Develop_Latest|Win32.ActiveCfg = Develop_Latest|Win32
@@ -166,5 +164,8 @@ Global
 		{6878E232-79B8-4F5E-AE6F-8057C6B83201} = {A2DAC854-D831-4546-9275-3BBBFF20389F}
 		{7826AAA2-7578-4CD3-B9CF-874A4763359F} = {4DB5B3D1-33EE-4D51-AC83-D754F59E1D8A}
 		{92170CA8-165C-4033-9DC5-614DCEF792B3} = {34676EA1-391F-4149-A124-4D2AD6B06B24}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14676071-8BA5-4D2B-A9A6-5A0623CD2985}
 	EndGlobalSection
 EndGlobal
