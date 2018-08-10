@@ -1,6 +1,7 @@
 code/thirdparty/
 INTERMEDIATE/
 .hg/
+code/.vs/
 .DS_Store
 code/engine/solutions/ipch/
 exec/engine/shaders/d3d9/shadercache/

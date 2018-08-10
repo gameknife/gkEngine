@@ -26,9 +26,6 @@ IF NOT EXIST %GKENGINE_HOME%\..\code\thirdparty\dxsdk.7z (
 IF NOT EXIST %GKENGINE_HOME%\..\code\thirdparty\freetype.7z (
 %GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/dependency/freetype.7z
 )
-IF NOT EXIST %GKENGINE_HOME%\..\code\thirdparty\havoksdk.7z (
-%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/dependency/havoksdk.7z
-)
 IF NOT EXIST %GKENGINE_HOME%\..\code\thirdparty\misc.7z (
 %GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/dependency/misc.7z
 )
@@ -37,12 +34,6 @@ IF NOT EXIST %GKENGINE_HOME%\..\code\thirdparty\mscrt.7z (
 )
 IF NOT EXIST %GKENGINE_HOME%\..\code\thirdparty\oglsdk.7z (
 %GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/dependency/oglsdk.7z
-)
-IF NOT EXIST %GKENGINE_HOME%\..\code\thirdparty\havoksdk_win32.7z (
-%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/dependency/havoksdk_win32.7z
-)
-IF NOT EXIST %GKENGINE_HOME%\..\code\thirdparty\toolkitpro_15.7z (
-%GKENGINE_HOME%\tools\wget --no-check-certificate https://raw.githubusercontent.com/gameknife/gkengine-resource/master/dependency/toolkitpro_15.7z
 )
 
 echo Download Success! Extracting...
