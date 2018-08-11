@@ -300,7 +300,7 @@ struct gkVertexBuffer
 	EBufferType bufferType;
 	EVertexInputType vertexType;
 	bool m_needRebind;
-	uint32 userData;
+	uint64 userData;
 
 	gkVertexBuffer(uint32 pelementSize, uint32 pelementCount, EVertexInputType type, EBufferType inBufferType)
 	{
@@ -383,7 +383,7 @@ struct gkIndexBuffer
 	uint32  currAddress;
 	bool m_needRebind;
 
-	uint32 userData;
+	uint64 userData;
 	bool wordbit;
 
 	gkIndexBuffer(uint32 pcount, bool bit16 = false)

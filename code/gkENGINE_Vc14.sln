@@ -116,8 +116,8 @@ Global
 		{7826AAA2-7578-4CD3-B9CF-874A4763359F}.Develop_Latest|x64.ActiveCfg = Develop_Latest|Win32
 		{92170CA8-165C-4033-9DC5-614DCEF792B3}.Develop_Latest|Win32.ActiveCfg = Develop_Latest|Win32
 		{92170CA8-165C-4033-9DC5-614DCEF792B3}.Develop_Latest|Win32.Build.0 = Develop_Latest|Win32
-		{92170CA8-165C-4033-9DC5-614DCEF792B3}.Develop_Latest|x64.ActiveCfg = Debug|x64
-		{92170CA8-165C-4033-9DC5-614DCEF792B3}.Develop_Latest|x64.Build.0 = Debug|x64
+		{92170CA8-165C-4033-9DC5-614DCEF792B3}.Develop_Latest|x64.ActiveCfg = Develop_Latest|x64
+		{92170CA8-165C-4033-9DC5-614DCEF792B3}.Develop_Latest|x64.Build.0 = Develop_Latest|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
