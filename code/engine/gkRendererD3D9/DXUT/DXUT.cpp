@@ -1136,11 +1136,6 @@ HRESULT WINAPI DXUTCreateWindow( const WCHAR* strWindowTitle, HINSTANCE hInstanc
             hInstance = ( HINSTANCE )GetModuleHandle( NULL );
         GetDXUTState().SetHInstance( hInstance );
 
-        WCHAR szExePath[MAX_PATH];
-        GetModuleFileName( NULL, szExePath, MAX_PATH );
-        if( hIcon == NULL ) // If the icon is NULL, then use the first one found in the exe
-            hIcon = ExtractIcon( hInstance, szExePath, 0 );
-
         // Register the windows class
         WNDCLASS wndClass;
         wndClass.style = CS_DBLCLKS;

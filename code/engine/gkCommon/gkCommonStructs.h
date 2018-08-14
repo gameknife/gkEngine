@@ -134,5 +134,97 @@ enum gkRenderLayerID
 };
 
 
+struct ISystem;
+struct IInputManager;
+struct INetworkLayer;
+struct IRenderer;
+struct I3DEngine;
+class IResourceManager;
+struct ITimer;
+struct ISystemProfiler;
+struct IPhysics;
+struct IGameObjectSystem;
+struct IGameFramework;
+struct IResFileManager;
+struct IAnimation;
+struct IMeshLoader;
+struct IInGUI;
+struct IFileChangeMonitor;
+struct ITaskDispatcher;
+struct IFontModule;
+struct ITrackBus;
+
+struct ISound;
+struct IVideo;
+struct IStereoDevice;
+
+struct IConsoleVariablesManager;
+struct ILog;
+
+struct UNIQUE_IFACE SSystemInfo
+{
+	TCHAR gpuDesc[255];
+	TCHAR cpuDesc[255];
+
+	uint32 gpuVendorID;
+	uint32 cpuVendorID;
+
+	uint32 cpuCoreCount;
+
+	gk_thread_id mainThreadId;
+};
+
+
+/**
+@ingroup CoreModuleAPI
+@brief 全局环境
+@remark 各模块之间的交互核心。通过改全局结构，获取到各模块的入口
+*/
+struct UNIQUE_IFACE SSystemGlobalEnvironment
+{
+	ISystem*						pSystem;						/// 主系统模块
+
+	IInputManager*					pInputManager;				/// 输入模块
+	INetworkLayer*					pNetworkLayer;				/// 网络模块（暂时停用）
+	IRenderer*						pRenderer;					/// 渲染器模块
+	IPhysics*						pPhysics;						/// 物理模块
+	IAnimation*						pAnimation;					/// 动画模块
+	IGameObjectSystem*				pGameObjSystem;				/// 游戏物件系统模块
+	I3DEngine*						p3DEngine;					/// 3D环境管理模块
+
+	ITimer*							pTimer;						/// 计时器模块
+	IConsoleVariablesManager*		pCVManager;					/// 控制台变量模块
+	ISystemProfiler*				pProfiler;					/// 系统性能监控器
+	ILog*							pLog;						/// 日志系统
+	IGameFramework*					pGameFramework;				/// 游戏框架
+	IResFileManager*				pFileSystem;					/// 文件系统
+	IInGUI*							pInGUI;						/// 内部GUI系统
+	IFileChangeMonitor*				pFileChangeMonitor;			/// 文件改变监视器
+	ITaskDispatcher*				pCommonTaskDispatcher;			/// 通用的多线程任务分发器
+
+	IFontModule*					pFont;						/// 字体管理模块
+
+	SSystemInfo*					pSystemInfo;					/// 系统信息
+
+	ITrackBus*						pTrackBus;					/// 轨道总线系统
+
+
+	ISound*							pSound;						/// 音效系统
+	IVideo*							pVideo;						/// 视频系统
+
+	IStereoDevice*					pStereoDevice;
+
+
+
+	void*                           pReserved0;
+	void*                           pReserved1;
+	void*                           pReserved2;
+
+	char*							rootPath;
+};
+
+extern SSystemGlobalEnvironment* gEnv;
+
+
 
 #endif //GKCOMMONSTRUCTS_H_

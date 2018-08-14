@@ -33,7 +33,7 @@ void gkFreeStaticModule_gkGameFramework();
 
 #include "gkMemoryLeakDetecter.h"
 
-typedef IGameFramework* (*GET_SYSTEM)(void);
+typedef IGameFramework* (*GET_SYSTEM)(const char*);
 typedef void (*DESTROY_END)(void);
 
 //--------------------------------------------------------------------------------------
@@ -49,20 +49,40 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, int )
 #ifdef _STATIC_LIB
 	IGameFramework* game = gkLoadStaticModule_gkGameFramework();
 #else
-	// load gkSystem dll
-	HINSTANCE hHandle = 0;
-	gkOpenModule(hHandle, _T("gkGameFramework"));//, NULL, LOAD_WITH_ALTERED_SEARCH_PATH);
-	GET_SYSTEM pFuncStart = (GET_SYSTEM)DLL_GETSYM(hHandle, "gkModuleInitialize");
-	IGameFramework* game = pFuncStart();
-#endif
+
 
 	int width = 1280;
 	int height = 720;
+
+	char strExePath[MAX_PATH] = { 0 };
+	char* strLastSlash = NULL;
+	GetModuleFileNameA(NULL, strExePath, MAX_PATH);
+	strExePath[MAX_PATH - 1] = 0;
+
+	strLastSlash = strrchr(strExePath, '\\');
+	if (strLastSlash)
+		*strLastSlash = 0;
+
+	strLastSlash = strrchr(strExePath, '\\');
+	if (strLastSlash)
+		*strLastSlash = 0;
+
+	strcat(strExePath, "\\");
+
+
+	// load gkSystem dll
+	HINSTANCE hHandle = 0;
+	gkOpenModule(hHandle, _T("gkGameFramework"));
+	GET_SYSTEM pFuncStart = (GET_SYSTEM)DLL_GETSYM(hHandle, "gkModuleInitialize");
+	IGameFramework* game = pFuncStart(NULL);
+#endif
+
 
 	// init
 	ISystemInitInfo sii;
 	sii.fWidth = width;
 	sii.fHeight = height;
+	sii.rootDir = strExePath;
 
 	if (!(game->Init(sii)))
 	{

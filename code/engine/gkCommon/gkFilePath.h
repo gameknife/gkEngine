@@ -255,23 +255,24 @@ inline gkStdString gkGetExecRootDir()
     return macBundlePath() + "/";
 #else
 	// Get the exe name, and exe path
-	TCHAR strExePath[MAX_PATH] = {0};
-	TCHAR* strLastSlash = NULL;
-	GetModuleFileName( NULL, strExePath, MAX_PATH );
-	strExePath[MAX_PATH - 1] = 0;
+	// TCHAR strExePath[MAX_PATH] = {0};
+	// TCHAR* strLastSlash = NULL;
+	// //GetModuleFileName( NULL, strExePath, MAX_PATH );
+	// strExePath[MAX_PATH - 1] = 0;
+ //
+	// // 再砍一层目录
+	// strLastSlash = _tcsrchr( strExePath, L'\\' );
+	// if( strLastSlash )
+	// 	*strLastSlash = 0;
+ //
+	// strLastSlash = _tcsrchr( strExePath, L'\\' );
+	// if( strLastSlash )
+	// 	*strLastSlash = 0;
+ //
+	// _tcscat( strExePath, _T("\\") );
 
-	// 再砍一层目录
-	strLastSlash = _tcsrchr( strExePath, L'\\' );
-	if( strLastSlash )
-		*strLastSlash = 0;
 
-	strLastSlash = _tcsrchr( strExePath, L'\\' );
-	if( strLastSlash )
-		*strLastSlash = 0;
-
-	_tcscat( strExePath, _T("\\") );
-
-	gkStdString ret(strExePath);
+	gkStdString ret(gEnv->rootPath);
 	RemoveRelativeParts(ret);
 
 	return ret;

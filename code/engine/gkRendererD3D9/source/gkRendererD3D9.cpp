@@ -211,7 +211,7 @@ LRESULT CALLBACK gkENGINEStaticWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 			if( hMenu != NULL )
 				DestroyMenu( hMenu );
 			DestroyWindow( hWnd );
-			UnregisterClass( L"Direct3DWindowClass", NULL );
+			UnregisterClass( _T("Direct3DWindowClass"), NULL );
 			return 0;
 		}
 	case WM_SYSKEYDOWN:
@@ -1256,7 +1256,7 @@ HWND gkRendererD3D9::Init(ISystemInitInfo& sii)
 
 
 		// This may fail if Direct3D 9 isn't installed
-		HMODULE d3d9dll = LoadLibrary( L"d3d9.dll" );
+		HMODULE d3d9dll = LoadLibrary( _T("d3d9.dll") );
 		if( d3d9dll != NULL )
 		{
 			FNDIRECT3DCREATE9 s_DynamicDirect3DCreate9 = ( FNDIRECT3DCREATE9 )GetProcAddress( d3d9dll, "Direct3DCreate9" );
@@ -1674,15 +1674,8 @@ bool gkRendererD3D9::SetWindow(int width, int height, bool fullscreen, HWND hWnd
 			HINSTANCE hInstance = NULL;
 			if( hInstance == NULL )
 				hInstance = ( HINSTANCE )GetModuleHandle( NULL );
-			//GetDXUTState().SetHInstance( hInstance );
-
-			TCHAR szExePath[MAX_PATH];
-			GetModuleFileName( NULL, szExePath, MAX_PATH );
 
 			HICON hIcon = NULL;
-
-			if( hIcon == NULL ) // If the icon is NULL, then use the first one found in the exe
-				hIcon = ExtractIcon( hInstance, szExePath, 0 );
 
 			// Register the windows class
 			WNDCLASS wndClass;

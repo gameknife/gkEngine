@@ -172,119 +172,6 @@ extern void gkLogInput(const TCHAR *, ...);
 extern void gkLogWarning(const TCHAR *, ...); 
 extern void gkLogError(const TCHAR *, ...);
 
-// start & end func
-typedef void (*MODULE_START)(SSystemGlobalEnvironment*);
-typedef void (*MODULE_END)(void);
-
-// module accessing func
-void gkLoadModule(HINSTANCE&, const TCHAR*);
-void gkOpenModule(HINSTANCE&, const TCHAR*);
-void gkFreeModule(HINSTANCE&);
-
-inline void gkFreeModule( HINSTANCE& hHandle)
-{
-	if (hHandle)
-	{
-		MODULE_END pFunc = (MODULE_END)DLL_GETSYM(hHandle, "gkModuleUnload");
-		pFunc();
-		DLL_FREE(hHandle);
-	}
-}
-
-inline void gkLoadModule( HINSTANCE& hHandle, const TCHAR* moduleName)
-{
-	// load input dll [7/20/2011 Kaiming-Desktop]
-	// cat .dll or .so
-	gkLogMessage( _T("loading lib[ %s ]..."), moduleName );
-	TCHAR finalModuleName[MAX_PATH];
-
-	bool load_ok = false;
-
-	for(int i=0; i < 2; ++i)
-	{
-		if(i == 0)
-		{
-			_tcscpy( finalModuleName, DLL_PREFIX);
-		}
-		else
-		{
-			_tcscpy( finalModuleName, DLL_PREFIX_2);
-		}
-		_tcscat( finalModuleName, moduleName );
-		_tcscat( finalModuleName, DLL_SUFFIX);
-
-
-		hHandle = DLL_OPEN(finalModuleName);
-		if (hHandle)
-		{
-			gkLogMessage( _T("lib[ %s ] entry calling..."), moduleName );
-			MODULE_START pFunc = (MODULE_START)DLL_GETSYM(hHandle, "gkModuleInitialize");
-			if(pFunc)
-			{
-				pFunc(gEnv);
-				load_ok = true;
-				break;
-			}
-		}
-	}
-	
-	if(!load_ok)
-	{
-		gkLogError( _T("loading lib[ %s ] failed."), moduleName );
-#ifdef OS_ANDROID
-		gkLogError( _T("dlerr: %s"), dlerror());
-#endif
-	}
-}
-
-inline void gkOpenModule( HINSTANCE& hHandle, const TCHAR* moduleName)
-{
-	// load input dll [7/20/2011 Kaiming-Desktop]
-	// cat .dll or .so
-	gkLogMessage( _T("loading lib[ %s ]..."), moduleName );
-	TCHAR finalModuleName[MAX_PATH];
-
-	bool load_ok = false;
-
-	for(int i=0; i < 2; ++i)
-	{
-		if(i == 0)
-		{
-			_tcscpy( finalModuleName, DLL_PREFIX);
-		}
-		else
-		{
-			_tcscpy( finalModuleName, DLL_PREFIX_2);
-		}
-		_tcscat( finalModuleName, moduleName );
-		_tcscat( finalModuleName, DLL_SUFFIX);
-
-		hHandle = DLL_OPEN(finalModuleName);
-		if (hHandle)
-		{
-			gkLogMessage( _T("loading lib[ %s ] successed."), moduleName );
-			load_ok = true;
-			break;
-		}
-	}
-
-	if(!load_ok)
-	{
-		gkLogMessage( _T("loading lib[ %s ] failed."), moduleName );
-	}
-}
-
-//////////////////////////////////////////////////////////////////////////
-// static library define
-
-#ifdef _STATIC_LIB
-	#define LOAD_MODULE_GLOBAL( a, b )		gkLoadStaticModule_##b(gEnv);a = (HINSTANCE)1;
-	#define UNLOAD_MODULE_GLOBAL( a, b )	gkFreeStaticModule_##b();a = (HINSTANCE)0;	
-#else
-	#define LOAD_MODULE_GLOBAL( a, b )		gkLoadModule( a, _T(#b) )
-	#define UNLOAD_MODULE_GLOBAL( a, b )	gkFreeModule( a )
-#endif
-
 //////////////////////////////////////////////////////////////////////////
 // ASSERT
 #include "gkAssert.h"
@@ -350,8 +237,122 @@ inline void gkOpenModule( HINSTANCE& hHandle, const TCHAR* moduleName)
 #define ANDROID_APP_ROMROOT "/data/data/com.kkstudio.gklauncher/"
 #define ANDROID_APP_SDCARDROOT "/storage/emulated/legacy/gkENGINE/"
 
+#ifdef OS_WIN32
+typedef uint32 gk_thread_id;
+#else
+typedef pthread_t gk_thread_id;
+#endif
+
 // gkCommonStructs
 #include "gkCommonStructs.h"
+
+
+// start & end func
+typedef void(*MODULE_START)(SSystemGlobalEnvironment*);
+typedef void(*MODULE_END)(void);
+
+// module accessing func
+void gkLoadModule(HINSTANCE&, const TCHAR*);
+void gkOpenModule(HINSTANCE&, const TCHAR*, const TCHAR* );
+void gkFreeModule(HINSTANCE&);
+
+inline void gkFreeModule(HINSTANCE& hHandle)
+{
+	if (hHandle)
+	{
+		MODULE_END pFunc = (MODULE_END)DLL_GETSYM(hHandle, "gkModuleUnload");
+		pFunc();
+		DLL_FREE(hHandle);
+	}
+}
+
+inline void gkLoadModule(HINSTANCE& hHandle, const TCHAR* moduleName)
+{
+	// load input dll [7/20/2011 Kaiming-Desktop]
+	// cat .dll or .so
+	gkLogMessage(_T("loading lib[ %s ]..."), moduleName);
+	TCHAR finalModuleName[MAX_PATH];
+
+	bool load_ok = false;
+
+	if(gEnv != NULL && gEnv->rootPath != NULL)
+	{
+		_tcscpy(finalModuleName, gEnv->rootPath);
+		_tcscat(finalModuleName, "bin64\\");
+	}
+	else
+	{
+		_tcscpy(finalModuleName, DLL_PREFIX);
+	}
+	_tcscat(finalModuleName, moduleName);
+	_tcscat(finalModuleName, DLL_SUFFIX);
+
+
+	hHandle = DLL_OPEN(finalModuleName);
+	if (hHandle)
+	{
+		gkLogMessage(_T("lib[ %s ] entry calling..."), finalModuleName);
+		MODULE_START pFunc = (MODULE_START)DLL_GETSYM(hHandle, "gkModuleInitialize");
+		if (pFunc)
+		{
+			pFunc(gEnv);
+			load_ok = true;
+		}
+	}
+	
+
+	if (!load_ok)
+	{
+		gkLogError(_T("loading lib[ %s ] failed."), finalModuleName);
+#ifdef OS_ANDROID
+		gkLogError(_T("dlerr: %s"), dlerror());
+#endif
+	}
+}
+
+inline void gkOpenModule(HINSTANCE& hHandle, const TCHAR* moduleName, const TCHAR* modulePath = NULL)
+{
+	// load input dll [7/20/2011 Kaiming-Desktop]
+	// cat .dll or .so
+	gkLogMessage(_T("loading lib[ %s ]..."), moduleName);
+	TCHAR finalModuleName[MAX_PATH];
+
+	bool load_ok = false;
+
+	if (modulePath != NULL)
+	{
+		_tcscpy(finalModuleName, modulePath);
+	}
+	else
+	{
+		_tcscpy(finalModuleName, DLL_PREFIX);
+	}
+	_tcscat(finalModuleName, moduleName);
+	_tcscat(finalModuleName, DLL_SUFFIX);
+
+	hHandle = DLL_OPEN(finalModuleName);
+	if (hHandle)
+	{
+		gkLogMessage(_T("loading lib[ %s ] successed."), moduleName);
+		load_ok = true;
+	}
+
+	if (!load_ok)
+	{
+		gkLogMessage(_T("loading lib[ %s ] failed."), moduleName);
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
+// static library define
+
+#ifdef _STATIC_LIB
+#define LOAD_MODULE_GLOBAL( a, b )		gkLoadStaticModule_##b(gEnv);a = (HINSTANCE)1;
+#define UNLOAD_MODULE_GLOBAL( a, b )	gkFreeStaticModule_##b();a = (HINSTANCE)0;	
+#else
+#define LOAD_MODULE_GLOBAL( a, b )		gkLoadModule( a, _T(#b) )
+#define UNLOAD_MODULE_GLOBAL( a, b )	gkFreeModule( a )
+#endif
 
 // gkPathtool
 //#if !defined( _AFXDLL ) && !defined( _3DSMAX )
@@ -365,12 +366,6 @@ inline void gkOpenModule( HINSTANCE& hHandle, const TCHAR* moduleName)
 
 #if defined( OS_IOS )
 #	include "gkIOSSpecific.h"
-#endif
-
-#ifdef OS_WIN32
-typedef uint32 gk_thread_id;
-#else
-typedef pthread_t gk_thread_id;
 #endif
 
 

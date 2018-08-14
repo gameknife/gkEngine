@@ -29,11 +29,11 @@ DESTROY_END pFuncEnd;
 HINSTANCE hHandle;
 
 #ifndef _STATIC_LIB
-extern "C" GKGAMEFRAMEWORK_API IGameFramework* gkModuleInitialize() throw()
+extern "C" GKGAMEFRAMEWORK_API IGameFramework* gkModuleInitialize(const char* prefixDir = NULL) throw()
 {
 	// create system.dll first
 	hHandle = 0;
-	gkOpenModule(hHandle, _T("gkSystem"));
+	gkOpenModule(hHandle, _T("gkSystem"), prefixDir);
 	pFuncStart = (GET_SYSTEM)DLL_GETSYM(hHandle, "gkModuleInitialize");
 	pFuncEnd = (DESTROY_END)DLL_GETSYM(hHandle, "gkModuleUnload");
 

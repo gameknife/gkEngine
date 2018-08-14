@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>SoftRenderer</title>
+    <link rel="stylesheet" href="editor/style.css" type="text/css">
+    <link rel="stylesheet" href="editor/blacktie/css/black-tie.min.css">
+
+    <!-- ace editor -->
+    <!-- <script src="lib/ace/ace.js" type="text/javascript"></script> -->
+    <!-- <script src="lib/ace/theme-twilight.js" type="text/javascript" charset="utf-8"></script> -->
+    <!-- <script src="lib/ace/mode-glsl.js" type="text/javascript" charset="utf-8"></script> -->
+    
+</head>
+
+<body>
+    
+<div id="toolbar">
+    <div id="group_center" class="grp_control">
+        <button class="btn_play" id="btn_play"><i class="btm bt-play bt-fw"></i></button>
+        <button class="btn_play" id="btn_pause"><i class="btm bt-pause bt-fw"></i></button>
+        <button class="btn_play" id="btn_next"><i class="btm bt-next bt-fw"></i></button>
+    </div>
+</div>
+<div id="mainframe">
+
+    <div id="left">
+        <div class="title-bar">
+            Real-time Preview
+        </div>
+        <div class="canvas-frame">
+            <div id="profiledata" class="title-bar-profiledata">
+                    
+            </div>
+            <canvas id="canvas" class='interactive-frame' width="1280" height="480"></canvas>
+            <div class="title-bar-active">
+                Soft | 854 x 480 | 100%
+            </div>
+        </div>
+        <div class="console-frame">
+            <div class="title-bar">
+                Console
+            </div>
+            <div id="console-log-container" class="obj-container">
+            </div>
+        </div>
+    </div>
+
+    <div id="parameter-bar">
+        <div class="title-bar">
+            Components
+        </div>
+        <div id="parameter-container" class="obj-container">
+            <div class="parameter-group">
+                Mesh-Filter
+                <div class="droped-title">
+                    RenderingMesh
+                </div>
+                <div id="mesh-holder" class="droped-container">
+                    Drag mesh here!
+                </div>
+            </div>
+
+            <div class="parameter-group">
+                Material
+            <div class="droped-title">
+                _MainTex
+            </div>
+            <div id="image-holder" class="droped-container">
+                Drag texture here!
+            </div>
+            </div>
+<!--
+            <div class="parameter-group">
+                Export
+                <div class="droped-title">
+                    to .obj
+                </div>
+                <div id="exporter" class="btn_wide">
+                    Load Bundle
+                </div>
+                <div id="builder" class="btn_wide">
+                    Build Bundle
+                </div>
+                <div id="grab" class="btn_wide">
+                    Grab SketchFab
+                </div>
+                <div id="buildpackage" class="btn_wide">
+                    Build SketchFab
+                </div>
+
+            </div>
+        -->
+        </div>
+    </div>
+<!--
+    <div id="hierarchy-bar">
+        <div class="title-bar">
+            Hierarchy
+        </div>
+
+        <div id="scene-container" class="obj-container">
+
+        </div>
+
+    </div>
+-->
+    <div id="project-bar">
+        <div class="title-bar">
+            Resources
+        </div>
+
+        <div id="res-container" class="obj-container">
+        </div>
+
+    </div>
+
+</div>
+
+<div id="status_bar">
+    <div id="status_info" , class="status-content">
+        <i class="btl bt-info-circle"></i> ready.
+    </div>
+
+</div>
+</body>
+
+<script>
+    // You can also require other files to run in this process
+    //require('./public/js/bundle.js')
+    require('./build/renderer.js')
+</script>
+
+</html>

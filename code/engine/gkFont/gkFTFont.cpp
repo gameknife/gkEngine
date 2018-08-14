@@ -320,7 +320,7 @@ gkFTCharInfo& gkFTFont::getCharacterInfo( wchar_t character )
 void gkFTFont::drawString( const TCHAR* strings, const Vec2& pos, const ColorB& color, uint32 alignment, uint32 depth_order )
 {
 	// get char info 1 by 1
-	const wchar_t* wstr = NULL;
+	wchar_t* wstr = NULL;
 
 #ifdef UNICODE
 	wstr = strings;
@@ -329,7 +329,9 @@ void gkFTFont::drawString( const TCHAR* strings, const Vec2& pos, const ColorB& 
 	wstr = new wchar_t[len + 1];
     
 #ifdef OS_WIN32
-    MultiByteToWideChar( CP_ACP, NULL, strings, NULL, wstr, len + 1 );
+    //MultiByteToWideChar( CP_ACP, NULL, strings, NULL, wstr, len + 1 );
+	CUnicodeConverter::UTF8Str_To_UTF16Str((BYTE*)strings, (WORD*)wstr);
+	//CUnicodeConverter::UTF8Str_To_UTF32Str((BYTE*)strings, (DWORD*)wstr);
 #else
 	CUnicodeConverter::UTF8Str_To_UTF32Str( (BYTE*)strings, (DWORD*)wstr );
 #endif

@@ -152,15 +152,8 @@ bool gkDeviceRenderContext::SetWindow(int width, int height, bool fullscreen, HW
 		HINSTANCE hInstance = NULL;
 		if( hInstance == NULL )
 			hInstance = ( HINSTANCE )GetModuleHandle( NULL );
-		//GetDXUTState().SetHInstance( hInstance );
-
-		TCHAR szExePath[MAX_PATH];
-		GetModuleFileName( NULL, szExePath, MAX_PATH );
 
 		HICON hIcon = NULL;
-
-		if( hIcon == NULL ) // If the icon is NULL, then use the first one found in the exe
-			hIcon = ExtractIcon( hInstance, szExePath, 0 );
 
 		// Register the windows class
 		WNDCLASS wndClass;

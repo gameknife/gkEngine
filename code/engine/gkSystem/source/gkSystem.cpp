@@ -223,6 +223,9 @@ gkSystem::~gkSystem( void )
 bool gkSystem::Init( ISystemInitInfo& sii )
 {
 	gkLogMessage(_T("Initializing gkSystem..."));
+
+	getENV()->rootPath = new char[256];
+	strcpy(getENV()->rootPath, sii.rootDir);
     
     std::vector<gkStdString> result;
 
@@ -243,7 +246,6 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 			{
 				gkNormalizePath(file);
 				gkStdString filename = gkGetFilename( file.c_str() );
-
 //#ifdef OS_IOS
 //				
 //#else
@@ -308,16 +310,13 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 #endif
     
 #endif
-	
 
 	LOAD_MODULE_GLOBAL(m_moduleHandles.h3DEngine, gkCore);
 	gEnv->p3DEngine->Init();
 
-
 	LOAD_MODULE_GLOBAL(m_moduleHandles.hInputLayer, gkInput);
 
 	//LoadLib(m_moduleHandles.hNetworkLayer,		_T("gkNetwork"));
-
 
 	//////////////////////////////////////////////////////////////////////////
 	// load physics module

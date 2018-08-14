@@ -159,8 +159,11 @@ bool gkGameFramework::InitGame(const TCHAR* dllname)
 	}
 
 	gkLogMessage(_T("load Game: %s"), name);
+
+	gkStdString dllPath = gEnv->rootPath;
+	dllPath += "\\bin64\\";
 	// create system.dll first
-	gkOpenModule( m_hHandleGame, name );
+	gkOpenModule( m_hHandleGame, name, dllPath.c_str());
 
 	if (m_hHandleGame)
 	{

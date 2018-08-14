@@ -1,3 +1,6 @@
+build/
+node_modules/
+node_natives/build/
 code/thirdparty/
 INTERMEDIATE/
 .hg/
