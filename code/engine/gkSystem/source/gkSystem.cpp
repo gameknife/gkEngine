@@ -1,4 +1,4 @@
-﻿// gkSystem.cpp : Defines the exported functions for the DLL application.
+// gkSystem.cpp : Defines the exported functions for the DLL application.
 //
 
 #include "gkSystemStableHeader.h"
@@ -356,10 +356,10 @@ bool gkSystem::Init( ISystemInitInfo& sii )
         
 #else
 #	ifndef _STATIC_LIB
-		gkLoadModule( m_moduleHandles.hAnimation, wszAnimationDll );
+		//gkLoadModule( m_moduleHandles.hAnimation, wszAnimationDll );
 #	else
         #if TARGET_OS_IPHONE
-        LOAD_MODULE_GLOBAL( m_moduleHandles.hAnimation,				gkAnimation );
+        //LOAD_MODULE_GLOBAL( m_moduleHandles.hAnimation,				gkAnimation );
         #endif
 #	endif // _STATIC_LIB
 #endif
