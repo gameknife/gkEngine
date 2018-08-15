@@ -90,6 +90,8 @@ int main(int argc, char *argv[])
     ISystemInitInfo sii;
     sii.fWidth = 1280;
     sii.fHeight = 720;
+    gkStdString rootPath = macBundlePath() + "/";
+    sii.rootDir = rootPath.c_str();
     
     g_pGame->Init(sii);
     g_pGame->PostInit(0, sii);

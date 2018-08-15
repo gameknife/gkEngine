@@ -237,6 +237,14 @@ extern void gkLogError(const TCHAR *, ...);
 #define ANDROID_APP_ROMROOT "/data/data/com.kkstudio.gklauncher/"
 #define ANDROID_APP_SDCARDROOT "/storage/emulated/legacy/gkENGINE/"
 
+#if defined( OS_ANDROID )
+#    include "gkAndroidSpecific.h"
+#endif
+
+#if defined( OS_IOS )
+#    include "gkIOSSpecific.h"
+#endif
+
 #ifdef OS_WIN32
 typedef uint32 gk_thread_id;
 #else
@@ -358,15 +366,6 @@ inline void gkOpenModule(HINSTANCE& hHandle, const TCHAR* moduleName, const TCHA
 //#if !defined( _AFXDLL ) && !defined( _3DSMAX )
 #	include "gkFilePath.h"
 //#endif
-
-
-#if defined( OS_ANDROID )
-#	include "gkAndroidSpecific.h"
-#endif
-
-#if defined( OS_IOS )
-#	include "gkIOSSpecific.h"
-#endif
 
 
 #endif // !INCLUDED_GKPLATFORM_H
