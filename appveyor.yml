@@ -1,19 +1,17 @@
-os: Visual Studio 2017 
-version: 0.1.{build}
+build:
+  project: code/gkENGINE_Vc14.sln
+  parallel: true
+  verbosity: minimal
 
-configuration:
-- Develop_Latest
-#- Release
 
-environment:
-  matrix:
-  - VS_VERSION: 15 2017
-    VS_PLATFORM: x64
-
+version: 1.0.{build}
+image: Visual Studio 2017
+configuration: Develop_Latest
+platform: x64
+clone_folder: c:\projects\gkEngine
 before_build:
 - cmd: appveyor_setup.bat
-
 build:
-  project: c:\projects\gkengine\code\gkENGINE_Vc14.sln
+  project: c:\projects\gkEngine\code\gkENGINE_Vc14.sln
   parallel: true
   verbosity: minimal
