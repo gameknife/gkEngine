@@ -20,9 +20,6 @@ cd %GKENGINE_HOME%\..\code\thirdparty
 %GKENGINE_HOME%\tools\7zr x -y -bd  %GKENGINE_HOME%\..\code\thirdparty\freetype.7z
 %GKENGINE_HOME%\tools\7zr x -y -bd  %GKENGINE_HOME%\..\code\thirdparty\misc.7z
 %GKENGINE_HOME%\tools\7zr x -y -bd  %GKENGINE_HOME%\..\code\thirdparty\oglsdk.7z
-%GKENGINE_HOME%\tools\7zr x -y -bd  %GKENGINE_HOME%\..\code\thirdparty\toolkitpro_15.7z
-%GKENGINE_HOME%\tools\7zr x -y -bd  %GKENGINE_HOME%\..\code\thirdparty\havoksdk.7z
-%GKENGINE_HOME%\tools\7zr x -y -bd  %GKENGINE_HOME%\..\code\thirdparty\havoksdk_win32.7z
 %GKENGINE_HOME%\tools\7zr x -y -bd  %GKENGINE_HOME%\..\code\thirdparty\mscrt.7z
 
 cd %restore%

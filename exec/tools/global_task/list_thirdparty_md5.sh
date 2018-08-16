@@ -9,7 +9,5 @@ echo $hash
 }
 
 listsdkmd5 freetype
-listsdkmd5 havoksdk
 listsdkmd5 misc
 listsdkmd5 oglsdk
-listsdkmd5 havoksdk_ios

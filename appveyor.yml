@@ -1,6 +1,6 @@
 build:
   project: code/gkENGINE_Vc14.sln
-  parallel: true
+  parallel: false
   verbosity: minimal
 
 
@@ -13,5 +13,5 @@ before_build:
 - cmd: appveyor_setup.bat
 build:
   project: c:\projects\gkEngine\code\gkENGINE_Vc14.sln
-  parallel: true
+  parallel: false
   verbosity: minimal

@@ -13,9 +13,7 @@ cd $GKENGINE_HOME/../code/thirdparty
 
 
 downloadsdk freetype
-downloadsdk havoksdk
 downloadsdk misc
 downloadsdk oglsdk
-downloadsdk havoksdk_ios
 
 #pause

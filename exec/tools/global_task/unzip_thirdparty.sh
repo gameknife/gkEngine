@@ -14,10 +14,8 @@ fi
 }
 
 unzipsdk freetype
-unzipsdk havoksdk
 unzipsdk misc
 unzipsdk oglsdk
-unzipsdk havoksdk_ios
 
 #cd %restore%
 #del %GKENGINE_HOME%\..\code\thirdparty\depends.7z
