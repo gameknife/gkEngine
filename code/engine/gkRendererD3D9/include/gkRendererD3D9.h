@@ -154,6 +154,9 @@ private:
 	bool m_bFrameRendering;
 	static LPDIRECT3DSURFACE9	m_pBackBufferSurface;
 	static LPDIRECT3DSURFACE9	m_pOriginDepthSurface;
+	static LPDIRECT3DSURFACE9	m_pBackBufferSystemSurface;
+	static uint32*				m_pBackBufferSystemData;
+
 	static gkDSCaches			m_dsCaches;
 	static gkDSCaches			m_nullRTs;
 
@@ -402,6 +405,8 @@ public:
 	virtual float GetPixelReSize();
 
 	virtual void SavePositionCubeMap(Vec3 position, const TCHAR* texturename);
+
+	virtual uint8* GetBackBufferData() { return (uint8*)m_pBackBufferSystemData; }
 
 	static gkRenderSequence*	m_pUpdatingRenderSequence;
 	static gkRenderSequence*	m_pRenderingRenderSequence;

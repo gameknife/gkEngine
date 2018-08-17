@@ -308,6 +308,8 @@ public:
 	virtual bool FullScreenMode() {return true;}
 
 	virtual void SavePositionCubeMap(Vec3 position, const TCHAR* texturename) {}
+
+	virtual uint8* GetBackBufferData() { return NULL; }
 };
 
 #endif

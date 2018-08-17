@@ -61,7 +61,7 @@
 #include "gkLightProbeSystem.h"
 
 #define USE_DXUT 0
-#define USE_SWAPCHAIN 0;
+#define USE_SWAPCHAIN 1;
 
 LRESULT CALLBACK gkStudioFSWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
@@ -381,6 +381,9 @@ IResourceManager*	gkRendererD3D9::m_pShaderManager = NULL;
 gkAuxRenderer*		gkRendererD3D9::m_pAuxRenderer = 0;
 LPDIRECT3DSURFACE9	gkRendererD3D9::m_pBackBufferSurface = NULL;
 LPDIRECT3DSURFACE9  gkRendererD3D9::m_pOriginDepthSurface = NULL;
+LPDIRECT3DSURFACE9	gkRendererD3D9::m_pBackBufferSystemSurface = NULL;
+uint32*				gkRendererD3D9::m_pBackBufferSystemData = NULL;
+
 gkDSCaches			gkRendererD3D9::m_dsCaches;
 gkDSCaches			gkRendererD3D9::m_nullRTs;
 
@@ -543,6 +546,13 @@ bool gkRendererD3D9::CheckDevice()
 				m_lNewHeight = getRenderer()->m_adapterFullscreenSize.y;
 			}
 
+			if(m_pBackBufferSystemData != NULL)
+			{
+				free(m_pBackBufferSystemData);
+			}
+
+			m_pBackBufferSystemData = (uint32*)malloc(m_lNewWidth * m_lNewHeight * sizeof(uint32));
+
 			// D3D9EX, Directly Change the BackBuffer
 			D3DPRESENT_PARAMETERS pp;
 			memset( &pp, 0, sizeof(pp));
@@ -550,7 +560,7 @@ bool gkRendererD3D9::CheckDevice()
 			pp.BackBufferWidth = m_lNewWidth;
 			pp.BackBufferHeight = m_lNewHeight;
 			pp.BackBufferCount = 0;
-			pp.BackBufferFormat = D3DFMT_X8R8G8B8;
+			pp.BackBufferFormat = D3DFMT_A8R8G8B8;
 
 			pp.AutoDepthStencilFormat = D3DFMT_D24S8;
 			pp.EnableAutoDepthStencil = TRUE;
@@ -584,7 +594,7 @@ bool gkRendererD3D9::CheckDevice()
 				mode.Height = m_lNewHeight;
 				mode.RefreshRate = 60;
 				mode.Size = sizeof(D3DDISPLAYMODEEX);
-				mode.Format = D3DFMT_X8R8G8B8;
+				mode.Format = D3DFMT_A8R8G8B8;
 				mode.ScanLineOrdering = D3DSCANLINEORDERING_PROGRESSIVE;
 			}
 
@@ -714,6 +724,16 @@ void gkRendererD3D9::_startFrame(ERenderStereoType stereoType)
 	}
 
 	SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+}
+
+static inline uint32 uint32RGB_2_uint32ABGR(const uint32 rgb)
+{
+	uint32 ret = ((rgb & 0xff000000) << 0) |
+		((rgb & 0xff0000) << 16) |
+		((rgb & 0xff00) << 8) |
+		((0xff) << 24);
+
+	return ret;
 }
 
 //-----------------------------------------------------------------------
@@ -877,6 +897,51 @@ void gkRendererD3D9::_endFrame(ERenderStereoType stereoType)
 					}
 				}
 #endif
+
+
+
+				HRESULT res = S_OK;
+				IDirect3DSurface9* bb;
+				m_pSwapChain1->GetBackBuffer(0, D3DBACKBUFFER_TYPE_MONO, &bb);
+
+				// get buffer from backbuffer
+				if (m_pBackBufferSystemSurface == NULL)
+				{
+					m_pd3d9Device->CreateOffscreenPlainSurface(m_lNewWidth, m_lNewHeight,
+						D3DFMT_A8R8G8B8, D3DPOOL_SYSTEMMEM,
+						&m_pBackBufferSystemSurface, NULL);
+				}
+
+
+				res = m_pd3d9Device->GetRenderTargetData(bb, m_pBackBufferSystemSurface);
+				if (res != S_OK)
+				{
+					// FATAL ERROR
+					return;
+				}
+
+				D3DLOCKED_RECT lockinfo;
+				memset(&lockinfo, 0, sizeof(lockinfo));
+
+				res = m_pBackBufferSystemSurface->LockRect(&lockinfo, NULL, D3DLOCK_DISCARD);
+				if (res != S_OK)
+				{
+					// FATAL ERROR
+					return;
+				}
+
+				memcpy(m_pBackBufferSystemData, lockinfo.pBits, m_lNewWidth * m_lNewHeight * sizeof(uint32));
+				// swizzle
+				for(int i=0; i < m_lNewWidth * m_lNewHeight; ++i)
+				{
+					m_pBackBufferSystemData[i] = uint32RGB_2_uint32ABGR(m_pBackBufferSystemData[i]);
+				}
+
+				m_pBackBufferSystemSurface->UnlockRect();
+				m_pBackBufferSystemSurface->Release();
+				m_pBackBufferSystemSurface = NULL;
+
+
 			}
 
 		}
@@ -1304,7 +1369,7 @@ HWND gkRendererD3D9::Init(ISystemInitInfo& sii)
 			pp.BackBufferWidth = sii.fWidth;
 			pp.BackBufferHeight = sii.fHeight;
 			pp.BackBufferCount = 0;
-			pp.BackBufferFormat = D3DFMT_X8R8G8B8;
+			pp.BackBufferFormat = D3DFMT_A8R8G8B8;
 
 			pp.AutoDepthStencilFormat = D3DFMT_D24S8;
 			pp.EnableAutoDepthStencil = TRUE;

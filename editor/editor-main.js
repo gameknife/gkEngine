@@ -8,8 +8,8 @@ window.onload = function(){
 
   // 初始化canvas
   let canvas = bid('canvas');
-  canvas.width = 854;
-  canvas.height = 480;
+  canvas.width = 1280;
+  canvas.height = 720;
   let context = canvas.getContext('2d');
 
   // 设置资源路径
@@ -32,8 +32,8 @@ window.onload = function(){
   //} );
 
   // 创建backbuffer
-  let bufferData = new Buffer(854*480*4);
-  let imageData = context.createImageData(854, 480);
+  let bufferData = new Buffer(1280*720*4);
+  let imageData = context.createImageData(1280, 720);
 
   // 取得profile数据显示器
   let profiledata = bid('profiledata');
@@ -52,13 +52,13 @@ window.onload = function(){
     ev.preventDefault();
   }
 
-  let resPanel = new EditorResourceManager();
+  // let resPanel = new EditorResourceManager();
 
-  // 刷新project面板
-  resPanel.init(bid('res-container'), path.join(__dirname, '../'));
-  resPanel.rescan_resources();
-  resPanel.reconstruct_filetree();
-  resPanel.refresh();
+  // // 刷新project面板
+  // resPanel.init(bid('res-container'), path.join(__dirname, '../'));
+  // resPanel.rescan_resources();
+  // resPanel.reconstruct_filetree();
+  // resPanel.refresh();
 
   // 创建逻辑循环
   render_loop();

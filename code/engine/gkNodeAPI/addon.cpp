@@ -3,6 +3,7 @@
 
 #include "IGameframework.h"
 #include "ISystem.h"
+#include "IRenderer.h"
 #include "gkPlatform_impl.h"
 #include "gkIniParser.h"
 
@@ -44,6 +45,7 @@ NAN_METHOD(getprofiledata) {
 NAN_METHOD(getcounter) {
     info.GetReturnValue().Set(Nan::New(s_counter));
 }
+IGameFramework* g_game = NULL;
 
 NAN_METHOD(initOfflineSystem) {
 
@@ -57,7 +59,7 @@ NAN_METHOD(initOfflineSystem) {
 	HINSTANCE hHandle = 0;
 	gkOpenModule(hHandle, _T("gkGameFramework"), dllPathAddress);
 	GET_SYSTEM pFuncStart = (GET_SYSTEM)DLL_GETSYM(hHandle, "gkModuleInitialize");
-	IGameFramework* game = pFuncStart(dllPathAddress);
+	g_game = pFuncStart(dllPathAddress);
 
 	int width = 1280;
 	int height = 720;
@@ -68,15 +70,15 @@ NAN_METHOD(initOfflineSystem) {
 	sii.fHeight = height;
     sii.rootDir = rootPathAddress;
 
-	if (!(game->Init(sii)))
+	if (!(g_game->Init(sii)))
 	{
 		return;
 	}
 
 
-	game->PostInit( NULL, sii );
+	g_game->PostInit( NULL, sii );
 
-	game->InitGame( NULL );
+	g_game->InitGame( NULL );
 
 	// run
 	//game->Run();
@@ -84,14 +86,14 @@ NAN_METHOD(initOfflineSystem) {
 
 NAN_METHOD(renderToBuffer) {
 
-	// g_app->Update();
+    g_game->Update();
 
-	// const uint8* data = gEnv->renderer->getBuffer();
-	// int length = gEnv->renderer->getBufferLength();
+	const uint8* data = g_game->getENV()->pRenderer->GetBackBufferData();
+	int length = 1280 * 720 * 4;
 
-	// char* buffer = (char*)node::Buffer::Data(info[0]->ToObject());
+    char* buffer = (char*)node::Buffer::Data(info[0]->ToObject());
 
-	// memcpy(buffer, data, length);
+	memcpy(buffer, data, length);
 }
 
 NAN_METHOD(shutDown){
