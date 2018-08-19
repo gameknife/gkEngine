@@ -56,7 +56,7 @@ set msBuildDir=%WINDIR%\Microsoft.NET\Framework\v4.0.30319
 IF EXIST %WINDIR%\Microsoft.NET\Framework\v4.0.30319\msbuild.exe (
 echo MSBuild finded, build gkENGINE automaticly...
 echo -------------------------------------------------------------------------
-call %msBuildDir%\msbuild.exe %GKENGINE_HOME%\..\code\gkENGINE_CORE_Vc10.sln /p:Configuration=Develop /p:Platform=Win32
+call %msBuildDir%\msbuild.exe %GKENGINE_HOME%\..\code\gkENGINE_Vc14.sln /p:Configuration=Develop_Latest /p:Platform=x64
 ) ELSE (
 echo MSBuild Can not find, you should build gkENGINE manmally.
 echo -------------------------------------------------------------------------
@@ -64,10 +64,10 @@ echo -------------------------------------------------------------------------
 
 rem strp5, auto run, if possible
 
-IF EXIST %GKENGINE_HOME%\bin32\gkLauncherUniverse.exe (
+IF EXIST %GKENGINE_HOME%\bin64\gkLauncherUniverse.exe (
 echo Automatic launch the Testcase Demo...
 echo -------------------------------------------------------------------------
-call %GKENGINE_HOME%\bin32\gkLauncherUniverse.exe
+call %GKENGINE_HOME%\bin64\gkLauncherUniverse.exe
 ) ELSE (
 echo Build not success, faild to launch the Testcase Demo.
 echo -------------------------------------------------------------------------

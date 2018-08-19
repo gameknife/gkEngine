@@ -728,9 +728,9 @@ void gkRendererD3D9::_startFrame(ERenderStereoType stereoType)
 
 static inline uint32 uint32RGB_2_uint32ABGR(const uint32 rgb)
 {
-	uint32 ret = ((rgb & 0xff000000) << 0) |
-		((rgb & 0xff0000) << 16) |
-		((rgb & 0xff00) << 8) |
+	uint32 ret = ((rgb & 0xff) << 16) |
+		((rgb & 0xff00) << 0) |
+		((rgb & 0xff0000) >> 16) |
 		((0xff) << 24);
 
 	return ret;
@@ -1790,7 +1790,10 @@ bool gkRendererD3D9::SetWindow(int width, int height, bool fullscreen, HWND hWnd
 		}
 		else
 			m_hWnd = (HWND)hWnd;
-		ShowWindow(m_hWnd, SW_SHOWNORMAL);
+
+
+		//ShowWindow(m_hWnd, SW_SHOWNORMAL);
+		ShowWindow(m_hWnd, SW_HIDE);
 		SetFocus(m_hWnd);
 		SetForegroundWindow(m_hWnd);
 	}
