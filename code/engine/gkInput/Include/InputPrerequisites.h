@@ -43,9 +43,4 @@ Copyright (c) 2011-2015 Kaiming Yi
 #include <dinput.h>
 #endif
 
-#ifdef GAMEKNIFEINPUT_EXPORTS
-#define GAMEKNIFEINPUT_API DLL_EXPORT
 #include "gkInputManager.h"
-#else
-#define GAMEKNIFEINPUT_API DLL_IMPORT
-#endif

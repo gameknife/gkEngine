@@ -9,7 +9,7 @@
 
 gkGameObjectSystem* g_goSystem;
 #ifndef _STATIC_LIB
-extern "C" void GKGAMEOBJECTSYSTEM_API gkModuleInitialize(SSystemGlobalEnvironment* pEnv) throw()
+extern "C" void DLL_EXPORT gkModuleInitialize(SSystemGlobalEnvironment* pEnv) throw()
 {
 	if (pEnv)
 	{
@@ -20,7 +20,7 @@ extern "C" void GKGAMEOBJECTSYSTEM_API gkModuleInitialize(SSystemGlobalEnvironme
 
 }
 
-extern "C" void GKGAMEOBJECTSYSTEM_API gkModuleUnload(void)
+extern "C" void DLL_EXPORT gkModuleUnload(void)
 {
 	delete g_goSystem;
 }

@@ -35,13 +35,7 @@ Copyright (c) 2011-2015 Kaiming Yi
 #pragma once
 #include "gkPlatform.h"
 
-
-#ifdef GKSYSTEM_EXPORTS
 #define GKSYSTEM_API DLL_EXPORT
-#else
-#define GKSYSTEM_API DLL_IMPORT
-#endif
-
 
 #define USE_NULLRENDERER
 

@@ -33,12 +33,7 @@ Copyright (c) 2011-2015 Kaiming Yi
 // defined with this macro as being exported.
 #pragma once
 #include "gkPlatform.h"
-
 #include "gk_Math.h"
 
-#ifdef GKGAMEFRAMEWORK_EXPORTS
 #define GKGAMEFRAMEWORK_API DLL_EXPORT
-#else
-#define GKGAMEFRAMEWORK_API DLL_IMPORT
-#endif
 

@@ -45,17 +45,7 @@ Copyright (c) 2011-2015 Kaiming Yi
 #include "gkPlatform.h"
 
 /// dll export flag
-
-#ifdef GAMEKNIFECORE_EXPORTS
 #define GAMEKNIFECORE_API DLL_EXPORT
-#else
-#define GAMEKNIFECORE_API DLL_IMPORT
-#endif
-
-/// D3D9 headers
-// #include <d3d9.h>
-// #include <d3dx9.h>
-// #include <DxErr.h>
 
 #include "gk_Math.h"
 #include "gk_Color.h"

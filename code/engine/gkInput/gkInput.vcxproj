@@ -164,7 +164,6 @@
     <ClCompile Include="Source\dllmain.cpp" />
     <ClCompile Include="Source\gkAndroidInput.cpp" />
     <ClCompile Include="Source\gkIOSInput.cpp" />
-    <ClCompile Include="Source\gkNuiInterface.cpp" />
     <ClCompile Include="Source\InputStableHeader.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Develop_Latest|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticBuild|x64'">Create</PrecompiledHeader>
@@ -172,7 +171,6 @@
     </ClCompile>
     <ClCompile Include="Source\gkInputDeviceBase.cpp" />
     <ClCompile Include="Source\gkKeyboard.cpp" />
-    <ClCompile Include="Source\gkKinect.cpp" />
     <ClCompile Include="Source\gkMouse.cpp" />
     <ClCompile Include="Source\gkXboxController.cpp" />
     <ClCompile Include="Source\gkInputManager.cpp" />
@@ -181,13 +179,11 @@
     <ClInclude Include="Include\dllmain.h" />
     <ClInclude Include="Include\gkAndroidInput.h" />
     <ClInclude Include="Include\gkIOSInput.h" />
-    <ClInclude Include="Include\gkNuiInterface.h" />
     <ClInclude Include="Include\InputPrerequisites.h" />
     <ClInclude Include="Include\InputStableHeader.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Include\gkInputDeviceBase.h" />
     <ClInclude Include="Include\gkKeyboard.h" />
-    <ClInclude Include="Include\gkKinect.h" />
     <ClInclude Include="Include\gkMouse.h" />
     <ClInclude Include="Include\gkXboxController.h" />
     <ClInclude Include="Include\gkInputManager.h" />

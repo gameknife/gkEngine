@@ -6,7 +6,6 @@
 #include "gkKeyboard.h"
 #include "gkMouse.h"
 #include "gkXboxController.h"
-#include "gkKinect.h"
 #elif defined ( OS_ANDROID )
 #include "gkAndroidInput.h"
 #elif defined (OS_IOS)

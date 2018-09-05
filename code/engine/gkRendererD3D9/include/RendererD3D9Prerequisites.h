@@ -35,11 +35,7 @@ Copyright (c) 2011-2015 Kaiming Yi
 #include "gkPlatform.h"
 #include "gk_Math.h"
 
-#ifdef GKRENDERERD3D9_EXPORTS
-#define GKRENDERERD3D9_API __declspec(dllexport)
-#else
-#define GKRENDERERD3D9_API __declspec(dllimport)
-#endif
+#define GKRENDERERD3D9_API DLL_EXPORT
 
 // TODO: reference additional headers your program requires here
 

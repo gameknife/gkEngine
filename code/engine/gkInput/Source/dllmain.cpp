@@ -20,7 +20,7 @@
 
 gkInputManager* g_InputModule;
 #ifndef _STATIC_LIB
-extern "C" void GAMEKNIFEINPUT_API gkModuleInitialize(SSystemGlobalEnvironment* pEnv) throw()
+extern "C" void DLL_EXPORT gkModuleInitialize(SSystemGlobalEnvironment* pEnv) throw()
 {
 	if (pEnv)
 	{
@@ -30,7 +30,7 @@ extern "C" void GAMEKNIFEINPUT_API gkModuleInitialize(SSystemGlobalEnvironment* 
 	}
 }
 
-extern "C" void GAMEKNIFEINPUT_API gkModuleUnload(void)
+extern "C" void DLL_EXPORT gkModuleUnload(void)
 {
 	SAFE_DELETE( g_InputModule );
 }
