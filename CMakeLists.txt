@@ -9,6 +9,7 @@ set (gkENGINE_VERSION_MINOR 0)
 # so that we will find TutorialConfig.h
 include_directories ("${PROJECT_BINARY_DIR}")
 
+# add warning mute
 add_compile_options(/w44996)
 add_compile_options(/w44819)
 add_compile_options(/w44215)
@@ -19,13 +20,14 @@ add_compile_options(/w44311)
 add_compile_options(/w44302)
 add_compile_options(/w44067)
 
-# add the MathFunctions library?
+# add the global inlude dir
 include_directories ("${PROJECT_SOURCE_DIR}/code/engine/gkCommon")
 include_directories ("${PROJECT_SOURCE_DIR}/code/engine/gkCommon/MathLib")
 include_directories ("${PROJECT_SOURCE_DIR}/code/engine/gkCommon/serializer")
 include_directories ("${PROJECT_SOURCE_DIR}/code/thirdparty")
 include_directories ("${PROJECT_SOURCE_DIR}/code/thirdparty/rapidxml")
 
+# add gkCore
 FILE(GLOB sources ./code/engine/gkCore/*.cpp ./code/engine/gkCore/*/*.cpp)
 add_library(gkCore SHARED ${sources})
 target_include_directories(gkCore PRIVATE
@@ -33,6 +35,7 @@ target_include_directories(gkCore PRIVATE
   ./code/engine/gkCore/include/
 )
 
+# add gkFont
 FILE(GLOB sources ./code/engine/gkFont/*.cpp ./code/engine/gkFont/*/*.cpp)
 add_library(gkFont SHARED ${sources})
 target_include_directories(gkFont PRIVATE
@@ -107,7 +110,7 @@ target_include_directories(gkLauncher PRIVATE
   ./code/engine/gkLauncherUniverse/include/
 )
 
- 
+# set all targets output dir
 set_target_properties(gkCore gkLauncher gkSystem gkRendererD3D9 gkInput gkGameObjectSystem gkGameFramework gkFont
     PROPERTIES
     #ARCHIVE_OUTPUT_DIRECTORY "/home/xy/cmake_practice/lib/"
@@ -116,8 +119,3 @@ set_target_properties(gkCore gkLauncher gkSystem gkRendererD3D9 gkInput gkGameOb
     RUNTIME_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/exec/bin64"
     RUNTIME_OUTPUT_DIRECTORY_DEBUG "${PROJECT_SOURCE_DIR}/exec/bin64"
 )
-
-# add_subdirectory (code/engine/gkCore)
-# add_subdirectory (code/engine/gkLauncherUniverse)
-
-# add the executable
