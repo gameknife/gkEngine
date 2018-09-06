@@ -1,7 +1,7 @@
+#include "gkSystemStableHeader.h"
+
 #ifdef OS_WIN32
 
-
-#include "gkSystemStableHeader.h"
 #include "FileChangeMonitor.h"
 
 

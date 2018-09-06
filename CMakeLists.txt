@@ -5,8 +5,19 @@ if (IOS)
     MESSAGE ("This is build for ios, use static lib")
 	set(CoreLinkType STATIC)
 else()
-    MESSAGE ("This is build for ios, use dynamic lib")
+    MESSAGE ("This is build for windows, use dynamic lib")
 	set(CoreLinkType SHARED)
+
+    # add warning mute
+    add_compile_options(/w44996)
+    add_compile_options(/w44819)
+    add_compile_options(/w44215)
+    add_compile_options(/w44251)
+    add_compile_options(/w44267)
+    add_compile_options(/w44005)
+    add_compile_options(/w44311)
+    add_compile_options(/w44302)
+    add_compile_options(/w44067)
 endif()
 
 set(CMAKE_MACOSX_RPATH 0)
@@ -19,16 +30,6 @@ set (gkENGINE_VERSION_MINOR 0)
 # so that we will find TutorialConfig.h
 include_directories ("${PROJECT_BINARY_DIR}")
 
-# add warning mute
-#add_compile_options(/w44996)
-#add_compile_options(/w44819)
-#add_compile_options(/w44215)
-#add_compile_options(/w44251)
-#add_compile_options(/w44267)
-#add_compile_options(/w44005)
-#add_compile_options(/w44311)
-#add_compile_options(/w44302)
-#add_compile_options(/w44067)
 
 # add the global inlude dir
 include_directories ("${PROJECT_SOURCE_DIR}/code/engine/gkCommon")
@@ -90,7 +91,7 @@ target_include_directories(gkInput PRIVATE
 )
 target_link_libraries(gkInput 
     ${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/lib/x64/dinput8.lib
-    ${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/lib/x64/dxguid
+    ${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/lib/x64/dxguid.lib
 )
 
 FILE(GLOB sources ./code/engine/gkCommon/*.cpp ./code/engine/gkSystem/*.cpp ./code/engine/gkSystem/*/*.cpp ./code/engine/gkSystem/*/*.c)
@@ -136,11 +137,11 @@ target_include_directories(gkRendererD3D9 PRIVATE
 target_link_libraries(gkRendererD3D9 
     winmm.lib
     comctl32.lib
-    ${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/lib/x64/d3d9
-    ${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/lib/x64/dxerr
-    ${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/lib/x64/dxguid
-    ${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/lib/x64/d3dx9
-    ${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/lib/x64/d3dx10
+    ${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/lib/x64/d3d9.lib
+    ${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/lib/x64/dxerr.lib
+    ${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/lib/x64/dxguid.lib
+    ${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/lib/x64/d3dx9.lib
+    ${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/lib/x64/d3dx10.lib
 )
 
 FILE(GLOB sources ./code/engine/gkLauncherUniverse/*.cpp ./code/engine/gkLauncherUniverse/*/*.cpp)
