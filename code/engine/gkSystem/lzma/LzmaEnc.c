@@ -1,8 +1,8 @@
-﻿/* LzmaEnc.c -- LZMA Encoder
+/* LzmaEnc.c -- LZMA Encoder
 2010-04-16 : Igor Pavlov : Public domain */
 
 #include <string.h>
-
+#define _7ZIP_ST
 /* #define SHOW_STAT */
 /* #define SHOW_STAT2 */
 

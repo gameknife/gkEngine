@@ -55,14 +55,14 @@ EHwTexError PVR_Loader::Load_Data( const void* pointer, uint32 size )
 
 	//Check supported texture formats.
 	bool bIsPVRTCSupported = gkGLExtension::IsGLExtensionSupported("GL_IMG_texture_compression_pvrtc");
-#ifndef TARGET_OS_IPHONE
+#ifndef OS_IOS
 	bool bIsBGRA8888Supported  = gkGLExtension::IsGLExtensionSupported("GL_IMG_texture_format_BGRA8888");
 #else
 	bool bIsBGRA8888Supported  = gkGLExtension::IsGLExtensionSupported("GL_APPLE_texture_format_BGRA8888");
 #endif
 	bool bIsFloat16Supported = gkGLExtension::IsGLExtensionSupported("GL_OES_texture_half_float");
 	bool bIsFloat32Supported = gkGLExtension::IsGLExtensionSupported("GL_OES_texture_float");
-#ifndef TARGET_OS_IPHONE
+#ifndef OS_IOS
 	bool bIsETCSupported = gkGLExtension::IsGLExtensionSupported("GL_OES_compressed_ETC1_RGB8_texture");
 #endif
 	bool bIsATCSupported = gkGLExtension::IsGLExtensionSupported("GL_AMD_compressed_ATC_texture");
@@ -82,7 +82,7 @@ EHwTexError PVR_Loader::Load_Data( const void* pointer, uint32 size )
 				return PVR_FAIL;
 			}
 		}
-#ifndef TARGET_OS_IPHONE //TODO
+#ifndef OS_IOS //TODO
 		else if (eTextureFormat==GL_ETC1_RGB8_OES)
 		{
 			if(bIsETCSupported)
@@ -114,12 +114,12 @@ EHwTexError PVR_Loader::Load_Data( const void* pointer, uint32 size )
 	//Check for BGRA support.	
 	if(eTextureFormat==GL_BGRA)
 	{
-#ifdef TARGET_OS_IPHONE
+#ifdef OS_IOS
 		eTextureInternalFormat = GL_RGBA;
 #endif
 		if(!bIsBGRA8888Supported)
 		{
-#ifdef TARGET_OS_IPHONE
+#ifdef OS_IOS
 			gkLogWarning(_T("PVRTTextureLoadFromPointer failed: Unable to load GL_BGRA texture as extension GL_APPLE_texture_format_BGRA8888 is unsupported.\n"));
 #else
 			gkLogWarning(_T("PVRTTextureLoadFromPointer failed: Unable to load GL_BGRA texture as extension GL_IMG_texture_format_BGRA8888 is unsupported.\n"));

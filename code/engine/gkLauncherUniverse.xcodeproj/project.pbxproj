@@ -328,6 +328,7 @@
 					"$(BUILD_DIR)",
 					"\"$(SRCROOT)/../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"",
 					../thirdparty/havoksdk/lib/ios_armv7/dev,
+					"../thirdparty/freetype/lib/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)",
 				);
 				OBJROOT = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
@@ -422,6 +423,7 @@
 					"$(BUILD_DIR)",
 					"\"$(SRCROOT)/../../exec/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"",
 					../thirdparty/havoksdk/lib/ios_armv7/dev,
+					"../thirdparty/freetype/lib/ios/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)",
 				);
 				LLVM_LTO = YES;
 				OBJROOT = "../../intermediate/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
@@ -435,6 +437,7 @@
 					"-lgkGameFramework",
 					"-lgkSystem",
 					"-lTestCases",
+					"-lfreetype2",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = gameknife.testcase;
 				PRODUCT_NAME = gkENGINE;

@@ -1,4 +1,7 @@
-﻿#include "gkSystemStableHeader.h"
+#ifdef OS_WIN32
+
+
+#include "gkSystemStableHeader.h"
 #include "FileChangeMonitor.h"
 
 
@@ -219,3 +222,5 @@ void FileChangeMonitorThread::Stop()
 	CloseHandle( hDir );
 	Resume();
 }
+
+#endif

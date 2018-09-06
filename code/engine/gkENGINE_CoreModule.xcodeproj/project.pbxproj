@@ -12,7 +12,6 @@
 		A01A53851AC5C2AB00665B07 /* TouchView.mm in Sources */ = {isa = PBXBuildFile; fileRef = A097995E1AC5BD8A00173F60 /* TouchView.mm */; };
 		A01A538A1AC5E0EF00665B07 /* glExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = A01A53881AC5E0EF00665B07 /* glExtension.h */; };
 		A01A538B1AC5E12D00665B07 /* glExtension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A01A53871AC5E0EF00665B07 /* glExtension.cpp */; };
-		A03FCC8C1732B9C700FFA4DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8A8BA315BEC9990039AACB /* Foundation.framework */; };
 		A03FCD261732C1B600FFA4DF /* gk3DEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0583590172D27AB00B168C8 /* gk3DEngine.cpp */; };
 		A03FCD271732C1B600FFA4DF /* gkParticleInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0583595172D27AB00B168C8 /* gkParticleInstance.cpp */; };
 		A03FCD281732C1B600FFA4DF /* gkParticleRenderable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0583597172D27AB00B168C8 /* gkParticleRenderable.cpp */; };
@@ -75,16 +74,13 @@
 		A058366D172D280A00B168C8 /* gkInputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0583654172D280A00B168C8 /* gkInputManager.cpp */; };
 		A058366E172D280A00B168C8 /* gkIOSInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0583655172D280A00B168C8 /* gkIOSInput.cpp */; };
 		A0583674172D280A00B168C8 /* InputStableHeader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A058365B172D280A00B168C8 /* InputStableHeader.cpp */; };
-		A07D493F1786476D000F2DA7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8A8BA315BEC9990039AACB /* Foundation.framework */; };
 		A07D4953178647F9000F2DA7 /* dllmain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A07D494A178647F9000F2DA7 /* dllmain.cpp */; };
 		A07D4954178647F9000F2DA7 /* gkFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A07D494B178647F9000F2DA7 /* gkFont.cpp */; };
 		A07D4955178647F9000F2DA7 /* gkFontRenderable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A07D494D178647F9000F2DA7 /* gkFontRenderable.cpp */; };
 		A07D4957178647F9000F2DA7 /* gkFTFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A07D4951178647F9000F2DA7 /* gkFTFont.cpp */; };
-		A07D495E17865623000F2DA7 /* libfreetype2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07D495D17865623000F2DA7 /* libfreetype2.a */; };
 		A07D4B3D1799AEC800C36005 /* StableHeader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A07D4B181799AEC800C36005 /* StableHeader.cpp */; };
 		A07D4B471799B31200C36005 /* dllmain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A07D4B451799B31200C36005 /* dllmain.cpp */; };
 		A08C56F31734BE8500CA593D /* gkIOSLog.mm in Sources */ = {isa = PBXBuildFile; fileRef = A08C56F11734BE8500CA593D /* gkIOSLog.mm */; };
-		A0950EFE179BF797002C8759 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0950EFD179BF797002C8759 /* AppKit.framework */; };
 		A097991C1AC5BBB800173F60 /* DDsTextureLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A09798F31AC5BB3000173F60 /* DDsTextureLoader.cpp */; };
 		A097991D1AC5BBB800173F60 /* dllmain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A09798F61AC5BB3000173F60 /* dllmain.cpp */; };
 		A097991E1AC5BBB800173F60 /* gkAuxRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A09798F81AC5BB3000173F60 /* gkAuxRenderer.cpp */; };
@@ -175,11 +171,6 @@
 		A0D17CD9172E3CA0001EBD1C /* gkTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0D17CB7172E3CA0001EBD1C /* gkTimer.cpp */; };
 		A0D17CDA172E3CA0001EBD1C /* SystemCVars.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0D17CB8172E3CA0001EBD1C /* SystemCVars.cpp */; };
 		A0F3EB9A172F7DF600F8EB6B /* gkMeshFileLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0F3EB99172F7DF600F8EB6B /* gkMeshFileLoader.cpp */; };
-		FF8A8BB415BEC9ED0039AACB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8A8BA315BEC9990039AACB /* Foundation.framework */; };
-		FF8A8BC315BEC9F50039AACB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8A8BA315BEC9990039AACB /* Foundation.framework */; };
-		FF8A8BD215BEC9FD0039AACB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8A8BA315BEC9990039AACB /* Foundation.framework */; };
-		FF8A8BE115BECA260039AACB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8A8BA315BEC9990039AACB /* Foundation.framework */; };
-		FF8A8BF015BECA300039AACB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8A8BA315BEC9990039AACB /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -537,74 +528,6 @@
 		FF8A8BE015BECA260039AACB /* libgkGameObjectSystem.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libgkGameObjectSystem.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF8A8BEF15BECA300039AACB /* libgkGameFramework.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libgkGameFramework.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		A03FCC881732B9C700FFA4DF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A03FCC8C1732B9C700FFA4DF /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A07D493B1786476D000F2DA7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A07D495E17865623000F2DA7 /* libfreetype2.a in Frameworks */,
-				A07D493F1786476D000F2DA7 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A07D4ADF1799AE0300C36005 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A0950EFE179BF797002C8759 /* AppKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FF8A8BB015BEC9ED0039AACB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FF8A8BB415BEC9ED0039AACB /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FF8A8BBF15BEC9F50039AACB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FF8A8BC315BEC9F50039AACB /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FF8A8BCE15BEC9FD0039AACB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FF8A8BD215BEC9FD0039AACB /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FF8A8BDD15BECA260039AACB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FF8A8BE115BECA260039AACB /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FF8A8BEC15BECA300039AACB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FF8A8BF015BECA300039AACB /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		A01A53861AC5C49A00665B07 /* Renderer */ = {
@@ -1377,7 +1300,6 @@
 			buildConfigurationList = A03FCC941732B9C700FFA4DF /* Build configuration list for PBXNativeTarget "gkCore" */;
 			buildPhases = (
 				A03FCC871732B9C700FFA4DF /* Sources */,
-				A03FCC881732B9C700FFA4DF /* Frameworks */,
 				A03FCC891732B9C700FFA4DF /* CopyFiles */,
 			);
 			buildRules = (
@@ -1394,7 +1316,6 @@
 			buildConfigurationList = A07D49471786476D000F2DA7 /* Build configuration list for PBXNativeTarget "gkFont" */;
 			buildPhases = (
 				A07D493A1786476D000F2DA7 /* Sources */,
-				A07D493B1786476D000F2DA7 /* Frameworks */,
 				A07D493C1786476D000F2DA7 /* CopyFiles */,
 			);
 			buildRules = (
@@ -1411,7 +1332,6 @@
 			buildConfigurationList = A07D4AEF1799AE0300C36005 /* Build configuration list for PBXNativeTarget "gkRendererGL330" */;
 			buildPhases = (
 				A07D4ADE1799AE0300C36005 /* Sources */,
-				A07D4ADF1799AE0300C36005 /* Frameworks */,
 				A07D4AE01799AE0300C36005 /* Headers */,
 			);
 			buildRules = (
@@ -1428,7 +1348,6 @@
 			buildConfigurationList = FF8A8BBB15BEC9ED0039AACB /* Build configuration list for PBXNativeTarget "gkRendererGLES2" */;
 			buildPhases = (
 				FF8A8BAF15BEC9ED0039AACB /* Sources */,
-				FF8A8BB015BEC9ED0039AACB /* Frameworks */,
 				FF8A8BB115BEC9ED0039AACB /* Headers */,
 			);
 			buildRules = (
@@ -1445,7 +1364,6 @@
 			buildConfigurationList = FF8A8BCA15BEC9F50039AACB /* Build configuration list for PBXNativeTarget "gkSystem" */;
 			buildPhases = (
 				FF8A8BBE15BEC9F50039AACB /* Sources */,
-				FF8A8BBF15BEC9F50039AACB /* Frameworks */,
 				FF8A8BC015BEC9F50039AACB /* Headers */,
 			);
 			buildRules = (
@@ -1462,7 +1380,6 @@
 			buildConfigurationList = FF8A8BD915BEC9FD0039AACB /* Build configuration list for PBXNativeTarget "gkInput" */;
 			buildPhases = (
 				FF8A8BCD15BEC9FD0039AACB /* Sources */,
-				FF8A8BCE15BEC9FD0039AACB /* Frameworks */,
 				FF8A8BCF15BEC9FD0039AACB /* Headers */,
 			);
 			buildRules = (
@@ -1479,7 +1396,6 @@
 			buildConfigurationList = FF8A8BE815BECA260039AACB /* Build configuration list for PBXNativeTarget "gkGameObjectSystem" */;
 			buildPhases = (
 				FF8A8BDC15BECA260039AACB /* Sources */,
-				FF8A8BDD15BECA260039AACB /* Frameworks */,
 				FF8A8BDE15BECA260039AACB /* Headers */,
 			);
 			buildRules = (
@@ -1496,7 +1412,6 @@
 			buildConfigurationList = FF8A8BF715BECA300039AACB /* Build configuration list for PBXNativeTarget "gkGameFramework" */;
 			buildPhases = (
 				FF8A8BEB15BECA300039AACB /* Sources */,
-				FF8A8BEC15BECA300039AACB /* Frameworks */,
 				FF8A8BED15BECA300039AACB /* Headers */,
 			);
 			buildRules = (

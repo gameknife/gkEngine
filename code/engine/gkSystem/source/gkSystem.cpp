@@ -358,7 +358,7 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 #	ifndef _STATIC_LIB
 		//gkLoadModule( m_moduleHandles.hAnimation, wszAnimationDll );
 #	else
-        #if TARGET_OS_IPHONE
+        #ifdef OS_IOS
         //LOAD_MODULE_GLOBAL( m_moduleHandles.hAnimation,				gkAnimation );
         #endif
 #	endif // _STATIC_LIB
