@@ -45,6 +45,7 @@ target_include_directories(gkCore PRIVATE
   ./code/engine/gkCore/
   ./code/engine/gkCore/include/
 )
+set (EXTRA_LIBS ${EXTRA_LIBS} gkCore)
 
 # add gkFont
 FILE(GLOB sources ./code/engine/gkFont/*.cpp ./code/engine/gkFont/*/*.cpp)
@@ -54,9 +55,16 @@ target_include_directories(gkFont PRIVATE
     ./code/engine/gkFont/include/
     ./code/ThirdParty/freetype/include/
 )
+if (IOS)
+target_link_libraries(gkFont 
+    ${PROJECT_SOURCE_DIR}/code/ThirdParty/freetype/lib/ios/Release-iphoneos/libfreetype2.a
+)
+else()
 target_link_libraries(gkFont 
     ${PROJECT_SOURCE_DIR}/code/ThirdParty/freetype/lib/freetype_x64release.lib
 )
+endif()
+set (EXTRA_LIBS ${EXTRA_LIBS} gkFont)
 
 FILE(GLOB sources ./code/engine/gkGameFramework/*.cpp ./code/engine/gkGameFramework/*/*.cpp)
 add_library(gkGameFramework ${CoreLinkType} ${sources})
@@ -64,6 +72,7 @@ target_include_directories(gkGameFramework PRIVATE
     ./code/engine/gkGameFramework/
   ./code/engine/gkGameFramework/include/
 )
+set (EXTRA_LIBS ${EXTRA_LIBS} gkGameFramework)
 
 FILE(GLOB sources ./code/engine/gkGameObjectSystem/*.cpp ./code/engine/gkGameObjectSystem/*/*.cpp)
 add_library(gkGameObjectSystem ${CoreLinkType} ${sources})
@@ -71,7 +80,9 @@ target_include_directories(gkGameObjectSystem PRIVATE
     ./code/engine/gkGameObjectSystem/
   ./code/engine/gkGameObjectSystem/include/
 )
+set (EXTRA_LIBS ${EXTRA_LIBS} gkGameObjectSystem)
 
+# gkInput
 FILE(GLOB sources ./code/engine/gkInput/*.cpp ./code/engine/gkInput/source/*.cpp)
 if (IOS)
     add_library(gkInput ${CoreLinkType} 
@@ -89,20 +100,49 @@ target_include_directories(gkInput PRIVATE
     ./code/engine/gkInput/include/
     ./code/ThirdParty/DXSDK/include/
 )
+
+if (IOS)
+
+else()
 target_link_libraries(gkInput 
     ${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/lib/x64/dinput8.lib
     ${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/lib/x64/dxguid.lib
 )
+endif()
 
+set (EXTRA_LIBS ${EXTRA_LIBS} gkInput)
+
+# gkSystem
+if (IOS)
+FILE(GLOB sources ./code/engine/gkCommon/*.cpp ./code/engine/gkSystem/*.cpp ./code/engine/gkSystem/*/*.cpp ./code/engine/gkSystem/*/*.mm ./code/engine/gkSystem/*/*.c)
+else()
 FILE(GLOB sources ./code/engine/gkCommon/*.cpp ./code/engine/gkSystem/*.cpp ./code/engine/gkSystem/*/*.cpp ./code/engine/gkSystem/*/*.c)
+endif()
+
 add_library(gkSystem ${CoreLinkType} ${sources})
 target_include_directories(gkSystem PRIVATE
   ./code/engine/gkSystem/
   ./code/engine/gkSystem/include/
 )
+
+if (IOS)
+
+else()
 target_link_libraries(gkSystem 
     winmm.lib
 )
+endif()
+
+set (EXTRA_LIBS ${EXTRA_LIBS} gkSystem)
+
+
+# gkTestcase
+add_library(gkTestcase ${CoreLinkType} ./code/engine/gkTestApps/TestCases/TestCaseFramework.cpp)
+target_include_directories(gkTestcase PRIVATE
+    ./code/engine/gkTestApps/TestCases/
+)
+
+set (EXTRA_LIBS ${EXTRA_LIBS} gkTestcase)
 
 # platfrom specific
 if (IOS)
@@ -122,6 +162,64 @@ target_include_directories(gkRendererGLES2 PRIVATE
     ./code/engine/gkRendererGLES2/include/
 )
 target_compile_definitions(gkRendererGLES2 PRIVATE -DBUILD_OGLES2 -DRENDERER_GLES -DRENDERAPI_GLES2)
+set (EXTRA_LIBS ${EXTRA_LIBS} gkRendererGLES2)
+        
+
+FILE(GLOB sources ./code/engine/gkLauncherUniverse/*.m ./code/engine/gkLauncherUniverse/*.mm)
+add_executable(gkLauncher ${sources})
+target_include_directories(gkLauncher PRIVATE
+    ./code/engine/gkLauncherUniverse/
+    ./code/engine/gkLauncherUniverse/include/
+)
+target_link_libraries(gkLauncher "-framework Foundation -framework UIKit -framework OpenGLES -framework CoreGraphics -framework QuartzCore")
+target_link_libraries (gkLauncher ${EXTRA_LIBS} )
+
+set(DEPLOYMENT_TARGET 8.0)
+#file(GLOB IOSAssets ios/assets/*.png)
+#list(REMOVE_ITEM IOSAssets ${CMAKE_CURRENT_SOURCE_DIR}/ios/assets/Default-568h@2x.png)
+#list(REMOVE_ITEM IOSAssets ${CMAKE_CURRENT_SOURCE_DIR}/ios/assets/Default-568h@3x.png)
+#file(INSTALL ${IOSAssets} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets)
+#file(GLOB IOSAssets ios/assets/Default-568h@*.png)
+#file(INSTALL ${IOSAssets} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+#set(RSRC_XIB_FILES assets/Icon@2x.png)
+#set(RSRC_XIB_FILES "Launch Screen.storyboard")
+#set_source_files_properties(${RSRC_XIB_FILES}
+#    PROPERTIES MACOSX_PACKAGE_LOCATION Resources
+#)
+
+if(CMAKE_GENERATOR STREQUAL "Xcode")
+    set(APP_DIR_NAME "$(TARGET_BUILD_DIR)/$(FULL_PRODUCT_NAME)")
+else()
+    set(APP_DIR_NAME "$<TARGET_FILE_DIR:PPSSPP>")
+endif()
+
+add_custom_command(TARGET gkLauncher POST_BUILD
+    COMMAND rm -rf "$(TARGET_BUILD_DIR)/$(PRODUCT_NAME).app/data"
+    COMMAND mkdir "$(TARGET_BUILD_DIR)/$(PRODUCT_NAME).app/data"
+    COMMAND cp -Rf "$(BUILD_DIR)/../exec/paks" "$(TARGET_BUILD_DIR)/$(PRODUCT_NAME).app/data/paks"
+)
+
+set(MACOSX_DEPLOYMENT_TARGET ${DEPLOYMENT_TARGET})
+
+set_target_properties(gkLauncher PROPERTIES
+    MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/code/engine/gkLauncherUniverse/Info.plist"
+    #RESOURCE "ios/Launch Screen.storyboard"
+    XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET ${DEPLOYMENT_TARGET}
+    XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "iPhone/iPad"
+    XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC YES
+    XCODE_ATTRIBUTE_ENABLE_BITCODE NO
+    XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "-"
+)
+
+set_target_properties(gkLauncher
+    PROPERTIES
+    #ARCHIVE_OUTPUT_DIRECTORY "/home/xy/cmake_practice/lib/"
+    LIBRARY_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/exec/ios"
+    LIBRARY_OUTPUT_DIRECTORY_DEBUG "${PROJECT_SOURCE_DIR}/exec/ios"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/exec/ios"
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${PROJECT_SOURCE_DIR}/exec/ios"
+)
 
 else()
 

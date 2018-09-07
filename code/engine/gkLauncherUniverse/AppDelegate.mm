@@ -39,7 +39,7 @@ std::string macBundlePath()
     CFRelease(mainBundleURL);
     CFRelease(cfStringRef);
     
-    strcat(path, "/data");
+    strcat(path, "/data/");
     
     return std::string(path);
 }
@@ -66,7 +66,7 @@ void enum_all_files_in_folder( const TCHAR* root_path,std::vector<gkStdString>& 
     NSError *error = nil;
     NSArray *fileList = [[NSArray alloc] init];
     //fileList便是包含有该文件夹下所有文件的文件名及文件夹名的数组
-    NSString* string = [[[NSString alloc] initWithBytes:root_path length:strlen(root_path) encoding:NSUTF8StringEncoding] autorelease];
+    NSString* string = [[NSString alloc] initWithBytes:root_path length:strlen(root_path) encoding:NSUTF8StringEncoding];
     
     fileList = [fileManager contentsOfDirectoryAtPath:string error:&error];
     //NSLog(@"路径==%@,fileList%@",string,fileList);
@@ -74,8 +74,6 @@ void enum_all_files_in_folder( const TCHAR* root_path,std::vector<gkStdString>& 
     for (NSString *str in fileList) {
         result.push_back( [str UTF8String] );
     }
-    
-    
     
     return;
 }
@@ -129,6 +127,10 @@ const int kFPS = 60.0;
     
     ISystemInitInfo sii;
     
+    char* bundlePath = new char[255];
+    strcpy(bundlePath, macBundlePath().c_str() );
+    sii.rootDir = bundlePath;
+    
     g_pGame->Init(sii);
     g_pGame->PostInit(0, sii);
     
@@ -156,7 +158,7 @@ const int kFPS = 60.0;
 
 - (void) dealloc {
 	// In ordinary circumstances this isn't called
-	[super dealloc];
+	//[super dealloc];
 }
 
 // throws up a warning dialog

@@ -8,15 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		A008A140211D7ECB00AA8B74 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A008A13F211D7ECB00AA8B74 /* Info.plist */; };
-		A00A4A9C188B73B7005376F7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00A4A9B188B73B7005376F7 /* CFNetwork.framework */; };
-		A00A4A9E188B73D3005376F7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00A4A9D188B73D3005376F7 /* SystemConfiguration.framework */; };
-		A00A4AA0188B758A005376F7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00A4A9F188B758A005376F7 /* CoreData.framework */; };
-		A00A4AA2188B7594005376F7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00A4AA1188B7594005376F7 /* CoreFoundation.framework */; };
 		A04B42F41734038500EF0763 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B42F31734038500EF0763 /* UIKit.framework */; };
 		A04B42F61734038500EF0763 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B42F51734038500EF0763 /* Foundation.framework */; };
-		A04B42F81734038500EF0763 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B42F71734038500EF0763 /* CoreGraphics.framework */; };
 		A04B433517340CE700EF0763 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B433317340CE700EF0763 /* OpenGLES.framework */; };
-		A04B433617340CE700EF0763 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B433417340CE700EF0763 /* QuartzCore.framework */; };
+		A054376F21421A4300CAFE5A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B433417340CE700EF0763 /* QuartzCore.framework */; };
+		A054377021421A5900CAFE5A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04B42F71734038500EF0763 /* CoreGraphics.framework */; };
 		A0AE74341B90B8EF0065C00B /* libgkCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AE742B1B90B8EF0065C00B /* libgkCore.a */; };
 		A0AE74351B90B8EF0065C00B /* libgkFont.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AE742C1B90B8EF0065C00B /* libgkFont.a */; };
 		A0AE74361B90B8EF0065C00B /* libgkGameFramework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AE742D1B90B8EF0065C00B /* libgkGameFramework.a */; };
@@ -65,6 +61,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A054377021421A5900CAFE5A /* CoreGraphics.framework in Frameworks */,
+				A054376F21421A4300CAFE5A /* QuartzCore.framework in Frameworks */,
 				A0AE74341B90B8EF0065C00B /* libgkCore.a in Frameworks */,
 				A0AE74351B90B8EF0065C00B /* libgkFont.a in Frameworks */,
 				A0AE74361B90B8EF0065C00B /* libgkGameFramework.a in Frameworks */,
@@ -73,15 +71,9 @@
 				A0AE74391B90B8EF0065C00B /* libgkRendererGLES2.a in Frameworks */,
 				A0AE743A1B90B8EF0065C00B /* libgkSystem.a in Frameworks */,
 				A0AE743B1B90B8EF0065C00B /* libTestCases.a in Frameworks */,
-				A00A4AA2188B7594005376F7 /* CoreFoundation.framework in Frameworks */,
-				A00A4AA0188B758A005376F7 /* CoreData.framework in Frameworks */,
-				A00A4A9E188B73D3005376F7 /* SystemConfiguration.framework in Frameworks */,
-				A00A4A9C188B73B7005376F7 /* CFNetwork.framework in Frameworks */,
 				A04B42F41734038500EF0763 /* UIKit.framework in Frameworks */,
 				A04B42F61734038500EF0763 /* Foundation.framework in Frameworks */,
-				A04B42F81734038500EF0763 /* CoreGraphics.framework in Frameworks */,
 				A04B433517340CE700EF0763 /* OpenGLES.framework in Frameworks */,
-				A04B433617340CE700EF0763 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
