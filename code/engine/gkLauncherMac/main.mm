@@ -54,7 +54,7 @@ std::string macBundlePath()
         *lastpath = 0;
     }
     
-    //strcat(path, "Data/");
+    strcat(path, "/exec");
     
     return std::string(path);
 }

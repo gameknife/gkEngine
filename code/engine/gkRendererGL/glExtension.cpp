@@ -1,4 +1,4 @@
-﻿#include "StableHeader.h"
+#include "StableHeader.h"
 #include "glExtension.h"
 
 #if defined(OS_IOS)
@@ -156,3 +156,4 @@ bool gkGLExtension::IsGLExtensionSupported(const char * const extension)
 
 	return false;
 }
+

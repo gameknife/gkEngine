@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 project (gkENGINE)
 
-if (IOS)
+if (APPLE)
     MESSAGE ("This is build for ios, use static lib")
 	set(CoreLinkType STATIC)
 else()
@@ -9,15 +9,15 @@ else()
 	set(CoreLinkType SHARED)
 
     # add warning mute
-    add_compile_options(/w44996)
-    add_compile_options(/w44819)
-    add_compile_options(/w44215)
-    add_compile_options(/w44251)
-    add_compile_options(/w44267)
-    add_compile_options(/w44005)
-    add_compile_options(/w44311)
-    add_compile_options(/w44302)
-    add_compile_options(/w44067)
+    #add_compile_options(/w44996)
+    #add_compile_options(/w44819)
+    #add_compile_options(/w44215)
+    #add_compile_options(/w44251)
+    #add_compile_options(/w44267)
+    #add_compile_options(/w44005)
+    #add_compile_options(/w44311)
+    #add_compile_options(/w44302)
+    #add_compile_options(/w44067)
 endif()
 
 set(CMAKE_MACOSX_RPATH 0)
@@ -59,6 +59,10 @@ if (IOS)
 target_link_libraries(gkFont 
     ${PROJECT_SOURCE_DIR}/code/ThirdParty/freetype/lib/ios/Release-iphoneos/libfreetype2.a
 )
+elseif(OSX)
+target_link_libraries(gkFont 
+    ${PROJECT_SOURCE_DIR}/code/ThirdParty/freetype/lib/ios/Release-OSX/libfreetype2.a
+)
 else()
 target_link_libraries(gkFont 
     ${PROJECT_SOURCE_DIR}/code/ThirdParty/freetype/lib/freetype_x64release.lib
@@ -84,7 +88,7 @@ set (EXTRA_LIBS ${EXTRA_LIBS} gkGameObjectSystem)
 
 # gkInput
 FILE(GLOB sources ./code/engine/gkInput/*.cpp ./code/engine/gkInput/source/*.cpp)
-if (IOS)
+if (APPLE)
     add_library(gkInput ${CoreLinkType} 
     ./code/engine/gkInput/source/dllmain.cpp
     ./code/engine/gkInput/source/gkInputManager.cpp
@@ -101,7 +105,7 @@ target_include_directories(gkInput PRIVATE
     ./code/ThirdParty/DXSDK/include/
 )
 
-if (IOS)
+if (APPLE)
 
 else()
 target_link_libraries(gkInput 
@@ -113,7 +117,7 @@ endif()
 set (EXTRA_LIBS ${EXTRA_LIBS} gkInput)
 
 # gkSystem
-if (IOS)
+if (APPLE)
 FILE(GLOB sources ./code/engine/gkCommon/*.cpp ./code/engine/gkSystem/*.cpp ./code/engine/gkSystem/*/*.cpp ./code/engine/gkSystem/*/*.mm ./code/engine/gkSystem/*/*.c)
 else()
 FILE(GLOB sources ./code/engine/gkCommon/*.cpp ./code/engine/gkSystem/*.cpp ./code/engine/gkSystem/*/*.cpp ./code/engine/gkSystem/*/*.c)
@@ -125,7 +129,7 @@ target_include_directories(gkSystem PRIVATE
   ./code/engine/gkSystem/include/
 )
 
-if (IOS)
+if (APPLE)
 
 else()
 target_link_libraries(gkSystem 
@@ -145,36 +149,89 @@ target_include_directories(gkTestcase PRIVATE
 set (EXTRA_LIBS ${EXTRA_LIBS} gkTestcase)
 
 # platfrom specific
-if (IOS)
+if (APPLE)
 
+
+
+
+if(IOS)
+
+    FILE(GLOB sources 
+        ./code/engine/gkRendererGL/*.cpp 
+        ./code/engine/gkRendererGL/RenderRes/*.cpp 
+        ./code/engine/gkRendererGL/Platform/IOS/*.mm
+    )
+    list(FILTER sources EXCLUDE REGEX ".*DDsTextureLoader.cpp$")
+
+    add_library(gkRendererGLES2 ${CoreLinkType} ${sources})
+    target_include_directories(gkRendererGLES2 PRIVATE
+        ./code/engine/gkRendererGL/
+        ./code/engine/gkRendererGLES2/
+        ./code/engine/gkRendererGLES2/include/
+    )
+    target_compile_definitions(gkRendererGLES2 PRIVATE -DBUILD_OGLES2 -DRENDERER_GLES -DRENDERAPI_GLES2)
+    set (EXTRA_LIBS ${EXTRA_LIBS} gkRendererGLES2)
+
+
+
+
+    FILE(GLOB sources ./code/engine/gkLauncherUniverse/*.m ./code/engine/gkLauncherUniverse/*.mm)
+    add_executable(gkLauncher ${sources})
+    target_include_directories(gkLauncher PRIVATE
+        ./code/engine/gkLauncherUniverse/
+        ./code/engine/gkLauncherUniverse/include/
+    )
+    target_link_libraries(gkLauncher "-framework Foundation -framework UIKit -framework OpenGLES -framework CoreGraphics -framework QuartzCore")
+    target_link_libraries (gkLauncher ${EXTRA_LIBS} )
+
+    set(DEPLOYMENT_TARGET 8.0)
+
+
+else()
+#OSX
 FILE(GLOB sources 
-    ./code/engine/gkRendererGL/*.cpp 
-    ./code/engine/gkRendererGL/RenderRes/*.cpp 
-    ./code/engine/gkRendererGL/Platform/IOS/*.mm
+./code/engine/gkRendererGL/*.cpp 
+./code/engine/gkRendererGL/RenderRes/*.cpp 
+./code/engine/gkRendererGL/Platform/OSX/*.cpp
+./code/engine/gkRendererGL/Platform/OSX/*.mm
 )
+list(FILTER sources EXCLUDE REGEX ".*HwTextureLoader.cpp$")
+list(FILTER sources EXCLUDE REGEX ".*glExtension.cpp$")
 
-list(FILTER sources EXCLUDE REGEX ".*DDsTextureLoader.cpp$")
-
-add_library(gkRendererGLES2 ${CoreLinkType} ${sources})
-target_include_directories(gkRendererGLES2 PRIVATE
+add_library(gkRendererGL330 ${CoreLinkType} ${sources})
+target_include_directories(gkRendererGL330 PRIVATE
     ./code/engine/gkRendererGL/
-    ./code/engine/gkRendererGLES2/
-    ./code/engine/gkRendererGLES2/include/
+    ./code/engine/gkRendererGL330/
+    ./code/engine/gkRendererGL330/include/
+    ./code/thirdparty/oglsdk/include/
 )
-target_compile_definitions(gkRendererGLES2 PRIVATE -DBUILD_OGLES2 -DRENDERER_GLES -DRENDERAPI_GLES2)
-set (EXTRA_LIBS ${EXTRA_LIBS} gkRendererGLES2)
-        
+target_compile_definitions(gkRendererGL330 PRIVATE -DRENDERAPI_GL330)
+set (EXTRA_LIBS ${EXTRA_LIBS} gkRendererGL330)
 
-FILE(GLOB sources ./code/engine/gkLauncherUniverse/*.m ./code/engine/gkLauncherUniverse/*.mm)
+target_link_libraries(gkRendererGL330 
+    ${PROJECT_SOURCE_DIR}/code/ThirdParty/oglsdk/lib/libglfw.a
+)
+
+
+
+FILE(GLOB sources ./code/engine/gkLauncherMac/*.m ./code/engine/gkLauncherMac/*.mm)
 add_executable(gkLauncher ${sources})
 target_include_directories(gkLauncher PRIVATE
-    ./code/engine/gkLauncherUniverse/
-    ./code/engine/gkLauncherUniverse/include/
+    ./code/engine/gkLauncherMac/
+    ./code/engine/gkLauncherMac/include/
 )
-target_link_libraries(gkLauncher "-framework Foundation -framework UIKit -framework OpenGLES -framework CoreGraphics -framework QuartzCore")
+target_link_libraries(gkLauncher "-framework AppKit -framework OpenGL -framework CoreGraphics -framework IOKit")
 target_link_libraries (gkLauncher ${EXTRA_LIBS} )
 
-set(DEPLOYMENT_TARGET 8.0)
+#set(DEPLOYMENT_TARGET 8.0)
+
+endif()
+
+
+        
+
+
+
 #file(GLOB IOSAssets ios/assets/*.png)
 #list(REMOVE_ITEM IOSAssets ${CMAKE_CURRENT_SOURCE_DIR}/ios/assets/Default-568h@2x.png)
 #list(REMOVE_ITEM IOSAssets ${CMAKE_CURRENT_SOURCE_DIR}/ios/assets/Default-568h@3x.png)
@@ -202,6 +259,12 @@ add_custom_command(TARGET gkLauncher POST_BUILD
 
 set(MACOSX_DEPLOYMENT_TARGET ${DEPLOYMENT_TARGET})
 
+
+
+
+
+if(IOS)
+
 set_target_properties(gkLauncher PROPERTIES
     MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/code/engine/gkLauncherUniverse/Info.plist"
     #RESOURCE "ios/Launch Screen.storyboard"
@@ -220,6 +283,22 @@ set_target_properties(gkLauncher
     RUNTIME_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/exec/ios"
     RUNTIME_OUTPUT_DIRECTORY_DEBUG "${PROJECT_SOURCE_DIR}/exec/ios"
 )
+
+else()
+
+set_target_properties(gkLauncher PROPERTIES
+    MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/code/engine/gkLauncherUniverse/Info.plist"
+    #RESOURCE "ios/Launch Screen.storyboard"
+    #XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET ${DEPLOYMENT_TARGET}
+    #XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "iPhone/iPad"
+    XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC YES
+    #XCODE_ATTRIBUTE_ENABLE_BITCODE NO
+    #XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "-"
+)
+
+endif()
+
+
 
 else()
 
@@ -252,7 +331,6 @@ target_include_directories(gkLauncher PRIVATE
 # set all targets output dir
 set_target_properties(gkCore gkLauncher gkSystem gkRendererD3D9 gkInput gkGameObjectSystem gkGameFramework gkFont
     PROPERTIES
-    #ARCHIVE_OUTPUT_DIRECTORY "/home/xy/cmake_practice/lib/"
     LIBRARY_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/exec/bin64"
     LIBRARY_OUTPUT_DIRECTORY_DEBUG "${PROJECT_SOURCE_DIR}/exec/bin64"
     RUNTIME_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/exec/bin64"
