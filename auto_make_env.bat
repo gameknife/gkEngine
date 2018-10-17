@@ -1,6 +1,5 @@
 @echo off
 
-
 echo .
 echo .
 echo -------------------------------------------------------------------------
@@ -10,22 +9,18 @@ echo Finally, it will try to build the whole Engine with MsBuild. And auto run t
 echo -------------------------------------------------------------------------
 echo .
 
+rem 1. process built-in resources
 call init_engine_res.bat
 
+rem 2. global param setup
 cd exec\tools\global_task
-
 call set_global_env.bat
 
-rem step01, download, extract, place the denpendencys
-
-rem call extract_thirdparty.bat
-
-rem step01-1, process default resource
-
+rem 3. process built-in resources
 call ..\resource_task\_obj2gmf_media.bat
 call ..\resource_task\desktop_tga2dds_engine.bat
 
-rem step02, download, extract, place the medias
+rem 4. extract mediapack from submodule & process
 call extract_media_pack.bat
 
 echo All thing done...
