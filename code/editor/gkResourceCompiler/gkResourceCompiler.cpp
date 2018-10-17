@@ -27,6 +27,7 @@ char g_inputPath[MAX_PATH];
 char g_outputPath[MAX_PATH];
 int g_compressLevel = 5;
 int g_platform = 0;
+int g_suppressLevel = 1;
 char g_cfg[MAX_PATH];
 
 void showHelp()
@@ -36,6 +37,7 @@ void showHelp()
 	printf("-l 后跟压缩级别0-10，0为不压缩，压缩率顺序增高，耗时顺序增多。默认：5\n");
 	printf("-p 平台代码： 0: PC  1: ANDORID/IOS。\n");
 	printf("-cfg 资源特殊编译选项, 图片转码时，为格式，例如OGL4444 PVRTC ATC等");
+	printf("-y 输出级别： 0: 安静模式  1: 正常\n");
 	printf("-----------------------------------------\n");
 }
 
@@ -61,6 +63,10 @@ void ProcessArgs(const char* args, const char* args1)
 	{
 		strcpy(g_cfg, args1);
 	}
+	else if (!stricmp(args, "-y"))
+	{
+		g_suppressLevel = atoi(args1);
+	}	
 }
 
 #ifdef OS_APPLE
@@ -111,18 +117,6 @@ void ProcessArgs(const char* args, const char* args1)
 
 int main(int numArgs, const char *args[])
 {	
-	printf("GameKnife Resource Compiler. \n");
-	printf("Created by yi kaiming. 2013.03.25 \n");
-	printf("-----------------------------------------\n");
-
-	for (uint32 i=0; i < g_compilers.size(); ++i)
-	{
-		printf("	");
-		printf( g_compilers[i]->getName());
-		printf(" integraded. \n");
-	}
-	printf("-----------------------------------------\n");
-
 	// 解析命令行执行 [3/8/2013 Kaiming]
 	if (numArgs <= 1)
 	{
@@ -137,7 +131,22 @@ int main(int numArgs, const char *args[])
 		ProcessArgs( args[i], args[i+1] );
 	}
 
-	std::cout<< g_inputPath << " -> " << g_outputPath << " use: cl " << g_compressLevel << "| pf " << g_platform << std::endl;
+	if(g_suppressLevel)
+	{
+		printf("GameKnife Resource Compiler. \n");
+		printf("Created by yi kaiming. 2013.03.25 \n");
+		printf("-----------------------------------------\n");
+
+		for (uint32 i = 0; i < g_compilers.size(); ++i)
+		{
+			printf("	");
+			printf(g_compilers[i]->getName());
+			printf(" integraded. \n");
+		}
+		printf("-----------------------------------------\n");
+
+		std::cout << g_inputPath << " -> " << g_outputPath << " use: cl " << g_compressLevel << "| pf " << g_platform << std::endl;
+	}
 
 	const char* in_ext = strrchr( g_inputPath, '.' );
 	const char* out_ext = strrchr( g_outputPath, '.');

@@ -8,6 +8,7 @@ node_natives/build/
 INTERMEDIATE/
 .hg/
 code/.vs/
+.vs/
 .DS_Store
 code/engine/solutions/ipch/
 exec/engine/shaders/d3d9/shadercache/

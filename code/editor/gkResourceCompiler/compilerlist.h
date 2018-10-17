@@ -6,7 +6,7 @@
 
 gmfCompiler g_gmfCompiler;
 #ifdef OS_WIN32
-pvrCompiler g_gatcCompiler;
+//pvrCompiler g_gatcCompiler;
 shaderCompiler g_shaderCompiler;
 #endif
 utf8Compiler g_utf8Compiler;

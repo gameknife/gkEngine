@@ -180,8 +180,7 @@ bool pvrCompiler::encode(const char* filename, const char* cfg)
 			strcpy( split, "\\pvrtextool.exe" );
 
 			TCHAR cmdline[MAX_PATH];
-			sprintf( cmdline, "%s -m -f%s -yflip0 -silent -i %s", szExePath, cfg, filename );
-
+			sprintf(cmdline, "%s -m -f%s -yflip0 -silent -i %s", szExePath, cfg, filename);
 			system( cmdline );
 
 		}

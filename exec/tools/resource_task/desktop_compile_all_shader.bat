@@ -15,7 +15,7 @@ call ..\global_task\set_global_env.bat
 for /R %GKENGINE_HOME%\engine\shaders\template %%A in (*.gfx) do (
     
     echo [compile shader] %%~nxA
-    %GKENGINE_HOME%\tools\gkResourceCompiler -i %%~fA -o %%~dpnA.o -l 5 -p 0-i
+    %GKENGINE_HOME%\tools\gkResourceCompiler -i %%~fA -o %%~dpnA.o -l 5 -p 0-i -y 0
 
 )
 

@@ -27,9 +27,6 @@
     <ClCompile Include="Image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="atcCompiler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="shaderCompiler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,9 +60,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="ddsCompiler.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="atcCompiler.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
