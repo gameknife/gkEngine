@@ -1,4 +1,4 @@
-﻿//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 /*
 Copyright (c) 2011-2015 Kaiming Yi
 	
@@ -43,7 +43,7 @@ Copyright (c) 2011-2015 Kaiming Yi
 #include "Prerequisites.h"
 #include "DeviceRenderContext.h"
 
-#include "GL/glfw.h"
+#include "GLFW/glfw3.h"
 
 class gkDeviceRenderContext : public IDeviceRenderContext
 {
@@ -57,6 +57,8 @@ public:
 	virtual void swapBuffer();
 
 	virtual void makeThreadContext(bool close) {}
+    
+    GLFWwindow* window;
 };
 
 

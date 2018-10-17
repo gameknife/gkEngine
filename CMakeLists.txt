@@ -209,7 +209,7 @@ target_compile_definitions(gkRendererGL330 PRIVATE -DRENDERAPI_GL330)
 set (EXTRA_LIBS ${EXTRA_LIBS} gkRendererGL330)
 
 target_link_libraries(gkRendererGL330 
-    ${PROJECT_SOURCE_DIR}/code/ThirdParty/oglsdk/lib/libglfw.a
+    ${PROJECT_SOURCE_DIR}/code/ThirdParty/oglsdk/lib/libglfw3.a
 )
 
 
@@ -220,7 +220,7 @@ target_include_directories(gkLauncher PRIVATE
     ./code/engine/gkLauncherMac/
     ./code/engine/gkLauncherMac/include/
 )
-target_link_libraries(gkLauncher "-framework AppKit -framework OpenGL -framework CoreGraphics -framework IOKit")
+target_link_libraries(gkLauncher "-framework AppKit -framework OpenGL -framework CoreGraphics -framework IOKit -framework CoreVideo")
 target_link_libraries (gkLauncher ${EXTRA_LIBS} )
 
 #set(DEPLOYMENT_TARGET 8.0)
