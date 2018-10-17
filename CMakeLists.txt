@@ -18,7 +18,7 @@ else()
     add_compile_options(/w44311)
     add_compile_options(/w44302)
     add_compile_options(/w44067)
-    
+    add_compile_options(/w44566)
 endif()
 
 set(CMAKE_MACOSX_RPATH 0)
