@@ -24,5 +24,3 @@ rem 4. extract mediapack from submodule & process
 call extract_media_pack.bat
 
 echo All thing done...
-
-PAUSE
