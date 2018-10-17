@@ -5,7 +5,6 @@ build-ios/
 build-osx/
 node_modules/
 node_natives/build/
-code/thirdparty/
 INTERMEDIATE/
 .hg/
 code/.vs/
@@ -32,7 +31,6 @@ exec/bin64/
 archive.zip
 *.suo
 *.pdb
-thirdparty/
 gkENGINE_CORE_Vc10.sln.cache
 exec/ios/
 code/editor/gkPak/gkPak.xcodeproj/xcuserdata/
