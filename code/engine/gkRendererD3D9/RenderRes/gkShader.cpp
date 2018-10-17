@@ -572,11 +572,11 @@ bool gkShader::CompileShader( gkStdString &binaryPath, gkStdString &sourcePath, 
 	TCHAR buffer[1024];
 	if(profile)
 	{
-		_stprintf(buffer, _T("%sbin32\\fxc.exe /Zpc /T fx_2_0 %s /Fo %s %s"), gkGetExecRootDir().c_str(), profile, absbinaryPath.c_str(), sourcePath.c_str());
+		_stprintf(buffer, _T("%stools\\fxc.exe /Zpc /T fx_2_0 %s /Fo %s %s"), gkGetExecRootDir().c_str(), profile, absbinaryPath.c_str(), sourcePath.c_str());
 	}
 	else
 	{
-		_stprintf(buffer, _T("%sbin32\\fxc.exe /Zpc /T fx_2_0 /Fo %s %s"), gkGetExecRootDir().c_str(), absbinaryPath.c_str(), sourcePath.c_str());
+		_stprintf(buffer, _T("%stools\\fxc.exe /Zpc /T fx_2_0 /Fo %s %s"), gkGetExecRootDir().c_str(), absbinaryPath.c_str(), sourcePath.c_str());
 	}
 	
 
@@ -602,7 +602,7 @@ bool gkShader::CompileShader( gkStdString &binaryPath, gkStdString &sourcePath, 
 			gkStdString absbinaryPath = gkGetExecRootDir() + _T("Engine/Shaders/d3d9/ksCompileFailed.sto");
 			gkStdString sourcePath = gkGetExecRootDir() + _T("Engine/Shaders/d3d9/hwcode/kscompilefailed.fx"); 
 			TCHAR buffer[1024];
-			_stprintf(buffer, _T("%sbin32\\fxc.exe /Zpc /T fx_2_0 /Fo %s %s"), gkGetExecRootDir().c_str(), absbinaryPath.c_str(), sourcePath.c_str());
+			_stprintf(buffer, _T("%stools\\fxc.exe /Zpc /T fx_2_0 /Fo %s %s"), gkGetExecRootDir().c_str(), absbinaryPath.c_str(), sourcePath.c_str());
 			char bufferA[1024];
 
 #ifdef UNICODE

@@ -1792,8 +1792,8 @@ bool gkRendererD3D9::SetWindow(int width, int height, bool fullscreen, HWND hWnd
 			m_hWnd = (HWND)hWnd;
 
 
-		//ShowWindow(m_hWnd, SW_SHOWNORMAL);
-		ShowWindow(m_hWnd, SW_HIDE);
+		ShowWindow(m_hWnd, SW_SHOWNORMAL);
+		//ShowWindow(m_hWnd, SW_HIDE);
 		SetFocus(m_hWnd);
 		SetForegroundWindow(m_hWnd);
 	}

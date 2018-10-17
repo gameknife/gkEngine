@@ -140,13 +140,13 @@ endif()
 set (EXTRA_LIBS ${EXTRA_LIBS} gkSystem)
 
 
-# gkTestcase
-add_library(gkTestcase ${CoreLinkType} ./code/engine/gkTestApps/TestCases/TestCaseFramework.cpp)
-target_include_directories(gkTestcase PRIVATE
+# Testcases
+add_library(Testcases ${CoreLinkType} ./code/engine/gkTestApps/TestCases/TestCaseFramework.cpp)
+target_include_directories(Testcases PRIVATE
     ./code/engine/gkTestApps/TestCases/
 )
 
-set (EXTRA_LIBS ${EXTRA_LIBS} gkTestcase)
+set (EXTRA_LIBS ${EXTRA_LIBS} Testcases)
 
 # platfrom specific
 if (APPLE)
@@ -329,7 +329,7 @@ target_include_directories(gkLauncher PRIVATE
 )
 
 # set all targets output dir
-set_target_properties(gkCore gkLauncher gkSystem gkRendererD3D9 gkInput gkGameObjectSystem gkGameFramework gkFont
+set_target_properties(gkCore gkLauncher gkSystem gkRendererD3D9 gkInput gkGameObjectSystem gkGameFramework gkFont Testcases
     PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/exec/bin64"
     LIBRARY_OUTPUT_DIRECTORY_DEBUG "${PROJECT_SOURCE_DIR}/exec/bin64"
