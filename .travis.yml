@@ -4,6 +4,6 @@ script:
 - git submodule update --init
 - sh auto_make_env.sh
 - sh b.sh --osx
-- xcodebuild -workspace ./build-osx/gkENGINE.xcodeproj -scheme ALL_BUILD GCC_GENERATE_TEST_COVERAGE_FILES=YES GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES
+- xcodebuild -project ./build-osx/gkENGINE.xcodeproj -scheme ALL_BUILD GCC_GENERATE_TEST_COVERAGE_FILES=YES GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES
 after_success:
 
