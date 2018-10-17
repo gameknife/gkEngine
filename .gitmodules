@@ -1,0 +1,9 @@
+[submodule "thirdparty"]
+	path = code/thirdparty
+	url = https://github.com/gameknife/gkEngine-thirdparty.git
+[submodule "mediapack-base"]
+	path = exec/media
+	url = https://github.com/gameknife/gkEngine-mediapack-base.git
+[submodule "mediapack-confroom"]
+	path = exec/media
+	url = https://github.com/gameknife/gkEngine-mediapack-confroom.git
