@@ -1,5 +1,8 @@
 project/
 build/
+build-win64/
+build-ios/
+build-osx/
 node_modules/
 node_natives/build/
 code/thirdparty/
