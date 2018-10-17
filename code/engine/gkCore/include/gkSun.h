@@ -41,7 +41,7 @@ Copyright (c) 2011-2015 Kaiming Yi
 #include "gkPrerequisites.h"
 #include "gkLight.h"
 
-class GAMEKNIFECORE_API gkSun : public gkLight
+class gkSun : public gkLight
 {
 public:
 	//gkSun(void);

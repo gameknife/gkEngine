@@ -41,7 +41,7 @@ Copyright (c) 2011-2015 Kaiming Yi
 #include "gkMovableObject.h"
 #include "IGameObjectLayer.h"
 
-class GAMEKNIFECORE_API gkLight : public gkMovableObject, public IGameObjectLightLayer
+class gkLight : public gkMovableObject, public IGameObjectLightLayer
 {
 public:
 	/// Defines the type of light

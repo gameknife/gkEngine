@@ -215,7 +215,7 @@ struct gkLockOperation
 	 @brief 抽象纹理对象，提供纹理的外部访问接口
 	 @remark 
 	*/
-class UNIQUE_IFACE ITexture : public IResource {
+struct UNIQUE_IFACE ITexture : public IResource {
 public:
 	ITexture(IResourceManager* creator, const gkStdString& name, gkResourceHandle handle,
 		const gkStdString& group = _T("none")):IResource(eRT_Texture, creator,name,handle,group) {}
