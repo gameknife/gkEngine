@@ -14,8 +14,8 @@ window.onload = function(){
 
   // 设置资源路径
   let rootPath = path.dirname(__dirname);
-  let dllPath = rootPath + '\\exec\\bin64\\';
-  let execPath = rootPath + '\\exec\\';
+  let dllPath = rootPath + '.\\..\\exec\\bin64\\';
+  let execPath = rootPath + '.\\..\\exec\\';
   addon.setDllPath(rootPath);
   console.log("dll: " + dllPath);
   console.log("exec: " + execPath);
