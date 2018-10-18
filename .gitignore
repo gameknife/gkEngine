@@ -6,6 +6,7 @@ build-osx/
 node_modules/
 node_natives/build/
 INTERMEDIATE/
+package-lock.json
 .hg/
 code/.vs/
 .vs/

@@ -15,11 +15,22 @@ Latest CI result:
 
 <br>
 
-gkENGINE's Future Flag
+gkENGINE's runtime Quick Start
 ---
 
-* 接入Mono作为逻辑驱动入口，Export引擎组件
-* 支持无限地形生成
+1. 你需要安装git, cmake控制台环境
+1. git submodule update --init
+1. .\auto_make_env.bat (windows) | sh ./auto_make_env.sh (mac)
+1. .\auto_cmake.bat -win64(windows) | sh ./auto_cmake.sh --osx(mac) | sh ./auto_cmake.sh --ios(mac)
+1. 工程生成在build-win64/build_osx/build_ios下面
+
+<br>
+
+gkENGINE's editor Quick Start
+---
+
+1. 你需要安装git, cmake, nodejs环境, 并已经构建runtime环境
+1. to be continued...
 
 <br>
 
