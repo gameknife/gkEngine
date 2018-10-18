@@ -32,7 +32,7 @@ window.onload = function(){
   //} );
 
   // 创建backbuffer
-  let bufferData = new Buffer(1280*720*4);
+  let bufferData = Buffer.alloc(1280*720*4);
   let imageData = context.createImageData(1280, 720);
 
   // 取得profile数据显示器
