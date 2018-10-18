@@ -60,8 +60,8 @@ gkENGINE的技术特性
 
 ##### 物理&动画
 
-* 物理模块通过接口抽象，插件式集成，同时支持havok及physx。暂未自主开发物理引擎
-* 骨骼动画模块通过接口抽象，可接入havok动画引擎驱动，提供强大的多线程高效动画驱动能力，自主开发的骨骼动画模块正在筹划
+* 物理模块通过接口抽象，已剥离第三方组件。暂未自主开发实现
+* 骨骼动画模块通过接口抽象，已剥离第三方组件，后续提供自写实现
 * 内建trackbus动画模块，用于驱动各类gameobject，实现cutscene等功能
 
 ##### 工具链
@@ -73,27 +73,11 @@ gkENGINE的技术特性
 
 ##### 编辑器
 
-* 基于MFC的编辑器框架，提供关卡场景开发，模型预览，材质编辑，动画编辑，角色编辑等功能
-
-##### 其他
-
-* 支持oculus rift dk1/dk2,
-* 支持3d显示，支持左右分割/上下分割3d模式
+* 已废弃原有MFC实现编辑器，开始使用electron框架研究编辑器实现
 
 gkENGINE截图
 ---
 
-**gkStudio  ↓**
-
-![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/gkstudio.jpg "gkStudio截图")
-
-**gkEngine室外效果  ↓**
-
 ![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/out1.jpg "gkEngine室外截图1")
-![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/out2.jpg "gkEngine室外截图2")
-
-**gkEngine室内效果  ↓**
-
-![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/indoor1.jpg "gkEngine室内截图1")
 ![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/indoor2.jpg "gkEngine室内截图2")
 ![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/indoor3.jpg "gkEngine室内截图3")
