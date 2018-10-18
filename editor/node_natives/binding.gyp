@@ -2,8 +2,8 @@
   "targets": [
     {
       "target_name": "addon",
-      'sources' : [  "<!@(node -p \"require('fs').readdirSync('../code/engine/gkNodeAPI/').map(f=>'../code/engine/gkNodeAPI/'+f).join(' ')\")" ],
-      "include_dirs" : ["<!(node -e \"require('nan')\")","../code/engine/gkCommon","../code/engine/gkCommon","../code/engine/gkCommon/serializer","../code/engine/gkCommon/Mathlib","../code/thirdparty","../code/thirdparty/rapidxml"],
+      'sources' : [  "<!@(node -p \"require('fs').readdirSync('../../code/engine/gkNodeAPI/').map(f=>'../../code/engine/gkNodeAPI/'+f).join(' ')\")" ],
+      "include_dirs" : ["<!(node -e \"require('nan')\")","../../code/engine/gkCommon","../code/engine/gkCommon","../../code/engine/gkCommon/serializer","../../code/engine/gkCommon/Mathlib","../../code/thirdparty","../../code/thirdparty/rapidxml"],
       'conditions': [
         [
           'OS=="win"', {   
