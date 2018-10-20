@@ -18,11 +18,17 @@ gkENGINE's runtime Quick Start
 
 1. 你需要安装git, cmake控制台环境, windows安装有visual studio, mac安装有xcode, 拥有良好的github网络访问环境
 1. 拉取submodule
+```
 git submodule update --init
+```
 1. 构筑基础引擎环境
+```
 .\auto_make_env.bat (windows) | sh ./auto_make_env.sh (mac)
+```
 1. 通过cmake，生成你本机的编译环境
+```
 .\auto_cmake.bat -win64(windows) | sh ./auto_cmake.sh --osx(mac) | sh ./auto_cmake.sh --ios(mac)
+```
 1. 工程生成在build-win64/build_osx/build_ios下面
 
 <br>
