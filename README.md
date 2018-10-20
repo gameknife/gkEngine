@@ -1,8 +1,6 @@
 ![placeholder](https://raw.githubusercontent.com/gameknife/gameknife.github.io/master/images/gkengine_logo.png "logo")
 ========
 
-Latest CI result:
-
 | OSX | WIN |
 | --- | --- |
 |[![Build Status](https://travis-ci.org/gameknife/gkEngine.svg?branch=master)](https://travis-ci.org/gameknife/gkEngine)|![https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true](https://ci.appveyor.com/api/projects/status/github/gameknife/gkengine?branch=master&svg=true)|
@@ -18,10 +16,13 @@ Latest CI result:
 gkENGINE's runtime Quick Start
 ---
 
-1. 你需要安装git, cmake控制台环境
-1. git submodule update --init
-1. .\auto_make_env.bat (windows) | sh ./auto_make_env.sh (mac)
-1. .\auto_cmake.bat -win64(windows) | sh ./auto_cmake.sh --osx(mac) | sh ./auto_cmake.sh --ios(mac)
+1. 你需要安装git, cmake控制台环境, windows安装有visual studio, mac安装有xcode, 拥有良好的github网络访问环境
+1. 拉取submodule
+git submodule update --init
+1. 构筑基础引擎环境
+.\auto_make_env.bat (windows) | sh ./auto_make_env.sh (mac)
+1. 通过cmake，生成你本机的编译环境
+.\auto_cmake.bat -win64(windows) | sh ./auto_cmake.sh --osx(mac) | sh ./auto_cmake.sh --ios(mac)
 1. 工程生成在build-win64/build_osx/build_ios下面
 
 <br>
@@ -29,8 +30,11 @@ gkENGINE's runtime Quick Start
 gkENGINE's editor Quick Start
 ---
 
-1. 你需要安装git, cmake, nodejs环境, 并已经构建runtime环境
-1. to be continued...
+1. 你需要安装nodejs环境, 并已经构建runtime环境
+1. 进入引擎的editor目录, 运行npm install 或 cnpm install, 下载nodejs所需环境
+1. 运行npm run nconfig, 部署node-gyp，准备构建node api库
+1. 运行npm run nbuild, 构建node api库
+1. 运行npm start, 启动编辑器
 
 <br>
 
