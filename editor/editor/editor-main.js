@@ -52,13 +52,13 @@ window.onload = function(){
     ev.preventDefault();
   }
 
-  // let resPanel = new EditorResourceManager();
+  let resPanel = new EditorResourceManager();
 
   // // 刷新project面板
-  // resPanel.init(bid('res-container'), path.join(__dirname, '../'));
-  // resPanel.rescan_resources();
-  // resPanel.reconstruct_filetree();
-  // resPanel.refresh();
+  resPanel.init(bid('res-container'), path.join(__dirname, '../../'));
+  resPanel.rescan_resources();
+  resPanel.reconstruct_filetree();
+  resPanel.refresh();
 
   // 创建逻辑循环
   render_loop();

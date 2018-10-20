@@ -16,14 +16,11 @@ class BaseResObj {
         if (ext !== undefined) {
             ext = ext.toLowerCase();
             switch (ext) {
-                case 'fbx':
-                case 'osgjs':
-                case 'obj':
+                case 'gmf':
                     this.type = "mesh";
                     break;
-                case 'jpg':
-                case 'png':
-                case 'bmp':
+                case 'dds':
+                case 'pvr':
                     this.type = "texture";
                     break;
                 case 'glsl':
@@ -169,19 +166,18 @@ export default class EditorResourceManager {
                 let res = this.get_res(filetoken);
                 if(res !== null && !res.dynamic)
                 {
-                    log_icon = document.createElement('img');
-                    log_icon.src = res.filetoken;
-                    if(thumbMode)
-                    {
-                        log_icon.width = '13';
-                        log_icon.height = '13';
-                    }
-                    else
-                    {
-                        log_icon.width = '48';
-                        log_icon.height = '48';
-                    }
-
+                    log_icon = document.createElement('i');
+                    log_icon.className = 'btm bt-photo';
+                    // if(thumbMode)
+                    // {
+                    //     log_icon.width = '13';
+                    //     log_icon.height = '13';
+                    // }
+                    // else
+                    // {
+                    //     log_icon.width = '48';
+                    //     log_icon.height = '48';
+                    // }
                 }
                 else
                 {
