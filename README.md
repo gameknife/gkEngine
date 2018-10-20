@@ -21,15 +21,15 @@ gkENGINE's runtime Quick Start
 ```
 git submodule update --init
 ```
-1. 构筑基础引擎环境
+3. 构筑基础引擎环境
 ```
 .\auto_make_env.bat (windows) | sh ./auto_make_env.sh (mac)
 ```
-1. 通过cmake，生成你本机的编译环境
+4. 通过cmake，生成你本机的编译环境
 ```
-.\auto_cmake.bat -win64(windows) | sh ./auto_cmake.sh --osx(mac) | sh ./auto_cmake.sh --ios(mac)
+.\auto_cmake.bat -win64(windows) | sh ./auto_cmake.sh --osx(mac) | sh ./auto_cmake.sh --ios(mac build for ios)
 ```
-1. 工程生成在build-win64/build_osx/build_ios下面
+5. 工程生成在build-win64/build_osx/build_ios下面
 
 <br>
 
