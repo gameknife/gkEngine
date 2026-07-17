@@ -142,7 +142,8 @@ set (EXTRA_LIBS ${EXTRA_LIBS} gkSystem)
 
 
 # Testcases
-add_library(Testcases ${CoreLinkType} ./code/engine/gkTestApps/TestCases/TestCaseFramework.cpp)
+FILE(GLOB TESTCASE_SOURCES ./code/engine/gkTestApps/TestCases/*.cpp)
+add_library(Testcases ${CoreLinkType} ${TESTCASE_SOURCES})
 target_include_directories(Testcases PRIVATE
     ./code/engine/gkTestApps/TestCases/
 )
@@ -322,6 +323,17 @@ target_link_libraries(gkRendererD3D9
     ${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/lib/x64/d3dx10.lib
 )
 
+if (WIN32)
+    add_custom_command(TARGET gkRendererD3D9 POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/bin/x64/D3DX9_43.dll"
+            "$<TARGET_FILE_DIR:gkRendererD3D9>/D3DX9_43.dll"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${PROJECT_SOURCE_DIR}/code/ThirdParty/DXSDK/bin/x64/D3DCompiler_43.dll"
+            "$<TARGET_FILE_DIR:gkRendererD3D9>/D3DCompiler_43.dll"
+    )
+endif()
+
 FILE(GLOB sources ./code/engine/gkLauncherUniverse/*.cpp ./code/engine/gkLauncherUniverse/*/*.cpp)
 add_executable(gkLauncher ${sources})
 target_include_directories(gkLauncher PRIVATE
@@ -334,8 +346,12 @@ set_target_properties(gkCore gkLauncher gkSystem gkRendererD3D9 gkInput gkGameOb
     PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/exec/bin64"
     LIBRARY_OUTPUT_DIRECTORY_DEBUG "${PROJECT_SOURCE_DIR}/exec/bin64"
+    LIBRARY_OUTPUT_DIRECTORY_MINSIZEREL "${PROJECT_SOURCE_DIR}/exec/bin64"
+    LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO "${PROJECT_SOURCE_DIR}/exec/bin64"
     RUNTIME_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/exec/bin64"
     RUNTIME_OUTPUT_DIRECTORY_DEBUG "${PROJECT_SOURCE_DIR}/exec/bin64"
+    RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${PROJECT_SOURCE_DIR}/exec/bin64"
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${PROJECT_SOURCE_DIR}/exec/bin64"
 )
 
 endif()

@@ -46,5 +46,7 @@ code/gkENGINE_xcode.xcworkspace/xcuserdata/
 code/gkENGINE_Tools.xcworkspace/xcuserdata/
 exec/tools/gkPak.dSYM/
 exec/tools/gkResourceCompiler.dSYM/
+exec/tools/msvcp100.dll
+exec/tools/msvcr100.dll
 code/ipch/
 code/gkENGINE_Vc14.VC.db

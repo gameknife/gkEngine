@@ -18,6 +18,7 @@
 #include "ITerrianSystem.h"
 #include "ITask.h"
 #include "IFont.h"
+#include "gkIniParser.h"
 
 #define MAIN_CATEGORY_X 58
 #define SUB_CATEGORY_X 288
@@ -139,6 +140,28 @@ bool TestCaseFramework::OnInit()
 		if ( g_cateTestCases[i].empty() )
 		{
 			g_cateTestCases[i].clear();
+		}
+	}
+
+	// Allow the launcher config to select a testcase for unattended startup.
+	// The default config selects the conference-room rendering test.
+	gkIniParser startupFile( _T("config/startup.cfg") );
+	startupFile.Parse();
+	gkStdString startupTest = startupFile.FetchValue( _T("launcher"), _T("testcase") );
+	if ( !startupTest.empty() )
+	{
+		for (uint32 category = 0; category < eTcc_Count && !m_runningCase; ++category)
+		{
+			for (uint32 test = 0; test < g_cateTestCases[category].size(); ++test)
+			{
+				if ( !_tcsicmp(g_cateTestCases[category][test]->GetName(), startupTest.c_str()) )
+				{
+					m_testCase_Point = category;
+					m_testCase_sub_Point = test;
+					m_runningCase = g_cateTestCases[category][test];
+					break;
+				}
+			}
 		}
 	}
 
