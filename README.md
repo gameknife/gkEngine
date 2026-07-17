@@ -30,6 +30,17 @@ Windows:
 
 The default launcher configuration uses `TestCases` and starts `TestCase_InDoorRendering`, which loads `level/conf_room/conf_room.gks`. Press Esc to return to the TestCases menu. The generated executable and DLLs are under `exec\bin64`; do not launch the stale intermediate copy under `build-win64\RelWithDebInfo`.
 
+gks level to standalone GLB
+---
+
+`exec\tools\gks2glb.py` exports a gkENGINE scene to a self-contained binary glTF file without starting the renderer. The exporter preserves the gks node hierarchy and transforms, automatically loads a same-name `.cam` file, exports each camera record as a glTF camera node, converts the engine's Z-up coordinates to glTF Y-up, embeds TGA textures as PNG, and writes point lights through `KHR_lights_punctual`.
+
+```bat
+python exec\tools\gks2glb.py exec\media\level\conf_room\conf_room.gks build-win64\conf_room.glb
+```
+
+On Windows the equivalent wrapper is `exec\tools\gks2glb.bat`. The media root is inferred from the scene path; use `--media-root exec\media` when exporting a scene from another location. Use `--camera-file path\to\custom.cam` to override the same-name camera file. The current exporter supports the OBJ meshes and XML `.mtl` files used by the sample level.
+
 For manual setup, initialize the submodules first:
 
 ```bat
