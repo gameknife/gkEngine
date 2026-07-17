@@ -1,12 +1,16 @@
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.10)
 project (gkENGINE)
 
 if (APPLE)
-    MESSAGE ("This is build for ios, use static lib")
+    message(STATUS "This is build for ios, use static lib")
 	set(CoreLinkType STATIC)
 else()
-    MESSAGE ("This is build for windows, use dynamic lib")
-	set(CoreLinkType SHARED)
+    message(STATUS "This is build for windows, use dynamic lib")
+    set(CoreLinkType SHARED)
+
+    if (WIN32)
+        add_compile_definitions(DIRECTINPUT_VERSION=0x0800)
+    endif()
 
     # add warning mute
     add_compile_options(/w44996)

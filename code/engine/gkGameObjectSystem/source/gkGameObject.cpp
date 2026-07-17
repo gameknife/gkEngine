@@ -358,7 +358,8 @@
 			return m_pRenderLayer->getMaterialName();
 		}
 
-		return GKNULLSTR;
+		static const gkStdString nullMaterialName = GKNULLSTR;
+		return nullMaterialName;
 	}
 	//////////////////////////////////////////////////////////////////////////
 	void gkGameObject::showBBox(bool bShow)

@@ -142,10 +142,10 @@ void gkSun::setTime( float fTime )
 		m_pAttachSceneNode->setOrientation(qRot);
 
 		// sync cascade cam
-		if( gEnv->pProfiler->getFrameCount() % GSM_SHADOWCASCADE1_DELAY == 0);
+		if( gEnv->pProfiler->getFrameCount() % GSM_SHADOWCASCADE1_DELAY == 0)
 			m_pAttachSceneNode1->setOrientation(qRot);
 
-		if( gEnv->pProfiler->getFrameCount() % GSM_SHADOWCASCADE2_DELAY == 0);
+		if( gEnv->pProfiler->getFrameCount() % GSM_SHADOWCASCADE2_DELAY == 0)
 			m_pAttachSceneNode2->setOrientation(qRot);
 
 
@@ -200,11 +200,11 @@ void gkSun::update( void ) const
   		m_pAttachSceneNode->setPosition(desirePoint + off );
 
 		//sync cascade cam
-		if( gEnv->pProfiler->getFrameCount() % GSM_SHADOWCASCADE1_DELAY == 0);
+		if( gEnv->pProfiler->getFrameCount() % GSM_SHADOWCASCADE1_DELAY == 0)
 			m_pAttachSceneNode1->setPosition(desirePoint1 + off);
 
 		//sync cascade cam
-		if( gEnv->pProfiler->getFrameCount() % GSM_SHADOWCASCADE2_DELAY == 0);
+		if( gEnv->pProfiler->getFrameCount() % GSM_SHADOWCASCADE2_DELAY == 0)
 			m_pAttachSceneNode2->setPosition(desirePoint2 + off);
 
 	

@@ -350,7 +350,7 @@ public:
 	virtual void AddAttribute(const TCHAR* name, const ColorF& color)
 	{
 		TCHAR buffer[256];
-		_stprintf_s(buffer, 256, _T("%.5f %.5f %.5f"), color.r, color.g, color.b, color.a);
+		_stprintf_s(buffer, 256, _T("%.5f %.5f %.5f %.5f"), color.r, color.g, color.b, color.a);
 		TCHAR* rapidLifeString = m_xmlNode->document()->allocate_string(buffer);
 		rapidxml::xml_attribute<TCHAR>* att = m_xmlNode->document()->allocate_attribute(name, rapidLifeString);
 		m_xmlNode->append_attribute(att);
@@ -609,7 +609,7 @@ struct CObjectNode : public IRapidXmlNode
 	virtual void SetScale( float kx, float ky, float kz )
 	{
 		TCHAR buf[MAX_PATH];
-		_stprintf_s( buf, MAX_PATH, _T("%f %f %f %f %f %f %f %f"),  kx, ky, kz, .0f, .0f, .0f, .0f );
+		_stprintf_s( buf, MAX_PATH, _T("%f %f %f %f %f %f %f %f"),  kx, ky, kz, .0f, .0f, .0f, .0f, .0f );
 
 		TCHAR* rapidLifeString = m_xmlNode->document()->allocate_string(buf);
 

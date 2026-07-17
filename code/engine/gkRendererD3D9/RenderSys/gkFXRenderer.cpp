@@ -132,7 +132,7 @@ void gkRendererD3D9::FX_TexBlurGaussian(gkTexturePtr tgt, int nAmount, float fSc
 
 	if (blur_mipmapchain)
 	{
-		for (int i = 0; i < tgt->getMipLevel() - 1; ++i)
+		for (uint32 i = 0; i < tgt->getMipLevel() - 1; ++i)
 		{
 			GaussionBlurWithMipLevel(tmp, fDistribution, fScale, iterate, source_blur_mipmapchain++, pShader, tgt, ++target_blur_mipmapchain);
 		}
@@ -710,7 +710,7 @@ void gkRendererD3D9::FX_BlurCubeMap(gkTexturePtr cubetgt, int nAmount, float fSc
 {
 	for (int cube = 0; cube < 6; ++cube)
 	{
-		for (int level = 1; level < cubetgt->getMipLevel(); ++level)
+		for (uint32 level = 1; level < cubetgt->getMipLevel(); ++level)
 		{
 			//for (int i = 0; i < 2; ++i)
 			{

@@ -1392,7 +1392,7 @@ void gkRendererD3D9::RP_GenCubemap(Vec3 samplePos, gkTexturePtr cubetgt, gkTextu
 		m_pd3d9Device->CreateCubeTexture( cubetgt->getWidth(), cubetgt->getMipLevel(), NULL, D3DFMT_A8R8G8B8, D3DPOOL_SYSTEMMEM, &sysCubemap, NULL );
 		for (int cube = 0; cube < 6; cube++)
 		{
-			for (int level = 0; level < cubetgt->getMipLevel(); ++level)
+			for (uint32 level = 0; level < cubetgt->getMipLevel(); ++level)
 			{
 				IDirect3DSurface9* src = NULL;
 				IDirect3DSurface9* dst = NULL;

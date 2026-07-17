@@ -341,7 +341,7 @@ void gkSystemProfiler::profileResource()
 	ColorB buttonBgColorPressed(0,0,0,250);
 
 	static bool bShowResInfo = false;
-	static uint32 showIndex = 0;
+	static int showIndex = 0;
 
 	int tab_height = gEnv->pRenderer->GetScreenHeight() - 120;
 
@@ -412,7 +412,15 @@ void gkSystemProfiler::profileResource()
 				++it;
 			}
 
-			showIndex = showIndex >= collections.size() ? (collections.size() - 1) : showIndex;
+			if (collections.empty())
+			{
+				showIndex = 0;
+			}
+			else
+			{
+				const int lastIndex = static_cast<int>(collections.size()) - 1;
+				showIndex = showIndex < 0 ? 0 : (showIndex > lastIndex ? lastIndex : showIndex);
+			}
 		}
 
 		int lineCount = (tab_height - 60) / 15;
@@ -430,7 +438,7 @@ void gkSystemProfiler::profileResource()
 
 		// draw table info
 		TCHAR basicinfo[255];
-		_stprintf(basicinfo, _T("%d / %d"), 1, collections.size() );
+		_stprintf(basicinfo, _T("%d / %d"), 1, static_cast<int>(collections.size()) );
 		gEnv->pRenderer->getAuxRenderer()->AuxRenderText(basicinfo , tabX[1] - 80, tableInfoY, m_profilerFont, ColorB(255,255,255,255) );
 		_stprintf(basicinfo, _T(" id  | ref | usage | name") );
 		gEnv->pRenderer->getAuxRenderer()->AuxRenderText(basicinfo , 25, tableInfoY, m_profilerFont, ColorB(255,255,255,255) );
@@ -646,8 +654,6 @@ void gkSystemProfiler::qinfo( int boxheight )
 
 void gkSystemProfiler::about()
 {
-	TCHAR buffer[250];
-	TCHAR bufferT[250];
 	ColorB textColor(255,255,255,255);
 	ColorB textColorHighlight(40,127,200,255);
 	ColorB buttonTextColor(180,180,180,255);
@@ -739,41 +745,41 @@ void gkSystemProfiler::features()
 // 						_stprintf(buffer, (_T("r_hdrrendering")_T(" 0"))); \
 // 					}
 
-				_stprintf(bufferT, _T("HDR PROCESS"), i);
+				_stprintf(bufferT, _T("HDR PROCESS"));
 			}
 
 			break;
 		case 1:
 			{
 				MAKE_SWITCH( r_postmsaa );
-				_stprintf(bufferT, _T("POST MSAA"), i);
+				_stprintf(bufferT, _T("POST MSAA"));
 			}
 
 			break;
 		case 2:
 			{
 				MAKE_SWITCH( r_dof );
-				_stprintf(bufferT, _T("DEPTH OF FIELD"), i);
+				_stprintf(bufferT, _T("DEPTH OF FIELD"));
 			}
 
 			break;
 		case 3:
 			{
 				MAKE_SWITCH( r_shadow );
-				_stprintf(bufferT, _T("SHADOW"), i);
+				_stprintf(bufferT, _T("SHADOW"));
 			}
 
 			break;
 		case 4:
 			{
 				MAKE_SWITCH( r_SSAO );
-				_stprintf(bufferT, _T("SSAO"), i);
+				_stprintf(bufferT, _T("SSAO"));
 			}
             break;
         case 5:
             {
                 MAKE_SWITCH( r_Fog );
-				_stprintf(bufferT, _T("FOG"), i);
+				_stprintf(bufferT, _T("FOG"));
             }
 			break;
 		}
@@ -785,7 +791,7 @@ void gkSystemProfiler::features()
 		}
 
 		buttonLeft += buttonWidth + 2;
-		if (buttonLeft >= gEnv->pRenderer->GetScreenWidth() - buttonLeftStart)
+		if (buttonLeft >= static_cast<int>(gEnv->pRenderer->GetScreenWidth()) - buttonLeftStart)
 		{
 			buttonLeft = buttonLeftStart;
 			buttonTop += buttonHeight + 2;

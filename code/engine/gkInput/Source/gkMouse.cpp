@@ -2,6 +2,14 @@
 #include "gkMouse.h"
 #include "ITimer.h"
 #include "IRenderer.h"
+#include <cstddef>
+
+namespace
+{
+	const DWORD kDimoFsX = static_cast<DWORD>(offsetof(DIMOUSESTATE, lX));
+	const DWORD kDimoFsY = static_cast<DWORD>(offsetof(DIMOUSESTATE, lY));
+	const DWORD kDimoFsZ = static_cast<DWORD>(offsetof(DIMOUSESTATE, lZ));
+}
 
 #if 1
 SInputSymbol*	gkMouse::Symbol[MAX_MOUSE_SYMBOLS] = {0};
@@ -54,9 +62,9 @@ bool gkMouse::Init()
 
 	Symbol[eKI_MouseWheelUp-KI_MOUSE_BASE] = MapSymbol(_DIMOFS_WHEEL_UP, eKI_MouseWheelUp);
 	Symbol[eKI_MouseWheelDown-KI_MOUSE_BASE] = MapSymbol(_DIMOFS_WHEEL_DOWN, eKI_MouseWheelDown);
-	Symbol[eKI_MouseX-KI_MOUSE_BASE] = MapSymbol(DIMOFS_X, eKI_MouseX, SInputSymbol::RawAxis);
-	Symbol[eKI_MouseY-KI_MOUSE_BASE] = MapSymbol(DIMOFS_Y, eKI_MouseY, SInputSymbol::RawAxis);
-	Symbol[eKI_MouseZ-KI_MOUSE_BASE] = MapSymbol(DIMOFS_Z, eKI_MouseZ, SInputSymbol::RawAxis);
+	Symbol[eKI_MouseX-KI_MOUSE_BASE] = MapSymbol(kDimoFsX, eKI_MouseX, SInputSymbol::RawAxis);
+	Symbol[eKI_MouseY-KI_MOUSE_BASE] = MapSymbol(kDimoFsY, eKI_MouseY, SInputSymbol::RawAxis);
+	Symbol[eKI_MouseZ-KI_MOUSE_BASE] = MapSymbol(kDimoFsZ, eKI_MouseZ, SInputSymbol::RawAxis);
 
 	return true;
 }
@@ -123,13 +131,13 @@ void gkMouse::Update(bool bFocus)
 					}
 					switch (Events[i].dwOfs) 
 					{
-					case DIMOFS_X: 
+					case kDimoFsX:
 						m_deltas.x += float((int)Events[i].dwData);
 						break;
-					case DIMOFS_Y: 
+					case kDimoFsY:
 						m_deltas.y += float((int)Events[i].dwData);
 						break; 
-					case DIMOFS_Z:
+					case kDimoFsZ:
 						m_mouseWheel += float((int)Events[i].dwData);
 						break;
 					}

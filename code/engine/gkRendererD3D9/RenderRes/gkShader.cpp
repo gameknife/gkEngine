@@ -58,8 +58,6 @@ gkStdString gkShader::getMacroProfile(uint32 macromask)
 
 bool gkShader::loadFromGfxShader( CRapidXmlParseNode* rootNode, uint32 mask, IDirect3DDevice9* d3d9Device, ID3DXEffectPool** ppPool )
 {
-	HRESULT hr;
-
 	// test
 
 	// read vfx & ffx file

@@ -133,8 +133,9 @@ void gkTaskDispatcher::Init()
         
 		DWORD_PTR mask1,mask2;
 		GetProcessAffinityMask( GetCurrentProcess(),&mask1,&mask2 );
-		if(BIT(core) & mask1)	// Check if we have this affinity
-			SetThreadAffinityMask( thisThread->GetHandle(), BIT(core) );
+		const DWORD_PTR coreMask = static_cast<DWORD_PTR>(1) << core;
+		if(coreMask & mask1)	// Check if we have this affinity
+			SetThreadAffinityMask( thisThread->GetHandle(), coreMask );
 		else // Reserve CPU 1 for main thread.
 			SetThreadAffinityMask( thisThread->GetHandle(),(mask1 & (~1)) );
 #endif

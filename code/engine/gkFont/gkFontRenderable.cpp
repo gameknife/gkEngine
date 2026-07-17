@@ -23,7 +23,8 @@ void gkFontRenderable::setMaterialName( const gkStdString& matName )
 
 const gkStdString& gkFontRenderable::getMaterialName() const
 {
-	return _T("FontMaterial");
+	static const gkStdString materialName = _T("FontMaterial");
+	return materialName;
 }
 
 bool gkFontRenderable::getSkinnedMatrix( Matrix44A** pMatrixs, uint32& size )
@@ -90,7 +91,7 @@ void gkFontRenderable::resizeHwBuffer()
 	gkIndexBuffer* ib = m_mesh->getIndexBuffer();
 	ib->Clear();
 
-	for (uint32 i=0; i < m_vbCharacterCacheSize; ++i)
+	for (int i=0; i < m_vbCharacterCacheSize; ++i)
 	{
 		ib->push_back(i * 4 + 0);
 		ib->push_back(i * 4 + 1);
@@ -131,9 +132,6 @@ void gkFontRenderable::addCharacter( gkFTCharInfo& info, const Vec3i& tmpPos, co
 	GKVL_P3T2U4* CHARACTER_RB = CHARACTER_LT + 3;
 
 
-	// 安排vb
-
-	// 这里的顶点坐标，必须是整数，否则会有渲染错误！
 	Vec3i bearing(info.bearingX, -info.bearingY, 0.0f);
 	Vec3i offsetingPos = tmpPos + bearing;
 
@@ -169,4 +167,3 @@ void gkFontRenderable::RP_Prepare()
 {
 	m_mesh->UpdateHwBuffer();
 }
-

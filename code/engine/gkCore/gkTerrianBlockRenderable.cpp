@@ -45,7 +45,7 @@ gkTerrianBlockRenderable::gkTerrianBlockRenderable(gkTerrian* creator,  gkTextur
 	gkNameValuePairList createlist;
 	// set params
 	createlist[_T("type")] =	_T("TERRIAN_BLOCK");
-	_stprintf(buffer, _T("TerrianBlock_0x%x_LOD%d_%d_%d_%d_%d"), (gk_ptr_type)creator, (int)blockUnit, (int)(region.x * 1000), (int)(region.y * 1000), (int)(region.z * 1000), (int)(region.w * 1000));
+	_stprintf(buffer, _T("TerrianBlock_%p_LOD%d_%d_%d_%d_%d"), static_cast<void*>(creator), (int)blockUnit, (int)(region.x * 1000), (int)(region.y * 1000), (int)(region.z * 1000), (int)(region.w * 1000));
 
 	m_mesh = gEnv->pSystem->getMeshMngPtr()->create( buffer, _T("terrian"), &createlist );
 	m_mesh->load();
