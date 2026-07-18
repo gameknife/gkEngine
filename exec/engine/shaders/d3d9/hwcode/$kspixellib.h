@@ -108,7 +108,7 @@ float4 pipe_process(inout fragPass pPass)
 	pPass.vNormal.xyz = normalize( pPass.cNormalMapRT.xyz );
 
 	pPass.fNdotE = ( dot(pPass.vView.xyz, pPass.vNormal.xyz));
-	pPass.vReflVec = (2.0h * pPass.fNdotE * pPass.vNormal.xyz) - pPass.vView.xyz;  
+	pPass.vReflVec = (2.0h * pPass.fNdotE * pPass.vNormal.xzy) - pPass.vView.xzy;  
 
 	// pass setup virtual implement
 	pipe_start_impl(pPass);
@@ -129,7 +129,8 @@ float4 pipe_process(inout fragPass pPass)
 		else
 			if( pPass.nReflectionMapping == REFLECT_SPHERE)
 			{
-				pPass.cEnvironment = GetEnvironment2DMap(IBLenvmapSampler, pPass.vReflVec.xy);      
+				// 2D environment maps use the same XZY world-axis convention as cube maps.
+				pPass.cEnvironment = GetEnvironment2DMap(IBLenvmapSampler, pPass.vReflVec.xy);
 			}
 	}
 
