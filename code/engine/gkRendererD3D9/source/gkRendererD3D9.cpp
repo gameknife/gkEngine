@@ -1293,6 +1293,12 @@ HWND gkRendererD3D9::Init(ISystemInitInfo& sii)
 
 	m_pDefaultFont = NULL;
 
+	// Keep the native window size in sync with the requested back-buffer size.
+	// The window is created before the D3D device, so using the constructor
+	// defaults here leaves the device and window at different resolutions.
+	m_lNewWidth = sii.fWidth;
+	m_lNewHeight = sii.fHeight;
+
 	SetWindow(m_lNewWidth, m_lNewHeight, 0, 0);
 
 	m_pLightProbeSystem = new gkLightProbeSystem();
