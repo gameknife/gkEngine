@@ -14,6 +14,7 @@ class CBaseStateManager :
 {
 protected:
 	LPDIRECT3DDEVICE9 m_pDevice;
+	DWORD m_defaultAnisotropy;
 	LONG m_lRef;
 	UINT m_nTotalStateChanges;
 	UINT m_nTotalStateChangesPerFrame;
@@ -22,12 +23,23 @@ public:
 	CBaseStateManager( LPDIRECT3DDEVICE9 pDevice )
 		: m_lRef( 1UL ),
 		m_pDevice( pDevice ),
+		m_defaultAnisotropy( 16 ),
 		m_nTotalStateChanges( 0 ),
 		m_nTotalStateChangesPerFrame( 0 )
 	{
 		// Increment the reference count on the device, because a pointer to it has
 		// been copied for later use
 		m_pDevice->AddRef();
+
+		// Use 16x anisotropic filtering by default, but respect the device cap.
+		D3DCAPS9 caps;
+		if( SUCCEEDED( m_pDevice->GetDeviceCaps( &caps ) )
+			&& caps.MaxAnisotropy > 0
+			&& caps.MaxAnisotropy < m_defaultAnisotropy )
+		{
+			m_defaultAnisotropy = caps.MaxAnisotropy;
+		}
+
 		m_wszFrameStats[0] = 0;
 	}
 
@@ -101,6 +113,14 @@ public:
 	STDMETHOD( SetSamplerState )( THIS_ DWORD dwStage, D3DSAMPLERSTATETYPE d3dSamplerState, DWORD dwValue )
 	{
 		m_nTotalStateChanges++;
+		if( ( d3dSamplerState == D3DSAMP_MINFILTER || d3dSamplerState == D3DSAMP_MAGFILTER )
+			&& dwValue == D3DTEXF_LINEAR )
+		{
+			// Keep point samplers untouched while upgrading the default linear
+			// material sampling path to anisotropic filtering.
+			dwValue = D3DTEXF_ANISOTROPIC;
+			m_pDevice->SetSamplerState( dwStage, D3DSAMP_MAXANISOTROPY, m_defaultAnisotropy );
+		}
 		return m_pDevice->SetSamplerState( dwStage, d3dSamplerState, dwValue );
 	}
 	STDMETHOD( SetTextureStageState )( THIS_ DWORD dwStage, D3DTEXTURESTAGESTATETYPE d3dTextureStageState, DWORD dwValue )
@@ -346,6 +366,14 @@ public:
 	STDMETHOD( SetSamplerState )( THIS_ DWORD dwStage, D3DSAMPLERSTATETYPE d3dSamplerState, DWORD dwValue )
 	{
 		m_nTotalStateChanges++;
+		if( ( d3dSamplerState == D3DSAMP_MINFILTER || d3dSamplerState == D3DSAMP_MAGFILTER )
+			&& dwValue == D3DTEXF_LINEAR )
+		{
+			// Keep point samplers untouched while upgrading the default linear
+			// material sampling path to anisotropic filtering.
+			dwValue = D3DTEXF_ANISOTROPIC;
+			m_pDevice->SetSamplerState( dwStage, D3DSAMP_MAXANISOTROPY, m_defaultAnisotropy );
+		}
 
 		// If this dwStage is not cached, pass the value through and exit.
 		// Otherwise, update the sampler state cache and if the return value is 'true', the 
