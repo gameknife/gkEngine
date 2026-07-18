@@ -3,7 +3,7 @@
 // K&K Studio GameKnife ENGINE Source File
 //
 // Name:   	ksPixelLib.fx
-// Desc:	ÏñËØ´¦Àí£¬»ùÀà
+// Desc:	ï¿½ï¿½ï¿½Ø´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 // 
 // Author:  Kaiming
 // Date:	2011/11/4 
@@ -74,7 +74,7 @@ void pipe_quality_setting( inout fragPass pPass )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// ´Ódeferred shading µÄ light bufferÖÐ£¬²ÉÑù¹âÕÕ
+// ï¿½ï¿½deferred shading ï¿½ï¿½ light bufferï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void pipe_get_light_buffer( inout fragPass pPass )
 {
 	pPass.cNormalMapRT = 2 * (tex2D( samSceneNormal, pPass.IN.screenProj.xy ) - 0.5);
@@ -137,11 +137,11 @@ float4 pipe_process(inout fragPass pPass)
 	if( pPass.bSSRL )
 	{
 		float fEdgeMipFix = saturate(1-pPass.fNdotE);
-		fEdgeMipFix *= fEdgeMipFix;
-		fEdgeMipFix *= fEdgeMipFix;
+		fEdgeMipFix = sqrt(fEdgeMipFix);
+		fEdgeMipFix = sqrt(fEdgeMipFix);
 		float fGlossinessLod = 6.16231 - 0.497418 * sqrt(pPass.fSpecPow);
 		fGlossinessLod = max(3.16231 - 6.16231*fEdgeMipFix,fGlossinessLod);
-		pPass.cEnvironment += 0.2f * g_EnvironmentBia * tex2Dlod(samSceneColor,  float4(pPass.IN.screenProj.xy, 0, fGlossinessLod));
+		pPass.cEnvironment += 0.25f * g_EnvironmentBia * tex2Dlod(samSceneColor,  float4(pPass.IN.screenProj.xy, 0, fGlossinessLod));
 
 	}
 
