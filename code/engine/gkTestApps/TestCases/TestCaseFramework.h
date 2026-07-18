@@ -93,6 +93,9 @@ struct TestCaseBase
 	}
 
 	virtual const TCHAR* GetName() =0;
+	// Optional camera preset file associated with the scene used by this test.
+	// The framework uses it for Ctrl+number camera switching.
+	virtual const TCHAR* GetCameraFile() const { return NULL; }
 	ETestCaseStatus m_status;
 
 
@@ -143,8 +146,9 @@ private:
 
 	void RestoreSetting();
     
-    void IntoSubSection();
+	void IntoSubSection();
     void IntoMainSection();
+	bool SwitchCameraPreset( const SInputEvent& event );
 
 
 	struct IFtFont* m_mainFont;

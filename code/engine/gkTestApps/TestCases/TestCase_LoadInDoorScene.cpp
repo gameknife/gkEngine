@@ -9,6 +9,11 @@
 
 TEST_CASE_FASTIMPL_HEAD( TestCase_InDoorRendering, eTcc_Rendering )
 
+virtual const TCHAR* GetCameraFile() const
+{
+	return _T("level/conf_room/conf_room.cam");
+}
+
 virtual void OnInit() 
 {
 	// set camera

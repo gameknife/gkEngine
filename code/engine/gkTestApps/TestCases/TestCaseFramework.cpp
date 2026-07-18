@@ -323,10 +323,96 @@ bool TestCaseFramework::OnInputEvent( const SInputEvent &event )
 
 	if (m_runningCase)
 	{
+		SwitchCameraPreset( event );
 		m_runningCase->InputEvent(event);
 	}
 
 	return true;
+}
+
+bool TestCaseFramework::SwitchCameraPreset( const SInputEvent& event )
+{
+	if (!m_runningCase || event.deviceId != eDI_Keyboard || event.state != eIS_Pressed || !(event.modifiers & eMM_Ctrl))
+	{
+		return false;
+	}
+
+	int cameraIndex = -1;
+	switch (event.keyId)
+	{
+	case eKI_1: cameraIndex = 1; break;
+	case eKI_2: cameraIndex = 2; break;
+	case eKI_3: cameraIndex = 3; break;
+	case eKI_4: cameraIndex = 4; break;
+	case eKI_5: cameraIndex = 5; break;
+	case eKI_6: cameraIndex = 6; break;
+	case eKI_7: cameraIndex = 7; break;
+	case eKI_8: cameraIndex = 8; break;
+	case eKI_9: cameraIndex = 9; break;
+	case eKI_0: cameraIndex = 0; break;
+	case eKI_NP_1: cameraIndex = 1; break;
+	case eKI_NP_2: cameraIndex = 2; break;
+	case eKI_NP_3: cameraIndex = 3; break;
+	case eKI_NP_4: cameraIndex = 4; break;
+	case eKI_NP_5: cameraIndex = 5; break;
+	case eKI_NP_6: cameraIndex = 6; break;
+	case eKI_NP_7: cameraIndex = 7; break;
+	case eKI_NP_8: cameraIndex = 8; break;
+	case eKI_NP_9: cameraIndex = 9; break;
+	case eKI_NP_0: cameraIndex = 0; break;
+	default: break;
+	}
+
+	if (cameraIndex < 0)
+	{
+		return false;
+	}
+
+	const TCHAR* cameraFile = m_runningCase->GetCameraFile();
+	if (!cameraFile || !cameraFile[0])
+	{
+		return false;
+	}
+
+	IRapidXmlParser parser;
+	parser.initializeReading( cameraFile );
+	CRapidXmlParseNode* cameras = parser.getRootXmlNode( _T("Cameras") );
+	bool switched = false;
+
+	if (cameras)
+	{
+		for (CRapidXmlParseNode* camera = cameras->getChildNode(_T("CameraRecord")); camera; camera = camera->getNextSiblingNode())
+		{
+			int index = -1;
+			camera->GetAttribute( _T("Index"), index );
+			if (index == cameraIndex)
+			{
+				Vec3 position;
+				Quat orientation;
+				camera->GetAttribute( _T("Pos"), position );
+				camera->GetAttribute( _T("Rot"), orientation );
+
+				ICamera* maincam = gEnv->p3DEngine->getMainCamera();
+				maincam->setPosition( position );
+				maincam->setOrientation( orientation );
+				switched = true;
+				break;
+			}
+		}
+	}
+
+	parser.finishReading();
+
+	if (switched)
+	{
+		gkLogMessage( _T("TestCase camera preset %d applied from [%s]."), cameraIndex, cameraFile );
+	}
+	else
+	{
+		gkLogWarning( _T("TestCase camera preset %d was not found in [%s]."), cameraIndex, cameraFile );
+	}
+
+	return switched;
 }
 
 void TestCaseFramework::IntoSubSection()
