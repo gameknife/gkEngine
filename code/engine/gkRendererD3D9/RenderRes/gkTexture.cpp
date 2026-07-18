@@ -587,6 +587,15 @@ bool gkTexture::loadImpl( IDirect3DDevice9* d3d9Device )
 		*strLastSlash = 0;
 	}
 
+	// Color charts and other engine textures are lookup/data textures where
+	// DXT compression can introduce visible color errors. Keep the existing
+	// compressed format for non-engine textures, but generate lossless DDS for
+	// engine/assets/textures.
+	gkStdString normalizedSourceName(sourceName);
+	gkNormalizePath(normalizedSourceName);
+	const bool bEngineTexture = normalizedSourceName.find(_T("/engine/assets/textures/")) != gkStdString::npos;
+	const TCHAR* texconvFormat = bEngineTexture ? _T("A8R8G8B8") : _T("DXT5");
+
 	strLastSlash = _tcsrchr( wszPath, _T( '.' ) );
 
 	if ( _tcslen(wszPath) > 7 )
@@ -643,11 +652,11 @@ bool gkTexture::loadImpl( IDirect3DDevice9* d3d9Device )
 				// 判断是engine目录还是media目录
 				if( gkIsEnginePath( sourceName ) )
 				{
-					_stprintf(buffer, _T("%stools\\texconv -nologo -f DXT5 -ft dds -o %s%s %s%s.tga"), gkGetExecRootDir().c_str(), gkGetExecRootDir().c_str(), rel_path.c_str(), gkGetExecRootDir().c_str(), sourceName);
+					_stprintf(buffer, _T("%stools\\texconv -nologo -f %s -ft dds -o %s%s %s%s.tga"), gkGetExecRootDir().c_str(), texconvFormat, gkGetExecRootDir().c_str(), rel_path.c_str(), gkGetExecRootDir().c_str(), sourceName);
 				}
 				else
 				{
-					_stprintf(buffer, _T("%stools\\texconv -nologo -f DXT5 -ft dds -o %s%s %s%s.tga"), gkGetExecRootDir().c_str(), gkGetGameRootDir().c_str(), rel_path.c_str(), gkGetGameRootDir().c_str(), sourceName);
+					_stprintf(buffer, _T("%stools\\texconv -nologo -f %s -ft dds -o %s%s %s%s.tga"), gkGetExecRootDir().c_str(), texconvFormat, gkGetGameRootDir().c_str(), rel_path.c_str(), gkGetGameRootDir().c_str(), sourceName);
 				}
 
 				
