@@ -9,6 +9,7 @@
 #include "gk_Camera.h"
 #include "gkVkResources.h"
 
+#include <algorithm>
 #include <vector>
 
 namespace
@@ -19,6 +20,14 @@ namespace
 			point.x * matrix.m00 + point.y * matrix.m10 + point.z * matrix.m20 + matrix.m30,
 			point.x * matrix.m01 + point.y * matrix.m11 + point.z * matrix.m21 + matrix.m31,
 			point.x * matrix.m02 + point.y * matrix.m12 + point.z * matrix.m22 + matrix.m32);
+	}
+
+	Vec3 transformSkinDirectionRowVector(const Matrix44A& matrix, const Vec3& direction)
+	{
+		return Vec3(
+			direction.x * matrix.m00 + direction.y * matrix.m10 + direction.z * matrix.m20,
+			direction.x * matrix.m01 + direction.y * matrix.m11 + direction.z * matrix.m21,
+			direction.x * matrix.m02 + direction.y * matrix.m12 + direction.z * matrix.m22);
 	}
 
 	void skinVertexBuffer(gkVertexBuffer& source, gkVertexBuffer& destination,
@@ -42,6 +51,8 @@ namespace
 				input->blendWeight.z, input->blendWeight.w
 			};
 			Vec3 skinned(ZERO);
+			Vec3 skinnedTangent(ZERO);
+			Vec3 skinnedBinormal(ZERO);
 			float totalWeight = 0.0f;
 			for (uint32 influence = 0; influence < 4; ++influence)
 			{
@@ -50,9 +61,23 @@ namespace
 				const float weight = weights[influence] / 255.0f;
 				skinned += transformSkinPointRowVector(
 					matrices[indices[influence]], input->position) * weight;
+				skinnedTangent += transformSkinDirectionRowVector(
+					matrices[indices[influence]],
+					Vec3(input->tangent_ti.x, input->tangent_ti.y,
+						input->tangent_ti.z)) * weight;
+				skinnedBinormal += transformSkinDirectionRowVector(
+					matrices[indices[influence]], input->binormal) * weight;
 				totalWeight += weight;
 			}
 			output->position = totalWeight > 0.0f ? skinned / totalWeight : input->position;
+			if (totalWeight > 0.0f)
+			{
+				skinnedTangent.NormalizeSafe(
+					Vec3(input->tangent_ti.x, input->tangent_ti.y, input->tangent_ti.z));
+				skinnedBinormal.NormalizeSafe(input->binormal);
+				output->tangent_ti = Vec4(skinnedTangent, input->tangent_ti.w);
+				output->binormal = skinnedBinormal;
+			}
 		}
 		destination.m_needRebind = true;
 	}
@@ -61,24 +86,45 @@ namespace
 class gkVkRenderSequence : public IRenderSequence
 {
 public:
+	struct Entry
+	{
+		gkRenderable* renderable;
+		BYTE layer;
+	};
+
 	gkVkRenderSequence()
 		: m_camera(NULL)
 		, m_fillMode(eRFMode_General)
 	{
 	}
 
-	virtual void addToRenderSequence(gkRenderable* renderable, BYTE)
+	virtual void addToRenderSequence(gkRenderable* renderable, BYTE layer)
 	{
 		if (!renderable || m_fillMode != eRFMode_General)
 			return;
 		IMaterial* material = renderable->getMaterial();
 		if (material)
 			material->touch();
-		m_renderables.push_back(renderable);
+		Entry entry = { renderable, layer };
+		m_entries.push_back(entry);
 	}
 	virtual void addToRenderSequence(gkRenderable* renderable)
 	{
-		addToRenderSequence(renderable, 0);
+		if (!renderable)
+			return;
+		BYTE layer = RENDER_LAYER_OPAQUE;
+		IMaterial* material = renderable->getMaterial();
+		if (material)
+		{
+			IShader* shader = material->getShader().getPointer();
+			const uint32 shaderLayer = shader ? shader->getDefaultRenderLayer() :
+				static_cast<uint32>(-1);
+			if (shaderLayer != static_cast<uint32>(-1))
+				layer = static_cast<BYTE>(shaderLayer);
+			else if (material->getOpacity() < 100)
+				layer = RENDER_LAYER_TRANSPARENT;
+		}
+		addToRenderSequence(renderable, layer);
 	}
 	virtual void addRenderLight(gkRenderLight&) {}
 	virtual void setCamera(ICamera* camera, BYTE mode)
@@ -90,16 +136,16 @@ public:
 	virtual void markFinished() {}
 	virtual void clear()
 	{
-		m_renderables.clear();
+		m_entries.clear();
 		m_camera = NULL;
 		m_fillMode = eRFMode_General;
 	}
 
-	const std::vector<gkRenderable*>& renderables() const { return m_renderables; }
+	const std::vector<Entry>& entries() const { return m_entries; }
 	ICamera* camera() const { return m_camera; }
 
 private:
-	std::vector<gkRenderable*> m_renderables;
+	std::vector<Entry> m_entries;
 	ICamera* m_camera;
 	BYTE m_fillMode;
 };
@@ -114,15 +160,105 @@ public:
 		ITexture* texture;
 	};
 
-	virtual void AuxRender3DLine(const Vec3&, const Vec3&, ColorF&, bool) {}
-	virtual void AuxRender3DGird(const Vec3&, int, float, ColorF&, bool) {}
-	virtual void AuxRender3DBoxFrameRotated(const Vec3&, const Quat&, float, ColorF&, bool) {}
-	virtual void AuxRender3DBoxFrameRotated(const Vec3&, const Quat&, const Vec3&, ColorF&, bool) {}
-	virtual void AuxRender3DBoxFrame(const Vec3&, float, ColorF&, bool) {}
-	virtual void AuxRender3DBoxFrame(const Vec3&, Vec3&, ColorF&, bool) {}
-	virtual void AuxRender3DCircle(const Vec3&, const Vec3&, float, uint32, ColorF&, bool) {}
-	virtual void AuxRenderAABB(const AABB&, ColorF&, bool) {}
-	virtual void AuxRenderGizmo(const Matrix44&, float, uint8, bool, uint8) {}
+	struct WorldLine
+	{
+		Vec3 from;
+		Vec3 to;
+		ColorF color;
+		bool ignoreZ;
+	};
+
+	virtual void AuxRender3DLine(const Vec3& from, const Vec3& to,
+		ColorF& color, bool ignoreZ)
+	{
+		if ((to - from).GetLengthSquared() < 0.000001f)
+			return;
+		WorldLine line = { from, to, color, ignoreZ };
+		m_updatingLines.push_back(line);
+	}
+	virtual void AuxRender3DGird(const Vec3& center, int row, float gap,
+		ColorF& color, bool ignoreZ)
+	{
+		const float extent = row * gap;
+		for (int index = -row; index <= row; ++index)
+		{
+			const float offset = index * gap;
+			AuxRender3DLine(center + Vec3(-extent, offset, 0),
+				center + Vec3(extent, offset, 0), color, ignoreZ);
+			AuxRender3DLine(center + Vec3(offset, -extent, 0),
+				center + Vec3(offset, extent, 0), color, ignoreZ);
+		}
+	}
+	virtual void AuxRender3DBoxFrameRotated(const Vec3& center, const Quat& rotation,
+		float length, ColorF& color, bool ignoreZ)
+	{
+		AuxRender3DBoxFrameRotated(center, rotation,
+			Vec3(length, length, length), color, ignoreZ);
+	}
+	virtual void AuxRender3DBoxFrameRotated(const Vec3& center, const Quat& rotation,
+		const Vec3& size, ColorF& color, bool ignoreZ)
+	{
+		const Vec3 half = size * 0.5f;
+		Vec3 corners[8] = {
+			Vec3(-half.x, -half.y, -half.z), Vec3(half.x, -half.y, -half.z),
+			Vec3(half.x, half.y, -half.z), Vec3(-half.x, half.y, -half.z),
+			Vec3(-half.x, -half.y, half.z), Vec3(half.x, -half.y, half.z),
+			Vec3(half.x, half.y, half.z), Vec3(-half.x, half.y, half.z)
+		};
+		for (uint32 index = 0; index < 8; ++index)
+			corners[index] = rotation * corners[index] + center;
+		appendBoxCorners(corners, color, ignoreZ);
+	}
+	virtual void AuxRender3DBoxFrame(const Vec3& center, float radius,
+		ColorF& color, bool ignoreZ)
+	{
+		Vec3 half(radius, radius, radius);
+		AuxRender3DBoxFrame(center, half, color, ignoreZ);
+	}
+	virtual void AuxRender3DBoxFrame(const Vec3& center, Vec3& size,
+		ColorF& color, bool ignoreZ)
+	{
+		const Vec3 half = size * 0.5f;
+		appendBox(center - half, center + half, color, ignoreZ);
+	}
+	virtual void AuxRender3DCircle(const Vec3& center, const Vec3& normal,
+		float radius, uint32 side, ColorF& color, bool ignoreZ)
+	{
+		if (side < 3 || radius <= 0.0f)
+			return;
+		Vec3 axis = fabs(normal.z) < 0.9f ? normal.Cross(Vec3(0, 0, 1)) :
+			normal.Cross(Vec3(0, 1, 0));
+		axis.NormalizeSafe(Vec3(1, 0, 0));
+		Vec3 tangent = normal.Cross(axis);
+		tangent.NormalizeSafe(Vec3(0, 1, 0));
+		Vec3 previous = center + axis * radius;
+		for (uint32 index = 1; index <= side; ++index)
+		{
+			const float angle = gf_PI2 * index / static_cast<float>(side);
+			const Vec3 current = center +
+				(axis * cosf(angle) + tangent * sinf(angle)) * radius;
+			AuxRender3DLine(previous, current, color, ignoreZ);
+			previous = current;
+		}
+	}
+	virtual void AuxRenderAABB(const AABB& aabb, ColorF& color, bool ignoreZ)
+	{
+		appendBox(aabb.min, aabb.max, color, ignoreZ);
+	}
+	virtual void AuxRenderGizmo(const Matrix44& matrix, float size, uint8,
+		bool ignoreZ, uint8)
+	{
+		const Vec3 center(matrix.m30, matrix.m31, matrix.m32);
+		ColorF red(1, 0, 0, 1);
+		ColorF green(0, 1, 0, 1);
+		ColorF blue(0, 0.5f, 1, 1);
+		AuxRender3DLine(center,
+			center + Vec3(matrix.m00, matrix.m01, matrix.m02) * size, red, ignoreZ);
+		AuxRender3DLine(center,
+			center + Vec3(matrix.m10, matrix.m11, matrix.m12) * size, green, ignoreZ);
+		AuxRender3DLine(center,
+			center + Vec3(matrix.m20, matrix.m21, matrix.m22) * size, blue, ignoreZ);
+	}
 	virtual void AuxRenderSkeleton(const Vec3&, const Vec3&, ColorF&, float, bool) {}
 	virtual void AuxRender3DBoxSolid(const Vec3&, float, ColorF&, bool) {}
 	virtual void AuxRender3DBoxSolid(const Vec3&, Vec3&, ColorF&, bool) {}
@@ -170,11 +306,15 @@ public:
 	{
 		m_renderingQuads.swap(m_updatingQuads);
 		m_updatingQuads.clear();
+		m_renderingLines.swap(m_updatingLines);
+		m_updatingLines.clear();
 	}
 	virtual void _cleanBuffer()
 	{
 		m_updatingQuads.clear();
 		m_renderingQuads.clear();
+		m_updatingLines.clear();
+		m_renderingLines.clear();
 	}
 
 	void prepare(gkVkDeviceContext* context)
@@ -183,11 +323,56 @@ public:
 			context->prepareTexture(m_renderingQuads[i].texture);
 	}
 
-	void render(gkVkDeviceContext* context, uint32 width, uint32 height)
+	void render(gkVkDeviceContext* context, uint32 width, uint32 height,
+		const Matrix44& viewProjection, const Vec3& cameraPosition,
+		const Vec3& cameraDirection)
 	{
 		if (!width || !height)
 			return;
 		const Matrix44 identity(IDENTITY);
+		for (size_t lineIndex = 0; lineIndex < m_renderingLines.size(); ++lineIndex)
+		{
+			const WorldLine& line = m_renderingLines[lineIndex];
+			const Vec3 direction = line.to - line.from;
+			Vec3 normal = direction.Cross(cameraDirection);
+			if (normal.GetLengthSquared() < 0.000001f)
+				normal = direction.Cross(Vec3(0, 0, 1));
+			normal.NormalizeSafe(Vec3(1, 0, 0));
+			const float distance = ((line.from + line.to) * 0.5f -
+				cameraPosition).GetLength();
+			normal *= (std::max)(0.005f, (std::min)(0.25f, distance * 0.0015f));
+			gkVertexBuffer vertices(sizeof(GKVL_P3T2U4), 4,
+				eVI_P3T2U4, eBF_Discard);
+			vertices.m_needRebind = true;
+			const Vec3 positions[4] = {
+				line.from - normal, line.to - normal,
+				line.to + normal, line.from + normal
+			};
+			for (uint32 vertexIndex = 0; vertexIndex < 4; ++vertexIndex)
+			{
+				GKVL_P3T2U4* vertex = reinterpret_cast<GKVL_P3T2U4*>(
+					vertices.data + vertexIndex * vertices.elementSize);
+				vertex->position = positions[vertexIndex];
+				vertex->texcoord = Vec2(0, 0);
+				vertex->color = 0xffffffff;
+			}
+			gkIndexBuffer indices(6, true);
+			indices.m_needRebind = true;
+			indices.push_back(0); indices.push_back(1); indices.push_back(2);
+			indices.push_back(0); indices.push_back(2); indices.push_back(3);
+			gkRenderOperation operation;
+			operation.vertexData = &vertices;
+			operation.vertexCount = 4;
+			operation.vertexStart = 0;
+			operation.vertexSize = sizeof(GKVL_P3T2U4);
+			operation.useIndexes = true;
+			operation.indexData = &indices;
+			operation.indexCount = 6;
+			operation.indexStart = 0;
+			context->drawRenderOperation(operation, viewProjection, line.color, NULL,
+				Vec2(1, 1), line.color.a < 1.0f, false, Vec3(0, 0, 1),
+				true, false, line.ignoreZ);
+		}
 		for (size_t quadIndex = 0; quadIndex < m_renderingQuads.size(); ++quadIndex)
 		{
 			const ScreenQuad& quad = m_renderingQuads[quadIndex];
@@ -234,6 +419,33 @@ public:
 	}
 
 private:
+	void appendBox(const Vec3& minimum, const Vec3& maximum,
+		ColorF& color, bool ignoreZ)
+	{
+		const Vec3 corners[8] = {
+			Vec3(minimum.x, minimum.y, minimum.z),
+			Vec3(maximum.x, minimum.y, minimum.z),
+			Vec3(maximum.x, maximum.y, minimum.z),
+			Vec3(minimum.x, maximum.y, minimum.z),
+			Vec3(minimum.x, minimum.y, maximum.z),
+			Vec3(maximum.x, minimum.y, maximum.z),
+			Vec3(maximum.x, maximum.y, maximum.z),
+			Vec3(minimum.x, maximum.y, maximum.z)
+		};
+		appendBoxCorners(corners, color, ignoreZ);
+	}
+
+	void appendBoxCorners(const Vec3 (&corners)[8], ColorF& color, bool ignoreZ)
+	{
+		const uint8 edges[24] = {
+			0,1, 1,2, 2,3, 3,0, 4,5, 5,6, 6,7, 7,4,
+			0,4, 1,5, 2,6, 3,7
+		};
+		for (uint32 edge = 0; edge < 12; ++edge)
+			AuxRender3DLine(corners[edges[edge * 2]],
+				corners[edges[edge * 2 + 1]], color, ignoreZ);
+	}
+
 	void appendScreenBox(const Vec2& pos, const Vec2& wh,
 		const ColorB& color, ITexture* texture)
 	{
@@ -249,6 +461,8 @@ private:
 
 	std::vector<ScreenQuad> m_updatingQuads;
 	std::vector<ScreenQuad> m_renderingQuads;
+	std::vector<WorldLine> m_updatingLines;
+	std::vector<WorldLine> m_renderingLines;
 };
 
 gkRendererVulkan::gkRendererVulkan()
@@ -368,23 +582,47 @@ bool gkRendererVulkan::RT_StartRender()
 	mathMatrixPerspectiveFov(&projection, renderCamera->GetFov(),
 		renderCamera->GetProjRatio(), renderCamera->GetNearPlane(),
 		renderCamera->GetFarPlane());
+	const Matrix44 viewProjection = view * projection;
 
-	const std::vector<gkRenderable*>& renderables = m_renderingSequence->renderables();
+	std::vector<gkVkRenderSequence::Entry> entries = m_renderingSequence->entries();
+	std::stable_sort(entries.begin(), entries.end(),
+		[&cameraPosition](const gkVkRenderSequence::Entry& left,
+			const gkVkRenderSequence::Entry& right)
+		{
+			if (left.layer != right.layer)
+				return left.layer < right.layer;
+			if (left.layer < RENDER_LAYER_TRANSPARENT)
+				return false;
+			Matrix44 leftWorld(IDENTITY);
+			Matrix44 rightWorld(IDENTITY);
+			left.renderable->getWorldTransforms(&leftWorld);
+			right.renderable->getWorldTransforms(&rightWorld);
+			const Vec3 leftPosition(leftWorld.m30, leftWorld.m31, leftWorld.m32);
+			const Vec3 rightPosition(rightWorld.m30, rightWorld.m31, rightWorld.m32);
+			return (leftPosition - cameraPosition).GetLengthSquared() >
+				(rightPosition - cameraPosition).GetLengthSquared();
+		});
 	m_context->prepareTexture(NULL);
-	for (size_t i = 0; i < renderables.size(); ++i)
+	for (size_t i = 0; i < entries.size(); ++i)
 	{
-		gkVkMaterial* material = renderables[i] ?
-			dynamic_cast<gkVkMaterial*>(renderables[i]->getMaterial()) : NULL;
+		gkRenderable* renderable = entries[i].renderable;
+		gkVkMaterial* material = renderable ?
+			dynamic_cast<gkVkMaterial*>(renderable->getMaterial()) : NULL;
 		if (material)
-			m_context->prepareTexture(
-				material->getTexture(eMS_Diffuse).getPointer());
+		{
+			ITexture* textures[16] = {};
+			for (uint32 stage = 0; stage < eMS_Invalid; ++stage)
+				textures[stage] = material->getTexture(
+					static_cast<EMaterialSlot>(stage)).getPointer();
+			m_context->prepareTextures(textures, 16);
+		}
 	}
 	m_auxRenderer->prepare(m_context);
 	for (uint32 renderPass = 0; renderPass < 2; ++renderPass)
 	{
-		for (size_t i = 0; i < renderables.size(); ++i)
+		for (size_t i = 0; i < entries.size(); ++i)
 		{
-			gkRenderable* renderable = renderables[i];
+			gkRenderable* renderable = entries[i].renderable;
 			if (!renderable)
 				continue;
 			gkVkMaterial* material =
@@ -392,6 +630,7 @@ bool gkRendererVulkan::RT_StartRender()
 			const bool fontRenderable =
 				renderable->getMaterialName() == _T("FontMaterial");
 			const bool transparent = fontRenderable ||
+				entries[i].layer >= RENDER_LAYER_TRANSPARENT ||
 				(material && material->getOpacity() < 100);
 			if (transparent != (renderPass == 1))
 				continue;
@@ -423,13 +662,15 @@ bool gkRendererVulkan::RT_StartRender()
 			if (fontRenderable)
 				worldViewProjection.SetIdentity();
 			ColorF color(0.8f, 0.75f, 0.65f, 1.0f);
-			ITexture* diffuseTexture = NULL;
+			ITexture* materialTextures[16] = {};
 			Vec2 uvTiling(1.0f, 1.0f);
 			if (material)
 			{
 				color = material->diffuseColor();
 				color.a *= material->getOpacity() / 100.0f;
-				diffuseTexture = material->getTexture(eMS_Diffuse).getPointer();
+				for (uint32 stage = 0; stage < eMS_Invalid; ++stage)
+					materialTextures[stage] = material->getTexture(
+						static_cast<EMaterialSlot>(stage)).getPointer();
 				uvTiling = material->getUVTill();
 			}
 			if (fontRenderable)
@@ -442,8 +683,8 @@ bool gkRendererVulkan::RT_StartRender()
 				world.m20 * m_sunDirection.x + world.m21 * m_sunDirection.y +
 					world.m22 * m_sunDirection.z);
 			localSunDirection.NormalizeSafe(m_sunDirection);
-			m_context->drawRenderOperation(operation, worldViewProjection,
-				color, diffuseTexture, uvTiling, transparent,
+			m_context->drawRenderOperationTextures(operation, worldViewProjection,
+				color, materialTextures, 16, uvTiling, transparent,
 				material && (material->getShaderMarcoMask() & (1u << 7)) != 0,
 				localSunDirection, fontRenderable ||
 					(material && material->isDoubleSide()),
@@ -452,7 +693,8 @@ bool gkRendererVulkan::RT_StartRender()
 			delete cpuSkinnedVertexData;
 		}
 	}
-	m_auxRenderer->render(m_context, m_context->width(), m_context->height());
+	m_auxRenderer->render(m_context, m_context->width(), m_context->height(),
+		viewProjection, cameraPosition, cameraDirection);
 	return true;
 }
 

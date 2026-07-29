@@ -1,11 +1,40 @@
 # gkVulkanRenderer 设计方案与开发计划
 
-> 文档状态：可执行设计 / 等待实现
+> 文档状态：Windows P0-P2 compatibility-forward 已实现；P3+ 与 macOS 待实现
 > 编写日期：2026-07-28
 > 目标平台：Windows（原生 Vulkan）与 macOS（Vulkan + MoltenVK），第一优先级为 Apple Silicon macOS
 > 目标读者：后续接手实现的开发 Agent / 渲染开发者
 
 ## 1. 结论先行
+
+### 1.1 2026-07-29 Windows 实现状态
+
+Windows Vulkan 后端已推进至 P2 的 compatibility-forward 验收点：
+
+- Vulkan 1.2 device/swapchain、dynamic rendering、synchronization2、双帧同步、
+  resize/minimize/restore、Validation Layer 与磁盘 pipeline cache 已落地。
+- 静态/动态 mesh、DDS/TGA/RAW、材质与 sub-material、16 个兼容纹理槽、
+  alpha blend/test、depth/cull/double-side、render layer 与透明物体排序已接通。
+- `.gfx` 会解析 render layer、macro mask 和 technique 名；P2 所需的
+  `ksbase`、`kssimple`、`ks_skyhdr`、skinned、terrain、grass/vegetation
+  均有 Vulkan 映射。当前 forward fallback 中不改变结果的旧宏共享 pipeline，
+  `ALPHATEST` 使用独立 specialization pipeline。
+- 离线 shader target 使用 `compile_vulkan_shaders.py`，包含递归 include
+  依赖哈希、`spirv-val`、SPIRV-Cross reflection、descriptor/location 与
+  vertex-fragment stage 接口校验，并输出稳定 manifest。
+- skinned vertex layout 已支持 CPU bone-palette fallback（位置、tangent、
+  binormal），terrain/vegetation 动态 triangle-list mesh 可提交；缺失可选
+  terrain RAW 包时使用平坦高度和零植被密度的确定性降级。
+- font/HUD/screen quad、screen line、3D line/grid/AABB/circle/gizmo 已实现。
+- `gkVulkanSmoke` 的 resize/minimize/restore 与 indoor scene 均在 Validation
+  Layer 下无 Vulkan error；D3D9 target 同时完成构建回归。
+
+P2 场景验收有一个非 renderer 阻塞：当前 checkout 不含
+`objects/characters/prophet/prophet.chr`，且 `gkSystem` 的 animation module
+加载仍被禁用。因此 `TestCase_LoadCharacter` / `TestCase_CharacterAnimation`
+可稳定进入但没有可供 renderer 验证的角色内容。恢复该媒体包与 animation
+module 后，应补做最终动画视觉验收；renderer 的 skinning fallback 不依赖这项
+外部恢复继续编译和运行。
 
 推荐以一个全新的、与现有两个 renderer 并列的 `gkRendererVulkan` 模块扩展引擎：
 

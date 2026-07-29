@@ -131,6 +131,7 @@ private:
 	ShaderMacros m_macros;
 	uint32 m_systemMacro;
 	uint32 m_materialMacro;
+	uint32 m_defaultRenderLayer;
 	GKHANDLE m_technique;
 	std::set<std::string> m_internedNames;
 	std::map<std::string, std::vector<uint8> > m_parameterValues;

@@ -5,6 +5,7 @@ build-vulkan/
 build-ios/
 build-osx/
 node_modules/
+__pycache__/
 node_natives/build/
 INTERMEDIATE/
 package-lock.json

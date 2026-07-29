@@ -188,6 +188,41 @@ namespace
 		}
 		return true;
 	}
+
+	bool hasExtension(const gkStdString& name, const TCHAR* extension)
+	{
+		return name.size() >= _tcslen(extension) &&
+			!_tcsicmp(name.c_str() + name.size() - _tcslen(extension), extension);
+	}
+
+	bool decodeRawR8(const uint8* bytes, size_t size, uint32& width, uint32& height,
+		std::vector<uint8>& pixels)
+	{
+		if (!bytes || !size)
+			return false;
+		const uint32 side = static_cast<uint32>(sqrt(static_cast<double>(size)));
+		if (!side || static_cast<size_t>(side) * side != size)
+			return false;
+		width = side;
+		height = side;
+		pixels.assign(bytes, bytes + size);
+		return true;
+	}
+
+	EMaterialSlot textureSlotFromParameter(const TCHAR* name)
+	{
+		if (!name)
+			return eMS_Invalid;
+		if (!_tcsicmp(name, _T("texDiffuse")) || !_tcsicmp(name, _T("g_DiffuseMap")))
+			return eMS_Diffuse;
+		if (!_tcsicmp(name, _T("texNormal")) || !_tcsicmp(name, _T("g_NormalMap")))
+			return eMS_Normal;
+		if (!_tcsicmp(name, _T("texSpecular")) || !_tcsicmp(name, _T("g_SpecularMap")))
+			return eMS_Specular;
+		if (!_tcsicmp(name, _T("texDetail")) || !_tcsicmp(name, _T("g_DetailMap")))
+			return eMS_Detail;
+		return eMS_Invalid;
+	}
 }
 
 gkVkTexture::gkVkTexture(IResourceManager* creator, const gkStdString& name,
@@ -251,23 +286,37 @@ void gkVkTexture::resolveDimensions()
 bool gkVkTexture::loadImpl()
 {
 	resolveDimensions();
+	const bool rawTexture = hasExtension(m_wstrFileName, _T(".raw"));
 	if (m_params.empty() && gEnv && gEnv->pFileSystem)
 	{
 		IResFile* file = gEnv->pFileSystem->loadResFile(m_wstrFileName.c_str(), true);
 		if (file)
 		{
 			const uint8* bytes = static_cast<const uint8*>(file->DataPtr());
-			const bool decoded =
-				decodeTga(bytes, file->Size(), m_width, m_height, m_rawData) ||
-				decodeDds(bytes, file->Size(), m_width, m_height, m_rawData);
+			const bool decoded = rawTexture ?
+				decodeRawR8(bytes, file->Size(), m_width, m_height, m_rawData) :
+				(decodeTga(bytes, file->Size(), m_width, m_height, m_rawData) ||
+					decodeDds(bytes, file->Size(), m_width, m_height, m_rawData));
 			gEnv->pFileSystem->closeResFile(file);
 			if (decoded)
 			{
-				m_format = eTF_RGBA8;
+				m_format = rawTexture ? eTF_R8 : eTF_RGBA8;
 				m_nSize = static_cast<uint32>(m_rawData.size());
 				return true;
 			}
 		}
+	}
+	// Legacy terrain test packs are optional. A missing RAW map must be a flat,
+	// empty field; treating it as the generic white texture puts the terrain
+	// 80 metres above the testcase camera and creates maximum vegetation.
+	if (rawTexture)
+	{
+		m_width = 512;
+		m_height = 512;
+		m_format = eTF_R8;
+		m_rawData.assign(static_cast<size_t>(m_width) * m_height, 0);
+		m_nSize = static_cast<uint32>(m_rawData.size());
+		return true;
 	}
 	const uint32 bytesPerPixel = (m_format == eTF_A8 || m_format == eTF_R8) ? 1 : 4;
 	m_rawData.assign(static_cast<size_t>(m_width) * m_height * bytesPerPixel, 0xff);
@@ -294,7 +343,8 @@ float gkVkTexture::Tex2DRAW(const Vec2& texcoord, int)
 		return 0.0f;
 	const uint32 x = (std::min)(m_width - 1, static_cast<uint32>(fabs(texcoord.x) * m_width));
 	const uint32 y = (std::min)(m_height - 1, static_cast<uint32>(fabs(texcoord.y) * m_height));
-	return m_rawData[static_cast<size_t>(y) * m_width + x] / 255.0f;
+	const uint32 bytesPerPixel = (m_format == eTF_A8 || m_format == eTF_R8) ? 1 : 4;
+	return m_rawData[(static_cast<size_t>(y) * m_width + x) * bytesPerPixel] / 255.0f;
 }
 
 uint8* gkVkTexture::RawData()
@@ -478,6 +528,7 @@ gkVkShader::gkVkShader(IResourceManager* creator, const gkStdString& name,
 	: IShader(creator, name, handle, group)
 	, m_systemMacro(0)
 	, m_materialMacro(0)
+	, m_defaultRenderLayer(static_cast<uint32>(-1))
 	, m_technique("General")
 {
 }
@@ -498,8 +549,24 @@ bool gkVkShader::loadImpl()
 	IRapidXmlParser parser;
 	parser.initializeReading(metadataPath.c_str());
 	CRapidXmlParseNode* root = parser.getRootXmlNode();
+	if (!root)
+	{
+		parser.finishReading();
+		gkLogError(_T("Vulkan shader metadata/variant missing: %s"),
+			m_wstrFileName.c_str());
+		return false;
+	}
 	if (root)
 	{
+		CRapidXmlParseNode* renderLayer = root->getChildNode(_T("RenderLayer"));
+		if (renderLayer)
+		{
+			const TCHAR* layer = renderLayer->GetAttribute(_T("layer"));
+			if (layer && !_tcsicmp(layer, _T("WATER")))
+				m_defaultRenderLayer = RENDER_LAYER_WATER;
+			else if (layer && !_tcsicmp(layer, _T("RENDER_LAYER_SKIES_EARLY")))
+				m_defaultRenderLayer = RENDER_LAYER_SKIES_EARLY;
+		}
 		CRapidXmlParseNode* macros = root->getChildNode(_T("Marco"));
 		if (macros)
 		{
@@ -538,7 +605,7 @@ bool gkVkShader::unloadImpl()
 	m_technique = NULL;
 	return true;
 }
-uint32 gkVkShader::getDefaultRenderLayer() { return 0; }
+uint32 gkVkShader::getDefaultRenderLayer() { return m_defaultRenderLayer; }
 void gkVkShader::onReset() {}
 void gkVkShader::onLost() {}
 void gkVkShader::FX_SetTechniqueByName(LPCSTR name)
@@ -609,7 +676,7 @@ gkVkMaterial::gkVkMaterial(IResourceManager* creator, const gkStdString& name,
 	, m_doubleSided(false)
 	, m_ssrl(false)
 	, m_castShadow(true)
-	, m_shaderName(_T("vk_unlit"))
+	, m_shaderName(_T("kssimple"))
 	, m_macroMask(0)
 	, m_diffuseColor(0.8f, 0.8f, 0.8f, 1.0f)
 {
@@ -626,7 +693,7 @@ gkVkMaterial::~gkVkMaterial()
 bool gkVkMaterial::loadImpl()
 {
 	if (gEnv && gEnv->pSystem && gEnv->pSystem->getShaderMngPtr())
-		m_shader = gEnv->pSystem->getShaderMngPtr()->load(_T("vk_unlit"), _T("vulkan"));
+		m_shader = gEnv->pSystem->getShaderMngPtr()->load(_T("kssimple"), _T("vulkan"));
 
 	gkStdString filename = m_wstrFileName;
 	if (filename.size() < 4 || _tcsicmp(filename.c_str() + filename.size() - 4, _T(".mtl")))
@@ -674,6 +741,16 @@ bool gkVkMaterial::loadMaterialNode(CRapidXmlParseNode* node)
 		int mask = 0;
 		effect->GetAttribute(_T("Mask"), mask);
 		m_macroMask = static_cast<uint32>(mask);
+		const bool vegetationShader =
+			!_tcsicmp(m_shaderName.c_str(), _T("grass")) ||
+			!_tcsicmp(m_shaderName.c_str(), _T("vegetation")) ||
+			!_tcsicmp(m_shaderName.c_str(), _T("vegetation_autoexpand"));
+		if (vegetationShader || !_tcsicmp(m_shaderName.c_str(), _T("ks_skyhdr")))
+			m_doubleSided = true;
+		if (vegetationShader)
+		{
+			m_macroMask |= 128u;
+		}
 		if (gEnv && gEnv->pSystem && gEnv->pSystem->getShaderMngPtr())
 		{
 			gkStdStringstream variantName;
@@ -705,6 +782,14 @@ bool gkVkMaterial::loadMaterialNode(CRapidXmlParseNode* node)
 				gkStdStringstream values(value);
 				values >> opacity;
 				m_opacity = static_cast<int>(opacity * 100.0f);
+			}
+			const EMaterialSlot textureSlot = textureSlotFromParameter(name);
+			if (textureSlot != eMS_Invalid && gEnv && gEnv->pSystem &&
+				gEnv->pSystem->getTextureMngPtr())
+			{
+				m_textures[textureSlot] =
+					gEnv->pSystem->getTextureMngPtr()->loadSync(
+						value, _T("vulkan-material"));
 			}
 		}
 	}

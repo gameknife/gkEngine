@@ -9,6 +9,7 @@
 #include <cstdio>
 #include <cstring>
 #include <limits>
+#include <map>
 #include <set>
 #include <unordered_map>
 #include <vector>
@@ -16,6 +17,7 @@
 namespace
 {
 	const uint32 kFramesInFlight = 2;
+	const uint32 kTextureStageCount = 16;
 	const TCHAR* kWindowClassName = _T("gkVulkanWindowClass");
 
 	bool hasName(const std::vector<VkExtensionProperties>& properties, const char* name)
@@ -64,14 +66,13 @@ struct gkVkDeviceContext::Impl
 		VkImage image;
 		VkDeviceMemory memory;
 		VkImageView view;
-		VkDescriptorSet descriptorSet;
 		uint32 width;
 		uint32 height;
 		uint64 revision;
 
 		GpuTexture()
 			: image(VK_NULL_HANDLE), memory(VK_NULL_HANDLE), view(VK_NULL_HANDLE)
-			, descriptorSet(VK_NULL_HANDLE), width(0), height(0), revision(0) {}
+			, width(0), height(0), revision(0) {}
 	};
 
 	struct GpuBuffer
@@ -152,6 +153,7 @@ struct gkVkDeviceContext::Impl
 	VkDescriptorPool sceneDescriptorPool;
 	VkSampler sceneSampler;
 	std::unordered_map<const ITexture*, GpuTexture> gpuTextures;
+	std::map<std::vector<const ITexture*>, VkDescriptorSet> textureDescriptorSets;
 	std::unordered_map<const gkVertexBuffer*, GpuBuffer> gpuVertexBuffers;
 	std::unordered_map<const gkIndexBuffer*, GpuBuffer> gpuIndexBuffers;
 	std::vector<VkImage> images;
@@ -1010,21 +1012,25 @@ struct gkVkDeviceContext::Impl
 	{
 		if (sceneDescriptorSetLayout)
 			return true;
-		VkDescriptorSetLayoutBinding textureBinding = {};
-		textureBinding.binding = 0;
-		textureBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-		textureBinding.descriptorCount = 1;
-		textureBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+		VkDescriptorSetLayoutBinding textureBindings[kTextureStageCount] = {};
+		for (uint32 stage = 0; stage < kTextureStageCount; ++stage)
+		{
+			textureBindings[stage].binding = stage;
+			textureBindings[stage].descriptorType =
+				VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+			textureBindings[stage].descriptorCount = 1;
+			textureBindings[stage].stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+		}
 		VkDescriptorSetLayoutCreateInfo layoutInfo = {};
 		layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		layoutInfo.bindingCount = 1;
-		layoutInfo.pBindings = &textureBinding;
+		layoutInfo.bindingCount = kTextureStageCount;
+		layoutInfo.pBindings = textureBindings;
 		if (vkCreateDescriptorSetLayout(device, &layoutInfo, NULL,
 			&sceneDescriptorSetLayout) != VK_SUCCESS)
 			return false;
 		VkDescriptorPoolSize poolSize = {};
 		poolSize.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-		poolSize.descriptorCount = 4096;
+		poolSize.descriptorCount = 4096 * kTextureStageCount;
 		VkDescriptorPoolCreateInfo poolInfo = {};
 		poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
 		poolInfo.maxSets = 4096;
@@ -1369,6 +1375,7 @@ struct gkVkDeviceContext::Impl
 				vkFreeMemory(device, it->second.memory, NULL);
 		}
 		gpuTextures.clear();
+		textureDescriptorSets.clear();
 		if (sceneSampler)
 			vkDestroySampler(device, sceneSampler, NULL);
 		sceneSampler = VK_NULL_HANDLE;
@@ -1707,32 +1714,55 @@ struct gkVkDeviceContext::Impl
 			return NULL;
 		}
 
-		VkDescriptorSetAllocateInfo descriptorAllocation = {};
-		descriptorAllocation.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-		descriptorAllocation.descriptorPool = sceneDescriptorPool;
-		descriptorAllocation.descriptorSetCount = 1;
-		descriptorAllocation.pSetLayouts = &sceneDescriptorSetLayout;
-		if (vkAllocateDescriptorSets(device, &descriptorAllocation,
-			&gpuTexture.descriptorSet) != VK_SUCCESS)
-		{
-			destroyGpuTexture(gpuTexture);
-			return NULL;
-		}
-		VkDescriptorImageInfo descriptorImage = {};
-		descriptorImage.sampler = sceneSampler;
-		descriptorImage.imageView = gpuTexture.view;
-		descriptorImage.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-		VkWriteDescriptorSet write = {};
-		write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		write.dstSet = gpuTexture.descriptorSet;
-		write.dstBinding = 0;
-		write.descriptorCount = 1;
-		write.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-		write.pImageInfo = &descriptorImage;
-		vkUpdateDescriptorSets(device, 1, &write, 0, NULL);
 		std::pair<std::unordered_map<const ITexture*, GpuTexture>::iterator, bool> inserted =
 			gpuTextures.insert(std::make_pair(texture, gpuTexture));
 		return &inserted.first->second;
+	}
+
+	VkDescriptorSet getOrCreateTextureSet(ITexture* const* textures, uint32 textureCount)
+	{
+		if (renderingActive)
+			return VK_NULL_HANDLE;
+		std::vector<const ITexture*> key(kTextureStageCount, NULL);
+		std::vector<GpuTexture*> gpu(kTextureStageCount, NULL);
+		for (uint32 stage = 0; stage < kTextureStageCount; ++stage)
+		{
+			ITexture* texture = textures && stage < textureCount ?
+				textures[stage] : NULL;
+			key[stage] = texture;
+			gpu[stage] = getOrCreateTexture(texture);
+			if (!gpu[stage])
+				return VK_NULL_HANDLE;
+		}
+		std::map<std::vector<const ITexture*>, VkDescriptorSet>::iterator existing =
+			textureDescriptorSets.find(key);
+		if (existing != textureDescriptorSets.end())
+			return existing->second;
+		VkDescriptorSet descriptorSet = VK_NULL_HANDLE;
+		VkDescriptorSetAllocateInfo allocation = {};
+		allocation.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+		allocation.descriptorPool = sceneDescriptorPool;
+		allocation.descriptorSetCount = 1;
+		allocation.pSetLayouts = &sceneDescriptorSetLayout;
+		if (vkAllocateDescriptorSets(device, &allocation, &descriptorSet) != VK_SUCCESS)
+			return VK_NULL_HANDLE;
+		VkDescriptorImageInfo images[kTextureStageCount] = {};
+		VkWriteDescriptorSet writes[kTextureStageCount] = {};
+		for (uint32 stage = 0; stage < kTextureStageCount; ++stage)
+		{
+			images[stage].sampler = sceneSampler;
+			images[stage].imageView = gpu[stage]->view;
+			images[stage].imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+			writes[stage].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+			writes[stage].dstSet = descriptorSet;
+			writes[stage].dstBinding = stage;
+			writes[stage].descriptorCount = 1;
+			writes[stage].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+			writes[stage].pImageInfo = &images[stage];
+		}
+		vkUpdateDescriptorSets(device, kTextureStageCount, writes, 0, NULL);
+		textureDescriptorSets.insert(std::make_pair(key, descriptorSet));
+		return descriptorSet;
 	}
 
 	void destroySwapchain()
@@ -2014,12 +2044,21 @@ struct gkVkDeviceContext::Impl
 	{
 		if (!frameActive || renderingActive)
 			return false;
-		return getOrCreateTexture(texture) != NULL;
+		ITexture* textures[1] = { texture };
+		return getOrCreateTextureSet(textures, 1) != VK_NULL_HANDLE;
+	}
+
+	bool prepareTextures(ITexture* const* textures, uint32 textureCount)
+	{
+		if (!frameActive || renderingActive)
+			return false;
+		return getOrCreateTextureSet(textures, textureCount) != VK_NULL_HANDLE;
 	}
 
 	bool drawRenderOperation(const gkRenderOperation& operation,
 		const Matrix44& worldViewProjection, const ColorF& color,
-		ITexture* texture, const Vec2& uvTiling, bool transparent, bool alphaTest,
+		ITexture* const* textures, uint32 textureCount, const Vec2& uvTiling,
+		bool transparent, bool alphaTest,
 		const Vec3& lightDirection, bool doubleSided, bool alphaOnlyTexture,
 		bool overlay)
 	{
@@ -2039,8 +2078,12 @@ struct gkVkDeviceContext::Impl
 			vertexBuffer = getVertexBuffer(operation.vertexData);
 		if (!vertexBuffer)
 			return false;
-		GpuTexture* gpuTexture = getOrCreateTexture(texture);
-		if (!gpuTexture || !beginSceneRendering())
+		std::vector<const ITexture*> key(kTextureStageCount, NULL);
+		for (uint32 stage = 0; stage < kTextureStageCount; ++stage)
+			key[stage] = textures && stage < textureCount ? textures[stage] : NULL;
+		std::map<std::vector<const ITexture*>, VkDescriptorSet>::iterator descriptor =
+			textureDescriptorSets.find(key);
+		if (descriptor == textureDescriptorSets.end() || !beginSceneRendering())
 			return false;
 		FrameContext& frame = frames[frameIndex];
 		VkDeviceSize vertexOffset =
@@ -2050,7 +2093,7 @@ struct gkVkDeviceContext::Impl
 				(overlay ? 4 : (transparent ? 1 : (alphaTest ? 2 : 0)))]
 				[doubleSided ? 1 : 0]);
 		vkCmdBindDescriptorSets(frame.commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,
-			scenePipelineLayout, 0, 1, &gpuTexture->descriptorSet, 0, NULL);
+			scenePipelineLayout, 0, 1, &descriptor->second, 0, NULL);
 		vkCmdBindVertexBuffers(frame.commandBuffer, 0, 1, &vertexBuffer, &vertexOffset);
 		struct DrawConstants
 		{
@@ -2274,15 +2317,33 @@ bool gkVkDeviceContext::prepareTexture(ITexture* texture)
 	return m_impl->prepareTexture(texture);
 }
 
+bool gkVkDeviceContext::prepareTextures(ITexture* const* textures, uint32 textureCount)
+{
+	return m_impl->prepareTextures(textures, textureCount);
+}
+
 bool gkVkDeviceContext::drawRenderOperation(const gkRenderOperation& operation,
 	const Matrix44& worldViewProjection, const ColorF& color,
 	ITexture* texture, const Vec2& uvTiling, bool transparent, bool alphaTest,
 	const Vec3& lightDirection, bool doubleSided, bool alphaOnlyTexture,
 	bool overlay)
 {
+	ITexture* textures[1] = { texture };
 	return m_impl->drawRenderOperation(operation, worldViewProjection, color,
-		texture, uvTiling, transparent, alphaTest, lightDirection, doubleSided,
+		textures, 1, uvTiling, transparent, alphaTest, lightDirection, doubleSided,
 		alphaOnlyTexture, overlay);
+}
+
+bool gkVkDeviceContext::drawRenderOperationTextures(
+	const gkRenderOperation& operation, const Matrix44& worldViewProjection,
+	const ColorF& color, ITexture* const* textures, uint32 textureCount,
+	const Vec2& uvTiling, bool transparent, bool alphaTest,
+	const Vec3& lightDirection, bool doubleSided, bool alphaOnlyTexture,
+	bool overlay)
+{
+	return m_impl->drawRenderOperation(operation, worldViewProjection, color,
+		textures, textureCount, uvTiling, transparent, alphaTest, lightDirection,
+		doubleSided, alphaOnlyTexture, overlay);
 }
 
 void gkVkDeviceContext::resize(uint32 width, uint32 height)

@@ -406,47 +406,54 @@ if (WIN32)
         find_program(GK_SPIRV_VAL_EXECUTABLE spirv-val
             HINTS "$ENV{VULKAN_SDK}/Bin"
         )
+        find_program(GK_SPIRV_CROSS_EXECUTABLE spirv-cross
+            HINTS "$ENV{VULKAN_SDK}/Bin"
+        )
+        find_package(Python3 COMPONENTS Interpreter REQUIRED)
         if (GK_SPIRV_VAL_EXECUTABLE)
-            set(GK_SPIRV_VALIDATION_COMMANDS
-                COMMAND "${GK_SPIRV_VAL_EXECUTABLE}" --target-env vulkan1.2 "${GK_VULKAN_ACCEPTANCE_VERT}"
-                COMMAND "${GK_SPIRV_VAL_EXECUTABLE}" --target-env vulkan1.2 "${GK_VULKAN_ACCEPTANCE_FRAG}"
-                COMMAND "${GK_SPIRV_VAL_EXECUTABLE}" --target-env vulkan1.2 "${GK_VULKAN_BASIC_VERT}"
-                COMMAND "${GK_SPIRV_VAL_EXECUTABLE}" --target-env vulkan1.2 "${GK_VULKAN_BASIC_FRAG}"
-                COMMAND "${GK_SPIRV_VAL_EXECUTABLE}" --target-env vulkan1.2 "${GK_VULKAN_LIT_VERT}"
-                COMMAND "${GK_SPIRV_VAL_EXECUTABLE}" --target-env vulkan1.2 "${GK_VULKAN_LIT_FRAG}"
-            )
+            set(GK_SPIRV_VAL_ARGUMENT --spirv-val "${GK_SPIRV_VAL_EXECUTABLE}")
+        endif()
+        if (GK_SPIRV_CROSS_EXECUTABLE)
+            set(GK_SPIRV_CROSS_ARGUMENT --spirv-cross "${GK_SPIRV_CROSS_EXECUTABLE}")
         endif()
         add_custom_command(
             OUTPUT "${GK_VULKAN_ACCEPTANCE_VERT}" "${GK_VULKAN_ACCEPTANCE_FRAG}"
                 "${GK_VULKAN_BASIC_VERT}" "${GK_VULKAN_BASIC_FRAG}"
                 "${GK_VULKAN_LIT_VERT}" "${GK_VULKAN_LIT_FRAG}"
             COMMAND ${CMAKE_COMMAND} -E make_directory "${GK_VULKAN_SHADER_OUTPUT_DIR}"
-            COMMAND "${Vulkan_GLSLC_EXECUTABLE}" --target-env=vulkan1.2
-                -o "${GK_VULKAN_ACCEPTANCE_VERT}"
-                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/debug/acceptance.vert"
-            COMMAND "${Vulkan_GLSLC_EXECUTABLE}" --target-env=vulkan1.2
-                -o "${GK_VULKAN_ACCEPTANCE_FRAG}"
-                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/debug/acceptance.frag"
-            COMMAND "${Vulkan_GLSLC_EXECUTABLE}" --target-env=vulkan1.2
-                -o "${GK_VULKAN_BASIC_VERT}"
-                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/basic.vert"
-            COMMAND "${Vulkan_GLSLC_EXECUTABLE}" --target-env=vulkan1.2
-                -o "${GK_VULKAN_BASIC_FRAG}"
-                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/basic.frag"
-            COMMAND "${Vulkan_GLSLC_EXECUTABLE}" --target-env=vulkan1.2
-                -o "${GK_VULKAN_LIT_VERT}"
-                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/lit.vert"
-            COMMAND "${Vulkan_GLSLC_EXECUTABLE}" --target-env=vulkan1.2
-                -o "${GK_VULKAN_LIT_FRAG}"
-                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/lit.frag"
-            ${GK_SPIRV_VALIDATION_COMMANDS}
+            COMMAND "${Python3_EXECUTABLE}"
+                "${PROJECT_SOURCE_DIR}/exec/tools/compile_vulkan_shaders.py"
+                --source "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source"
+                --output "${GK_VULKAN_SHADER_OUTPUT_DIR}"
+                --glslc "${Vulkan_GLSLC_EXECUTABLE}"
+                --target-env vulkan1.2
+                --gfx-root "${PROJECT_SOURCE_DIR}/exec/engine/shaders/template"
+                --required-gfx ksbase
+                --required-gfx kssimple
+                --required-gfx ks_skyhdr
+                --required-gfx ksbaseskinned
+                --required-gfx terrian
+                --required-gfx vegetation
+                --required-gfx vegetation_autoexpand
+                --required-gfx grass
+                ${GK_SPIRV_VAL_ARGUMENT}
+                ${GK_SPIRV_CROSS_ARGUMENT}
             DEPENDS
+                "${PROJECT_SOURCE_DIR}/exec/tools/compile_vulkan_shaders.py"
                 "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/debug/acceptance.vert"
                 "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/debug/acceptance.frag"
                 "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/basic.vert"
                 "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/basic.frag"
                 "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/lit.vert"
                 "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/lit.frag"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/template/built_in/ksbase.gfx"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/template/built_in/kssimple.gfx"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/template/built_in/ks_skyhdr.gfx"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/template/built_in/ksbaseskinned.gfx"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/template/built_in/terrian.gfx"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/template/built_in/vegetation.gfx"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/template/built_in/vegetation_autoexpand.gfx"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/template/built_in/grass.gfx"
             VERBATIM
         )
         add_custom_target(gkVulkanShaders
