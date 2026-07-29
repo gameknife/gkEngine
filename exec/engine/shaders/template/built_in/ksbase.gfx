@@ -9,6 +9,11 @@
 	<Effect Filename="engine/shaders/d3d9/hwcode/ksbase.fx" />
 </D3D9Shader>
 
+<VulkanShader Name="ksBase">
+	<VSShader FileName="engine/shaders/vulkan/source/scene/lit.vert" />
+	<PSShader FileName="engine/shaders/vulkan/source/scene/lit.frag" />
+</VulkanShader>
+
 <Marco>
   <Attribute name="SSRL" desc="SSRefl" mask="1" value="" />
   <Attribute name="ENVMAP" desc="EnviormentMap" mask="2" value=""  />

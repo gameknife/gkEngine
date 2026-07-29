@@ -99,6 +99,7 @@ enum ERendererAPI
 	ERdAPI_D3D11,
 	ERdAPI_OPENGL,
 	ERdAPI_OPENGLES,
+	ERdAPI_VULKAN,
 };
 
 	/**

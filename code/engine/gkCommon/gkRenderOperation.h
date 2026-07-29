@@ -50,6 +50,8 @@ struct gkVertexBuffer;
 struct gkIndexBuffer;
 #if defined( RENDERER_D3D9 )
 typedef IDirect3DVertexDeclaration9* gkVertexDecl;
+#elif defined( RENDERER_VULKAN )
+typedef uint8 gkVertexDecl;
 #elif RENDERER_GLES
 typedef uint8 gkVertexDecl;
 #else

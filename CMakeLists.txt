@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 project (gkENGINE)
+include(CTest)
+
+set(GK_RENDERER_BACKEND "AUTO" CACHE STRING "Renderer backend: AUTO;D3D9;GL330;GLES2;VULKAN")
+set_property(CACHE GK_RENDERER_BACKEND PROPERTY STRINGS AUTO D3D9 GL330 GLES2 VULKAN)
+option(GK_VULKAN_VALIDATION "Enable Vulkan validation layers in development builds" ON)
+option(GK_VULKAN_BUNDLED_MOLTENVK "Use a bundled MoltenVK runtime on Apple" OFF)
 
 if (APPLE)
     message(STATUS "This is build for ios, use static lib")
@@ -69,9 +75,52 @@ target_link_libraries(gkFont
     ${PROJECT_SOURCE_DIR}/code/ThirdParty/freetype/lib/ios/Release-OSX/libfreetype2.a
 )
 else()
-target_link_libraries(gkFont 
-    ${PROJECT_SOURCE_DIR}/code/ThirdParty/freetype/lib/freetype_x64release.lib
+set(GK_FREETYPE_ROOT ${PROJECT_SOURCE_DIR}/code/ThirdParty/freetype)
+add_library(gkFreetype STATIC
+    ${GK_FREETYPE_ROOT}/src/autofit/autofit.c
+    ${GK_FREETYPE_ROOT}/src/bdf/bdf.c
+    ${GK_FREETYPE_ROOT}/src/cff/cff.c
+    ${GK_FREETYPE_ROOT}/src/base/ftbase.c
+    ${GK_FREETYPE_ROOT}/src/base/ftbitmap.c
+    ${GK_FREETYPE_ROOT}/src/cache/ftcache.c
+    ${GK_FREETYPE_ROOT}/builds/win32/ftdebug.c
+    ${GK_FREETYPE_ROOT}/src/base/ftfstype.c
+    ${GK_FREETYPE_ROOT}/src/base/ftgasp.c
+    ${GK_FREETYPE_ROOT}/src/base/ftglyph.c
+    ${GK_FREETYPE_ROOT}/src/gzip/ftgzip.c
+    ${GK_FREETYPE_ROOT}/src/base/ftinit.c
+    ${GK_FREETYPE_ROOT}/src/lzw/ftlzw.c
+    ${GK_FREETYPE_ROOT}/src/base/ftstroke.c
+    ${GK_FREETYPE_ROOT}/src/base/ftsystem.c
+    ${GK_FREETYPE_ROOT}/src/smooth/smooth.c
+    ${GK_FREETYPE_ROOT}/src/base/ftbbox.c
+    ${GK_FREETYPE_ROOT}/src/base/ftgxval.c
+    ${GK_FREETYPE_ROOT}/src/base/ftlcdfil.c
+    ${GK_FREETYPE_ROOT}/src/base/ftmm.c
+    ${GK_FREETYPE_ROOT}/src/base/ftotval.c
+    ${GK_FREETYPE_ROOT}/src/base/ftpatent.c
+    ${GK_FREETYPE_ROOT}/src/base/ftpfr.c
+    ${GK_FREETYPE_ROOT}/src/base/ftsynth.c
+    ${GK_FREETYPE_ROOT}/src/base/fttype1.c
+    ${GK_FREETYPE_ROOT}/src/base/ftwinfnt.c
+    ${GK_FREETYPE_ROOT}/src/base/ftxf86.c
+    ${GK_FREETYPE_ROOT}/src/pcf/pcf.c
+    ${GK_FREETYPE_ROOT}/src/pfr/pfr.c
+    ${GK_FREETYPE_ROOT}/src/psaux/psaux.c
+    ${GK_FREETYPE_ROOT}/src/pshinter/pshinter.c
+    ${GK_FREETYPE_ROOT}/src/psnames/psmodule.c
+    ${GK_FREETYPE_ROOT}/src/raster/raster.c
+    ${GK_FREETYPE_ROOT}/src/sfnt/sfnt.c
+    ${GK_FREETYPE_ROOT}/src/truetype/truetype.c
+    ${GK_FREETYPE_ROOT}/src/type1/type1.c
+    ${GK_FREETYPE_ROOT}/src/cid/type1cid.c
+    ${GK_FREETYPE_ROOT}/src/type42/type42.c
+    ${GK_FREETYPE_ROOT}/src/winfonts/winfnt.c
 )
+target_include_directories(gkFreetype PUBLIC ${GK_FREETYPE_ROOT}/include)
+target_compile_definitions(gkFreetype PRIVATE
+    FT2_BUILD_LIBRARY _CRT_SECURE_NO_WARNINGS)
+target_link_libraries(gkFont gkFreetype)
 endif()
 set (EXTRA_LIBS ${EXTRA_LIBS} gkFont)
 
@@ -338,6 +387,166 @@ if (WIN32)
     )
 endif()
 
+set(GK_WINDOWS_RENDERER_TARGETS gkRendererD3D9)
+if (WIN32)
+    if (GK_RENDERER_BACKEND STREQUAL "VULKAN")
+        find_package(Vulkan REQUIRED)
+    else()
+        find_package(Vulkan QUIET)
+    endif()
+
+    if (Vulkan_FOUND)
+        set(GK_VULKAN_SHADER_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/vulkan-shaders")
+        set(GK_VULKAN_ACCEPTANCE_VERT "${GK_VULKAN_SHADER_OUTPUT_DIR}/gk_vk_acceptance.vert.spv")
+        set(GK_VULKAN_ACCEPTANCE_FRAG "${GK_VULKAN_SHADER_OUTPUT_DIR}/gk_vk_acceptance.frag.spv")
+        set(GK_VULKAN_BASIC_VERT "${GK_VULKAN_SHADER_OUTPUT_DIR}/gk_vk_basic.vert.spv")
+        set(GK_VULKAN_BASIC_FRAG "${GK_VULKAN_SHADER_OUTPUT_DIR}/gk_vk_basic.frag.spv")
+        set(GK_VULKAN_LIT_VERT "${GK_VULKAN_SHADER_OUTPUT_DIR}/gk_vk_lit.vert.spv")
+        set(GK_VULKAN_LIT_FRAG "${GK_VULKAN_SHADER_OUTPUT_DIR}/gk_vk_lit.frag.spv")
+        find_program(GK_SPIRV_VAL_EXECUTABLE spirv-val
+            HINTS "$ENV{VULKAN_SDK}/Bin"
+        )
+        if (GK_SPIRV_VAL_EXECUTABLE)
+            set(GK_SPIRV_VALIDATION_COMMANDS
+                COMMAND "${GK_SPIRV_VAL_EXECUTABLE}" --target-env vulkan1.2 "${GK_VULKAN_ACCEPTANCE_VERT}"
+                COMMAND "${GK_SPIRV_VAL_EXECUTABLE}" --target-env vulkan1.2 "${GK_VULKAN_ACCEPTANCE_FRAG}"
+                COMMAND "${GK_SPIRV_VAL_EXECUTABLE}" --target-env vulkan1.2 "${GK_VULKAN_BASIC_VERT}"
+                COMMAND "${GK_SPIRV_VAL_EXECUTABLE}" --target-env vulkan1.2 "${GK_VULKAN_BASIC_FRAG}"
+                COMMAND "${GK_SPIRV_VAL_EXECUTABLE}" --target-env vulkan1.2 "${GK_VULKAN_LIT_VERT}"
+                COMMAND "${GK_SPIRV_VAL_EXECUTABLE}" --target-env vulkan1.2 "${GK_VULKAN_LIT_FRAG}"
+            )
+        endif()
+        add_custom_command(
+            OUTPUT "${GK_VULKAN_ACCEPTANCE_VERT}" "${GK_VULKAN_ACCEPTANCE_FRAG}"
+                "${GK_VULKAN_BASIC_VERT}" "${GK_VULKAN_BASIC_FRAG}"
+                "${GK_VULKAN_LIT_VERT}" "${GK_VULKAN_LIT_FRAG}"
+            COMMAND ${CMAKE_COMMAND} -E make_directory "${GK_VULKAN_SHADER_OUTPUT_DIR}"
+            COMMAND "${Vulkan_GLSLC_EXECUTABLE}" --target-env=vulkan1.2
+                -o "${GK_VULKAN_ACCEPTANCE_VERT}"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/debug/acceptance.vert"
+            COMMAND "${Vulkan_GLSLC_EXECUTABLE}" --target-env=vulkan1.2
+                -o "${GK_VULKAN_ACCEPTANCE_FRAG}"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/debug/acceptance.frag"
+            COMMAND "${Vulkan_GLSLC_EXECUTABLE}" --target-env=vulkan1.2
+                -o "${GK_VULKAN_BASIC_VERT}"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/basic.vert"
+            COMMAND "${Vulkan_GLSLC_EXECUTABLE}" --target-env=vulkan1.2
+                -o "${GK_VULKAN_BASIC_FRAG}"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/basic.frag"
+            COMMAND "${Vulkan_GLSLC_EXECUTABLE}" --target-env=vulkan1.2
+                -o "${GK_VULKAN_LIT_VERT}"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/lit.vert"
+            COMMAND "${Vulkan_GLSLC_EXECUTABLE}" --target-env=vulkan1.2
+                -o "${GK_VULKAN_LIT_FRAG}"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/lit.frag"
+            ${GK_SPIRV_VALIDATION_COMMANDS}
+            DEPENDS
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/debug/acceptance.vert"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/debug/acceptance.frag"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/basic.vert"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/basic.frag"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/lit.vert"
+                "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/lit.frag"
+            VERBATIM
+        )
+        add_custom_target(gkVulkanShaders
+            DEPENDS "${GK_VULKAN_ACCEPTANCE_VERT}" "${GK_VULKAN_ACCEPTANCE_FRAG}"
+                "${GK_VULKAN_BASIC_VERT}" "${GK_VULKAN_BASIC_FRAG}"
+                "${GK_VULKAN_LIT_VERT}" "${GK_VULKAN_LIT_FRAG}"
+        )
+        add_custom_target(gkVulkanRuntimeShaders
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${GK_VULKAN_ACCEPTANCE_VERT}" "${PROJECT_SOURCE_DIR}/exec/bin64/gk_vk_acceptance.vert.spv"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${GK_VULKAN_ACCEPTANCE_FRAG}" "${PROJECT_SOURCE_DIR}/exec/bin64/gk_vk_acceptance.frag.spv"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${GK_VULKAN_BASIC_VERT}" "${PROJECT_SOURCE_DIR}/exec/bin64/gk_vk_basic.vert.spv"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${GK_VULKAN_BASIC_FRAG}" "${PROJECT_SOURCE_DIR}/exec/bin64/gk_vk_basic.frag.spv"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${GK_VULKAN_LIT_VERT}" "${PROJECT_SOURCE_DIR}/exec/bin64/gk_vk_lit.vert.spv"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${GK_VULKAN_LIT_FRAG}" "${PROJECT_SOURCE_DIR}/exec/bin64/gk_vk_lit.frag.spv"
+            DEPENDS gkVulkanShaders
+        )
+
+        FILE(GLOB_RECURSE VULKAN_RENDERER_SOURCES CONFIGURE_DEPENDS
+            ./code/engine/gkRendererVulkan/*.cpp
+        )
+        list(FILTER VULKAN_RENDERER_SOURCES EXCLUDE REGEX "/tests/")
+        add_library(gkRendererVulkan ${CoreLinkType} ${VULKAN_RENDERER_SOURCES})
+        target_include_directories(gkRendererVulkan PRIVATE
+            ./code/engine/gkRendererVulkan/include/
+            ./code/engine/gkRendererVulkan/Vulkan/
+            ./code/engine/gkRendererVulkan/RenderRes/
+            ./code/engine/gkRendererVulkan/Platform/Win32/
+        )
+        target_compile_definitions(gkRendererVulkan PRIVATE
+            RENDERER_VULKAN
+            VK_USE_PLATFORM_WIN32_KHR
+            $<$<BOOL:${GK_VULKAN_VALIDATION}>:GK_VULKAN_VALIDATION=1>
+        )
+        target_link_libraries(gkRendererVulkan PRIVATE Vulkan::Vulkan)
+        add_dependencies(gkRendererVulkan gkVulkanRuntimeShaders)
+        add_custom_command(TARGET gkRendererVulkan POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${GK_VULKAN_ACCEPTANCE_VERT}" "$<TARGET_FILE_DIR:gkRendererVulkan>/gk_vk_acceptance.vert.spv"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${GK_VULKAN_ACCEPTANCE_FRAG}" "$<TARGET_FILE_DIR:gkRendererVulkan>/gk_vk_acceptance.frag.spv"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${GK_VULKAN_BASIC_VERT}" "$<TARGET_FILE_DIR:gkRendererVulkan>/gk_vk_basic.vert.spv"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${GK_VULKAN_BASIC_FRAG}" "$<TARGET_FILE_DIR:gkRendererVulkan>/gk_vk_basic.frag.spv"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${GK_VULKAN_LIT_VERT}" "$<TARGET_FILE_DIR:gkRendererVulkan>/gk_vk_lit.vert.spv"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${GK_VULKAN_LIT_FRAG}" "$<TARGET_FILE_DIR:gkRendererVulkan>/gk_vk_lit.frag.spv"
+        )
+        list(APPEND GK_WINDOWS_RENDERER_TARGETS gkRendererVulkan)
+
+        if (BUILD_TESTING)
+            add_executable(gkVulkanSmoke
+                ./code/engine/gkRendererVulkan/tests/gkVulkanSmoke.cpp
+                ./code/engine/gkRendererVulkan/Vulkan/gkVkDeviceContext.cpp
+            )
+            target_include_directories(gkVulkanSmoke PRIVATE
+                ./code/engine/gkRendererVulkan/Vulkan/
+            )
+            target_compile_definitions(gkVulkanSmoke PRIVATE
+                RENDERER_VULKAN
+                VK_USE_PLATFORM_WIN32_KHR
+                $<$<BOOL:${GK_VULKAN_VALIDATION}>:GK_VULKAN_VALIDATION=1>
+            )
+            target_link_libraries(gkVulkanSmoke PRIVATE Vulkan::Vulkan)
+            set_target_properties(gkVulkanSmoke PROPERTIES
+                RUNTIME_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/exec/bin64"
+                RUNTIME_OUTPUT_DIRECTORY_DEBUG "${PROJECT_SOURCE_DIR}/exec/bin64"
+                RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${PROJECT_SOURCE_DIR}/exec/bin64"
+                RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${PROJECT_SOURCE_DIR}/exec/bin64"
+            )
+            add_dependencies(gkVulkanSmoke gkVulkanRuntimeShaders)
+            add_custom_command(TARGET gkVulkanSmoke POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    "${GK_VULKAN_ACCEPTANCE_VERT}" "$<TARGET_FILE_DIR:gkVulkanSmoke>/gk_vk_acceptance.vert.spv"
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    "${GK_VULKAN_ACCEPTANCE_FRAG}" "$<TARGET_FILE_DIR:gkVulkanSmoke>/gk_vk_acceptance.frag.spv"
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    "${GK_VULKAN_BASIC_VERT}" "$<TARGET_FILE_DIR:gkVulkanSmoke>/gk_vk_basic.vert.spv"
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    "${GK_VULKAN_BASIC_FRAG}" "$<TARGET_FILE_DIR:gkVulkanSmoke>/gk_vk_basic.frag.spv"
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    "${GK_VULKAN_LIT_VERT}" "$<TARGET_FILE_DIR:gkVulkanSmoke>/gk_vk_lit.vert.spv"
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    "${GK_VULKAN_LIT_FRAG}" "$<TARGET_FILE_DIR:gkVulkanSmoke>/gk_vk_lit.frag.spv"
+            )
+            add_test(NAME gkVulkanSmoke COMMAND gkVulkanSmoke)
+            set_tests_properties(gkVulkanSmoke PROPERTIES TIMEOUT 30)
+        endif()
+    elseif (GK_RENDERER_BACKEND STREQUAL "AUTO")
+        message(STATUS "Vulkan SDK not found; gkRendererVulkan will not be built")
+    endif()
+endif()
+
 FILE(GLOB sources ./code/engine/gkLauncherUniverse/*.cpp ./code/engine/gkLauncherUniverse/*/*.cpp)
 add_executable(gkLauncher ${sources})
 target_include_directories(gkLauncher PRIVATE
@@ -346,7 +555,7 @@ target_include_directories(gkLauncher PRIVATE
 )
 
 # set all targets output dir
-set_target_properties(gkCore gkLauncher gkSystem gkRendererD3D9 gkInput gkGameObjectSystem gkGameFramework gkFont Testcases
+set_target_properties(gkCore gkLauncher gkSystem ${GK_WINDOWS_RENDERER_TARGETS} gkInput gkGameObjectSystem gkGameFramework gkFont Testcases
     PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/exec/bin64"
     LIBRARY_OUTPUT_DIRECTORY_DEBUG "${PROJECT_SOURCE_DIR}/exec/bin64"

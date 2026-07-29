@@ -1,6 +1,7 @@
 project/
 build/
 build-win64/
+build-vulkan/
 build-ios/
 build-osx/
 node_modules/

@@ -299,6 +299,10 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 	{
 		LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGL330 );
 	}
+	else if ( !_tcsicmp( wszRenderDll, _T("gkRendererVulkan") ) )
+	{
+		LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererVulkan );
+	}
 #else
 	//LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGLES2 );
 #ifdef OS_APPLE

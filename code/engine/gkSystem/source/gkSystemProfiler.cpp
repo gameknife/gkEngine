@@ -589,6 +589,9 @@ void gkSystemProfiler::qinfo( int boxheight )
 		case ERdAPI_OPENGL:
 			_tcscpy(renderAPI, _T("RendererGL320"));
 			break;
+		case ERdAPI_VULKAN:
+			_tcscpy(renderAPI, _T("RendererVulkan"));
+			break;
 		default:
 			_tcscpy(renderAPI, _T("RendererProto"));
 			break;

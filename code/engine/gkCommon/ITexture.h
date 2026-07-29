@@ -303,6 +303,7 @@ public:
 	virtual void unlock() {}
 
 	virtual bool dynamic(){return false;}
+	virtual uint64 revision() const { return 0; }
 
 	virtual bool sizable(){return false;}
 
