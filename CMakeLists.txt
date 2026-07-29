@@ -2,13 +2,25 @@ cmake_minimum_required(VERSION 3.10)
 project (gkENGINE)
 include(CTest)
 
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 set(GK_RENDERER_BACKEND "AUTO" CACHE STRING "Renderer backend: AUTO;D3D9;GL330;GLES2;VULKAN")
 set_property(CACHE GK_RENDERER_BACKEND PROPERTY STRINGS AUTO D3D9 GL330 GLES2 VULKAN)
 option(GK_VULKAN_VALIDATION "Enable Vulkan validation layers in development builds" ON)
 option(GK_VULKAN_BUNDLED_MOLTENVK "Use a bundled MoltenVK runtime on Apple" OFF)
 
 if (APPLE)
-    message(STATUS "This is build for ios, use static lib")
+    enable_language(OBJCXX)
+    add_compile_definitions(_STATIC_LIB)
+    if (NOT IOS)
+        set(OSX ON)
+        if (GK_RENDERER_BACKEND STREQUAL "AUTO")
+            set(GK_RENDERER_BACKEND "VULKAN" CACHE STRING
+                "Renderer backend: AUTO;D3D9;GL330;GLES2;VULKAN" FORCE)
+        endif()
+    endif()
+    message(STATUS "This is an Apple build; engine modules use static libraries")
 	set(CoreLinkType STATIC)
 else()
     message(STATUS "This is build for windows, use dynamic lib")
@@ -70,12 +82,13 @@ if (IOS)
 target_link_libraries(gkFont 
     ${PROJECT_SOURCE_DIR}/code/ThirdParty/freetype/lib/ios/Release-iphoneos/libfreetype2.a
 )
-elseif(OSX)
-target_link_libraries(gkFont 
-    ${PROJECT_SOURCE_DIR}/code/ThirdParty/freetype/lib/ios/Release-OSX/libfreetype2.a
-)
 else()
 set(GK_FREETYPE_ROOT ${PROJECT_SOURCE_DIR}/code/ThirdParty/freetype)
+if (OSX)
+    set(GK_FREETYPE_DEBUG_SOURCE ${GK_FREETYPE_ROOT}/src/base/ftdebug.c)
+else()
+    set(GK_FREETYPE_DEBUG_SOURCE ${GK_FREETYPE_ROOT}/builds/win32/ftdebug.c)
+endif()
 add_library(gkFreetype STATIC
     ${GK_FREETYPE_ROOT}/src/autofit/autofit.c
     ${GK_FREETYPE_ROOT}/src/bdf/bdf.c
@@ -83,7 +96,7 @@ add_library(gkFreetype STATIC
     ${GK_FREETYPE_ROOT}/src/base/ftbase.c
     ${GK_FREETYPE_ROOT}/src/base/ftbitmap.c
     ${GK_FREETYPE_ROOT}/src/cache/ftcache.c
-    ${GK_FREETYPE_ROOT}/builds/win32/ftdebug.c
+    ${GK_FREETYPE_DEBUG_SOURCE}
     ${GK_FREETYPE_ROOT}/src/base/ftfstype.c
     ${GK_FREETYPE_ROOT}/src/base/ftgasp.c
     ${GK_FREETYPE_ROOT}/src/base/ftglyph.c
@@ -120,6 +133,10 @@ add_library(gkFreetype STATIC
 target_include_directories(gkFreetype PUBLIC ${GK_FREETYPE_ROOT}/include)
 target_compile_definitions(gkFreetype PRIVATE
     FT2_BUILD_LIBRARY _CRT_SECURE_NO_WARNINGS)
+if (OSX)
+    target_compile_definitions(gkFreetype PRIVATE FT_CONFIG_OPTION_SYSTEM_ZLIB)
+    target_link_libraries(gkFreetype PRIVATE z)
+endif()
 target_link_libraries(gkFont gkFreetype)
 endif()
 set (EXTRA_LIBS ${EXTRA_LIBS} gkFont)
@@ -178,6 +195,11 @@ FILE(GLOB sources ./code/engine/gkCommon/*.cpp ./code/engine/gkSystem/*.cpp ./co
 endif()
 
 add_library(gkSystem ${CoreLinkType} ${sources})
+if (OSX)
+    set_source_files_properties(
+        ./code/engine/gkSystem/source/gkSystemProfiler.cpp
+        PROPERTIES LANGUAGE OBJCXX)
+endif()
 target_include_directories(gkSystem PRIVATE
   ./code/engine/gkSystem/
   ./code/engine/gkSystem/include/
@@ -244,39 +266,138 @@ if(IOS)
 
 else()
 #OSX
-FILE(GLOB sources 
-./code/engine/gkRendererGL/*.cpp 
-./code/engine/gkRendererGL/RenderRes/*.cpp 
-./code/engine/gkRendererGL/Platform/OSX/*.cpp
-./code/engine/gkRendererGL/Platform/OSX/*.mm
+if (NOT GK_RENDERER_BACKEND STREQUAL "VULKAN")
+    message(FATAL_ERROR "macOS currently supports GK_RENDERER_BACKEND=VULKAN only")
+endif()
+
+find_package(Vulkan REQUIRED)
+find_package(Python3 COMPONENTS Interpreter REQUIRED)
+set(GK_VULKAN_SHADER_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/vulkan-shaders")
+set(GK_VULKAN_SHADER_OUTPUTS
+    "${GK_VULKAN_SHADER_OUTPUT_DIR}/gk_vk_acceptance.vert.spv"
+    "${GK_VULKAN_SHADER_OUTPUT_DIR}/gk_vk_acceptance.frag.spv"
+    "${GK_VULKAN_SHADER_OUTPUT_DIR}/gk_vk_basic.vert.spv"
+    "${GK_VULKAN_SHADER_OUTPUT_DIR}/gk_vk_basic.frag.spv"
+    "${GK_VULKAN_SHADER_OUTPUT_DIR}/gk_vk_lit.vert.spv"
+    "${GK_VULKAN_SHADER_OUTPUT_DIR}/gk_vk_lit.frag.spv"
 )
-list(FILTER sources EXCLUDE REGEX ".*HwTextureLoader.cpp$")
-list(FILTER sources EXCLUDE REGEX ".*glExtension.cpp$")
-
-add_library(gkRendererGL330 ${CoreLinkType} ${sources})
-target_include_directories(gkRendererGL330 PRIVATE
-    ./code/engine/gkRendererGL/
-    ./code/engine/gkRendererGL330/
-    ./code/engine/gkRendererGL330/include/
-    ./code/thirdparty/oglsdk/include/
+find_program(GK_SPIRV_VAL_EXECUTABLE spirv-val
+    HINTS "$ENV{VULKAN_SDK}/macOS/bin")
+find_program(GK_SPIRV_CROSS_EXECUTABLE spirv-cross
+    HINTS "$ENV{VULKAN_SDK}/macOS/bin")
+if (GK_SPIRV_VAL_EXECUTABLE)
+    set(GK_SPIRV_VAL_ARGUMENT --spirv-val "${GK_SPIRV_VAL_EXECUTABLE}")
+endif()
+if (GK_SPIRV_CROSS_EXECUTABLE)
+    set(GK_SPIRV_CROSS_ARGUMENT --spirv-cross "${GK_SPIRV_CROSS_EXECUTABLE}")
+endif()
+add_custom_command(
+    OUTPUT ${GK_VULKAN_SHADER_OUTPUTS}
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${GK_VULKAN_SHADER_OUTPUT_DIR}"
+    COMMAND "${Python3_EXECUTABLE}"
+        "${PROJECT_SOURCE_DIR}/exec/tools/compile_vulkan_shaders.py"
+        --source "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source"
+        --output "${GK_VULKAN_SHADER_OUTPUT_DIR}"
+        --glslc "${Vulkan_GLSLC_EXECUTABLE}"
+        --target-env vulkan1.2
+        --gfx-root "${PROJECT_SOURCE_DIR}/exec/engine/shaders/template"
+        --required-gfx ksbase
+        --required-gfx kssimple
+        --required-gfx ks_skyhdr
+        --required-gfx ksbaseskinned
+        --required-gfx terrian
+        --required-gfx vegetation
+        --required-gfx vegetation_autoexpand
+        --required-gfx grass
+        ${GK_SPIRV_VAL_ARGUMENT}
+        ${GK_SPIRV_CROSS_ARGUMENT}
+    DEPENDS
+        "${PROJECT_SOURCE_DIR}/exec/tools/compile_vulkan_shaders.py"
+        "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/debug/acceptance.vert"
+        "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/debug/acceptance.frag"
+        "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/basic.vert"
+        "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/basic.frag"
+        "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/lit.vert"
+        "${PROJECT_SOURCE_DIR}/exec/engine/shaders/vulkan/source/scene/lit.frag"
+    VERBATIM
 )
-target_compile_definitions(gkRendererGL330 PRIVATE -DRENDERAPI_GL330)
-set (EXTRA_LIBS ${EXTRA_LIBS} gkRendererGL330)
+add_custom_target(gkVulkanShaders DEPENDS ${GK_VULKAN_SHADER_OUTPUTS})
 
-target_link_libraries(gkRendererGL330 
-    ${PROJECT_SOURCE_DIR}/code/ThirdParty/oglsdk/lib/libglfw3.a
+FILE(GLOB_RECURSE VULKAN_RENDERER_SOURCES CONFIGURE_DEPENDS
+    ./code/engine/gkRendererVulkan/*.cpp
+    ./code/engine/gkRendererVulkan/*.mm
 )
-
-
+list(FILTER VULKAN_RENDERER_SOURCES EXCLUDE REGEX "/tests/")
+add_library(gkRendererVulkan ${CoreLinkType} ${VULKAN_RENDERER_SOURCES})
+target_include_directories(gkRendererVulkan PRIVATE
+    ./code/engine/gkRendererVulkan/include/
+    ./code/engine/gkRendererVulkan/Vulkan/
+    ./code/engine/gkRendererVulkan/RenderRes/
+    ./code/engine/gkRendererVulkan/Platform/Mac/
+)
+target_compile_definitions(gkRendererVulkan PRIVATE
+    RENDERER_VULKAN
+    VK_USE_PLATFORM_METAL_EXT
+    $<$<BOOL:${GK_VULKAN_VALIDATION}>:GK_VULKAN_VALIDATION=1>
+)
+target_link_libraries(gkRendererVulkan PRIVATE
+    Vulkan::Vulkan
+    "-framework AppKit"
+    "-framework QuartzCore"
+    "-framework Metal"
+)
+add_dependencies(gkRendererVulkan gkVulkanShaders)
+set (EXTRA_LIBS ${EXTRA_LIBS} gkRendererVulkan)
 
 FILE(GLOB sources ./code/engine/gkLauncherMac/*.m ./code/engine/gkLauncherMac/*.mm)
-add_executable(gkLauncher ${sources})
+add_executable(gkLauncher MACOSX_BUNDLE ${sources})
 target_include_directories(gkLauncher PRIVATE
     ./code/engine/gkLauncherMac/
     ./code/engine/gkLauncherMac/include/
 )
-target_link_libraries(gkLauncher "-framework AppKit -framework OpenGL -framework CoreGraphics -framework IOKit -framework CoreVideo")
+target_compile_definitions(gkLauncher PRIVATE
+    GK_ENGINE_EXEC_ROOT="${PROJECT_SOURCE_DIR}/exec")
+target_link_libraries(gkLauncher
+    "-framework AppKit"
+    "-framework CoreGraphics"
+    "-framework IOKit"
+    "-framework CoreVideo"
+)
 target_link_libraries (gkLauncher ${EXTRA_LIBS} )
+add_dependencies(gkLauncher gkVulkanShaders)
+foreach(GK_VULKAN_SHADER ${GK_VULKAN_SHADER_OUTPUTS})
+    add_custom_command(TARGET gkLauncher POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${GK_VULKAN_SHADER}" "$<TARGET_FILE_DIR:gkLauncher>")
+endforeach()
+
+if (BUILD_TESTING)
+    add_executable(gkVulkanSmoke
+        ./code/engine/gkRendererVulkan/tests/gkVulkanSmoke.cpp
+        ./code/engine/gkRendererVulkan/Vulkan/gkVkDeviceContext.cpp
+        ./code/engine/gkRendererVulkan/Platform/Mac/gkVkMacPlatform.mm
+    )
+    target_include_directories(gkVulkanSmoke PRIVATE
+        ./code/engine/gkRendererVulkan/Vulkan/
+        ./code/engine/gkRendererVulkan/Platform/Mac/
+    )
+    target_compile_definitions(gkVulkanSmoke PRIVATE
+        RENDERER_VULKAN VK_USE_PLATFORM_METAL_EXT GK_VULKAN_INPUT_TESTING=1
+        $<$<BOOL:${GK_VULKAN_VALIDATION}>:GK_VULKAN_VALIDATION=1>
+    )
+    target_link_libraries(gkVulkanSmoke PRIVATE Vulkan::Vulkan
+        "-framework AppKit" "-framework QuartzCore" "-framework Metal")
+    add_dependencies(gkVulkanSmoke gkVulkanShaders)
+    set_target_properties(gkVulkanSmoke PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/exec/bin64")
+    foreach(GK_VULKAN_SHADER ${GK_VULKAN_SHADER_OUTPUTS})
+        add_custom_command(TARGET gkVulkanSmoke POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${GK_VULKAN_SHADER}" "$<TARGET_FILE_DIR:gkVulkanSmoke>")
+    endforeach()
+    add_test(NAME gkVulkanSmoke COMMAND gkVulkanSmoke)
+    set_tests_properties(gkVulkanSmoke PROPERTIES TIMEOUT 30)
+endif()
 
 #set(DEPLOYMENT_TARGET 8.0)
 
@@ -306,11 +427,15 @@ else()
     set(APP_DIR_NAME "$<TARGET_FILE_DIR:PPSSPP>")
 endif()
 
-add_custom_command(TARGET gkLauncher POST_BUILD
-    COMMAND rm -rf "$(TARGET_BUILD_DIR)/$(PRODUCT_NAME).app/data"
-    COMMAND mkdir "$(TARGET_BUILD_DIR)/$(PRODUCT_NAME).app/data"
-    COMMAND cp -Rf "$(BUILD_DIR)/../exec/paks" "$(TARGET_BUILD_DIR)/$(PRODUCT_NAME).app/data/paks"
-)
+if(CMAKE_GENERATOR STREQUAL "Xcode")
+    add_custom_command(TARGET gkLauncher POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory
+            "$(TARGET_BUILD_DIR)/$(PRODUCT_NAME).app/data"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${PROJECT_SOURCE_DIR}/exec/paks"
+            "$(TARGET_BUILD_DIR)/$(PRODUCT_NAME).app/data/paks"
+    )
+endif()
 
 set(MACOSX_DEPLOYMENT_TARGET ${DEPLOYMENT_TARGET})
 
@@ -342,7 +467,12 @@ set_target_properties(gkLauncher
 else()
 
 set_target_properties(gkLauncher PROPERTIES
-    MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/code/engine/gkLauncherUniverse/Info.plist"
+    MACOSX_BUNDLE_INFO_PLIST
+        "${PROJECT_SOURCE_DIR}/code/engine/gkLauncherMac/Info.plist.in"
+    MACOSX_BUNDLE_GUI_IDENTIFIER "com.kkstudio.gkengine"
+    MACOSX_BUNDLE_BUNDLE_NAME "gkENGINE"
+    MACOSX_BUNDLE_SHORT_VERSION_STRING "1.0"
+    MACOSX_BUNDLE_BUNDLE_VERSION "1"
     #RESOURCE "ios/Launch Screen.storyboard"
     #XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET ${DEPLOYMENT_TARGET}
     #XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "iPhone/iPad"
@@ -575,5 +705,3 @@ set_target_properties(gkCore gkLauncher gkSystem ${GK_WINDOWS_RENDERER_TARGETS} 
 )
 
 endif()
-
-

@@ -562,6 +562,8 @@ public:
 	virtual const char* GetKeyName(const SInputEvent& event, bool bGUI=0) =0;
     
     virtual void PostInputEvent( const SInputEvent &event, bool bForce = false) =0;
+	virtual int GetModifiers() const = 0;
+	virtual void SetModifiers(int modifiers) = 0;
 
 #ifdef OS_ANDROID	
 	virtual Android_InputHandler getAndroidHandler() =0;

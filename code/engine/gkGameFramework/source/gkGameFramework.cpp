@@ -143,7 +143,11 @@ bool gkGameFramework::InitGame(const TCHAR* dllname)
 	// check the dll name
 	TCHAR name[MAX_PATH];
 
+#ifdef OS_APPLE
+	gkIniParser startupFile( _T("tools/default_cfg/startup.cfg") );
+#else
 	gkIniParser startupFile( _T("config/startup.cfg") );
+#endif
 
 	startupFile.Parse();
 
@@ -506,4 +510,3 @@ bool gkGameFramework::AndroidMoveUpdate(float fElapsedTime)
     
     return true;
 }
-

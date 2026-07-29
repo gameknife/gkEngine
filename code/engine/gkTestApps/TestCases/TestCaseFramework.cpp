@@ -145,7 +145,11 @@ bool TestCaseFramework::OnInit()
 
 	// Allow the launcher config to select a testcase for unattended startup.
 	// The default config selects the conference-room rendering test.
+#ifdef OS_APPLE
+	gkIniParser startupFile( _T("tools/default_cfg/startup.cfg") );
+#else
 	gkIniParser startupFile( _T("config/startup.cfg") );
+#endif
 	startupFile.Parse();
 	gkStdString startupTest = startupFile.FetchValue( _T("launcher"), _T("testcase") );
 	if ( !startupTest.empty() )

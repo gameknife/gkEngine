@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <limits>
 
 
 #include "ISystem.h"
@@ -277,7 +278,7 @@ bool CObjMeshLoader::LoadGeometryFromOBJ( const TCHAR* strMeshData )
 	int starttime = gEnv->pTimer->GetCurrTime();
 
 	// File input
-	TCHAR strCommand[256] = {0};
+	gkStdString strCommand;
 	gkStdStringstream InFile( strMeshData );
 
 	if( !InFile )
@@ -289,32 +290,32 @@ bool CObjMeshLoader::LoadGeometryFromOBJ( const TCHAR* strMeshData )
 		if( !InFile )
 			break;
 
-		if( 0 == _tcscmp( strCommand, _T("#") ) )
+		if( 0 == _tcscmp( strCommand.c_str(), _T("#") ) )
 		{
 			// Comment
 		}
-		else if( 0 == _tcscmp( strCommand, _T("v") ) )
+		else if( 0 == _tcscmp( strCommand.c_str(), _T("v") ) )
 		{
 			// Vertex Position
 			float x, y, z;
 			InFile >> x >> y >> z;
 			Positions.push_back( Vec3( x, y, z ) );
 		}
-		else if( 0 == _tcscmp( strCommand, _T("vt") ) )
+		else if( 0 == _tcscmp( strCommand.c_str(), _T("vt") ) )
 		{
 			// Vertex TexCoord
 			float u, v;
 			InFile >> u >> v;
 			TexCoords[0].push_back( Vec2( u, 1-v ) );
 		}
-		else if( 0 == _tcscmp( strCommand, _T("vn"))  )
+		else if( 0 == _tcscmp( strCommand.c_str(), _T("vn"))  )
 		{
 			// Vertex Normal
 			float x, y, z;
 			InFile >> x >> y >> z;
 			Normals.push_back( Vec3( x, y, z ) );
 		}
-		else if( 0 == _tcscmp( strCommand, _T("f") ) )
+		else if( 0 == _tcscmp( strCommand.c_str(), _T("f") ) )
 		{
 			// Face
 			int iPosition, iTexCoord, iNormal;
@@ -354,7 +355,7 @@ bool CObjMeshLoader::LoadGeometryFromOBJ( const TCHAR* strMeshData )
 
 			m_Triangles.push_back(face);
 		}
-		else if ( 0 == _tcscmp( strCommand, _T("usemtl") ) )
+		else if ( 0 == _tcscmp( strCommand.c_str(), _T("usemtl") ) )
 		{
 			if (!m_Subsets.empty())
 			{
@@ -372,7 +373,7 @@ bool CObjMeshLoader::LoadGeometryFromOBJ( const TCHAR* strMeshData )
 			// Unimplemented or unrecognized command
 		}
 
-		InFile.ignore( 1000, '\n' );
+		InFile.ignore( std::numeric_limits<std::streamsize>::max(), '\n' );
 	}
 
 	if (!m_Subsets.empty())

@@ -6,26 +6,51 @@
 
 Crc32Gen gkPak::s_crcGenerator;
 
-IResFile* gkResFileManager::loadResFileHeader( const TCHAR* pszFilename, bool searchDir /*= false*/ )
+namespace
 {
-	IResFile* ret = NULL;
-
-	// 先观察是否为engine目录
-	if ( gkIsEnginePath( pszFilename ) )
+	bool hasPathPrefix(const gkStdString& path, const TCHAR* prefix)
 	{
-		ret = loadResFileExec(pszFilename, searchDir, true);
-		if (ret)
-		{
-			return ret;
-		}
+		const size_t prefixLength = _tcslen(prefix);
+		return path.length() >= prefixLength &&
+			path.compare(0, prefixLength, prefix) == 0;
 	}
 
+	bool isExplicitExecPath(const gkStdString& path)
+	{
+		return hasPathPrefix(path, _T("engine/")) ||
+			hasPathPrefix(path, _T("media/")) ||
+			hasPathPrefix(path, _T("tools/")) ||
+			hasPathPrefix(path, _T("paks/"));
+	}
 
-	TCHAR szFullPath[MAX_PATH] = _T("/media/");
-	_tcscat(szFullPath, pszFilename);
-	ret = loadResFileExec(szFullPath, searchDir, true);
+	bool existsInExec(const gkStdString& relativePath)
+	{
+		return IsFileExist(
+			(gkGetExecRootDir() + relativePath).c_str());
+	}
 
-	return ret;
+	gkStdString resolveResourcePath(const TCHAR* filename)
+	{
+		gkStdString normalized =
+			filename ? gkStdString(filename) : gkStdString();
+		if (normalized.empty())
+			return normalized;
+		gkNormalizeResName(normalized);
+
+		// Explicit top-level paths are always relative to exec. For legacy
+		// unqualified resource names, allow a real file at exec/<name> before
+		// preserving the historical exec/media/<name> fallback.
+		if (isExplicitExecPath(normalized) || existsInExec(normalized))
+			return normalized;
+		return _T("media/") + normalized;
+	}
+}
+
+IResFile* gkResFileManager::loadResFileHeader( const TCHAR* pszFilename, bool searchDir /*= false*/ )
+{
+	const gkStdString path = resolveResourcePath(pszFilename);
+	return path.empty() ? NULL :
+		loadResFileExec(path.c_str(), searchDir, true);
 }
 
 
@@ -33,17 +58,9 @@ EFileStatus gkResFileManager::checkFileExist(const TCHAR* pszFilename, bool sear
 {
 	IResFile* ret = NULL;
 
-	gkStdString normalized_path;
-
-	// 先观察是否为engine目录
-	if ( gkIsEnginePath( pszFilename ) )
-	{
-		normalized_path = pszFilename;
-	}
-	else
-	{
-		normalized_path = _T("/media/") + gkStdString(pszFilename);
-	}
+	gkStdString normalized_path = resolveResourcePath(pszFilename);
+	if (normalized_path.empty())
+		return eFS_notExsit;
 
 	if (searchDir && gEnv->pSystem->IsEditor())
 	{
@@ -78,8 +95,8 @@ EFileStatus gkResFileManager::checkFileExist(const TCHAR* pszFilename, bool sear
 	FILE* fp = _tfopen( szFullPath, _T("r") );
 	if( fp )
 	{
-		return eFS_inDisk;
 		fclose( fp );
+		return eFS_inDisk;
 	}
 
 	// not found
@@ -88,23 +105,9 @@ EFileStatus gkResFileManager::checkFileExist(const TCHAR* pszFilename, bool sear
 
 IResFile* gkResFileManager::loadResFile( const TCHAR* pszFilename, bool searchDir )
 {
-	IResFile* ret = NULL;
-
-	// 先观察是否为engine目录
-	if ( gkIsEnginePath( pszFilename ) )
-	{
-		ret = loadResFileExec(pszFilename, searchDir);
-		if (ret)
-		{
-			return ret;
-		}
-	}
-
-	TCHAR szFullPath[MAX_PATH] = _T("/media/");
-	_tcscat(szFullPath, pszFilename);
-	ret = loadResFileExec(szFullPath, searchDir);
-
-	return ret;
+	const gkStdString path = resolveResourcePath(pszFilename);
+	return path.empty() ? NULL :
+		loadResFileExec(path.c_str(), searchDir);
 }
 
 void gkResFileManager::closeResFile( IResFile* file )
@@ -140,9 +143,8 @@ void gkResFileManager::closeResFile( const TCHAR* pszFilename )
 		return;
 	}
 
-	TCHAR szFullPath[MAX_PATH] = _T("media/");
-	_tcscat( szFullPath, pszFilename );
-	it = m_mapFiles.find(szFullPath);
+	const gkStdString resolved = resolveResourcePath(pszFilename);
+	it = m_mapFiles.find(resolved);
 	if (it != m_mapFiles.end())
 	{
 		SAFE_DELETE( it->second );

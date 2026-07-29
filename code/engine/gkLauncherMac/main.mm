@@ -26,37 +26,48 @@ IGameFramework* g_pGame;
 // implement of macPathUtil
 std::string macBundlePath()
 {
-    char path[PATH_MAX];
-    CFBundleRef mainBundle = CFBundleGetMainBundle();
-    assert(mainBundle);
-    
-    CFURLRef mainBundleURL = CFBundleCopyBundleURL(mainBundle);
-    assert(mainBundleURL);
-    
-    CFStringRef cfStringRef = CFURLCopyFileSystemPath( mainBundleURL, kCFURLPOSIXPathStyle);
-    assert(cfStringRef);
-    
-    CFStringGetCString(cfStringRef, path, PATH_MAX, kCFStringEncodingASCII);
-    
-    CFRelease(mainBundleURL);
-    CFRelease(cfStringRef);
-    
-    char* lastpath = strrchr(path, '/');
-    if (lastpath) {
-        *lastpath = 0;
+    NSFileManager* files = [NSFileManager defaultManager];
+    bool (^isExecRoot)(NSString*) = ^bool(NSString* candidate) {
+        if (!candidate)
+            return false;
+        BOOL isDirectory = NO;
+        NSString* enginePath = [candidate stringByAppendingPathComponent:@"engine"];
+        NSString* toolsPath = [candidate stringByAppendingPathComponent:@"tools"];
+        return [files fileExistsAtPath:enginePath isDirectory:&isDirectory] &&
+            isDirectory && [files fileExistsAtPath:toolsPath isDirectory:&isDirectory] &&
+            isDirectory;
+    };
+
+    NSMutableArray* candidates = [NSMutableArray array];
+    const char* environmentRoot = getenv("GK_ENGINE_EXEC_ROOT");
+    if (environmentRoot && environmentRoot[0])
+        [candidates addObject:[NSString stringWithUTF8String:environmentRoot]];
+#ifdef GK_ENGINE_EXEC_ROOT
+    [candidates addObject:@GK_ENGINE_EXEC_ROOT];
+#endif
+
+    NSString* searchPath = [[NSBundle mainBundle] bundlePath];
+    for (int depth = 0; depth < 8 && searchPath.length; ++depth) {
+        [candidates addObject:[searchPath stringByAppendingPathComponent:@"exec"]];
+        NSString* parent = [searchPath stringByDeletingLastPathComponent];
+        if ([parent isEqualToString:searchPath])
+            break;
+        searchPath = parent;
     }
-    lastpath = strrchr(path, '/');
-    if (lastpath) {
-        *lastpath = 0;
+    NSString* workingDirectory = [files currentDirectoryPath];
+    [candidates addObject:workingDirectory];
+    [candidates addObject:[workingDirectory stringByAppendingPathComponent:@"exec"]];
+
+    for (NSString* candidate in candidates) {
+        NSString* standardized = [[candidate stringByExpandingTildeInPath]
+            stringByStandardizingPath];
+        if (isExecRoot(standardized))
+            return std::string([standardized fileSystemRepresentation]);
     }
-    lastpath = strrchr(path, '/');
-    if (lastpath) {
-        *lastpath = 0;
-    }
-    
-    strcat(path, "/exec");
-    
-    return std::string(path);
+
+    fprintf(stderr,
+        "gkLauncher: unable to locate exec (set GK_ENGINE_EXEC_ROOT)\n");
+    return std::string();
 }
 
 std::string iOSDocumentsDirectory()
@@ -90,10 +101,18 @@ int main(int argc, char *argv[])
     ISystemInitInfo sii;
     sii.fWidth = 1280;
     sii.fHeight = 720;
-    gkStdString rootPath = macBundlePath() + "/";
+    const std::string execRoot = macBundlePath();
+    if (execRoot.empty()) {
+        gkFreeStaticModule_gkGameFramework();
+        return EXIT_FAILURE;
+    }
+    gkStdString rootPath = execRoot + "/";
     sii.rootDir = rootPath.c_str();
     
-    g_pGame->Init(sii);
+    if (!g_pGame->Init(sii)) {
+        gkFreeStaticModule_gkGameFramework();
+        return EXIT_FAILURE;
+    }
     g_pGame->PostInit(0, sii);
     
     g_pGame->InitGame(NULL);

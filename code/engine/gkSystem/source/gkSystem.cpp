@@ -47,6 +47,18 @@
 
 extern CMTRand_int32 g_random_generator;
 
+namespace
+{
+	gkStdString startupConfigPath()
+	{
+		gkStdString path =
+			gkGetExecRootDir() + _T("media/config/startup.cfg");
+		if (IsFileExist(path.c_str()))
+			return path;
+		return gkGetExecRootDir() + _T("tools/default_cfg/startup.cfg");
+	}
+}
+
 #ifdef _STATIC_LIB
 
 #ifdef OS_IOS
@@ -57,8 +69,8 @@ void gkFreeStaticModule_gkCore();
 //void gkFreeStaticModule_gkRendererGLES2();
 
 #ifdef OS_APPLE
-void gkLoadStaticModule_gkRendererGL330(SSystemGlobalEnvironment* gEnv);
-void gkFreeStaticModule_gkRendererGL330();
+void gkLoadStaticModule_gkRendererVulkan(SSystemGlobalEnvironment* gEnv);
+void gkFreeStaticModule_gkRendererVulkan();
 #else
 void gkLoadStaticModule_gkRendererGLES2(SSystemGlobalEnvironment* gEnv);
 void gkFreeStaticModule_gkRendererGLES2();
@@ -279,7 +291,7 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 
 	if (!IsEditor())
 	{
-		gkStdString cfgfile = gkGetExecRootDir() + _T("media/config/startup.cfg");
+		gkStdString cfgfile = startupConfigPath();
 		GetPrivateProfileString( _T("launcher"), _T("renderer"), _T("gkRendererD3D9"), wszRenderDll, MAX_PATH, cfgfile.c_str() );
 	}
 #else 
@@ -306,7 +318,7 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 #else
 	//LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGLES2 );
 #ifdef OS_APPLE
-    LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGL330 );
+    LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererVulkan );
 #elif defined( OS_IOS )
     LOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGLES2 );
 #else
@@ -328,7 +340,7 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 #	ifdef WIN32
 	TCHAR wszPhysicDll[MAX_PATH] = _T("");
 
-	gkStdString cfgfile = gkGetExecRootDir() + _T("media/config/startup.cfg");
+	gkStdString cfgfile = startupConfigPath();
 	GetPrivateProfileString( _T("launcher"), _T("physicsengine"), _T(""), wszPhysicDll, MAX_PATH, cfgfile.c_str() );
 #	else 
 	TCHAR wszPhysicDll[MAX_PATH] = _T("gkHavok");
@@ -350,7 +362,7 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 #	ifdef WIN32
 		TCHAR wszAnimationDll[MAX_PATH] = _T("gkAnimationHavok");
 
-		gkStdString cfgfile = gkGetExecRootDir() + _T("media/config/startup.cfg");
+		gkStdString cfgfile = startupConfigPath();
 		GetPrivateProfileString( _T("launcher"), _T("animationengine"), _T("gkAnimationHavok"), wszAnimationDll, MAX_PATH, cfgfile.c_str() );
 #	else 
 		TCHAR wszAnimationDll[MAX_PATH] = _T("gkAnimationHavok");
@@ -386,7 +398,7 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 
 	{
 		TCHAR wszStereoDevDll[MAX_PATH] = _T("null");
-		gkStdString cfgfile = gkGetExecRootDir() + _T("media/config/startup.cfg");
+		gkStdString cfgfile = startupConfigPath();
 		GetPrivateProfileString( _T("launcher"), _T("stereodevice"), _T("null"), wszStereoDevDll, MAX_PATH, cfgfile.c_str() );
 
 		gkLoadModule( m_moduleHandles.hStereoDevice, wszStereoDevDll );
@@ -412,7 +424,11 @@ bool gkSystem::Init( ISystemInitInfo& sii )
 	gkLogMessage(_T("Timer Initialized."));
 
 
+#ifdef OS_APPLE
+	gkIniParser startupFile( _T("tools/default_cfg/startup.cfg") );
+#else
 	gkIniParser startupFile( _T("config/startup.cfg") );
+#endif
 	startupFile.Parse();
 	gkStdString ret = startupFile.FetchValue(  _T("launcher"), _T("width") );
 	if( !ret.empty() )
@@ -629,7 +645,7 @@ bool gkSystem::Destroy()
 	//UNLOAD_MODULE_GLOBAL(m_moduleHandles.hRenderer,			gkRendererGLES2);
     //UNLOAD_MODULE_GLOBAL(m_moduleHandles.hRenderer,			gkRendererGL330);
 #ifdef OS_APPLE
-    UNLOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGL330 );
+    UNLOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererVulkan );
 #elif defined( OS_IOS )
     UNLOAD_MODULE_GLOBAL( m_moduleHandles.hRenderer, gkRendererGLES2 );
 #else
@@ -1040,5 +1056,3 @@ void gkSystem::cleanGarbage()
 {
 	m_bNeedGarbage = true;
 }
-
-

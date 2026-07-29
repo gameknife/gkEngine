@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 CMAKE=1
 
 # Check arguments
@@ -9,8 +9,8 @@ do
 			GENERATOR="Xcode"
 			TARGET_OS=iOS
 			;;
-		--osx) CMAKE_ARGS="-G Xcode -DCMAKE_TOOLCHAIN_FILE=cmake/Toolchains/osx.cmake ${CMAKE_ARGS}"
-			GENERATOR="Xcode"
+		--osx) CMAKE_ARGS="-DGK_RENDERER_BACKEND=VULKAN ${CMAKE_ARGS}"
+			GENERATOR="Ninja"
 			TARGET_OS=OSX
 			;;
 		--win64) CMAKE_ARGS="${CMAKE_ARGS}"
@@ -35,6 +35,10 @@ fi
 
 # Strict errors. Any non-zero return exits this script
 set -e
+
+if [ "$TARGET_OS" = "OSX" ]; then
+	"$(cd "$(dirname "$0")" && pwd)/deploy_macos_assets.sh"
+fi
 
 mkdir -p ${BUILD_DIR}
 pushd ${BUILD_DIR}

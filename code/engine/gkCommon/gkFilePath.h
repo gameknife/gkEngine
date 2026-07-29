@@ -127,6 +127,8 @@ inline gkStdString GetParent( const gkStdString &path )
 
 inline void gkNormalizeResName( gkStdString &path )
 {
+	if (path.empty())
+		return;
 	gkStdString::iterator it = path.begin();
 	for (; it != path.end(); ++it)
 	{
@@ -153,6 +155,12 @@ inline void gkNormalizeResName( gkStdString &path )
 
 inline bool gkIsRelPath( const gkStdString& path )
 {
+	if (path.empty())
+		return true;
+#if defined(OS_LINUX)
+	if (path[0] == '/')
+		return false;
+#endif
 	if ( _tcsstr( path.c_str(), _T(":/") ) )
 	{
 		return false;

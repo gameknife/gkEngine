@@ -1,11 +1,13 @@
 #include "gkVkDeviceContext.h"
 
 #include "ISystem.h"
+#include "IGameFramework.h"
 #include "IMesh.h"
 
 #include <vulkan/vulkan.h>
 
 #include <algorithm>
+#include <chrono>
 #include <cstdio>
 #include <cstring>
 #include <limits>
@@ -14,11 +16,30 @@
 #include <unordered_map>
 #include <vector>
 
+#if defined(OS_APPLE)
+#include "gkVkMacPlatform.h"
+#include <mach-o/dyld.h>
+#include <unistd.h>
+#endif
+
 namespace
 {
 	const uint32 kFramesInFlight = 2;
 	const uint32 kTextureStageCount = 16;
+#if defined(OS_WIN32)
 	const TCHAR* kWindowClassName = _T("gkVulkanWindowClass");
+#endif
+
+	uint64 currentMilliseconds()
+	{
+#if defined(OS_WIN32)
+		return GetTickCount64();
+#else
+		return static_cast<uint64>(
+			std::chrono::duration_cast<std::chrono::milliseconds>(
+				std::chrono::steady_clock::now().time_since_epoch()).count());
+#endif
+	}
 
 	bool hasName(const std::vector<VkExtensionProperties>& properties, const char* name)
 	{
@@ -51,9 +72,11 @@ namespace
 		{
 			fprintf(stderr, "[gkVulkan] %s\n",
 				data && data->pMessage ? data->pMessage : "validation message");
+#if defined(OS_WIN32)
 			OutputDebugStringA("[gkVulkan] ");
 			OutputDebugStringA(data && data->pMessage ? data->pMessage : "validation message");
 			OutputDebugStringA("\n");
+#endif
 		}
 		return VK_FALSE;
 	}
@@ -111,17 +134,23 @@ struct gkVkDeviceContext::Impl
 		}
 	};
 
-	HINSTANCE hinstance;
 	HWND hwnd;
 	bool ownsWindow;
+#if defined(OS_WIN32)
+	HINSTANCE hinstance;
 	bool windowClassRegistered;
+#elif defined(OS_APPLE)
+	gkVkMacWindow* macWindow;
+#endif
 	uint32 requestedWidth;
 	uint32 requestedHeight;
 	bool resizePending;
 	bool isMinimized;
 	bool isFullscreen;
+#if defined(OS_WIN32)
 	DWORD windowedStyle;
 	RECT windowedRect;
+#endif
 
 	VkInstance instance;
 	VkDebugUtilsMessengerEXT debugMessenger;
@@ -180,16 +209,22 @@ struct gkVkDeviceContext::Impl
 	PFN_vkCmdPipelineBarrier2KHR cmdPipelineBarrier2;
 
 	Impl()
-		: hinstance(NULL)
-		, hwnd(NULL)
+		: hwnd(NULL)
 		, ownsWindow(false)
+#if defined(OS_WIN32)
+		, hinstance(NULL)
 		, windowClassRegistered(false)
+#elif defined(OS_APPLE)
+		, macWindow(NULL)
+#endif
 		, requestedWidth(0)
 		, requestedHeight(0)
 		, resizePending(false)
 		, isMinimized(false)
 		, isFullscreen(false)
+#if defined(OS_WIN32)
 		, windowedStyle(WS_OVERLAPPEDWINDOW)
+#endif
 		, instance(VK_NULL_HANDLE)
 		, debugMessenger(VK_NULL_HANDLE)
 		, surface(VK_NULL_HANDLE)
@@ -230,13 +265,16 @@ struct gkVkDeviceContext::Impl
 	{
 		swapchainExtent.width = 0;
 		swapchainExtent.height = 0;
+#if defined(OS_WIN32)
 		SetRectEmpty(&windowedRect);
+#endif
 		for (uint32 i = 0; i < 5; ++i)
 			for (uint32 variant = 0; variant < 5; ++variant)
 				for (uint32 sidedness = 0; sidedness < 2; ++sidedness)
 					scenePipelines[i][variant][sidedness] = VK_NULL_HANDLE;
 	}
 
+#if defined(OS_WIN32)
 	static LRESULT CALLBACK windowProc(HWND window, UINT message, WPARAM wparam, LPARAM lparam)
 	{
 		Impl* self = reinterpret_cast<Impl*>(GetWindowLongPtr(window, GWLP_USERDATA));
@@ -270,13 +308,15 @@ struct gkVkDeviceContext::Impl
 		}
 		return DefWindowProc(window, message, wparam, lparam);
 	}
+#endif
 
 	bool createWindow(const ISystemInitInfo& initInfo)
 	{
-		hinstance = GetModuleHandle(NULL);
 		requestedWidth = initInfo.fWidth > 0 ? static_cast<uint32>(initInfo.fWidth) : 1280;
 		requestedHeight = initInfo.fHeight > 0 ? static_cast<uint32>(initInfo.fHeight) : 720;
 
+#if defined(OS_WIN32)
+		hinstance = GetModuleHandle(NULL);
 		WNDCLASSEX windowClass;
 		ZeroMemory(&windowClass, sizeof(windowClass));
 		windowClass.cbSize = sizeof(windowClass);
@@ -304,12 +344,24 @@ struct gkVkDeviceContext::Impl
 		UpdateWindow(hwnd);
 		GetWindowRect(hwnd, &windowedRect);
 		return true;
+#elif defined(OS_APPLE)
+		macWindow = gkVkMacCreateWindow(requestedWidth, requestedHeight);
+		hwnd = reinterpret_cast<HWND>(macWindow);
+		ownsWindow = macWindow != NULL;
+		if (macWindow)
+			gkVkMacPumpEvents(macWindow, &requestedWidth, &requestedHeight,
+				&isMinimized);
+		return macWindow != NULL;
+#else
+		return false;
+#endif
 	}
 
 	void setFullscreen(bool fullscreen)
 	{
 		if (!hwnd || !ownsWindow || fullscreen == isFullscreen)
 			return;
+#if defined(OS_WIN32)
 		if (fullscreen)
 		{
 			windowedStyle = static_cast<DWORD>(GetWindowLongPtr(hwnd, GWL_STYLE));
@@ -334,6 +386,9 @@ struct gkVkDeviceContext::Impl
 				windowedRect.bottom - windowedRect.top,
 				SWP_FRAMECHANGED | SWP_SHOWWINDOW);
 		}
+#elif defined(OS_APPLE)
+		gkVkMacSetFullscreen(macWindow, fullscreen);
+#endif
 		isFullscreen = fullscreen;
 	}
 
@@ -356,12 +411,26 @@ struct gkVkDeviceContext::Impl
 		if (extensionCount)
 			vkEnumerateInstanceExtensionProperties(NULL, &extensionCount, &available[0]);
 
-		const char* required[] = { VK_KHR_SURFACE_EXTENSION_NAME, VK_KHR_WIN32_SURFACE_EXTENSION_NAME };
+		const char* required[] = {
+			VK_KHR_SURFACE_EXTENSION_NAME,
+#if defined(OS_WIN32)
+			VK_KHR_WIN32_SURFACE_EXTENSION_NAME
+#elif defined(OS_APPLE)
+			VK_EXT_METAL_SURFACE_EXTENSION_NAME
+#endif
+		};
 		for (size_t i = 0; i < sizeof(required) / sizeof(required[0]); ++i)
 			if (!hasName(available, required[i]))
 				return false;
 
-		std::vector<const char*> extensions(required, required + 2);
+		std::vector<const char*> extensions(required,
+			required + sizeof(required) / sizeof(required[0]));
+#if defined(OS_APPLE)
+		const bool portabilityEnumeration =
+			hasName(available, VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
+		if (portabilityEnumeration)
+			extensions.push_back(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
+#endif
 		bool enableDebug = false;
 #if defined(GK_VULKAN_VALIDATION)
 		enableDebug = hasName(available, VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
@@ -400,6 +469,10 @@ struct gkVkDeviceContext::Impl
 		createInfo.enabledLayerCount = static_cast<uint32>(layers.size());
 		createInfo.ppEnabledLayerNames = layers.empty() ? NULL : &layers[0];
 		createInfo.pNext = enableDebug ? &debugInfo : NULL;
+#if defined(OS_APPLE)
+		if (portabilityEnumeration)
+			createInfo.flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
+#endif
 
 		if (vkCreateInstance(&createInfo, NULL, &instance) != VK_SUCCESS)
 			return false;
@@ -415,11 +488,20 @@ struct gkVkDeviceContext::Impl
 
 	bool createSurface()
 	{
+#if defined(OS_WIN32)
 		VkWin32SurfaceCreateInfoKHR createInfo = {};
 		createInfo.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
 		createInfo.hinstance = hinstance;
 		createInfo.hwnd = hwnd;
 		return vkCreateWin32SurfaceKHR(instance, &createInfo, NULL, &surface) == VK_SUCCESS;
+#elif defined(OS_APPLE)
+		VkMetalSurfaceCreateInfoEXT createInfo = {};
+		createInfo.sType = VK_STRUCTURE_TYPE_METAL_SURFACE_CREATE_INFO_EXT;
+		createInfo.pLayer = gkVkMacMetalLayer(macWindow);
+		return vkCreateMetalSurfaceEXT(instance, &createInfo, NULL, &surface) == VK_SUCCESS;
+#else
+		return false;
+#endif
 	}
 
 	bool deviceExtensionsSupported(VkPhysicalDevice candidate, uint32 apiVersion)
@@ -536,12 +618,17 @@ struct gkVkDeviceContext::Impl
 			timestampsSupported = timestampValidBits > 0;
 		}
 		char message[512];
-		sprintf_s(message, "[gkVulkan] Selected GPU: %s (Vulkan %u.%u.%u)\n",
+		snprintf(message, sizeof(message),
+			"[gkVulkan] Selected GPU: %s (Vulkan %u.%u.%u)\n",
 			properties.deviceName,
 			VK_VERSION_MAJOR(properties.apiVersion),
 			VK_VERSION_MINOR(properties.apiVersion),
 			VK_VERSION_PATCH(properties.apiVersion));
+#if defined(OS_WIN32)
 		OutputDebugStringA(message);
+#else
+		fputs(message, stderr);
+#endif
 		return true;
 	}
 
@@ -564,6 +651,21 @@ struct gkVkDeviceContext::Impl
 
 		std::vector<const char*> extensions;
 		extensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+#if defined(OS_APPLE)
+		uint32 deviceExtensionCount = 0;
+		vkEnumerateDeviceExtensionProperties(
+			physicalDevice, NULL, &deviceExtensionCount, NULL);
+		std::vector<VkExtensionProperties> availableDeviceExtensions(
+			deviceExtensionCount);
+		if (deviceExtensionCount)
+			vkEnumerateDeviceExtensionProperties(physicalDevice, NULL,
+				&deviceExtensionCount, &availableDeviceExtensions[0]);
+		if (hasName(availableDeviceExtensions,
+			"VK_KHR_portability_subset"))
+		{
+			extensions.push_back("VK_KHR_portability_subset");
+		}
+#endif
 		const uint32 effectiveApiVersion = (std::min)(physicalApiVersion, instanceApiVersion);
 		if (effectiveApiVersion < VK_API_VERSION_1_3)
 		{
@@ -615,24 +717,38 @@ struct gkVkDeviceContext::Impl
 
 	bool executableSiblingPath(const char* filename, char (&path)[MAX_PATH])
 	{
+#if defined(OS_WIN32)
 		DWORD pathLength = GetModuleFileNameA(NULL, path, MAX_PATH);
 		if (!pathLength || pathLength >= MAX_PATH)
 			return false;
 		char* slash = strrchr(path, '\\');
+#elif defined(OS_APPLE)
+		uint32_t pathLength = MAX_PATH;
+		if (_NSGetExecutablePath(path, &pathLength) != 0)
+			return false;
+		char* slash = strrchr(path, '/');
+#else
+		char* slash = NULL;
+#endif
 		if (!slash)
 			return false;
 		*(slash + 1) = '\0';
-		return strcat_s(path, filename) == 0;
+		const size_t used = strlen(path);
+		const size_t filenameLength = strlen(filename);
+		if (used + filenameLength >= MAX_PATH)
+			return false;
+		memcpy(path + used, filename, filenameLength + 1);
+		return true;
 	}
 
 	bool createPipelineCache()
 	{
 		std::vector<uint8> initialData;
 		char path[MAX_PATH] = {};
-		if (executableSiblingPath("gkVulkanPipelineCache.bin", path))
-		{
-			FILE* file = NULL;
-			if (fopen_s(&file, path, "rb") == 0 && file)
+			if (executableSiblingPath("gkVulkanPipelineCache.bin", path))
+			{
+				FILE* file = fopen(path, "rb");
+				if (file)
 			{
 				fseek(file, 0, SEEK_END);
 				const long size = ftell(file);
@@ -673,8 +789,8 @@ struct gkVkDeviceContext::Impl
 				char path[MAX_PATH] = {};
 				if (executableSiblingPath("gkVulkanPipelineCache.bin", path))
 				{
-					FILE* file = NULL;
-					if (fopen_s(&file, path, "wb") == 0 && file)
+						FILE* file = fopen(path, "wb");
+						if (file)
 					{
 						fwrite(&data[0], 1, size, file);
 						fclose(file);
@@ -762,6 +878,8 @@ struct gkVkDeviceContext::Impl
 		createInfo.oldSwapchain = VK_NULL_HANDLE;
 		if (vkCreateSwapchainKHR(device, &createInfo, NULL, &swapchain) != VK_SUCCESS)
 			return false;
+		fprintf(stderr, "[gkVulkan] Swapchain extent: %ux%u px\n",
+			swapchainExtent.width, swapchainExtent.height);
 
 		swapchainFormat = surfaceFormat.format;
 		vkGetSwapchainImagesKHR(device, swapchain, &imageCount, NULL);
@@ -850,17 +968,11 @@ struct gkVkDeviceContext::Impl
 	bool loadShaderBinary(const char* filename, std::vector<uint32>& words)
 	{
 		char executablePath[MAX_PATH] = {};
-		DWORD pathLength = GetModuleFileNameA(NULL, executablePath, MAX_PATH);
-		if (!pathLength || pathLength >= MAX_PATH)
+		if (!executableSiblingPath(filename, executablePath))
 			return false;
-		char* slash = strrchr(executablePath, '\\');
-		if (!slash)
-			return false;
-		*(slash + 1) = '\0';
-		strcat_s(executablePath, filename);
 
-		FILE* file = NULL;
-		if (fopen_s(&file, executablePath, "rb") != 0 || !file)
+		FILE* file = fopen(executablePath, "rb");
+		if (!file)
 		{
 			fprintf(stderr, "gkVulkan: shader not found: %s\n", executablePath);
 			return false;
@@ -1861,11 +1973,11 @@ struct gkVkDeviceContext::Impl
 	bool initialize(const ISystemInitInfo& initInfo)
 	{
 		if (!createWindow(initInfo))
-			return failInitialization("Win32 window");
+			return failInitialization("native window");
 		if (!createInstance())
 			return failInitialization("Vulkan instance");
 		if (!createSurface())
-			return failInitialization("Win32 surface");
+			return failInitialization("native surface");
 		if (!selectPhysicalDevice())
 			return failInitialization("physical device");
 		if (!createDevice())
@@ -1893,6 +2005,26 @@ struct gkVkDeviceContext::Impl
 	bool beginFrame()
 	{
 		frameActive = false;
+#if defined(OS_APPLE)
+		uint32 windowWidth = requestedWidth;
+		uint32 windowHeight = requestedHeight;
+		bool minimized = isMinimized;
+		if (!gkVkMacPumpEvents(macWindow, &windowWidth, &windowHeight, &minimized))
+		{
+			if (gEnv && gEnv->pGameFramework)
+				gEnv->pGameFramework->markClose();
+			isMinimized = true;
+			return false;
+		}
+		isMinimized = minimized;
+		if (!minimized && (windowWidth != requestedWidth ||
+			windowHeight != requestedHeight))
+		{
+			requestedWidth = windowWidth;
+			requestedHeight = windowHeight;
+			resizePending = true;
+		}
+#endif
 		if (!device || isMinimized)
 			return false;
 		if (resizePending && !recreateSwapchain())
@@ -2150,7 +2282,8 @@ struct gkVkDeviceContext::Impl
 				float aspect;
 				float padding[2];
 			} drawParams;
-			drawParams.time = static_cast<float>(GetTickCount64() % 1000000) * 0.001f;
+			drawParams.time = static_cast<float>(
+				currentMilliseconds() % 1000000) * 0.001f;
 			drawParams.aspect = static_cast<float>(swapchainExtent.width) /
 				static_cast<float>(swapchainExtent.height);
 			drawParams.padding[0] = 0.0f;
@@ -2268,6 +2401,7 @@ struct gkVkDeviceContext::Impl
 		if (instance)
 			vkDestroyInstance(instance, NULL);
 		instance = VK_NULL_HANDLE;
+#if defined(OS_WIN32)
 		if (ownsWindow && hwnd)
 			DestroyWindow(hwnd);
 		hwnd = NULL;
@@ -2275,6 +2409,13 @@ struct gkVkDeviceContext::Impl
 		if (windowClassRegistered)
 			UnregisterClass(kWindowClassName, hinstance);
 		windowClassRegistered = false;
+#elif defined(OS_APPLE)
+		if (ownsWindow && macWindow)
+			gkVkMacDestroyWindow(macWindow);
+		macWindow = NULL;
+		hwnd = NULL;
+		ownsWindow = false;
+#endif
 		physicalDevice = VK_NULL_HANDLE;
 	}
 };
@@ -2348,6 +2489,9 @@ bool gkVkDeviceContext::drawRenderOperationTextures(
 
 void gkVkDeviceContext::resize(uint32 width, uint32 height)
 {
+#if defined(OS_APPLE)
+	gkVkMacSetWindowSize(m_impl->macWindow, width, height);
+#endif
 	m_impl->requestedWidth = width;
 	m_impl->requestedHeight = height;
 	m_impl->isMinimized = width == 0 || height == 0;

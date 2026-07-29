@@ -546,6 +546,13 @@ bool gkVkShader::loadImpl()
 	gkStdString metadataPath = _T("engine/shaders/template/built_in/");
 	metadataPath += shaderName;
 	metadataPath += _T(".gfx");
+	if (gEnv && gEnv->pFileSystem &&
+		gEnv->pFileSystem->checkFileExist(metadataPath.c_str()) == eFS_notExsit)
+	{
+		metadataPath = _T("engine/shaders/template/hidden/");
+		metadataPath += shaderName;
+		metadataPath += _T(".gfx");
+	}
 	IRapidXmlParser parser;
 	parser.initializeReading(metadataPath.c_str());
 	CRapidXmlParseNode* root = parser.getRootXmlNode();
@@ -696,6 +703,9 @@ bool gkVkMaterial::loadImpl()
 		m_shader = gEnv->pSystem->getShaderMngPtr()->load(_T("kssimple"), _T("vulkan"));
 
 	gkStdString filename = m_wstrFileName;
+	gkNameValuePairList::const_iterator fileParameter = m_params.find(_T("file"));
+	if (fileParameter != m_params.end() && !fileParameter->second.empty())
+		filename = fileParameter->second;
 	if (filename.size() < 4 || _tcsicmp(filename.c_str() + filename.size() - 4, _T(".mtl")))
 		filename += _T(".mtl");
 	IRapidXmlParser parser;

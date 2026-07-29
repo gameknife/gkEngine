@@ -1,5 +1,6 @@
 project/
 build/
+build-*/
 build-win64/
 build-vulkan/
 build-ios/
@@ -52,3 +53,5 @@ exec/tools/msvcp100.dll
 exec/tools/msvcr100.dll
 code/ipch/
 code/gkENGINE_Vc14.VC.db
+
+build-macos-vulkan/

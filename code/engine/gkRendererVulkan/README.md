@@ -84,3 +84,43 @@ For visual acceptance, run:
 A cyan indexed triangle using the engine vertex format should remain visible. Resize,
 minimize and restore the window repeatedly; press Escape or close the window
 to exit. Validation warnings and errors are written to stderr and the debugger.
+
+## macOS with MoltenVK
+
+The macOS build uses Vulkan exclusively. D3D9, GL330, and GLES2 targets are not
+generated. A Vulkan SDK or loader installation that exposes MoltenVK is
+required; the usual `VULKAN_SDK` environment is detected by CMake.
+
+```bash
+./auto_cmake.sh --osx
+cmake --build build-osx --target gkLauncher gkVulkanSmoke
+ctest --test-dir build-osx --output-on-failure
+open build-osx/gkLauncher.app
+```
+
+`auto_cmake.sh --osx` initializes the media-pack submodules and extracts them
+under `exec/media` before configuring. To deploy only the assets, run
+`./deploy_macos_assets.sh`. If configuring CMake directly, deploy the assets
+first:
+
+```bash
+./deploy_macos_assets.sh
+cmake -S . -B build-macos-vulkan -G Ninja \
+  -DCMAKE_BUILD_TYPE=Debug \
+  -DGK_RENDERER_BACKEND=VULKAN \
+  -DGK_VULKAN_VALIDATION=ON
+cmake --build build-macos-vulkan --target gkLauncher gkVulkanSmoke
+ctest --test-dir build-macos-vulkan --output-on-failure
+open build-macos-vulkan/gkLauncher.app
+```
+
+The launcher is a native arm64 macOS application. It creates an AppKit window
+backed by `CAMetalLayer`, then creates the Vulkan surface through
+`VK_EXT_metal_surface`. The layer and swapchain use macOS logical dimensions,
+so a 1724x1077-point desktop uses a 1724x1077 swapchain even when its Retina
+backing surface has twice as many physical pixels. AppKit keyboard, modifier,
+mouse-button, mouse-motion,
+and scroll events are translated to the engine `IInputManager`; losing focus
+releases held inputs. Set `GK_INPUT_TRACE=1` when launching to print translated
+input events. The Vulkan smoke test renders and validates input through the
+same path.
