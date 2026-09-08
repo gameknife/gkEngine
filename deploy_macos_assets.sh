@@ -5,7 +5,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"
 
-git submodule update --init --depth 1 mediapack/base mediapack/confroom
+git submodule update --init --depth 1 code/thirdparty mediapack/base mediapack/confroom
 
 ARCHIVER="$SCRIPT_DIR/exec/tools/7zr"
 if [[ ! -x "$ARCHIVER" ]]; then

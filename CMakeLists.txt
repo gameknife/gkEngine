@@ -282,9 +282,9 @@ set(GK_VULKAN_SHADER_OUTPUTS
     "${GK_VULKAN_SHADER_OUTPUT_DIR}/gk_vk_lit.frag.spv"
 )
 find_program(GK_SPIRV_VAL_EXECUTABLE spirv-val
-    HINTS "$ENV{VULKAN_SDK}/macOS/bin")
+    HINTS "$ENV{VULKAN_SDK}/bin")
 find_program(GK_SPIRV_CROSS_EXECUTABLE spirv-cross
-    HINTS "$ENV{VULKAN_SDK}/macOS/bin")
+    HINTS "$ENV{VULKAN_SDK}/bin")
 if (GK_SPIRV_VAL_EXECUTABLE)
     set(GK_SPIRV_VAL_ARGUMENT --spirv-val "${GK_SPIRV_VAL_EXECUTABLE}")
 endif()

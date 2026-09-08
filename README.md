@@ -28,6 +28,15 @@ Windows:
 
 `auto_make_env.bat` deploys the matching 32-bit runtime next to the legacy `texconv.exe`, extracts the base media and the optional `conf_room` pack, and generates converted resources. `auto_cmake.bat` generates the x64 Visual Studio build in `build-win64`. `auto_buildrun.bat` builds `RelWithDebInfo` and launches `exec\bin64\gkLauncher.exe`.
 
+macOS:
+
+```bash
+./auto_cmake.sh --osx
+./buildrun.sh
+```
+
+`buildrun.sh` builds the macOS Vulkan launcher and smoke target as `RelWithDebInfo`, then starts `build-osx/gkLauncher.app` with the `conf_room` test scene. Its output is written to `build-osx/gkLauncher.log`.
+
 The default launcher configuration uses `TestCases` and starts `TestCase_InDoorRendering`, which loads `level/conf_room/conf_room.gks`. Press Esc to return to the TestCases menu. The generated executable and DLLs are under `exec\bin64`; do not launch the stale intermediate copy under `build-win64\RelWithDebInfo`.
 
 gks level to standalone GLB
